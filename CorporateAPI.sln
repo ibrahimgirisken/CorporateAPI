@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastracture", "Infrastra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{0EB84EF1-1AA9-4F8A-99F1-E9EE208D4C38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorporateAPI.Domain", "Core\CorporateAPI.Domain\CorporateAPI.Domain.csproj", "{4A0B2329-9A20-41BF-8F2B-2D690B11E1FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorporateAPI.Domain", "Core\CorporateAPI.Domain\CorporateAPI.Domain.csproj", "{4A0B2329-9A20-41BF-8F2B-2D690B11E1FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorporateAPI.Application", "Core\CorporateAPI.Application\CorporateAPI.Application.csproj", "{B0B9BFDA-804D-4561-9625-5D59630952FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorporateAPI.Application", "Core\CorporateAPI.Application\CorporateAPI.Application.csproj", "{B0B9BFDA-804D-4561-9625-5D59630952FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreporateAPI.Infrastracture", "Infrastracture\CoreporateAPI.Infrastracture\CoreporateAPI.Infrastracture.csproj", "{952B4F74-0718-4E9B-8B3F-BDF3B60D2E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.Infrastracture", "Infrastracture\CoreporateAPI.Infrastracture\CoreporateAPI.Infrastracture.csproj", "{952B4F74-0718-4E9B-8B3F-BDF3B60D2E86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreporateAPI.Persistence", "Infrastracture\CoreporateAPI.Persistence\CoreporateAPI.Persistence.csproj", "{44384904-61FD-4BF4-9C73-C4B31FEC5CB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.Persistence", "Infrastracture\CoreporateAPI.Persistence\CoreporateAPI.Persistence.csproj", "{44384904-61FD-4BF4-9C73-C4B31FEC5CB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreporateAPI.API", "Presentation\CoreporateAPI.API\CoreporateAPI.API.csproj", "{8714BB16-C243-4695-8EEE-DCDD1E03A289}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.API", "Presentation\CoreporateAPI.API\CoreporateAPI.API.csproj", "{8714BB16-C243-4695-8EEE-DCDD1E03A289}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
