@@ -1,5 +1,8 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using CorporateAPI.Application.Features.Queries;
+using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
+using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,17 +12,18 @@ namespace CoreporateAPI.API.Controllers
     [ApiController]
     public class MenusController : ControllerBase
     {
-        readonly IMenuReadRepository _menuReadRepository;
-public MenusController(IMenuReadRepository menuReadRepository)
+        readonly IMediator _mediator;
+
+        public MenusController(IMediator mediator)
         {
-            _menuReadRepository = menuReadRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get([FromQuery] GetAllMenuQueryRequest getAllMenuQueryRequest)
         {
-           var menus= _menuReadRepository.GetAll();
-            return Ok(menus);
+            GetAllMenuQueryResponse response=await _mediator.Send(getAllMenuQueryRequest);
+            return Ok(response);
             
         }
     }

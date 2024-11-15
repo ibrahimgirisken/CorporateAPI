@@ -22,15 +22,36 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public IQueryable<T> GetAll()
-        => Table;
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method)
-       =>Table.Where(method);
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method)
-       =>await Table.FirstOrDefaultAsync(method);
-        public async Task<T> GetByIdAsync(string id)
-        => await Table.FirstOrDefaultAsync(e=>e.Id==Guid.Parse(id));
+        public IQueryable<T> GetAll(bool tracking = true)
+        {
+            var query=Table.AsQueryable();
+            if (!tracking)
+                query.AsNoTracking();
+            return query;
+        }
 
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
+        {
+            var query= Table.Where(method);
+            if (!tracking)
+               query= Table.AsNoTracking();
+            return query;
+
+        }
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
+        {
+            var query = Table.AsNoTracking();
+            if (!tracking)
+                query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(method);
+        }
+        public async Task<T> GetByIdAsync(string id, bool tracking = true)
+        {
+            var query = Table.AsNoTracking();
+            if (!tracking)
+                query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id));
+        }
 
     }
 }

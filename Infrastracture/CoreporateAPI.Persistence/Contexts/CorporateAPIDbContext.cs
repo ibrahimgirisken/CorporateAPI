@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,22 @@ namespace CoreporateAPI.Persistence.Contexts
                 .Property(e => e.UpdatedDate)
                 .HasColumnType("DATETIME")
                 .IsRequired();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var datas = ChangeTracker
+                .Entries<BaseEntity>();
+
+            foreach (var data in datas)
+            {
+                _ = data.State switch
+                {
+                    EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
+                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.Now
+                };
+            }
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 
