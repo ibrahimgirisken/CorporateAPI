@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoreporateAPI.Persistence.Contexts;
+using CorporateAPI.Application.Repositories;
+using CorporateAPI.Domain.Entities;
 
-namespace CoreporateAPI.Persistence.Repositories.Menu
+
+namespace CoreporateAPI.Persistence.Repositories
 {
-    public class MenuWriteRepository
+    public class MenuWriteRepository : WriteRepository<Menu>, IMenuWriteRepository
     {
+        public MenuWriteRepository(CorporateAPIDbContext context) : base(context)
+        {
+        }
     }
 }

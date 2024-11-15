@@ -1,5 +1,4 @@
-﻿using CorporateAPI.Domain.Entities.MenuEntity;
-using CorporateAPI.Domain.Entities.PageEntity;
+﻿using CorporateAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

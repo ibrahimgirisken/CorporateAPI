@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Concretes\" />
-    <Folder Include="Repositories\Pages\" />
   </ItemGroup>
 
 </Project>

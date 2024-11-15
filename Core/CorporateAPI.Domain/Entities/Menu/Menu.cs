@@ -1,12 +1,11 @@
 ﻿using CorporateAPI.Domain.Entities.Common;
-using CorporateAPI.Domain.Entities.PageEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Domain.Entities.MenuEntity
+namespace CorporateAPI.Domain.Entities
 {
     public class Menu:BaseEntity
     {

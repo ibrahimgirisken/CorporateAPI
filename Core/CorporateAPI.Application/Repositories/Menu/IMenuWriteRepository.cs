@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CorporateAPI.Domain.Entities;
 
-namespace CorporateAPI.Application.Repositories.Menu
+
+namespace CorporateAPI.Application.Repositories
 {
-    public interface IMenuWriteRepository:IWriteRepository<Domain.Entities.MenuEntity.Menu>
+    public interface IMenuWriteRepository:IWriteRepository<Menu>
     {
     }
 }

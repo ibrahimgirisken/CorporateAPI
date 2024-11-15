@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Application.Repositories
+namespace CoreporateAPI.Persistence.Repositories
 {
-    public interface IPageWriteRepository
+    public class PageReadRepository
     {
     }
 }

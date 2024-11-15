@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Application.Repositories.Page
+namespace CorporateAPI.Application.Repositories
 {
     public interface IPageReadRepository
     {
