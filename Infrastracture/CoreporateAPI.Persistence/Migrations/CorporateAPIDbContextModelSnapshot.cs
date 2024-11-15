@@ -22,7 +22,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.MenuEntity.Menu", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +50,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Menus");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.PageEntity.Page", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,13 +61,13 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
                     b.Property<Guid>("MenuId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
                     b.HasKey("Id");
 
@@ -77,18 +77,18 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Pages");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.PageEntity.Page", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.MenuEntity.Menu", "Menu")
+                    b.HasOne("CorporateAPI.Domain.Entities.Menu", "Menu")
                         .WithOne("Page")
-                        .HasForeignKey("CorporateAPI.Domain.Entities.PageEntity.Page", "MenuId")
+                        .HasForeignKey("CorporateAPI.Domain.Entities.Page", "MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Menu");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.MenuEntity.Menu", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu", b =>
                 {
                     b.Navigation("Page")
                         .IsRequired();

@@ -22,6 +22,14 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasOne(m => m.Page)
                 .WithOne(m => m.Menu)
                 .HasForeignKey<Page>(p => p.MenuId);
+            modelBuilder.Entity<Page>()
+                .Property(e => e.CreatedDate)
+                .HasColumnType("DATETIME")
+                .IsRequired();
+            modelBuilder.Entity<Page>()
+                .Property(e => e.UpdatedDate)
+                .HasColumnType("DATETIME")
+                .IsRequired();
         }
     }
 
