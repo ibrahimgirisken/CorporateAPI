@@ -5,6 +5,7 @@ using CorporateAPI.Application.Features.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
 
 namespace CoreporateAPI.API.Controllers
 {
@@ -39,5 +40,11 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateMenuCommandRequest updateMenuCommandRequest)
+        {
+            UpdateMenuCommandResponse response=await _mediator.Send(updateMenuCommandRequest);
+            return Ok(response);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using CorporateAPI.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,25 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
 {
     public class UpdateMenuCommandHandler : IRequestHandler<UpdateMenuCommandRequest, UpdateMenuCommandResponse>
     {
-        public Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
+        readonly IMenuWriteRepository _menuWriteRepository;
+        readonly IMenuReadRepository _menuReadRepository;
+
+        public UpdateMenuCommandHandler(IMenuWriteRepository menuWriteRepository, IMenuReadRepository menuReadRepository)
         {
-            throw new NotImplementedException();
+            _menuWriteRepository = menuWriteRepository;
+            _menuReadRepository = menuReadRepository;
+        }
+
+        public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
+        {
+            Domain.Entities.Menu menu=await _menuReadRepository.GetByIdAsync(request.Id);
+            menu.Title = request.Title;
+            menu.Url = request.Url;
+            menu.Order = request.Order;
+            menu.UpdatedDate=DateTime.Now;
+            _menuWriteRepository.Update(menu);
+            await _menuWriteRepository.SaveAsync();
+            return new();
         }
     }
 }
