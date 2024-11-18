@@ -12,5 +12,6 @@ namespace CorporateAPI.Domain.Entities
         public Guid MenuId { get; set; }
         public string Content { get; set; }
         public Menu Menu { get; set; }
+        public ICollection<Domain.Entities.Module.Module>  Modules { get; set; }
     }
 }

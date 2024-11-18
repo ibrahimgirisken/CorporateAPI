@@ -50,6 +50,35 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Menus");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Config")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Module");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
                     b.Property<Guid>("Id")
@@ -77,6 +106,21 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Pages");
                 });
 
+            modelBuilder.Entity("ModulePage", b =>
+                {
+                    b.Property<Guid>("ModulesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PagesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ModulesId", "PagesId");
+
+                    b.HasIndex("PagesId");
+
+                    b.ToTable("ModulePage");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Menu", "Menu")
@@ -86,6 +130,21 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("ModulePage", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Module.Module", null)
+                        .WithMany()
+                        .HasForeignKey("ModulesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CorporateAPI.Domain.Entities.Page", null)
+                        .WithMany()
+                        .HasForeignKey("PagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu", b =>

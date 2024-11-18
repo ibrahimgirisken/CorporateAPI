@@ -28,6 +28,22 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Module",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Config = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Module", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pages",
                 columns: table => new
                 {
@@ -48,6 +64,35 @@ namespace CoreporateAPI.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ModulePage",
+                columns: table => new
+                {
+                    ModulesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PagesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModulePage", x => new { x.ModulesId, x.PagesId });
+                    table.ForeignKey(
+                        name: "FK_ModulePage_Module_ModulesId",
+                        column: x => x.ModulesId,
+                        principalTable: "Module",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ModulePage_Pages_PagesId",
+                        column: x => x.PagesId,
+                        principalTable: "Pages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModulePage_PagesId",
+                table: "ModulePage",
+                column: "PagesId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Pages_MenuId",
                 table: "Pages",
@@ -58,6 +103,12 @@ namespace CoreporateAPI.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ModulePage");
+
+            migrationBuilder.DropTable(
+                name: "Module");
+
             migrationBuilder.DropTable(
                 name: "Pages");
 
