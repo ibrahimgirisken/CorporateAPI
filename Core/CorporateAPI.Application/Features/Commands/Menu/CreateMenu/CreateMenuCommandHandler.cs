@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,23 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
 {
     public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommandRequest, CreateMenuCommandResponse>
     {
-        public Task<CreateMenuCommandResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
+        readonly IMenuWriteRepository _menuWriteRepository;
+
+        public CreateMenuCommandHandler(IMenuWriteRepository menuWriteRepository)
         {
-            throw new NotImplementedException();
+            _menuWriteRepository = menuWriteRepository;
+        }
+
+        public async Task<CreateMenuCommandResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _menuWriteRepository.AddAsync(new()
+            {
+                Order = request.Order,
+                Title = request.Title,
+                Url = request.Url
+            });
+            await _menuWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

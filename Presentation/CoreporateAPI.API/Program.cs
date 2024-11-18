@@ -2,8 +2,9 @@ using CoreporateAPI.Persistence;
 using CorporateAPI.Application;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddApplicationServices();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceServices();
+builder.Services.AddApplicationServices();
 
 // Add services to the container.
 builder.Services.AddControllers();

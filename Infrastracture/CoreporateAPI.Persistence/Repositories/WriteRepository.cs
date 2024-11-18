@@ -13,7 +13,7 @@ namespace CoreporateAPI.Persistence.Repositories
 {
     public class WriteRepository<T> : IWriteRepository<T> where T : BaseEntity
     {
-        readonly CorporateAPIDbContext _context;
+        readonly private CorporateAPIDbContext _context;
 
         public WriteRepository(CorporateAPIDbContext context)
         {
@@ -39,17 +39,16 @@ namespace CoreporateAPI.Persistence.Repositories
           EntityEntry<T> entityEntry= Table.Remove(model);
           return entityEntry.State==EntityState.Deleted;
         }
+        public bool RemoveRange(List<T> datas)
+        {
+            Table.RemoveRange(datas);
+            return true;
+        }
 
         public async Task<bool> RemoveAsync(string id)
         {
           T data= await Table.FirstOrDefaultAsync(p => p.Id ==Guid.Parse(id));
-           EntityEntry entityEntry= Table.Remove(data);
-           return entityEntry.State==EntityState.Deleted;
-        }
-        public bool RemoveRange(List<T> datas)
-        {
-         Table.RemoveRange(datas);
-            return true;
+           return Remove(data);
         }
 
         public bool Update(T model)
