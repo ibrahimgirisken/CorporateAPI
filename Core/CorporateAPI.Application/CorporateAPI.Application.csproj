@@ -19,9 +19,4 @@
     <ProjectReference Include="..\CorporateAPI.Domain\CorporateAPI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Commands\Page\" />
-    <Folder Include="Features\Queries\Page\" />
-  </ItemGroup>
-
 </Project>
