@@ -9,6 +9,10 @@ namespace CorporateAPI.Domain.Entities.Module
 {
     public class Module:BaseEntity
     {
+        public Module()
+        {
+            Pages=new HashSet<Page>();
+        }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Config { get; set; }
