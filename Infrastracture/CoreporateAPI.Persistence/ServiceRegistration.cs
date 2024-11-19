@@ -10,6 +10,7 @@ using CorporateAPI.Application.Repositories;
 using CoreporateAPI.Persistence.Repositories;
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace CoreporateAPI.Persistence
 {
@@ -18,7 +19,16 @@ namespace CoreporateAPI.Persistence
         public static void AddPersistenceServices(this IServiceCollection services)
         {
             services.AddDbContext<CorporateAPIDbContext>(options=>options.UseSqlServer(Configurations.ConnectionString));
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                }
+
+            ).AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IMenuReadRepository, MenuReadRepository>();
             services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
             services.AddScoped<IPageReadRepository, PageReadRepository>();
