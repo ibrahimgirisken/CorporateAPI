@@ -1,5 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Common;
+using CorporateAPI.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CoreporateAPI.Persistence.Contexts
 {
-    public class CorporateAPIDbContext : DbContext
+    public class CorporateAPIDbContext : IdentityDbContext<AppUser,AppRole,string>
     {
         public CorporateAPIDbContext(DbContextOptions options) : base(options)
         { }
@@ -19,6 +21,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Menu>()
+                .HasOne(m => m.Parent)
+                .WithMany(m => m.Children)
+                .HasForeignKey(m => m.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Menu>()
                 .HasOne(m => m.Page)
                 .WithOne(m => m.Menu)
@@ -31,6 +38,11 @@ namespace CoreporateAPI.Persistence.Contexts
                 .Property(e => e.UpdatedDate)
                 .HasColumnType("DATETIME")
                 .IsRequired();
+            modelBuilder.Entity<Menu>()
+                .HasIndex(m => m.ParentId);
+            modelBuilder.Entity<Page>()
+                .HasIndex(p => p.MenuId);
+            base.OnModelCreating(modelBuilder);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
