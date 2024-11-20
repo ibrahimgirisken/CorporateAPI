@@ -6,11 +6,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreporateAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes="Admin")]
     public class MenusController : ControllerBase
     {
         readonly IMediator _mediator;
