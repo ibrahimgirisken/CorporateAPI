@@ -11,10 +11,12 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
     public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommandRequest, CreateMenuCommandResponse>
     {
         readonly IMenuWriteRepository _menuWriteRepository;
+        readonly IPageWriteRepository _pageWriteRepository;
 
-        public CreateMenuCommandHandler(IMenuWriteRepository menuWriteRepository)
+        public CreateMenuCommandHandler(IMenuWriteRepository menuWriteRepository, IPageWriteRepository pageWriteRepository)
         {
             _menuWriteRepository = menuWriteRepository;
+            _pageWriteRepository = pageWriteRepository;
         }
 
         public async Task<CreateMenuCommandResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
@@ -23,7 +25,13 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
             {
                 Order = request.Order,
                 Title = request.Title,
-                Url = request.Url
+                Url = request.Url,
+                Page = request.Page,
+                
+            });
+            await _pageWriteRepository.AddAsync(new()
+            {
+                Content=request.Page.Content,
             });
             await _menuWriteRepository.SaveAsync();
             return new();

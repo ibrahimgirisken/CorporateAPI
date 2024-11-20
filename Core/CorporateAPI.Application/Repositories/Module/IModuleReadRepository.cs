@@ -1,4 +1,4 @@
-﻿using CorporateAPI.Domain.Entities;
+﻿using CorporateAPI.Domain.Entities.Module;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Repositories
 {
-    public interface IPageWriteRepository:IWriteRepository<Page>
+    public interface IModuleReadRepository:IReadRepository<Module>
     {
     }
 }

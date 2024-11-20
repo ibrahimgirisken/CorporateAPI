@@ -9,6 +9,10 @@ namespace CorporateAPI.Domain.Entities
 {
     public class Menu:BaseEntity
     {
+        public Menu()
+        {
+            Children = new HashSet<Menu>();
+        }
         public string Title { get; set; }
         public Guid? ParentId { get; set; }
         public Menu? Parent { get; set; }
