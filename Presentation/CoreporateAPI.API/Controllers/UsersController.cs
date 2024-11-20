@@ -21,7 +21,7 @@ namespace CoreporateAPI.API.Controllers
            CreateUserCommandResponse response=await _mediator.Send(createUserCommandRequest);
             return Ok(response);
         }
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
         {
             LoginUserCommandResponse response = await _mediator.Send(loginUserCommandRequest);

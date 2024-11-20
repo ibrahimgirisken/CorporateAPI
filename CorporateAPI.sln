@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorporateAPI.Domain", "Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorporateAPI.Application", "Core\CorporateAPI.Application\CorporateAPI.Application.csproj", "{B0B9BFDA-804D-4561-9625-5D59630952FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.Infrastracture", "Infrastracture\CoreporateAPI.Infrastracture\CoreporateAPI.Infrastracture.csproj", "{952B4F74-0718-4E9B-8B3F-BDF3B60D2E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.Infrastructure", "Infrastracture\CoreporateAPI.Infrastracture\CoreporateAPI.Infrastructure.csproj", "{952B4F74-0718-4E9B-8B3F-BDF3B60D2E86}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.Persistence", "Infrastracture\CoreporateAPI.Persistence\CoreporateAPI.Persistence.csproj", "{44384904-61FD-4BF4-9C73-C4B31FEC5CB4}"
 EndProject
