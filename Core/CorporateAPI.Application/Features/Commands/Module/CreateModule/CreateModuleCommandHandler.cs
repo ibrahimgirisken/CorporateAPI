@@ -22,7 +22,8 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
             await _moduleWriteRepository.AddAsync(new()
             {
                 Name = request.Name,
-                Type = request.Type
+                Type = request.Type,
+                Config = request.Config,
             });
             await _moduleWriteRepository.SaveAsync();
             return new();

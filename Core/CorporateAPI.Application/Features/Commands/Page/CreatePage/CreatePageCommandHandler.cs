@@ -21,7 +21,18 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         {
             await _pageWriteRepository.AddAsync(new()
             {
-                Content = request.Content
+                Content = request.Content,
+                Menu = new()
+                {
+                    Id= (Guid)request.MenuId,
+                    Order=1,
+                    Title="",
+                    Url="",
+                    UpdatedDate= DateTime.Now,
+                    CreatedDate= DateTime.Now,
+                },
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
             });
             await _pageWriteRepository.SaveAsync();
             return new();
