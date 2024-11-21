@@ -33,6 +33,8 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
             services.AddScoped<IPageReadRepository, PageReadRepository>();
             services.AddScoped<IPageWriteRepository, PageWriteRepository>();
+            services.AddScoped<IModuleReadRepository, ModuleReadRepository>();
+            services.AddScoped<IModuleWriteRepository, ModuleWriteRepository>();
 
         }
     }

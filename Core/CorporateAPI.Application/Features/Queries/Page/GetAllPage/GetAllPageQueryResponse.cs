@@ -8,5 +8,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 {
     public class GetAllPageQueryResponse
     {
+        public object Pages { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetAllModule
 {
     public class GetAllModuleQueryResponse
     {
+        public object Modules { get; set; }
     }
 }
