@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,21 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 {
     public class CreatePageCommandHandler : IRequestHandler<CreatePageCommandRequest, CreatePageCommandResponse>
     {
-        public Task<CreatePageCommandResponse> Handle(CreatePageCommandRequest request, CancellationToken cancellationToken)
+        readonly IPageWriteRepository _pageWriteRepository;
+
+        public CreatePageCommandHandler(IPageWriteRepository pageWriteRepository)
         {
-            throw new NotImplementedException();
+            _pageWriteRepository = pageWriteRepository;
+        }
+
+        public async Task<CreatePageCommandResponse> Handle(CreatePageCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _pageWriteRepository.AddAsync(new()
+            {
+                Content = request.Content
+            });
+            await _pageWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

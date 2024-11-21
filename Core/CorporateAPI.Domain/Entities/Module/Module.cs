@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Domain.Entities.Module
+namespace CorporateAPI.Domain.Entities
 {
     public class Module:BaseEntity
     {

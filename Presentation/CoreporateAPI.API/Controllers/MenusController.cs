@@ -35,6 +35,14 @@ namespace CoreporateAPI.API.Controllers
             CreateMenuCommandResponse response = await _mediator.Send(createMenuCommandRequest);
             return StatusCode((int)HttpStatusCode.Created);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateMenuCommandRequest updateMenuCommandRequest)
+        {
+            UpdateMenuCommandResponse response = await _mediator.Send(updateMenuCommandRequest);
+            return Ok(response);
+        }
+
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete([FromRoute] RemoveMenuCommandRequest removeMenuCommandRequest)
         {
@@ -42,11 +50,5 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateMenuCommandRequest updateMenuCommandRequest)
-        {
-            UpdateMenuCommandResponse response=await _mediator.Send(updateMenuCommandRequest);
-            return Ok(response);
-        }
     }
 }

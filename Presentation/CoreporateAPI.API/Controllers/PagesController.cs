@@ -36,6 +36,13 @@ namespace CoreporateAPI.API.Controllers
             return StatusCode((int)HttpStatusCode.Created);
          }
 
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdatePageCommandRequest updatePageCommandRequest)
+        {
+            UpdatePageCommandResponse response = await _mediator.Send(updatePageCommandRequest);
+            return Ok(response);
+        }
+
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete([FromRoute] RemovePageCommandRequest removePageCommandRequest)
         {
@@ -43,11 +50,5 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdatePageCommandRequest updatePageCommandRequest)
-        {
-            UpdatePageCommandResponse response = await _mediator.Send(updatePageCommandRequest);
-            return Ok(response);
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,19 @@ namespace CorporateAPI.Application.Features.Commands.Page.RemovePage
 {
     public class RemovePageCommandHandler : IRequestHandler<RemovePageCommandRequest, RemovePageCommandResponse>
     {
-        public Task<RemovePageCommandResponse> Handle(RemovePageCommandRequest request, CancellationToken cancellationToken)
+        readonly IPageWriteRepository _pageWriteRepository;
+
+        public RemovePageCommandHandler(IPageWriteRepository pageWriteRepository)
         {
-            throw new NotImplementedException();
+            _pageWriteRepository = pageWriteRepository;
+        }
+
+        public async Task<RemovePageCommandResponse> Handle(RemovePageCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _pageWriteRepository.RemoveAsync(request.Id);
+            await _pageWriteRepository.SaveAsync();
+            return new();
+
         }
     }
 }

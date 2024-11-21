@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,22 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 {
     public class UpdatePageCommandHandler : IRequestHandler<UpdatePageCommandRequest, UpdatePageCommandResponse>
     {
-        public Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
+        readonly IPageWriteRepository _pageWriteRepository;
+        readonly IPageReadRepository _pageReadRepository;
+
+        public UpdatePageCommandHandler(IPageWriteRepository pageWriteRepository, IPageReadRepository pageReadRepository)
         {
-            throw new NotImplementedException();
+            _pageWriteRepository = pageWriteRepository;
+            _pageReadRepository = pageReadRepository;
+        }
+
+        public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
+        {
+            Domain.Entities.Page page = await _pageReadRepository.GetByIdAsync(request.Id);
+            page.Content=request.Content;
+            _pageWriteRepository.Update(page);
+            _pageWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

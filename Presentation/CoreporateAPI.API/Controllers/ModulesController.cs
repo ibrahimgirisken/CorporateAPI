@@ -1,4 +1,8 @@
-﻿using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
+﻿using CorporateAPI.Application.Features.Commands.Menu.CreateMenu;
+using CorporateAPI.Application.Features.Commands.Menu.RemoveMenu;
+using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
+using CorporateAPI.Application.Features.Queries;
+using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,9 +23,31 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(GetAllMenuQueryRequest getAllMenuQueryRequest)
+        public async Task<IActionResult> Get([FromQuery]GetAllMenuQueryRequest getAllMenuQueryRequest)
         {
-            return Ok();
+            GetAllMenuQueryResponse response=await _mediator.Send(getAllMenuQueryRequest);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateMenuCommandRequest createMenuCommandRequest)
+        {
+            CreateMenuCommandResponse response=await _mediator.Send(createMenuCommandRequest);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateMenuCommandRequest updateMenuCommandRequest)
+        {
+            UpdateMenuCommandResponse response=await _mediator.Send(updateMenuCommandRequest);
+            return Ok(response);
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute]RemoveMenuCommandRequest removeMenuCommandRequest)
+        {
+            RemoveMenuCommandResponse response=await _mediator.Send(removeMenuCommandRequest);
+            return Ok(response);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,18 @@ namespace CorporateAPI.Application.Features.Commands.Module.RemoveModule
 {
     public class RemoveModuleCommandHandler : IRequestHandler<RemoveModuleCommandRequest, RemoveModuleCommandResponse>
     {
-        public Task<RemoveModuleCommandResponse> Handle(RemoveModuleCommandRequest request, CancellationToken cancellationToken)
+        readonly IModuleWriteRepository _moduleWriteRepository;
+
+        public RemoveModuleCommandHandler(IModuleWriteRepository moduleWriteRepository)
         {
-            throw new NotImplementedException();
+            _moduleWriteRepository = moduleWriteRepository;
+        }
+
+        public async Task<RemoveModuleCommandResponse> Handle(RemoveModuleCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _moduleWriteRepository.RemoveAsync(request.Id);
+            await _moduleWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

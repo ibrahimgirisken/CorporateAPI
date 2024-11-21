@@ -1,6 +1,6 @@
 ﻿using CoreporateAPI.Persistence.Contexts;
 using CorporateAPI.Application.Repositories;
-using CorporateAPI.Domain.Entities.Module;
+using CorporateAPI.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

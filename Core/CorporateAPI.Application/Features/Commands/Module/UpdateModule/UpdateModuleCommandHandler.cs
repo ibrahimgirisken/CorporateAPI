@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,24 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 {
     public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommandRequest, UpdateModuleCommandResponse>
     {
-        public Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
+        readonly IModuleWriteRepository _moduleWriteRepository;
+        readonly IModuleReadRepository _moduleReadRepository;
+
+        public UpdateModuleCommandHandler(IModuleWriteRepository moduleWriteRepository, IModuleReadRepository moduleReadRepository)
         {
-            throw new NotImplementedException();
+            _moduleWriteRepository = moduleWriteRepository;
+            _moduleReadRepository = moduleReadRepository;
+        }
+
+        public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
+        {
+            Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.Id);
+            module.Name = request.Name;
+            module.Config = request.Config;
+            module.Type = request.Type;
+            _moduleWriteRepository.Update(module);
+            await _moduleWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

@@ -11,12 +11,10 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
     public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommandRequest, CreateMenuCommandResponse>
     {
         readonly IMenuWriteRepository _menuWriteRepository;
-        readonly IPageWriteRepository _pageWriteRepository;
 
-        public CreateMenuCommandHandler(IMenuWriteRepository menuWriteRepository, IPageWriteRepository pageWriteRepository)
+        public CreateMenuCommandHandler(IMenuWriteRepository menuWriteRepository)
         {
             _menuWriteRepository = menuWriteRepository;
-            _pageWriteRepository = pageWriteRepository;
         }
 
         public async Task<CreateMenuCommandResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
