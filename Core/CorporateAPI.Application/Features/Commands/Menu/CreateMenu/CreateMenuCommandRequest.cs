@@ -12,7 +12,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
         public string Title { get; set; }
         public string Url { get; set; }
         public int Order { get; set; }
-        public Guid PageId { get; set; }
-        public Domain.Entities.Page Page { get; set; }
+        public Guid? ParentId { get; set; }
+        public Guid? PageId { get; set; }
     }
 }

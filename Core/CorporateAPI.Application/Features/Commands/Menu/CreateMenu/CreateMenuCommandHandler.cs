@@ -25,13 +25,8 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
             {
                 Order = request.Order,
                 Title = request.Title,
-                Url = request.Url,
-                Page = request.Page,
+                Url = request.Url
                 
-            });
-            await _pageWriteRepository.AddAsync(new()
-            {
-                Content=request.Page.Content,
             });
             await _menuWriteRepository.SaveAsync();
             return new();

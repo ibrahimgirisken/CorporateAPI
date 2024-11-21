@@ -1,0 +1,17 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
+{
+    public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommandRequest, CreateModuleCommandResponse>
+    {
+        public Task<CreateModuleCommandResponse> Handle(CreateModuleCommandRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -1,0 +1,17 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CorporateAPI.Application.Features.Commands.Module.RemoveModule
+{
+    public class RemoveModuleCommandHandler : IRequestHandler<RemoveModuleCommandRequest, RemoveModuleCommandResponse>
+    {
+        public Task<RemoveModuleCommandResponse> Handle(RemoveModuleCommandRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
