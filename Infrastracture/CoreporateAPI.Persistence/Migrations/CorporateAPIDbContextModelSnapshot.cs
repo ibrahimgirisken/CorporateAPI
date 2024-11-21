@@ -151,7 +151,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Menus");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -402,7 +402,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("ModulePage", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Module.Module", null)
+                    b.HasOne("CorporateAPI.Domain.Entities.Module", null)
                         .WithMany()
                         .HasForeignKey("ModulesId")
                         .OnDelete(DeleteBehavior.Cascade)

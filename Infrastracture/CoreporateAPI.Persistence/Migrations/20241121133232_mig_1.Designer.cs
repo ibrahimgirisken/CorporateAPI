@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20241119081631_mig_3")]
-    partial class mig_3
+    [Migration("20241121133232_mig_1")]
+    partial class mig_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,7 +154,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Menus");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -405,7 +405,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("ModulePage", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Module.Module", null)
+                    b.HasOne("CorporateAPI.Domain.Entities.Module", null)
                         .WithMany()
                         .HasForeignKey("ModulesId")
                         .OnDelete(DeleteBehavior.Cascade)
