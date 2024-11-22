@@ -9,5 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
 {
     public class GetByIdMenuQueryRequest:IRequest<GetByIdMenuQueryResponse>
     {
+        public string Id { get; set; }
     }
 }

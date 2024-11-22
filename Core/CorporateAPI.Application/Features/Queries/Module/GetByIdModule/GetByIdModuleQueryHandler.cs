@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,22 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
 {
     public class GetByIdModuleQueryHandler : IRequestHandler<GetByIdModuleQueryRequest, GetByIdModuleQueryResponse>
     {
-        public Task<GetByIdModuleQueryResponse> Handle(GetByIdModuleQueryRequest request, CancellationToken cancellationToken)
+        readonly IModuleReadRepository _moduleReadRepository;
+
+        public GetByIdModuleQueryHandler(IModuleReadRepository moduleReadRepository)
         {
-            throw new NotImplementedException();
+            _moduleReadRepository = moduleReadRepository;
+        }
+
+        public async Task<GetByIdModuleQueryResponse> Handle(GetByIdModuleQueryRequest request, CancellationToken cancellationToken)
+        {
+           Domain.Entities.Module module= await _moduleReadRepository.GetByIdAsync(request.Id,false);
+            return new()
+            {
+                Name = module.Name,
+                Config = module.Config,
+                Type=module.Type,
+            };
         }
     }
 }

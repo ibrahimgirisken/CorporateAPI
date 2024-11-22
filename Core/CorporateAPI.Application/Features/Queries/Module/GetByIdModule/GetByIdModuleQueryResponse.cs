@@ -8,5 +8,8 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
 {
     public class GetByIdModuleQueryResponse
     {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Config { get; set; }
     }
 }

@@ -11,7 +11,5 @@ namespace CorporateAPI.Application.ViewModels.Menus
         public string Title { get; set; }
         public string Url { get; set; }
         public int Order { get; set; }
-        public string ParentId { get; set; }
-        public string PageId { get; set; }
     }
 }

@@ -8,5 +8,8 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
 {
     public class GetByIdMenuQueryResponse
     {
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public int Order { get; set; }
     }
 }
