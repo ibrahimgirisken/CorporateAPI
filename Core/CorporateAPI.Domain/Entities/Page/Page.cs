@@ -11,11 +11,11 @@ namespace CorporateAPI.Domain.Entities
     {
         public Page()
         {
-            Modules = new HashSet<Domain.Entities.Module>();
+            Menus=new HashSet<Menu>();
+            Modules=new HashSet<Module>();
         }
-        public Guid MenuId { get; set; }
         public string Content { get; set; }
-        public Menu Menu { get; set; }
+        public ICollection<Menu> Menus { get; set; }
         public ICollection<Domain.Entities.Module>  Modules { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
 {
     public class CreateMenuCommandRequest:IRequest<CreateMenuCommandResponse>
     {
-        public string Title { get; set; }
+        public string Name { get; set; }
         public string Url { get; set; }
         public int Order { get; set; }
         public Guid? ParentId { get; set; }

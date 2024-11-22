@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 {
     public class CreatePageCommandRequest:IRequest<CreatePageCommandResponse>
     {
-        public string Content { get; set; }
         public Guid? MenuId { get; set; }
+        public string Content { get; set; }
     }
 }

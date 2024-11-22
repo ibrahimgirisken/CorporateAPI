@@ -23,7 +23,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
             return new()
             {
                 Order = menu.Order,
-                Title = menu.Title,
+                Title = menu.Name,
                 Url = menu.Url,
             };
         }

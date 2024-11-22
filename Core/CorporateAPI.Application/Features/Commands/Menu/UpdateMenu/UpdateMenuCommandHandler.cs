@@ -23,7 +23,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
         {
             Domain.Entities.Menu menu=await _menuReadRepository.GetByIdAsync(request.Id);
-            menu.Title = request.Title;
+            menu.Name = request.Name;
             menu.Url = request.Url;
             menu.Order = request.Order;
             menu.UpdatedDate=DateTime.Now;

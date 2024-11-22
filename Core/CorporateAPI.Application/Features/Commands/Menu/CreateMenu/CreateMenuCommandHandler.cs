@@ -22,7 +22,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
             await _menuWriteRepository.AddAsync(new()
             {
                 Order = request.Order,
-                Title = request.Title,
+                Name = request.Name,
                 Url = request.Url
                 
             });
