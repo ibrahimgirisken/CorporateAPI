@@ -26,6 +26,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
             menu.Name = request.Name;
             menu.Url = request.Url;
             menu.Order = request.Order;
+            menu.ParentId = request.ParentId;
             menu.UpdatedDate=DateTime.Now;
             _menuWriteRepository.Update(menu);
             await _menuWriteRepository.SaveAsync();

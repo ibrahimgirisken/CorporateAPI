@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Domain.Entities;
+﻿using CorporateAPI.Application.DTOs.Menu;
+using CorporateAPI.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace CorporateAPI.Application.Features.Queries
 {
     public class GetAllMenuQueryResponse
     {
-        public object Menus { get; set; }
+       public List<MenuDto> Menus { get; set; }
     }
 }

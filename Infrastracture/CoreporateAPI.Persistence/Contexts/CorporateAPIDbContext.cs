@@ -21,15 +21,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Menu>()
-                  .HasOne(m => m.Page)
-                  .WithMany(p => p.Menus);
-
-            modelBuilder.Entity<Page>()
-                .HasMany(m => m.Modules)
-                .WithMany(p => p.Pages);
-
+                .HasOne(m => m.Parent)
+                .WithMany(m => m.Children)
+                .HasForeignKey(m => m.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(modelBuilder);
         }
 

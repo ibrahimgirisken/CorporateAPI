@@ -13,6 +13,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public string Name { get; set; }
         public string Url{ get; set; }
         public int Order { get; set; }
-        public Guid PageId { get; set; }
+        public Guid? ParentId { get; set; }
     }
 }

@@ -23,7 +23,8 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
             {
                 Order = request.Order,
                 Name = request.Name,
-                Url = request.Url
+                Url = request.Url,
+                ParentId = request.ParentId      
                 
             });
             await _menuWriteRepository.SaveAsync();

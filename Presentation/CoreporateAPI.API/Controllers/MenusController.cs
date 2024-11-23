@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
 using Microsoft.AspNetCore.Authorization;
+using CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu;
 
 namespace CoreporateAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes="Admin")]
     public class MenusController : ControllerBase
     {
         readonly IMediator _mediator;
@@ -26,6 +26,13 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllMenuQueryRequest getAllMenuQueryRequest)
         {
             GetAllMenuQueryResponse response = await _mediator.Send(getAllMenuQueryRequest);
+            return Ok(response);
+
+        }
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByIdMenuQueryRequest getByIdMenuQueryRequest)
+        {
+            GetByIdMenuQueryResponse response = await _mediator.Send(getByIdMenuQueryRequest);
             return Ok(response);
 
         }

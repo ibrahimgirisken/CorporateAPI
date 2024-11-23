@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using CorporateAPI.Application.DTOs.Menu;
+using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,60 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
         public async Task<GetAllMenuQueryResponse> Handle(GetAllMenuQueryRequest request, CancellationToken cancellationToken)
         {
             var menus = _menuReadRepository.GetAll(false).ToList();
+
+
+            List<MenuDto> GetMenuHierarchy(List<Domain.Entities.Menu> menus)
+            {
+                var menuDictionary = menus.ToDictionary(m => m.Id, m => m);
+
+                foreach (var menu in menus)
+                {
+                    if (menu.ParentId != null && menuDictionary.ContainsKey(menu.ParentId.Value))
+                    {
+                        var parent = menuDictionary[menu.ParentId.Value];
+                        parent.Children.Add(menu);
+                    }
+                }
+
+                return menus.Where(m => m.ParentId == null).Select(m => new MenuDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Order = m.Order,
+                    Children = GetChildMenus(m.Id),
+                }).ToList();
+            }
+
+             List<MenuDto> GetChildMenus(Guid parentId)
+            {
+                var childMenus = menus.Where(m=>m.ParentId== parentId).ToList();
+                return childMenus.Select(m => new MenuDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Order = m.Order,
+                    Children = GetChildMenus(m.Id),
+                }).ToList();
+               
+            }
+
+
+            var getData = menus.Select(menu => new MenuDto
+            {
+                Id = menu.Id,
+                Name = menu.Name,
+                Order = menu.Order,
+                Children = menu.Children.Select(child => new MenuDto
+                {
+                    Id = child.Id,
+                    Name = child.Name,
+                    Order = child.Order,
+                }).ToList()
+            }).ToList();
+
             return new()
             {
-                Menus = menus,
+                Menus = GetMenuHierarchy(menus),
             };
         }
     }
