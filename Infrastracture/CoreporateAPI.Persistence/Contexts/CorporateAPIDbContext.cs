@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Common;
 using CorporateAPI.Domain.Entities.Identity;
+using CorporateAPI.Domain.Entities.Relationship;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +27,26 @@ namespace CoreporateAPI.Persistence.Contexts
                 .WithMany(m => m.Children)
                 .HasForeignKey(m => m.ParentId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Menu>()
+                .HasOne(m=>m.Page)
+                .WithMany()
+                .HasForeignKey(m=>m.PageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PageModule>()
+                .HasKey(pm => new { pm.PageId, pm.ModuleId });
+
+            modelBuilder.Entity<PageModule>()
+                .HasOne(pm => pm.Page)
+                .WithMany(p => p.Modules)
+                .HasForeignKey(pm=>pm.PageId);
+
+            modelBuilder.Entity<PageModule>()
+                .HasOne(pm => pm.Module)
+                .WithMany(p=>p.Pages)
+                .HasForeignKey(pm=>pm.ModuleId);
+
             base.OnModelCreating(modelBuilder);
         }
 
