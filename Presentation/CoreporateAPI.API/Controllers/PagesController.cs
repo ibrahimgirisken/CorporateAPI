@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Features.Commands.Page.RemovePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
 using CorporateAPI.Application.Features.Queries.Page.GetAllPage;
+using CorporateAPI.Application.Features.Queries.Page.GetByIdPage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,12 @@ namespace CoreporateAPI.API.Controllers
             GetAllPageQueryResponse response=await _mediator.Send(getAllPageQueryRequest);
             return Ok(response);
         }
-
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get([FromRoute] GetByIdPageQueryRequest getByIdPageQueryRequest)
+        {
+            GetByIdPageQueryResponse response = await _mediator.Send(getByIdPageQueryRequest);
+            return Ok(response);
+        }
         [HttpPost]
         public async Task<IActionResult> Post(CreatePageCommandRequest createPageCommandRequest)
         {

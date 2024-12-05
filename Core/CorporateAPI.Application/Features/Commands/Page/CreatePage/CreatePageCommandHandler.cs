@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Application.Repositories;
+using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,28 +22,37 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 
         public async Task<CreatePageCommandResponse> Handle(CreatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            var modules = new HashSet<Domain.Entities.Relationship.PageModule>();
-            foreach (var mod in request.ModuleIds)
+            var page = new Domain.Entities.Page
             {
-               Domain.Entities.Module module= await _moduleReadRepository.GetByIdAsync(mod.ToString(), false);
+                Content = request.Content,
+                Slug = request.Slug,
+                Title = request.Title
+            };
+
+            await _pageWriteRepository.AddAsync(page);
+            await _pageWriteRepository.SaveAsync();
+
+            var pageModules = new HashSet<PageModule>();
+
+            foreach (var mod in request.ModuleIds.Where(id => id.HasValue).Select(id => id.Value))
+            {
+                Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(mod.ToString(), false);
                 if (module != null)
                 {
-                    modules.Add(new Domain.Entities.Relationship.PageModule
+                    pageModules.Add(new PageModule
                     {
                         Module = module,
-                        Page=module.Pages.Select(x => x.Page).First()
+                        Page = page
                     });
                 }
             }
-            var page = new Domain.Entities.Page
+
+            if (pageModules.Any())
             {
-                Content=request.Content,
-                Slug=request.Slug,
-                Title=request.Title,
-                Modules=modules
-            };
-            await _pageWriteRepository.AddAsync(page);
+                page.Modules = pageModules;
+            }
             await _pageWriteRepository.SaveAsync();
+
             return new();
         }
     }

@@ -19,7 +19,7 @@ namespace CorporateAPI.Domain.Entities
         public Guid? ParentId { get; set; }
         public Menu? Parent { get; set; }
         public Guid? PageId { get; set; }
-        public Page Page { get; set; }
+        public Page? Page { get; set; }
         public ICollection<Menu>? Children { get; set; }
     }
 }

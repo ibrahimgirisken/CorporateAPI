@@ -8,6 +8,8 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
 {
     public class GetByIdPageQueryResponse
     {
+        public string Title { get; set; }
         public string Content { get; set; }
+        public string Slug { get; set; }
     }
 }

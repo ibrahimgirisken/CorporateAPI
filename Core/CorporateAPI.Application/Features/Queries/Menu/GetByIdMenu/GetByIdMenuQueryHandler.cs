@@ -19,6 +19,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
 
         public async Task<GetByIdMenuQueryResponse> Handle(GetByIdMenuQueryRequest request, CancellationToken cancellationToken)
         {
+
             Domain.Entities.Menu menu= await _menuReadRepository.GetByIdAsync(request.Id,false);
             return new()
             {
