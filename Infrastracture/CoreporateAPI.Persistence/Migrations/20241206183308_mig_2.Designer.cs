@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20241206095921_mig1")]
-    partial class mig1
+    [Migration("20241206183308_mig_2")]
+    partial class mig_2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,9 +123,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -135,23 +138,28 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Name");
 
-                    b.Property<Guid?>("PageId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("PageId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Priority");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Url");
 
                     b.HasKey("Id");
 
@@ -159,14 +167,16 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Menus", "dbo");
+                    b.ToTable("Menu", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Config")
                         .IsRequired()
@@ -196,9 +206,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -212,27 +225,31 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Slug")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Slug");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Title");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pages", "dbo");
+                    b.ToTable("Page", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
                 {
-                    b.Property<Guid>("PageId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("PageId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ModuleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
 
                     b.HasKey("PageId", "ModuleId");
 
@@ -352,12 +369,14 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
                         .WithMany()
                         .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_Menu_Page");
 
                     b.HasOne("CorporateAPI.Domain.Entities.Menu", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Menu_ParentMenu");
 
                     b.Navigation("Page");
 
@@ -367,16 +386,18 @@ namespace CoreporateAPI.Persistence.Migrations
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
-                        .WithMany("Pages")
+                        .WithMany("PageModules")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_PageModule_Module");
 
                     b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
-                        .WithMany("Modules")
+                        .WithMany("PageModules")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_PageModule_Page");
 
                     b.Navigation("Module");
 
@@ -441,12 +462,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
-                    b.Navigation("Pages");
+                    b.Navigation("PageModules");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
-                    b.Navigation("Modules");
+                    b.Navigation("PageModules");
                 });
 #pragma warning restore 612, 618
         }

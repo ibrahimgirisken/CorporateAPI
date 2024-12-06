@@ -8,7 +8,7 @@ namespace CorporateAPI.Domain.Entities.Common
 {
     public class BaseEntity
     {
-        public Guid Id { get; set; } = new Guid();
+        public int Id { get; set; }
         public DateTime CreatedDate { get; set; }=DateTime.Now;
         public DateTime UpdatedDate { get; set; }
         public bool IsDeleted { get; set; } = false;

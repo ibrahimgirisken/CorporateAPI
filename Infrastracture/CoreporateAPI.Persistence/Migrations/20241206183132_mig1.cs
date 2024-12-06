@@ -61,7 +61,8 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Config = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -75,21 +76,22 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pages",
+                name: "Page",
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pages", x => x.Id);
+                    table.PrimaryKey("PK_Page", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,35 +212,36 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Menus",
+                name: "Menu",
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Priority = table.Column<int>(type: "int", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    PageId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Menus", x => x.Id);
+                    table.PrimaryKey("PK_Menu", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Menus_Menus_ParentId",
-                        column: x => x.ParentId,
-                        principalSchema: "dbo",
-                        principalTable: "Menus",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Menus_Pages_PageId",
+                        name: "FK_Menu_Page",
                         column: x => x.PageId,
                         principalSchema: "dbo",
-                        principalTable: "Pages",
+                        principalTable: "Page",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Menu_ParentMenu",
+                        column: x => x.ParentId,
+                        principalSchema: "dbo",
+                        principalTable: "Menu",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -248,24 +251,24 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    PageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ModuleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PageId = table.Column<int>(type: "int", nullable: false),
+                    ModuleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PageModule", x => new { x.PageId, x.ModuleId });
                     table.ForeignKey(
-                        name: "FK_PageModule_Module_ModuleId",
+                        name: "FK_PageModule_Module",
                         column: x => x.ModuleId,
                         principalSchema: "dbo",
                         principalTable: "Module",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PageModule_Pages_PageId",
+                        name: "FK_PageModule_Page",
                         column: x => x.PageId,
                         principalSchema: "dbo",
-                        principalTable: "Pages",
+                        principalTable: "Page",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -317,15 +320,15 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menus_PageId",
+                name: "IX_Menu_PageId",
                 schema: "dbo",
-                table: "Menus",
+                table: "Menu",
                 column: "PageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menus_ParentId",
+                name: "IX_Menu_ParentId",
                 schema: "dbo",
-                table: "Menus",
+                table: "Menu",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
@@ -359,7 +362,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Menus",
+                name: "Menu",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -379,7 +382,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Pages",
+                name: "Page",
                 schema: "dbo");
         }
     }

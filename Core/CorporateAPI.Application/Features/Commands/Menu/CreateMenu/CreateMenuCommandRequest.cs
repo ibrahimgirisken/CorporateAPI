@@ -12,6 +12,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
         public string Name { get; set; }
         public string? Url { get; set; }
         public int Order { get; set; }
-        public Guid? ParentId { get; set; }
+        public int? ParentId { get; set; }
     }
 }

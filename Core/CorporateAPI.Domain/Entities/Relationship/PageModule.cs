@@ -8,9 +8,9 @@ namespace CorporateAPI.Domain.Entities.Relationship
 {
     public class PageModule
     {
-        public Guid PageId { get; set; }
-        public Guid ModuleId { get; set; }
+        public int PageId { get; set; }
         public Page Page { get; set; }
+        public int ModuleId { get; set; }
         public Module Module { get; set; }
     }
 }

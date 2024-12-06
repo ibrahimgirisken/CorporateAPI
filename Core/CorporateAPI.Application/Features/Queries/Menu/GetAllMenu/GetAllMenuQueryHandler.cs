@@ -45,7 +45,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
                 }).ToList();
             }
 
-             List<MenuDto> GetChildMenus(Guid parentId)
+             List<MenuDto> GetChildMenus(int parentId)
             {
                 var childMenus = menus.Where(m=>m.ParentId== parentId).ToList();
                 return childMenus.Select(m => new MenuDto

@@ -11,11 +11,11 @@ namespace CorporateAPI.Domain.Entities
     {
         public Page()
         {
-            Modules = new HashSet<Domain.Entities.Relationship.PageModule>();
+            PageModules = new HashSet<Domain.Entities.Relationship.PageModule>();
         }
         public string Title { get; set; }
         public string Content { get; set; }
         public string Slug { get; set; }
-        public ICollection<Domain.Entities.Relationship.PageModule>? Modules { get; set; }
+        public ICollection<Domain.Entities.Relationship.PageModule> PageModules { get; set; }
     }
 }

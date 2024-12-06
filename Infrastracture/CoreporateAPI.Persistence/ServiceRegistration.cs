@@ -18,7 +18,10 @@ namespace CoreporateAPI.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddDbContext<CorporateAPIDbContext>(options=>options.UseSqlServer(Configurations.ConnectionString));
+            services.AddDbContext<CorporateAPIDbContext>(options => {
+                options.UseSqlServer(Configurations.ConnectionString);
+                options.EnableSensitiveDataLogging();
+                });
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.Password.RequiredLength = 3;

@@ -36,7 +36,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 
             foreach (var mod in request.ModuleIds.Where(id => id.HasValue).Select(id => id.Value))
             {
-                Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(mod.ToString(), false);
+                Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(mod, false);
                 if (module != null)
                 {
                     pageModules.Add(new PageModule
@@ -49,7 +49,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 
             if (pageModules.Any())
             {
-                page.Modules = pageModules;
+                page.PageModules = pageModules;
             }
             await _pageWriteRepository.SaveAsync();
 

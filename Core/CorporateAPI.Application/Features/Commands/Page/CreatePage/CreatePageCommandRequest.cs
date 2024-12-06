@@ -13,6 +13,6 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         public string Title { get; set; }
         public string Content { get; set; }
         public string Slug { get; set; }
-        public ICollection<Guid?> ModuleIds { get; set; }
+        public ICollection<int?> ModuleIds { get; set; }
     }
 }

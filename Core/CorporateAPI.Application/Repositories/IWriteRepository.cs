@@ -12,7 +12,7 @@ namespace CorporateAPI.Application.Repositories
         Task<bool> AddAsync(T model);
         Task<bool> AddRangeAsync(List<T> datas);
         bool Remove(T model);
-        Task<bool> RemoveAsync(string id);
+        Task<bool> RemoveAsync(int id);
         bool RemoveRange(List<T> datas);
         bool Update(T model);
         Task<int> SaveAsync();

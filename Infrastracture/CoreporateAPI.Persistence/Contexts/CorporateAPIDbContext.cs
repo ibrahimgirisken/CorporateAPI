@@ -25,35 +25,35 @@ namespace CoreporateAPI.Persistence.Contexts
             modelBuilder.HasDefaultSchema("dbo");
             modelBuilder.Entity<Menu>(entity =>
             {
-                modelBuilder.Entity<Menu>()
-                     .HasOne(m => m.Parent)
-                     .WithMany(m => m.Children)
-                     .HasForeignKey(m => m.ParentId)
-                     .OnDelete(DeleteBehavior.Restrict);
+                entity.ToTable("Menu");
+                entity.Property(i => i.Id).HasColumnName("Id").UseIdentityColumn();
+                entity.Property(i => i.Name).HasColumnName("Name").HasColumnType("nvarchar").HasMaxLength(100);
+                entity.Property(i => i.Url).HasColumnName("Url").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.Property(i => i.Priority).HasColumnName("Priority").HasColumnType("int");
 
-                modelBuilder.Entity<Menu>()
-                    .HasOne(m => m.Page)
-                    .WithMany()
-                    .HasForeignKey(m => m.PageId)
-                    .OnDelete(DeleteBehavior.Restrict);
 
-                modelBuilder.Entity<PageModule>()
-                    .HasKey(pm => new { pm.PageId, pm.ModuleId });
+                entity.HasOne(m => m.Parent).WithMany(m => m.Children).HasForeignKey(m => m.ParentId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_Menu_ParentMenu");
 
-                modelBuilder.Entity<PageModule>()
-                    .HasOne(pm => pm.Page)
-                    .WithMany(p => p.Modules)
-                    .HasForeignKey(pm => pm.PageId);
-
-                modelBuilder.Entity<PageModule>()
-                    .HasOne(pm => pm.Module)
-                    .WithMany(p => p.Pages)
-                    .HasForeignKey(pm => pm.ModuleId);
-
-                base.OnModelCreating(modelBuilder);
-
+                modelBuilder.Entity<Menu>().HasOne(m => m.Page).WithMany().HasForeignKey(m => m.PageId).OnDelete(DeleteBehavior.SetNull).HasConstraintName("FK_Menu_Page");
             });
-            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Page>(entity =>
+            {
+                entity.ToTable("Page");
+                entity.Property(i => i.Id).HasColumnName("Id").UseIdentityColumn();
+                entity.Property(i => i.Title).HasColumnName("Title").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.Property(i => i.Slug).HasColumnName("Slug").HasColumnType("nvarchar").HasMaxLength(120);
+            });
+
+            modelBuilder.Entity<PageModule>(entity =>
+            {
+                entity.ToTable("PageModule");
+                entity.HasKey(pm => new { pm.PageId, pm.ModuleId });
+                entity.HasOne(pm => pm.Page).WithMany(p => p.PageModules).HasForeignKey(pm => pm.PageId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_PageModule_Page");
+
+                entity.HasOne(pm => pm.Module).WithMany(p => p.PageModules).HasForeignKey(pm => pm.ModuleId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_PageModule_Module");
+            });
+                base.OnModelCreating(modelBuilder);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

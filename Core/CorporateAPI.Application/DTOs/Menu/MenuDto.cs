@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Menu
 {
     public class MenuDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Order { get; set; }
         public ICollection<MenuDto> Children { get; set; }
