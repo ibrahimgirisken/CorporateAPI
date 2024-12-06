@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CoreporateAPI.Persistence.Contexts
 {
-    public class CorporateAPIDbContext : IdentityDbContext<AppUser,AppRole,string>
+    public class CorporateAPIDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public CorporateAPIDbContext(DbContextOptions options) : base(options)
         { }
@@ -22,31 +22,37 @@ namespace CoreporateAPI.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Menu>()
-                .HasOne(m => m.Parent)
-                .WithMany(m => m.Children)
-                .HasForeignKey(m => m.ParentId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.HasDefaultSchema("dbo");
+            modelBuilder.Entity<Menu>(entity =>
+            {
+                modelBuilder.Entity<Menu>()
+                     .HasOne(m => m.Parent)
+                     .WithMany(m => m.Children)
+                     .HasForeignKey(m => m.ParentId)
+                     .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Menu>()
-                .HasOne(m=>m.Page)
-                .WithMany()
-                .HasForeignKey(m=>m.PageId)
-                .OnDelete(DeleteBehavior.Restrict);
+                modelBuilder.Entity<Menu>()
+                    .HasOne(m => m.Page)
+                    .WithMany()
+                    .HasForeignKey(m => m.PageId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<PageModule>()
-                .HasKey(pm => new { pm.PageId, pm.ModuleId });
+                modelBuilder.Entity<PageModule>()
+                    .HasKey(pm => new { pm.PageId, pm.ModuleId });
 
-            modelBuilder.Entity<PageModule>()
-                .HasOne(pm => pm.Page)
-                .WithMany(p => p.Modules)
-                .HasForeignKey(pm=>pm.PageId);
+                modelBuilder.Entity<PageModule>()
+                    .HasOne(pm => pm.Page)
+                    .WithMany(p => p.Modules)
+                    .HasForeignKey(pm => pm.PageId);
 
-            modelBuilder.Entity<PageModule>()
-                .HasOne(pm => pm.Module)
-                .WithMany(p=>p.Pages)
-                .HasForeignKey(pm=>pm.ModuleId);
+                modelBuilder.Entity<PageModule>()
+                    .HasOne(pm => pm.Module)
+                    .WithMany(p => p.Pages)
+                    .HasForeignKey(pm => pm.ModuleId);
 
+                base.OnModelCreating(modelBuilder);
+
+            });
             base.OnModelCreating(modelBuilder);
         }
 
@@ -61,7 +67,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 {
                     EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
                     EntityState.Modified => data.Entity.UpdatedDate = DateTime.Now,
-                    _=> DateTime.Now,
+                    _ => DateTime.Now,
                 };
             }
             return await base.SaveChangesAsync(cancellationToken);

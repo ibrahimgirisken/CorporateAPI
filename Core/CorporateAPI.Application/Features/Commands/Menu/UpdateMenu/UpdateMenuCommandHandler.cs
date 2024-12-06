@@ -25,7 +25,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
             Domain.Entities.Menu menu=await _menuReadRepository.GetByIdAsync(request.Id);
             menu.Name = request.Name;
             menu.Url = request.Url;
-            menu.Order = request.Order;
+            menu.Priority = request.Order;
             menu.ParentId = request.ParentId;
             menu.UpdatedDate=DateTime.Now;
             _menuWriteRepository.Update(menu);

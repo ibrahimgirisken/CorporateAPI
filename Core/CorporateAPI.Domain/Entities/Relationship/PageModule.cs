@@ -11,7 +11,6 @@ namespace CorporateAPI.Domain.Entities.Relationship
         public Guid PageId { get; set; }
         public Guid ModuleId { get; set; }
         public Page Page { get; set; }
-
         public Module Module { get; set; }
     }
 }

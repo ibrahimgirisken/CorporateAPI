@@ -40,7 +40,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Order = m.Order,
+                    Order = m.Priority,
                     Children = GetChildMenus(m.Id),
                 }).ToList();
             }
@@ -52,7 +52,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Order = m.Order,
+                    Order = m.Priority,
                     Children = GetChildMenus(m.Id),
                 }).ToList();
                
@@ -63,12 +63,12 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
             {
                 Id = menu.Id,
                 Name = menu.Name,
-                Order = menu.Order,
+                Order = menu.Priority,
                 Children = menu.Children.Select(child => new MenuDto
                 {
                     Id = child.Id,
                     Name = child.Name,
-                    Order = child.Order,
+                    Order = child.Priority,
                 }).ToList()
             }).ToList();
 

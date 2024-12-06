@@ -15,7 +15,7 @@ namespace CorporateAPI.Domain.Entities
         }
         public string Name { get; set; }
         public string Url { get; set; }
-        public int Order { get; set; }
+        public int Priority { get; set; }
         public Guid? ParentId { get; set; }
         public Menu? Parent { get; set; }
         public Guid? PageId { get; set; }

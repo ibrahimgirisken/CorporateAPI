@@ -23,7 +23,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
             Domain.Entities.Menu menu= await _menuReadRepository.GetByIdAsync(request.Id,false);
             return new()
             {
-                Order = menu.Order,
+                Order = menu.Priority,
                 Title = menu.Name,
                 Url = menu.Url,
             };

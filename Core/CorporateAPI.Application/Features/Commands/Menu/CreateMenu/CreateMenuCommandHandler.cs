@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
         {
             await _menuWriteRepository.AddAsync(new()
             {
-                Order = request.Order,
+                Priority = request.Order,
                 Name = request.Name,
                 Url = request.Url,
                 ParentId = request.ParentId      
