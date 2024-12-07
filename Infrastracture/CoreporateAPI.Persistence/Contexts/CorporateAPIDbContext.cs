@@ -16,26 +16,11 @@ namespace CoreporateAPI.Persistence.Contexts
     {
         public CorporateAPIDbContext(DbContextOptions options) : base(options)
         { }
-
-        public DbSet<Menu> Menus { get; set; }
         public DbSet<Page> Pages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
-            modelBuilder.Entity<Menu>(entity =>
-            {
-                entity.ToTable("Menu");
-                entity.Property(i => i.Id).HasColumnName("Id").UseIdentityColumn();
-                entity.Property(i => i.Name).HasColumnName("Name").HasColumnType("nvarchar").HasMaxLength(100);
-                entity.Property(i => i.Url).HasColumnName("Url").HasColumnType("nvarchar").HasMaxLength(120);
-                entity.Property(i => i.Priority).HasColumnName("Priority").HasColumnType("int");
-
-
-                entity.HasOne(m => m.Parent).WithMany(m => m.Children).HasForeignKey(m => m.ParentId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_Menu_ParentMenu");
-
-                modelBuilder.Entity<Menu>().HasOne(m => m.Page).WithMany().HasForeignKey(m => m.PageId).OnDelete(DeleteBehavior.SetNull).HasConstraintName("FK_Menu_Page");
-            });
 
             modelBuilder.Entity<Page>(entity =>
             {
@@ -43,6 +28,11 @@ namespace CoreporateAPI.Persistence.Contexts
                 entity.Property(i => i.Id).HasColumnName("Id").UseIdentityColumn();
                 entity.Property(i => i.Title).HasColumnName("Title").HasColumnType("nvarchar").HasMaxLength(120);
                 entity.Property(i => i.Slug).HasColumnName("Slug").HasColumnType("nvarchar").HasMaxLength(120);
+
+                entity.HasMany(i => i.SubPages)
+                       .WithOne()
+                       .HasForeignKey(i => i.ParentId)
+                       .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<PageModule>(entity =>

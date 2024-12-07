@@ -64,8 +64,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Config = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModuleData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -82,9 +81,13 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -92,6 +95,13 @@ namespace CoreporateAPI.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Page", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Page_Page_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "dbo",
+                        principalTable: "Page",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,47 +222,13 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Menu",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Priority = table.Column<int>(type: "int", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: true),
-                    PageId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Menu", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Menu_Page",
-                        column: x => x.PageId,
-                        principalSchema: "dbo",
-                        principalTable: "Page",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Menu_ParentMenu",
-                        column: x => x.ParentId,
-                        principalSchema: "dbo",
-                        principalTable: "Menu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PageModule",
                 schema: "dbo",
                 columns: table => new
                 {
                     PageId = table.Column<int>(type: "int", nullable: false),
-                    ModuleId = table.Column<int>(type: "int", nullable: false)
+                    ModuleId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -320,15 +296,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menu_PageId",
+                name: "IX_Page_ParentId",
                 schema: "dbo",
-                table: "Menu",
-                column: "PageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Menu_ParentId",
-                schema: "dbo",
-                table: "Menu",
+                table: "Page",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
@@ -359,10 +329,6 @@ namespace CoreporateAPI.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens",
-                schema: "dbo");
-
-            migrationBuilder.DropTable(
-                name: "Menu",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

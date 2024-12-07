@@ -9,8 +9,9 @@ namespace CorporateAPI.Domain.Entities.Relationship
     public class PageModule
     {
         public int PageId { get; set; }
-        public Page Page { get; set; }
         public int ModuleId { get; set; }
+        public int Order { get; set; }
         public Module Module { get; set; }
+        public virtual Page Page { get; set; }
     }
 }

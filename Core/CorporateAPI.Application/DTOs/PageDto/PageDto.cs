@@ -1,18 +1,13 @@
-﻿using CorporateAPI.Domain.Entities.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Domain.Entities
+namespace CorporateAPI.Application.DTOs.PageDto
 {
-    public class Page:BaseEntity
+    public class PageDto
     {
-        public Page()
-        {
-            PageModules = new HashSet<Domain.Entities.Relationship.PageModule>();
-        }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Content { get; set; }
@@ -20,7 +15,6 @@ namespace CorporateAPI.Domain.Entities
         public string Type { get; set; }
         public int Order { get; set; } = 1;
         public bool Status { get; set; } = true;
-        public ICollection<Domain.Entities.Relationship.PageModule> PageModules { get; set; }
-        public virtual List<Page> SubPages { get; set; }
+        public virtual List<PageDto> SubPages { get; set; }
     }
 }

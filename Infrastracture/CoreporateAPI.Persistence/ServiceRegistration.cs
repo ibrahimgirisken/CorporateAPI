@@ -32,8 +32,6 @@ namespace CoreporateAPI.Persistence
                 }
 
             ).AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
-            services.AddScoped<IMenuReadRepository, MenuReadRepository>();
-            services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
             services.AddScoped<IPageReadRepository, PageReadRepository>();
             services.AddScoped<IPageWriteRepository, PageWriteRepository>();
             services.AddScoped<IModuleReadRepository, ModuleReadRepository>();

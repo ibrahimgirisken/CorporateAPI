@@ -15,8 +15,7 @@ namespace CorporateAPI.Domain.Entities
             PageModules = new HashSet<Domain.Entities.Relationship.PageModule>();
         }
         public string Name { get; set; }
-        public string Type { get; set; }
-        public string Config { get; set; }
+        public string ModuleData { get; set; }
         public ICollection<Domain.Entities.Relationship.PageModule> PageModules { get; set; }
     }
 }

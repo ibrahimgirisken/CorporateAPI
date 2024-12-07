@@ -5,34 +5,34 @@
 namespace CoreporateAPI.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class mig_2 : Migration
+    public partial class mig2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
+            migrationBuilder.AlterColumn<int>(
+                name: "ParentId",
                 schema: "dbo",
                 table: "Page",
-                type: "nvarchar(120)",
-                maxLength: 120,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar");
+                type: "int",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
+            migrationBuilder.AlterColumn<int>(
+                name: "ParentId",
                 schema: "dbo",
                 table: "Page",
-                type: "nvarchar",
+                type: "int",
                 nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(120)",
-                oldMaxLength: 120);
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
         }
     }
 }

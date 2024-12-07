@@ -26,7 +26,11 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
             {
                 Content = request.Content,
                 Slug = request.Slug,
-                Title = request.Title
+                Title = request.Title,
+                Order=request.Order,
+                Type = request.Type,
+                Status = request.Status,
+                ParentId=request.ParentId
             };
 
             await _pageWriteRepository.AddAsync(page);

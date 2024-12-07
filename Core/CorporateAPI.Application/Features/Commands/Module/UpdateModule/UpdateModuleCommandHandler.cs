@@ -23,8 +23,6 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
         {
             Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.Id);
             module.Name = request.Name;
-            module.Config = request.Config;
-            module.Type = request.Type;
             _moduleWriteRepository.Update(module);
             await _moduleWriteRepository.SaveAsync();
             return new();

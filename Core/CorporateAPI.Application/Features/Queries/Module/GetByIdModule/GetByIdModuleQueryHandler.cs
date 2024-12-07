@@ -22,9 +22,7 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
            Domain.Entities.Module module= await _moduleReadRepository.GetByIdAsync(request.Id,false);
             return new()
             {
-                Name = module.Name,
-                Config = module.Config,
-                Type=module.Type,
+                Name = module.Name
             };
         }
     }

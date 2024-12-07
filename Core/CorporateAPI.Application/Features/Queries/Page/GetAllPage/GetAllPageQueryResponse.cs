@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Application.DTOs.PageDto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 {
     public class GetAllPageQueryResponse
     {
-        public object Pages { get; set; }
+        public List<PageDto> Pages { get; set; }
     }
 }

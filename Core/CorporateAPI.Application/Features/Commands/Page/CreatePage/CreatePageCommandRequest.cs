@@ -11,8 +11,12 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
     public class CreatePageCommandRequest:IRequest<CreatePageCommandResponse>
     {
         public string Title { get; set; }
-        public string Content { get; set; }
         public string Slug { get; set; }
+        public string Content { get; set; }
+        public int? ParentId { get; set; }
+        public string Type { get; set; }
+        public int Order { get; set; }
+        public bool Status { get; set; }
         public ICollection<int?> ModuleIds { get; set; }
     }
 }

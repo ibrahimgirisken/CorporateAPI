@@ -1,11 +1,6 @@
-﻿using CorporateAPI.Application.Features.Commands.Menu.CreateMenu;
-using CorporateAPI.Application.Features.Commands.Menu.RemoveMenu;
-using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
-using CorporateAPI.Application.Features.Commands.Module.CreateModule;
+﻿using CorporateAPI.Application.Features.Commands.Module.CreateModule;
 using CorporateAPI.Application.Features.Commands.Module.RemoveModule;
 using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
-using CorporateAPI.Application.Features.Queries;
-using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using CorporateAPI.Application.Features.Queries.Module.GetAllModule;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
