@@ -1,4 +1,4 @@
-﻿using CorporateAPI.Application.DTOs.PageDto;
+﻿using CorporateAPI.Application.DTOs.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 {
     public class GetAllPageQueryResponse
     {
-        public List<PageDto> Pages { get; set; }
+        public List<CreatePage> Pages { get; set; }
     }
 }

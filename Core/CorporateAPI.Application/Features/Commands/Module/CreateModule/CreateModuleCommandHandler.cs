@@ -19,10 +19,13 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
 
         public async Task<CreateModuleCommandResponse> Handle(CreateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            await _moduleWriteRepository.AddAsync(new()
+            var module = new Domain.Entities.Module
             {
-                Name = request.Name
-            });
+                ModuleData=request.Module.ModuleData,
+                Name = request.Module.Name
+            };
+
+            await _moduleWriteRepository.AddAsync(module);
             await _moduleWriteRepository.SaveAsync();
             return new();
         }

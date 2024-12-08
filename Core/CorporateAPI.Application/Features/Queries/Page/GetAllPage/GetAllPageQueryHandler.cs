@@ -1,4 +1,4 @@
-﻿using CorporateAPI.Application.DTOs.PageDto;
+﻿using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities;
 using MediatR;
@@ -23,8 +23,9 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
             var pages = _pageReadRepository.GetAll(false).ToList();
-            var pageDtos = pages.Select(page => new PageDto
+            var pageDtos = pages.Select(page => new CreatePage
             {
+                Id = page.Id,
                 Content = page.Content,
                 Order = page.Order,
                 ParentId = page.ParentId,
@@ -42,9 +43,9 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         }
 
-        private List<PageDto> GetSubPages(int parentId,List<Domain.Entities.Page> pages) {
+        private List<CreatePage> GetSubPages(int parentId,List<Domain.Entities.Page> pages) {
             return pages.Where(p => p.ParentId == parentId)
-                .Select(p => new PageDto
+                .Select(p => new CreatePage
                 {
                     Title = p.Title,
                     Content = p.Content,
