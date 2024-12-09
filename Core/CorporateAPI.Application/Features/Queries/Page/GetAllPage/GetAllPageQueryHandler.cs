@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Application.DTOs.Page;
+﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities;
 using MediatR;
@@ -14,48 +15,39 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
     public class GetAllPageQueryHandler : IRequestHandler<GetAllPageQueryRequest, GetAllPageQueryResponse>
     {
         readonly IPageReadRepository _pageReadRepository;
+        readonly IMapper _mapper;
 
-        public GetAllPageQueryHandler(IPageReadRepository pageReadRepository)
+        public GetAllPageQueryHandler(IPageReadRepository pageReadRepository, IMapper mapper = null)
         {
             _pageReadRepository = pageReadRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
             var pages = _pageReadRepository.GetAll(false).ToList();
-            var pageDtos = pages.Select(page => new CreatePage
-            {
-                Id = page.Id,
-                Content = page.Content,
-                Order = page.Order,
-                ParentId = page.ParentId,
-                Slug = page.Slug,
-                Status = page.Status,
-                Title = page.Title,
-                Type = page.Type,
-                SubPages =GetSubPages(page.Id,pages)
-            }).ToList();
+            var pageDtos = _mapper.Map<List<ResultPageDTO>>(pages);
 
             return new()
             {
-                Pages=pageDtos,
+                Pages= pageDtos,
             };
 
         }
 
-        private List<CreatePage> GetSubPages(int parentId,List<Domain.Entities.Page> pages) {
-            return pages.Where(p => p.ParentId == parentId)
-                .Select(p => new CreatePage
-                {
-                    Title = p.Title,
-                    Content = p.Content,
-                    ParentId = parentId,
-                    Order = p.Order,
-                    Slug = p.Slug,
-                    Status = p.Status,
-                    Type = p.Type,
-                    SubPages = GetSubPages(p.Id, pages)
-                }).ToList();
-        }
+        //private List<CreatePageDTO> GetSubPages(int parentId,List<Domain.Entities.Page> pages) {
+        //    return pages.Where(p => p.ParentId == parentId)
+        //        .Select(p => new CreatePageDTO
+        //        {
+        //            Title = p.Title,
+        //            Content = p.Content,
+        //            ParentId = parentId,
+        //            Order = p.Order,
+        //            Slug = p.Slug,
+        //            Status = p.Status,
+        //            Type = p.Type,
+        //            SubPages = GetSubPages(p.Id, pages)
+        //        }).ToList();
+        //}
     }
 }

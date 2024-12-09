@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 {
     public class GetAllPageQueryResponse
     {
-        public List<CreatePage> Pages { get; set; }
+        public List<ResultPageDTO> Pages { get; set; }
     }
 }

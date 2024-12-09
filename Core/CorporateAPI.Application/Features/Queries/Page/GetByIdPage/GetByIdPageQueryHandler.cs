@@ -22,7 +22,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
             Domain.Entities.Page page= await _pageReadRepository.GetByIdAsync(request.Id,false);
             return new()
             {
-                Content = page.Content
+                Title = page.Title
             };
         }
     }

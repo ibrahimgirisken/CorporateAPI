@@ -11,16 +11,9 @@ namespace CorporateAPI.Domain.Entities
     {
         public Page()
         {
-            PageModules = new HashSet<Domain.Entities.Relationship.PageModule>();
+            PageModules=new HashSet<Domain.Entities.Relationship.PageModule>();
         }
         public string Title { get; set; }
-        public string Slug { get; set; }
-        public string Content { get; set; }
-        public int? ParentId { get; set; } = 0;
-        public string Type { get; set; }
-        public int Order { get; set; } = 1;
-        public bool Status { get; set; } = true;
         public ICollection<Domain.Entities.Relationship.PageModule> PageModules { get; set; }
-        public virtual List<Page> SubPages { get; set; }
     }
 }

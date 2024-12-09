@@ -27,22 +27,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 entity.ToTable("Page");
                 entity.Property(i => i.Id).HasColumnName("Id").UseIdentityColumn();
                 entity.Property(i => i.Title).HasColumnName("Title").HasColumnType("nvarchar").HasMaxLength(120);
-                entity.Property(i => i.Slug).HasColumnName("Slug").HasColumnType("nvarchar").HasMaxLength(120);
-
-                entity.HasMany(i => i.SubPages)
-                       .WithOne()
-                       .HasForeignKey(i => i.ParentId)
-                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<PageModule>(entity =>
-            {
-                entity.ToTable("PageModule");
-                entity.HasKey(pm => new { pm.PageId, pm.ModuleId });
-                entity.HasOne(pm => pm.Page).WithMany(p => p.PageModules).HasForeignKey(pm => pm.PageId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_PageModule_Page");
-
-                entity.HasOne(pm => pm.Module).WithMany(p => p.PageModules).HasForeignKey(pm => pm.ModuleId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("FK_PageModule_Module");
-            });
                 base.OnModelCreating(modelBuilder);
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Module
 {
-    public class CreateModule
+    public class CreateModuleDTO
     {
         public string Name { get; set; }
         public string Type { get; set; }

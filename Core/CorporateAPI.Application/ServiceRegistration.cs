@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Mapping;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace CorporateAPI.Application
         {
             collection.AddMediatR(typeof(ServiceRegistration));
             collection.AddHttpContextAccessor();
+            collection.AddAutoMapper(typeof(MappingProfile));
         }
     }
 }
