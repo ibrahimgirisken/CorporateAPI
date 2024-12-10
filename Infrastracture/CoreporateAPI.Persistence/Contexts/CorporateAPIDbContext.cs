@@ -25,8 +25,10 @@ namespace CoreporateAPI.Persistence.Contexts
             modelBuilder.Entity<Page>(entity =>
             {
                 entity.ToTable("Page");
-                entity.Property(i => i.Id).HasColumnName("Id").UseIdentityColumn();
-                entity.Property(i => i.Title).HasColumnName("Title").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.HasOne(m => m.Parent)
+                .WithMany(m => m.Children)
+                .HasForeignKey(m => m.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
                 base.OnModelCreating(modelBuilder);

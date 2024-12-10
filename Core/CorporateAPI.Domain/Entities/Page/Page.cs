@@ -11,9 +11,11 @@ namespace CorporateAPI.Domain.Entities
     {
         public Page()
         {
-            PageModules=new HashSet<Domain.Entities.Relationship.PageModule>();
+            Children=new HashSet<Page>();
         }
         public string Title { get; set; }
-        public ICollection<Domain.Entities.Relationship.PageModule> PageModules { get; set; }
+        public int? ParentId { get; set; }
+        public Page? Parent { get; set; }
+        public ICollection<Page?> Children { get; set; }
     }
 }

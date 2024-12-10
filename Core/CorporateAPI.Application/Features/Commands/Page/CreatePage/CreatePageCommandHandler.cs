@@ -31,6 +31,8 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
             await _pageWriteRepository.AddAsync(page);
             await _pageWriteRepository.SaveAsync();
 
+
+
             //var pageModules = new HashSet<PageModule>();
 
             //foreach (var mod in request.CreatePage.ModuleIds.Where(id => id.HasValue).Select(id => id.Value))

@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.DTOs.Page
     public class CreatePageDTO
     {
         public string Title { get; set; }
-        public List<int?> ModuleIds { get; set; }
+        public int? ParentId { get; set; }
     }
 
 }
