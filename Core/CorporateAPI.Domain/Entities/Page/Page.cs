@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Domain.Entities.Common;
+using CorporateAPI.Domain.Entities.Relationship;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace CorporateAPI.Domain.Entities
         public Page()
         {
             Children=new HashSet<Page>();
+            PageModules=new HashSet<PageModule>();
         }
         public string Title { get; set; }
         public int? ParentId { get; set; }
         public Page? Parent { get; set; }
         public ICollection<Page?> Children { get; set; }
+        public ICollection<PageModule?> PageModules { get; set; }
     }
 }

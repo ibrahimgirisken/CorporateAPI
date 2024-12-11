@@ -4,6 +4,7 @@ using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Relationship;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,21 @@ namespace CoreporateAPI.Persistence.Contexts
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
-                base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<PageModule>(entity =>
+            entity.HasKey(pm => new { pm.PageId, pm.ModuleId }
+            ));
+
+            modelBuilder.Entity<PageModule>(entity =>
+            entity.HasOne(pm => pm.Page)
+            .WithMany(p=>p.PageModules)
+            .HasForeignKey(pm=>pm.PageId));
+
+            modelBuilder.Entity<PageModule>(entity =>
+            entity.HasOne(pm=>pm.Module)
+            .WithMany(m=>m.PageModules)
+            .HasForeignKey(pm=>pm.ModuleId));
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

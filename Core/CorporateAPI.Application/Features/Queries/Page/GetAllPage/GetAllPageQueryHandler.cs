@@ -34,20 +34,5 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
             };
 
         }
-
-        //private List<CreatePageDTO> GetSubPages(int parentId,List<Domain.Entities.Page> pages) {
-        //    return pages.Where(p => p.ParentId == parentId)
-        //        .Select(p => new CreatePageDTO
-        //        {
-        //            Title = p.Title,
-        //            Content = p.Content,
-        //            ParentId = parentId,
-        //            Order = p.Order,
-        //            Slug = p.Slug,
-        //            Status = p.Status,
-        //            Type = p.Type,
-        //            SubPages = GetSubPages(p.Id, pages)
-        //        }).ToList();
-        //}
     }
 }
