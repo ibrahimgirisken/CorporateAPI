@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CorporateAPI.Application.DTOs.Module;
+using CorporateAPI.Domain.Entities.Relationship;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,7 @@ namespace CorporateAPI.Application.DTOs.Page
         public int Id { get; set; }
         public string Title { get; set; }
         public ICollection<ResultPageDTO?> Children { get; set; }
+        public ICollection<ResultModuleDTO?> PageModules { get; set; }
 
     }
 }

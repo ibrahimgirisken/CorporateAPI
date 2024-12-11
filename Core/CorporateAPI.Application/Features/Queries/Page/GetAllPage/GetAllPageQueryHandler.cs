@@ -2,6 +2,7 @@
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,7 +26,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var pages = _pageReadRepository.GetAll(false).ToList();
+            var pages = _pageReadRepository.GetAll(false).Include(p=>p.PageModules).ToList();
             var pageDtos = _mapper.Map<List<ResultPageDTO>>(pages);
 
             return new()

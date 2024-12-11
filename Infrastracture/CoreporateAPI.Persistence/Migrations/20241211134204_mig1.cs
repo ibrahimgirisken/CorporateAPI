@@ -57,6 +57,24 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Module",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModuleData = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Module", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Page",
                 schema: "dbo",
                 columns: table => new
@@ -198,6 +216,34 @@ namespace CoreporateAPI.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PageModule",
+                schema: "dbo",
+                columns: table => new
+                {
+                    PageId = table.Column<int>(type: "int", nullable: false),
+                    ModuleId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageModule", x => new { x.PageId, x.ModuleId });
+                    table.ForeignKey(
+                        name: "FK_PageModule_Module_ModuleId",
+                        column: x => x.ModuleId,
+                        principalSchema: "dbo",
+                        principalTable: "Module",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PageModule_Page_PageId",
+                        column: x => x.PageId,
+                        principalSchema: "dbo",
+                        principalTable: "Page",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 schema: "dbo",
@@ -249,6 +295,12 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "Page",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageModule_ModuleId",
+                schema: "dbo",
+                table: "PageModule",
+                column: "ModuleId");
         }
 
         /// <inheritdoc />
@@ -275,7 +327,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Page",
+                name: "PageModule",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -284,6 +336,14 @@ namespace CoreporateAPI.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Module",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Page",
                 schema: "dbo");
         }
     }
