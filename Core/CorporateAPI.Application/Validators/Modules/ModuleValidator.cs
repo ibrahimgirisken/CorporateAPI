@@ -20,6 +20,8 @@ namespace CorporateAPI.Application.Validators.Modules
 
             RuleFor(m=>m.ModuleData)
                 .NotEmpty()
+                .MinimumLength(5)
+                .WithMessage("ModuleData değeri en az 5 karakter içermelidir!")
                 .NotNull();
         }
     }
