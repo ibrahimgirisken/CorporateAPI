@@ -28,20 +28,20 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         {
             var page = _mapper.Map<Domain.Entities.Page>(request.CreatePage);
             var pageModule=new HashSet<PageModule>();
-            if (request.CreatePage.PageModuleIds != null&&request.CreatePage.PageModuleIds.Any()) 
+            if (request.CreatePage.PageModuleIds != null) 
             {
                 foreach (var item in request.CreatePage.PageModuleIds.Where(id=>id.HasValue).Select(id=>id.Value))
                 {
                     var module=await _moduleReadRepository.GetByIdAsync(item,false);
                     if (module!=null)
                     {
-                        pageModule.Add(new PageModule { ModuleId = module.Id, });
+                        pageModule.Add(new(){ ModuleId = module.Id,PageId=page.Id });
                     };
                 }
             }
             if (pageModule.Any())
             {
-                page.PageModules = pageModule;
+                page.Modules = pageModule;
             }
             await _pageWriteRepository.AddAsync(page);
             await _pageWriteRepository.SaveAsync();

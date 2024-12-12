@@ -8,6 +8,10 @@ namespace CorporateAPI.Application.DTOs.Page
 {
     public class CreatePageDTO
     {
+        public CreatePageDTO()
+        {
+            PageModuleIds=new HashSet<int?>();
+        }
         public string Title { get; set; }
         public int? ParentId { get; set; }
         public ICollection<int?> PageModuleIds { get; set; }

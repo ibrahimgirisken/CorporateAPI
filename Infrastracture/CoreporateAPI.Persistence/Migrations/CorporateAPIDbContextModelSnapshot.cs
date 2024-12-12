@@ -316,13 +316,13 @@ namespace CoreporateAPI.Persistence.Migrations
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
-                        .WithMany("PageModules")
+                        .WithMany("Pages")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
-                        .WithMany("PageModules")
+                        .WithMany("Modules")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -385,14 +385,14 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
-                    b.Navigation("PageModules");
+                    b.Navigation("Pages");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
                     b.Navigation("Children");
 
-                    b.Navigation("PageModules");
+                    b.Navigation("Modules");
                 });
 #pragma warning restore 612, 618
         }

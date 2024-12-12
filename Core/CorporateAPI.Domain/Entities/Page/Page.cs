@@ -13,12 +13,12 @@ namespace CorporateAPI.Domain.Entities
         public Page()
         {
             Children=new HashSet<Page>();
-            PageModules=new HashSet<PageModule>();
+            Modules = new HashSet<PageModule>();
         }
         public string Title { get; set; }
         public int? ParentId { get; set; }
         public Page? Parent { get; set; }
         public ICollection<Page?> Children { get; set; }
-        public ICollection<PageModule?> PageModules { get; set; }
+        public ICollection<PageModule?> Modules { get; set; }
     }
 }

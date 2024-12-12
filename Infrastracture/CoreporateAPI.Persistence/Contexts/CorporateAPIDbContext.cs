@@ -38,12 +38,12 @@ namespace CoreporateAPI.Persistence.Contexts
 
             modelBuilder.Entity<PageModule>(entity =>
             entity.HasOne(pm => pm.Page)
-            .WithMany(p=>p.PageModules)
+            .WithMany(p=>p.Modules)
             .HasForeignKey(pm=>pm.PageId));
 
             modelBuilder.Entity<PageModule>(entity =>
             entity.HasOne(pm=>pm.Module)
-            .WithMany(m=>m.PageModules)
+            .WithMany(m=>m.Pages)
             .HasForeignKey(pm=>pm.ModuleId));
 
             base.OnModelCreating(modelBuilder);

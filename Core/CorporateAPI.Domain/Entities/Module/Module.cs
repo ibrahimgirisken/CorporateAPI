@@ -12,10 +12,10 @@ namespace CorporateAPI.Domain.Entities
     {
         public Module()
         {
-            PageModules = new HashSet<Domain.Entities.Relationship.PageModule>();
+            Pages = new HashSet<Domain.Entities.Relationship.PageModule>();
         }
         public string Name { get; set; }
         public string ModuleData { get; set; }
-        public ICollection<Domain.Entities.Relationship.PageModule> PageModules { get; set; }
+        public ICollection<Domain.Entities.Relationship.PageModule> Pages { get; set; }
     }
 }
