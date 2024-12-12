@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
 {
     public class CreateModuleCommandRequest:IRequest<CreateModuleCommandResponse>
     {
-        public DTOs.Module.CreateModuleDTO Module { get; set; }
+        public DTOs.Module.CreateModuleDTO CreateModule { get; set; }
     }
 }

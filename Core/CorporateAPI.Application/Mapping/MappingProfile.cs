@@ -17,7 +17,10 @@ namespace CorporateAPI.Application.Mapping
         public MappingProfile()
         {
             CreateMap<Page,CreatePageDTO>().ReverseMap(); 
+            CreateMap<Page,UpdatePageDTO>().ReverseMap();
             CreateMap<Page,ResultPageDTO>().ReverseMap();
+            CreateMap<Module,CreateModuleDTO>().ReverseMap(); 
+            CreateMap<Module,UpdateModuleDTO>().ReverseMap(); 
             CreateMap<Module, ResultModuleDTO>().ReverseMap();
             CreateMap<PageModule,ResultPageModuleDTO>().ReverseMap();
         }
