@@ -4,12 +4,6 @@ using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Relationship;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreporateAPI.Persistence.Contexts
 {

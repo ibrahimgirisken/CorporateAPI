@@ -12,7 +12,7 @@ namespace CorporateAPI.Domain.Entities.Relationship
         public int PageId { get; set; }
         public int ModuleId { get; set; }
         public int Order { get; set; }
-        public Module Module { get; set; }
+        public virtual Module Module { get; set; }
         public virtual Page Page { get; set; }
     }
 }
