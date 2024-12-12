@@ -26,7 +26,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var pages = _pageReadRepository.GetAll(false).Include(p=>p.Modules).ToList();
+            var pages = _pageReadRepository.GetAll(false).Include(ms=>ms.Modules).ThenInclude(m=>m.Module).ToList();
             var pageDtos = _mapper.Map<List<ResultPageDTO>>(pages);
 
             return new()

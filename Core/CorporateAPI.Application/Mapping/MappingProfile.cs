@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
+using CorporateAPI.Application.DTOs.PageModule;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Relationship;
 using System;
@@ -17,7 +18,8 @@ namespace CorporateAPI.Application.Mapping
         {
             CreateMap<Page,CreatePageDTO>().ReverseMap(); 
             CreateMap<Page,ResultPageDTO>().ReverseMap();
-            CreateMap<PageModule, ResultModuleDTO>().ReverseMap();
+            CreateMap<Module, ResultModuleDTO>().ReverseMap();
+            CreateMap<PageModule,ResultPageModuleDTO>().ReverseMap();
         }
     }
 }
