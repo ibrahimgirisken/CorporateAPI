@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using AutoMapper;
+using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,19 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
     {
         readonly IModuleWriteRepository _moduleWriteRepository;
         readonly IModuleReadRepository _moduleReadRepository;
+        readonly IMapper _mapper;
 
-        public UpdateModuleCommandHandler(IModuleWriteRepository moduleWriteRepository, IModuleReadRepository moduleReadRepository)
+        public UpdateModuleCommandHandler(IModuleWriteRepository moduleWriteRepository, IModuleReadRepository moduleReadRepository, IMapper mapper = null)
         {
             _moduleWriteRepository = moduleWriteRepository;
             _moduleReadRepository = moduleReadRepository;
+            _mapper = mapper;
         }
 
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.Id);
-            module.Name = request.Name;
+            Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.UpdateModule.Id);
+            module=_mapper.Map<Domain.Entities.Module>(request.UpdateModule);
             _moduleWriteRepository.Update(module);
             await _moduleWriteRepository.SaveAsync();
             return new();
