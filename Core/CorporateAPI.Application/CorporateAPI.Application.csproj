@@ -24,9 +24,4 @@
     <ProjectReference Include="..\CorporateAPI.Domain\CorporateAPI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\Modules\" />
-    <Folder Include="Validators\Pages\" />
-  </ItemGroup>
-
 </Project>
