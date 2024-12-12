@@ -13,8 +13,8 @@ namespace CorporateAPI.Application.Validators.Pages
     {
         public PageValidator()
         {
-            RuleFor(p=>p.Title).NotEmpty().NotNull();
-            RuleFor(p => p.Title).Length(3, 80);                               
+            RuleFor(p=>p.Title).NotEmpty().NotNull().WithMessage("Boş geçmeyiniz!");
+            RuleFor(p => p.Title).Length(3, 80).WithMessage("Title alanı 3 ie 80 karakter arasında olması gerekmektedir!");                               
         }
     }
 }

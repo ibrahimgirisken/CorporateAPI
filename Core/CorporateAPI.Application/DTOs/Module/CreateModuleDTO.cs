@@ -9,8 +9,6 @@ namespace CorporateAPI.Application.DTOs.Module
     public class CreateModuleDTO
     {
         public string Name { get; set; }
-        public string Type { get; set; }
         public string ModuleData { get; set; }
-        public string Config { get; set; }
     }
 }
