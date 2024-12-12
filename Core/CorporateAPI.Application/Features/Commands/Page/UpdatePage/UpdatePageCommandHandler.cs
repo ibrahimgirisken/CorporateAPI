@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,30 +28,31 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Page page = await _pageReadRepository.GetByIdAsync(request.UpdatePage.Id);
+            Domain.Entities.Page page = await _pageReadRepository.Table.Include(p => p.Modules).ThenInclude(pm => pm.Module).FirstOrDefaultAsync(p => p.Id == request.UpdatePage.Id);
+
+            var moduleIds = request.UpdatePage.PageModuleIds?.Where(id => id.HasValue).Select(id => id.Value).ToList() ?? new List<int>();
+
+            var existingModuleIds=page.Modules.Select(pm=>pm.ModuleId).ToList();
+            var modulesToRemove = page.Modules.Where(pm => !moduleIds.Contains(pm.ModuleId)).ToList();
+
+            foreach (var moduleToRemove in modulesToRemove)
+            {
+                page.Modules.Remove(moduleToRemove); 
+            }
+            
             var pageModule = new HashSet<PageModule>();
             var pageData=_mapper.Map<Domain.Entities.Page>(request.UpdatePage);
 
-
-
-            var moduleIds = request.UpdatePage.PageModuleIds?.Where(id => id.HasValue).Select(id => id.Value).ToList();
-            if (moduleIds != null)
+            var newModuleIds = moduleIds.Except(existingModuleIds);
+            foreach (var moduleId in newModuleIds)
             {
-                foreach (var item in moduleIds)
+                var module = await _moduleReadRepository.GetByIdAsync(moduleId, false);
+                if (module != null)
                 {
-                    var module = await _moduleReadRepository.GetByIdAsync(item, false);
-                    if (module != null)
-                    {
-                        pageModule.Add(new() { ModuleId = module.Id, PageId = page.Id });
-                    };
+                    page.Modules.Add(new PageModule { Module = module });
                 }
             }
-            if (pageModule.Any())
-            {
-                page.Modules.Clear();
-                page.Modules= pageModule;
-            }          
-            
+
             page.Title = pageData.Title;
             page.ParentId = pageData.ParentId;
             page.Children = pageData.Children;
