@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using AutoMapper;
+using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,20 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
     public class GetByIdModuleQueryHandler : IRequestHandler<GetByIdModuleQueryRequest, GetByIdModuleQueryResponse>
     {
         readonly IModuleReadRepository _moduleReadRepository;
-
-        public GetByIdModuleQueryHandler(IModuleReadRepository moduleReadRepository)
+        readonly IMapper _mapper;
+        public GetByIdModuleQueryHandler(IModuleReadRepository moduleReadRepository, IMapper mapper = null)
         {
             _moduleReadRepository = moduleReadRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetByIdModuleQueryResponse> Handle(GetByIdModuleQueryRequest request, CancellationToken cancellationToken)
         {
-           Domain.Entities.Module module= await _moduleReadRepository.GetByIdAsync(request.Id,false);
+            var module = _mapper.Map<Domain.Entities.Module>(await _moduleReadRepository.GetByIdAsync(request.Id,false));
+
             return new()
             {
-                Name = module.Name
+                Module = module
             };
         }
     }

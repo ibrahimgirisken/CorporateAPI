@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Features.Commands.Module.RemoveModule;
 using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
 using CorporateAPI.Application.Features.Queries.Module.GetAllModule;
+using CorporateAPI.Application.Features.Queries.Module.GetByIdModule;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,12 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery]GetAllModuleQueryRequest getAllModuleQueryRequest)
         {
             GetAllModuleQueryResponse response=await _mediator.Send(getAllModuleQueryRequest);
+            return Ok(response);
+        }
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get([FromRoute] GetByIdModuleQueryRequest getByIdModuleQueryRequest)
+        {
+            GetByIdModuleQueryResponse response=await _mediator.Send(getByIdModuleQueryRequest);
             return Ok(response);
         }
 

@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using AutoMapper;
+using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,20 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
     public class GetByIdPageQueryHandler : IRequestHandler<GetByIdPageQueryRequest, GetByIdPageQueryResponse>
     {
         readonly IPageReadRepository _pageReadRepository;
+        readonly IMapper _mapper;
 
-        public GetByIdPageQueryHandler(IPageReadRepository pageReadRepository)
+        public GetByIdPageQueryHandler(IPageReadRepository pageReadRepository, IMapper mapper = null)
         {
             _pageReadRepository = pageReadRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetByIdPageQueryResponse> Handle(GetByIdPageQueryRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Page page= await _pageReadRepository.GetByIdAsync(request.Id,false);
+            var page= _mapper.Map<Domain.Entities.Page>(await _pageReadRepository.GetByIdAsync(request.Id, false));
             return new()
             {
-                Title = page.Title
+                Page = page
             };
         }
     }
