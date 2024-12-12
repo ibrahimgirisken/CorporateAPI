@@ -2,8 +2,10 @@ using CoreporateAPI.Infrastracture;
 using CoreporateAPI.Infrastructure.Filters;
 using CoreporateAPI.Persistence;
 using CorporateAPI.Application;
+using CorporateAPI.Application.Validators.Pages;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -14,7 +16,7 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
-builder.Services.AddControllers().AddFluentValidation(configuration=>configuration.RegisterValidatorsFromAssemblyContaining<ValidationFilter>()).ConfigureApiBehaviorOptions(options=>options.SuppressModelStateInvalidFilter=true);
+builder.Services.AddControllers(options=>options.Filters.Add<ValidationFilter>()).AddFluentValidation(configuration=>configuration.RegisterValidatorsFromAssemblyContaining<PageValidator>()).ConfigureApiBehaviorOptions(options=>options.SuppressModelStateInvalidFilter=true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
