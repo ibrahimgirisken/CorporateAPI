@@ -53,7 +53,6 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
                 }
             }
 
-            page.Title = pageData.Title;
             page.ParentId = pageData.ParentId;
             page.Children = pageData.Children;
 

@@ -26,6 +26,22 @@ namespace CoreporateAPI.Persistence.Contexts
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<PageTranslation>(entity =>
+            {
+                entity.HasOne(t=>t.Page)
+                .WithMany(t=>t.Translations)
+                .HasForeignKey(t=>t.PageId) 
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<ModuleTranslation>(entity =>
+            {
+                entity.HasOne(t=>t.Module)
+                .WithMany(t=>t.Translations)
+                .HasForeignKey(t=>t.ModuleId)
+                .OnDelete(DeleteBehavior.Restrict);
+            }
+            );
             modelBuilder.Entity<PageModule>(entity =>
             entity.HasKey(pm => new { pm.PageId, pm.ModuleId }
             ));

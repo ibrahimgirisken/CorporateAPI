@@ -14,8 +14,7 @@ namespace CorporateAPI.Domain.Entities
         {
             Pages = new HashSet<Domain.Entities.Relationship.PageModule>();
         }
-        public string Name { get; set; }
-        public string ModuleData { get; set; }
         public ICollection<Domain.Entities.Relationship.PageModule> Pages { get; set; }
+        public ICollection<ModuleTranslation> Translations { get; set; }
     }
 }

@@ -15,10 +15,10 @@ namespace CorporateAPI.Domain.Entities
             Children=new HashSet<Page>();
             Modules = new HashSet<PageModule>();
         }
-        public string Title { get; set; }
         public int? ParentId { get; set; }
         public Page? Parent { get; set; }
         public ICollection<Page?> Children { get; set; }
         public ICollection<PageModule?> Modules { get; set; }
+        public ICollection<PageTranslation> Translations { get; set; }
     }
 }
