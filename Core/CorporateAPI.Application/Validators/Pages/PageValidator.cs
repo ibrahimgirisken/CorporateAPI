@@ -4,12 +4,19 @@ using FluentValidation;
 
 namespace CorporateAPI.Application.Validators.Pages
 {
-    public class PageValidator:AbstractValidator<PageDTO>
+    public class PageValidator:AbstractValidator<PageTranslationDTO>
     {
         public PageValidator()
         {
-            RuleFor(p=>p.Title).NotEmpty().NotNull().WithMessage("Boş geçmeyiniz!");
-            RuleFor(p => p.Title).MinimumLength(3).MaximumLength(80).WithMessage("Title alanı 3 ie 80 karakter arasında olması gerekmektedir!");                               
+            RuleFor(m => m.Title)
+                 .NotEmpty()
+                 .NotNull()
+                 .MinimumLength(3)
+                 .MaximumLength(120);
+
+            RuleFor(m => m.Locale)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }
