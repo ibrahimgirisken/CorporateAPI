@@ -8,6 +8,7 @@ namespace CorporateAPI.Application.Validators.Pages
     {
         public PageValidator()
         {
+            List<string> allowedValues = new List<string> {"tr","en","de"};
             RuleFor(m => m.Title)
                  .NotEmpty()
                  .NotNull()
@@ -16,7 +17,9 @@ namespace CorporateAPI.Application.Validators.Pages
 
             RuleFor(m => m.Locale)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+                .Must(value=>allowedValues.Contains(value))
+                .WithMessage($"Sadece:{string.Join(",",allowedValues)}");
         }
     }
 }

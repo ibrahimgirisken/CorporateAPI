@@ -28,7 +28,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Page page = await _pageReadRepository.Table.Include(p => p.Modules).ThenInclude(pm => pm.Module).FirstOrDefaultAsync(p => p.Id == request.Id);
+            Domain.Entities.Page page = await _pageReadRepository.Table.Include(p => p.Modules).ThenInclude(pm => pm.Module).ThenInclude(m=>m.Translations).FirstOrDefaultAsync(p => p.Id == request.Id);
 
             var moduleIds = request.PageDTO.PageModuleIds?.Where(id => id.HasValue).Select(id => id.Value).ToList() ?? new List<int>();
 
