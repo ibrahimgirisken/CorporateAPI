@@ -12,6 +12,6 @@ namespace CorporateAPI.Application.DTOs.PageModule
         public int PageId { get; set; }
         public int ModuleId { get; set; }
         public int Order { get; set; }
-        public ResultModuleDTO Module { get; set; }
+        public GetModuleDTO Module { get; set; }
     }
 }

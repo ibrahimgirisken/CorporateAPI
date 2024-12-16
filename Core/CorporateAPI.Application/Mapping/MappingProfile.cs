@@ -18,11 +18,14 @@ namespace CorporateAPI.Application.Mapping
         {
             CreateMap<Page,PageDTO>().ReverseMap(); 
             CreateMap<Page,GetPageDTO>().ReverseMap();
+            CreateMap<PageTranslation, PageTranslationDTO>().ReverseMap();
+            CreateMap<PageModule,ResultPageModuleDTO>().ReverseMap();
+
+            CreateMap<Module, GetModuleDTO>().ReverseMap();
+            CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
             CreateMap<Module,CreateModuleDTO>().ReverseMap(); 
             CreateMap<Module,UpdateModuleDTO>().ReverseMap(); 
-            CreateMap<Module, ResultModuleDTO>().ReverseMap();
-            CreateMap<PageModule,ResultPageModuleDTO>().ReverseMap();
-            CreateMap<PageTranslation, PageTranslationDTO>().ReverseMap();
+            CreateMap<Module,ModuleDTO>().ReverseMap(); 
         }
     }
 }

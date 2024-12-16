@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
-using CorporateAPI.Domain.Entities;
-using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 {
@@ -26,7 +20,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var pages = _pageReadRepository.GetAll(false).Include(ms=>ms.Modules).ThenInclude(m=>m.Module).Include(m=>m.Translations).ToList();
+            var pages = _pageReadRepository.GetAll(false).Include(m => m.Translations).Include(ms=>ms.Modules).ThenInclude(m=>m.Module).ToList();
             var pageDtos = _mapper.Map<List<GetPageDTO>>(pages);
 
             return new()

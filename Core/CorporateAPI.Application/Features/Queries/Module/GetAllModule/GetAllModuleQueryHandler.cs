@@ -1,5 +1,8 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Module;
+using CorporateAPI.Application.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +14,21 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetAllModule
     public class GetAllModuleQueryHandler : IRequestHandler<GetAllModuleQueryRequest, GetAllModuleQueryResponse>
     {
         readonly IModuleReadRepository _moduleReadRepository;
+        readonly IMapper _mapper;
 
-        public GetAllModuleQueryHandler(IModuleReadRepository moduleReadRepository)
+        public GetAllModuleQueryHandler(IModuleReadRepository moduleReadRepository, IMapper mapper = null)
         {
             _moduleReadRepository = moduleReadRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetAllModuleQueryResponse> Handle(GetAllModuleQueryRequest request, CancellationToken cancellationToken)
         {
-            var modules= _moduleReadRepository.GetAll(false).ToList();
+            var modules= _moduleReadRepository.GetAll(false).Include(m=>m.Translations).ToList();
+            var moduleDtos = _mapper.Map<List<GetModuleDTO>>(modules);
             return new()
             {
-                Modules = modules
+                Modules = moduleDtos
             };
         }
     }
