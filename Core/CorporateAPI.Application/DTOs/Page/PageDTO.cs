@@ -13,7 +13,6 @@ namespace CorporateAPI.Application.DTOs.Page
             PageModuleIds = new HashSet<int?>();
             Translations=new HashSet<PageTranslationDTO>();
         }
-        public string Title { get; set; }
         public int? ParentId { get; set; }
         public ICollection<int?> PageModuleIds { get; set; }
         public ICollection<PageTranslationDTO> Translations { get; set; }
