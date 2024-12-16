@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Page
 {
-    public class PageDTO
+    public class UpdatePageDTO
     {
-        public int Id { get; set; }
-        public PageDTO()
+        public UpdatePageDTO()
         {
             PageModuleIds = new HashSet<int?>();
         }
