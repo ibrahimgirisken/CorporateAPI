@@ -63,8 +63,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModuleData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -81,7 +79,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -217,6 +214,33 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ModuleTranslation",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModuleData = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModuleId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModuleTranslation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModuleTranslation_Module_ModuleId",
+                        column: x => x.ModuleId,
+                        principalSchema: "dbo",
+                        principalTable: "Module",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PageModule",
                 schema: "dbo",
                 columns: table => new
@@ -242,6 +266,32 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalTable: "Page",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PageTranslation",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PageId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageTranslation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PageTranslation_Page_PageId",
+                        column: x => x.PageId,
+                        principalSchema: "dbo",
+                        principalTable: "Page",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -291,6 +341,12 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ModuleTranslation_ModuleId",
+                schema: "dbo",
+                table: "ModuleTranslation",
+                column: "ModuleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Page_ParentId",
                 schema: "dbo",
                 table: "Page",
@@ -301,6 +357,12 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "PageModule",
                 column: "ModuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageTranslation_PageId",
+                schema: "dbo",
+                table: "PageTranslation",
+                column: "PageId");
         }
 
         /// <inheritdoc />
@@ -327,7 +389,15 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "ModuleTranslation",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "PageModule",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "PageTranslation",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

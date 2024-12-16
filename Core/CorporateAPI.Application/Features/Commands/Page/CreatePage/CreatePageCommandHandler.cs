@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
+using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
 using System;
@@ -28,6 +29,19 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         {
             var page = _mapper.Map<Domain.Entities.Page>(request.PageDto);
             var pageModule=new HashSet<PageModule>();
+            var pageTranslations = new HashSet<PageTranslation>();
+            if (request.PageDto.Translations!=null)
+            {
+                foreach (var item in request.PageDto.Translations)
+                {
+                    var translation = new PageTranslation
+                    {
+                        Locale = item.Locale,
+                        Title = item.Title,
+                    };
+                    pageTranslations.Add(translation);
+                }
+            }
             if (request.PageDto.PageModuleIds != null) 
             {
                 foreach (var item in request.PageDto.PageModuleIds.Where(id=>id.HasValue).Select(id=>id.Value))
@@ -42,6 +56,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
             if (pageModule.Any())
             {
                 page.Modules = pageModule;
+                page.Translations = pageTranslations;
             }
             await _pageWriteRepository.AddAsync(page);
             await _pageWriteRepository.SaveAsync();

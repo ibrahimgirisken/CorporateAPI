@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Page
 {
-    public class ProductTranslationDTO
+    public class PageTranslationDTO
     {
         public string Title { get; set; }
         public string Locale { get; set; }

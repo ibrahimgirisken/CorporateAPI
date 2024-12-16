@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20241212092009_mig1")]
+    [Migration("20241216110123_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -135,9 +135,38 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Module", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ModuleData")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -148,7 +177,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Module", "dbo");
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("ModuleTranslation", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
@@ -168,6 +199,37 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Page", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -177,9 +239,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("PageId");
 
-                    b.ToTable("Page", "dbo");
+                    b.ToTable("PageTranslation", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
@@ -306,6 +368,17 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
+                        .WithMany("Translations")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Page", "Parent")
@@ -314,6 +387,17 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
+                        .WithMany("Translations")
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Page");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
@@ -389,6 +473,8 @@ namespace CoreporateAPI.Persistence.Migrations
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
                     b.Navigation("Pages");
+
+                    b.Navigation("Translations");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
@@ -396,6 +482,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Children");
 
                     b.Navigation("Modules");
+
+                    b.Navigation("Translations");
                 });
 #pragma warning restore 612, 618
         }
