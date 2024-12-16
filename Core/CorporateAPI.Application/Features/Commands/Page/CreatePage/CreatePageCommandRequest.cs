@@ -11,6 +11,6 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 {
     public class CreatePageCommandRequest:IRequest<CreatePageCommandResponse>
     {
-        public CreatePageDTO CreatePage { get; set; }
+        public PageDTO PageDto{ get; set; }
     }
 }

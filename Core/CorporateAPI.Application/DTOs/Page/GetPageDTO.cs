@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Page
 {
-    public class ResultPageDTO
+    public class GetPageDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public ICollection<ResultPageDTO?> Children { get; set; }
+        public ICollection<GetPageDTO?> Children { get; set; }
         public ICollection<ResultPageModuleDTO?> Modules { get; set; }
 
     }

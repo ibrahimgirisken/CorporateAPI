@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace CorporateAPI.Application.Validators.Pages
 {
-    public class PageValidator:AbstractValidator<CreatePageDTO>
+    public class PageValidator:AbstractValidator<PageDTO>
     {
         public PageValidator()
         {

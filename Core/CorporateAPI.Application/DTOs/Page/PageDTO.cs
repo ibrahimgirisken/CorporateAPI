@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Page
 {
-    public class UpdatePageDTO
+    public class PageDTO
     {
-        public int Id { get; set; }
-        public UpdatePageDTO()
+        public PageDTO()
         {
             PageModuleIds = new HashSet<int?>();
         }
         public string Title { get; set; }
         public int? ParentId { get; set; }
         public ICollection<int?> PageModuleIds { get; set; }
+        public ICollection<ProductTranslationDTO> Translations { get; set; }
     }
 }

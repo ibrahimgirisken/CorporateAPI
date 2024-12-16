@@ -28,9 +28,9 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Page page = await _pageReadRepository.Table.Include(p => p.Modules).ThenInclude(pm => pm.Module).FirstOrDefaultAsync(p => p.Id == request.UpdatePage.Id);
+            Domain.Entities.Page page = await _pageReadRepository.Table.Include(p => p.Modules).ThenInclude(pm => pm.Module).FirstOrDefaultAsync(p => p.Id == request.Id);
 
-            var moduleIds = request.UpdatePage.PageModuleIds?.Where(id => id.HasValue).Select(id => id.Value).ToList() ?? new List<int>();
+            var moduleIds = request.PageDTO.PageModuleIds?.Where(id => id.HasValue).Select(id => id.Value).ToList() ?? new List<int>();
 
             var existingModuleIds=page.Modules.Select(pm=>pm.ModuleId).ToList();
             var modulesToRemove = page.Modules.Where(pm => !moduleIds.Contains(pm.ModuleId)).ToList();
@@ -41,7 +41,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
             }
             
             var pageModule = new HashSet<PageModule>();
-            var pageData=_mapper.Map<Domain.Entities.Page>(request.UpdatePage);
+            var pageData=_mapper.Map<Domain.Entities.Page>(request.PageDTO);
 
             var newModuleIds = moduleIds.Except(existingModuleIds);
             foreach (var moduleId in newModuleIds)
