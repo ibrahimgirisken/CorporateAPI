@@ -12,15 +12,21 @@ namespace CoreporateAPI.Infrastructure.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if(!context.ModelState.IsValid)
+            if (!context.ModelState.IsValid)
             {
-                var errors=context.ModelState
-                    .Where(x=>x.Value.Errors.Any())
-                    .ToDictionary(e=>e.Key, e=>e.Value.Errors.Select(e=>e.ErrorMessage)).ToArray();
-                context.Result=new BadRequestObjectResult(errors);
+                var errors = context.ModelState
+                    .Where(x => x.Value.Errors.Any())
+                    .Select(x => new
+                    {
+                        Field = x.Key,
+                        Errors = x.Value.Errors.Select(e => e.ErrorMessage).ToList()
+                    }).ToList();
+
+                context.Result = new BadRequestObjectResult(errors);
                 return;
             }
-               await next();
+
+            await next();
         }
     }
 }
