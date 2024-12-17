@@ -8,21 +8,22 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Validators.Modules
 {
-    public class ModuleValidator:AbstractValidator<CreateModuleDTO>
+    public class ModuleValidator:AbstractValidator<ModuleTranslationDTO>
     {
         public ModuleValidator()
         {
+            List<string> allowedValues = new List<string> { "tr", "en", "de" };
             RuleFor(m => m.Name)
+                 .NotEmpty()
+                 .NotNull()
+                 .MinimumLength(3)
+                 .MaximumLength(120);
+
+            RuleFor(m => m.Locale)
                 .NotEmpty()
                 .NotNull()
-                .Length(3,80)
-                .WithMessage("Lütfen Name bilgisini boş geçmeyiniz!");
-
-            RuleFor(m=>m.ModuleData)
-                .NotEmpty()
-                .MinimumLength(5)
-                .WithMessage("ModuleData değeri en az 5 karakter içermelidir!")
-                .NotNull();
+                .Must(value => allowedValues.Contains(value))
+                .WithMessage($"Sadece:{string.Join(",", allowedValues)}");
         }
     }
 }

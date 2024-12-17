@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Application.Mapping;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +15,7 @@ namespace CorporateAPI.Application
         public static void AddApplicationServices(this IServiceCollection collection)
         {
             collection.AddMediatR(typeof(ServiceRegistration));
-            collection.AddHttpContextAccessor();
+            collection.AddHttpClient();
             collection.AddAutoMapper(typeof(MappingProfile));
         }
     }
