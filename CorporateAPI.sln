@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreporateAPI.API", "Presen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUI", "WebUI", "{EC59ADD5-A1BE-47E7-BDAB-746063B0E2ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorporateAPI.WebUI", "WebUI\CorporateAPI.WebUI\CorporateAPI.WebUI.csproj", "{840717F7-CA2F-4748-B749-560F80FD0343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorporateAPI.WebUI", "WebUI\CorporateAPI.WebUI\CorporateAPI.WebUI.csproj", "{840717F7-CA2F-4748-B749-560F80FD0343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
