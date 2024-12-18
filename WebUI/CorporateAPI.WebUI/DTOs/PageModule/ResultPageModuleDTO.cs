@@ -8,5 +8,6 @@ namespace CorporateAPI.WebUI.DTOs.PageModule
         public int ModuleId { get; set; }
         public int Order { get; set; }
         public GetModuleDTO Module { get; set; }
+
     }
 }

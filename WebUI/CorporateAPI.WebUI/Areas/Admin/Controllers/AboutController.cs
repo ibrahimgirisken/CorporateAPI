@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CorporateAPI.WebUI.DTOs.Page;
+using CorporateAPI.WebUI.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class AboutController(HttpClient _client) : Controller
+    public class AboutController() : Controller
     {
-        public IActionResult Index()
+        private readonly HttpClient _client=HttpClientInstance.CreateClient();
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var values =await _client.GetFromJsonAsync<List<GetPageDTO>>("Pages");
+            return View(values);
         }
     }
 }
