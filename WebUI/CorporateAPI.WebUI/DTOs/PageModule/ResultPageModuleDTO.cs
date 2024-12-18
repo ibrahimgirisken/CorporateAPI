@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Module;
+﻿
+using CorporateAPI.WebUI.DTOs.Module;
 
 namespace CorporateAPI.WebUI.DTOs.PageModule
 {
