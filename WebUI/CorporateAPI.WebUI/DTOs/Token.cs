@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Application.DTOs
+namespace CorporateAPI.WebUI.DTOs
 {
     public class Token
     {
