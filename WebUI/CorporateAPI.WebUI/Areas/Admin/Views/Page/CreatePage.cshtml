@@ -1,0 +1,12 @@
+﻿@model PageDTO
+@{
+    ViewData["Title"] = "Yeni Sayfa Oluşturma";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <label>Başlık</label>
+    <input type="number" asp-for="ParentId" class="form-control" />
+    </br>
+    <button class="btn btn-outline-primary">Kaydet</button>
+</form>
