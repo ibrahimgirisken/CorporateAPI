@@ -1,11 +1,12 @@
-﻿
+﻿using System.Text.Json.Serialization;
 namespace CorporateAPI.WebUI.DTOs.Module
 {
     public class ModuleTranslationDTO
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("locale")]
         public string Locale { get; set; }
-        public string ModuleData { get; set; }
     }
 }

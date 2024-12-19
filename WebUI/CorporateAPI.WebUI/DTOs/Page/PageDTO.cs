@@ -5,11 +5,11 @@ namespace CorporateAPI.WebUI.DTOs.Page
     {
          public PageDTO()
         {
-            PageModuleIds = new HashSet<int?>();
-            Translations=new HashSet<PageTranslationDTO>();
+            PageModuleIds = new List<int?>();
+            Translations=new List<PageTranslationDTO>();
         }
         public int? ParentId { get; set; }
-        public ICollection<int?> PageModuleIds { get; set; }
-        public ICollection<PageTranslationDTO> Translations { get; set; }
+        public List<int?> PageModuleIds { get; set; }
+        public List<PageTranslationDTO> Translations { get; set; }
     }
 }

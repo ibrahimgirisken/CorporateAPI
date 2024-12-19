@@ -1,4 +1,4 @@
-﻿@model List<GetPageDTO>
+﻿@model List<CorporateAPI.WebUI.DTOs.Page.GetPageDTO>
 
 @{
     ViewData["Title"] = "Hakkımızda Sayfası";
@@ -20,32 +20,7 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.Translations.FirstOrDefault(t => t.Locale == "tr")?.Title ?? "Başlık Yok"</td>
-                <td>@item.Children?.Count ?? 0</td>
-                <td>@item.Modules?.Count ?? 0</td>
-                <td>
-                    <a asp-action="Delete" asp-controller="About" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
-                    <a asp-action="Update" asp-controller="About" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
-                </td>
-            </tr>
-
-            @* Çocuk Sayfaları Rekürsif Olarak Göster *@
-            @if (item.Children != null && item.Children.Any())
-            {
-                foreach (var child in item.Children)
-                {
-                    <tr>
-                        <td>-- @child.Id</td>
-                        <td>@child.Translations.FirstOrDefault(t => t.Locale == "tr")?.Title ?? "Başlık Yok"</td>
-                        <td>@child.Children?.Count ?? 0</td>
-                        <td>@child.Modules?.Count ?? 0</td>
-                        <td>
-                            <a asp-action="Delete" asp-controller="About" asp-route-id="@child.Id" class="btn btn-outline-danger">Sil</a>
-                            <a asp-action="Update" asp-controller="About" asp-route-id="@child.Id" class="btn btn-outline-info">Güncelle</a>
-                        </td>
-                    </tr>
-                }
-            }
+                </tr>
         }
     </tbody>
 </table>

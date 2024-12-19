@@ -8,17 +8,17 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     [Route("[area]/[controller]/[action]/{id?}")]
     public class AboutController() : Controller
     {
-        private readonly HttpClient _client=HttpClientInstance.CreateClient();
+        private readonly HttpClient _client= HttpClientInstance.CreateClient();
         public async Task<IActionResult> Index()
         {
-            var model = await _client.GetFromJsonAsync<List<GetPageDTO>>("Pages");
+            var values = await _client.GetFromJsonAsync<List<GetPageDTO>>("Pages");
 
-            if (model == null)
+            if (values == null)
             {
                 return View(new List<GetPageDTO>()); // Eğer API null dönerse boş bir liste gönder
             }
 
-            return View(model);
+            return View(values);
         }
     }
 }

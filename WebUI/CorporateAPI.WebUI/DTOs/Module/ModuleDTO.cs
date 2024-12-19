@@ -1,13 +1,13 @@
-﻿
+﻿using System.Text.Json.Serialization;
 namespace CorporateAPI.WebUI.DTOs.Module
 {
     public class ModuleDTO
     {
-        public ModuleDTO()
-        {
-            Translsations=new HashSet<ModuleTranslationDTO>();
-        }
-        public ICollection<ModuleTranslationDTO> Translsations { get; set; }
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("translations")]
+        public List<ModuleTranslationDTO> Translations { get; set; } = new List<ModuleTranslationDTO>();
 
     }
 }
