@@ -12,12 +12,12 @@ namespace CorporateAPI.WebUI.DTOs.Page
         public string Title { get; set; }
 
         [JsonPropertyName("children")]
-        public List<GetPageDTO> Children { get; set; } = new List<GetPageDTO>();
+        public List<GetPageDTO> Children { get; set; } = new();
 
         [JsonPropertyName("modules")]
-        public List<ResultPageModuleDTO> Modules { get; set; } = new List<ResultPageModuleDTO>();
+        public List<ResultPageModuleDTO> Modules { get; set; } = new();
 
         [JsonPropertyName("translations")]
-        public List<PageTranslationDTO> Translations { get; set; } = new List<PageTranslationDTO>();
+        public List<PageTranslationDTO> Translations { get; set; } = new();
     }
 }

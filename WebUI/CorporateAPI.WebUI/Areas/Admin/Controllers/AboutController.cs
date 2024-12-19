@@ -11,14 +11,14 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         private readonly HttpClient _client= HttpClientInstance.CreateClient();
         public async Task<IActionResult> Index()
         {
-            var values = await _client.GetFromJsonAsync<List<GetPageDTO>>("Pages");
+            var response = await _client.GetFromJsonAsync<ResultPagesDTO>("Pages");
 
-            if (values == null)
+            if (response == null || response.Pages == null)
             {
-                return View(new List<GetPageDTO>()); // Eğer API null dönerse boş bir liste gönder
+                return View(new List<GetPageDTO>()); // Boş bir liste döner
             }
 
-            return View(values);
+            return View(response.Pages);
         }
     }
 }
