@@ -13,6 +13,7 @@ namespace CorporateAPI.Application.DTOs.Page
     {
         public int Id { get; set; }
         public string Title { get; set; }
+
         public ICollection<GetPageDTO?> Children { get; set; }
         public ICollection<ResultPageModuleDTO?> Modules { get; set; }
         public ICollection<PageTranslationDTO> Translations { get; set; }
