@@ -32,7 +32,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreatePage(PageDTO pageDTO)
+        public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)
         {
             await _client.PostAsJsonAsync("Pages", pageDTO);
             return RedirectToAction(nameof(Index));
@@ -40,7 +40,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdatePage(int id)
         {
-            PageDTO response= await _client.GetFromJsonAsync<PageDTO>($"Pages/{id}");
+            CreatePageDTO response= await _client.GetFromJsonAsync<CreatePageDTO>($"Pages/{id}");
             return View(response);
         }
 

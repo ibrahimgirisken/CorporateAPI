@@ -1,9 +1,9 @@
 ﻿
 namespace CorporateAPI.WebUI.DTOs.Page
 {
-    public class PageDTO
+    public class CreatePageDTO
     {
-         public PageDTO()
+         public CreatePageDTO()
         {
             PageModuleIds = new List<int?>();
             Translations=new List<PageTranslationDTO>();

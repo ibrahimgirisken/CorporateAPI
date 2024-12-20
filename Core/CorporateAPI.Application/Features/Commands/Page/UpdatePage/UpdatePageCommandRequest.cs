@@ -11,6 +11,6 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
     public class UpdatePageCommandRequest:IRequest<UpdatePageCommandResponse>
     {
         public int Id { get; set; }
-        public PageDTO PageDTO { get; set; }
+        public CreatePageDTO PageDTO { get; set; }
     }
 }

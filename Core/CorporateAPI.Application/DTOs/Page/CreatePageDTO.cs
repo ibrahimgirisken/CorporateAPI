@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Page
 {
-    public class PageDTO
+    public class CreatePageDTO
     {
-         public PageDTO()
+         public CreatePageDTO()
         {
             PageModuleIds = new HashSet<int?>();
             Translations=new HashSet<PageTranslationDTO>();
