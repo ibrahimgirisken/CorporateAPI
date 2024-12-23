@@ -42,14 +42,14 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
                     pageTranslations.Add(translation);
                 }
             }
-            if (request.PageDto.PageModuleIds != null) 
+            if (request.PageDto.Modules != null) 
             {
-                foreach (var item in request.PageDto.PageModuleIds.Where(id=>id.HasValue).Select(id=>id.Value))
+                foreach (var item in request.PageDto.Modules)
                 {
-                    var module=await _moduleReadRepository.GetByIdAsync(item,false);
+                    var module=await _moduleReadRepository.GetByIdAsync(item.ModuleId,false);
                     if (module!=null)
                     {
-                        pageModule.Add(new(){ ModuleId = module.Id,PageId=page.Id });
+                        pageModule.Add(new(){ ModuleId = module.Id,PageId=page.Id,Order=item.Order});
                     };
                 }
             }

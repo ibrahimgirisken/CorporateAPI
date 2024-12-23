@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories;
+using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -30,34 +31,36 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
         {
             Domain.Entities.Page page = await _pageReadRepository.Table.Include(p => p.Modules).ThenInclude(pm => pm.Module).ThenInclude(m=>m.Translations).FirstOrDefaultAsync(p => p.Id == request.Id);
 
-            var moduleIds = request.PageDTO.PageModuleIds?.Where(id => id.HasValue).Select(id => id.Value).ToList() ?? new List<int>();
-
-            var existingModuleIds=page.Modules.Select(pm=>pm.ModuleId).ToList();
-            var modulesToRemove = page.Modules.Where(pm => !moduleIds.Contains(pm.ModuleId)).ToList();
-
-            foreach (var moduleToRemove in modulesToRemove)
+          _mapper.Map(request.PageDTO, page);
+            var existingTranslations = page.Translations.ToList();
+            page.Translations.Clear();
+            foreach (var translationDto in request.PageDTO.Translations)
             {
-                page.Modules.Remove(moduleToRemove); 
+                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDto.Locale) ?? new PageTranslation();
+                _mapper.Map(translationDto, translation);
+                page.Translations.Add(translation);
             }
-            
-            var pageModule = new HashSet<PageModule>();
-            var pageData=_mapper.Map<Domain.Entities.Page>(request.PageDTO);
+            var moduleIds=request.PageDTO.Modules.Select(m => m.ModuleId).ToList();
+            var existingModulIds=page.Modules.Select(m => m.ModuleId).ToList();
+            var modulesToRemove = page.Modules.Where(m => !moduleIds.Contains(m.ModuleId)).ToList();
 
-            var newModuleIds = moduleIds.Except(existingModuleIds);
+            foreach (var module in modulesToRemove)
+            {
+                page.Modules.Remove(module);
+            }
+            var newModuleIds = moduleIds.Except(existingModulIds);
             foreach (var moduleId in newModuleIds)
             {
                 var module = await _moduleReadRepository.GetByIdAsync(moduleId, false);
                 if (module != null)
                 {
-                    page.Modules.Add(new PageModule { Module = module });
+                    page.Modules.Add(new PageModule { ModuleId = module.Id, PageId = page.Id });
                 }
             }
 
-            page.ParentId = pageData.ParentId;
-            page.Children = pageData.Children;
-
             _pageWriteRepository.Update(page);
             await _pageWriteRepository.SaveAsync();
+
             return new();
         }
     }
