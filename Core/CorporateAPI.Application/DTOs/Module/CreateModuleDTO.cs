@@ -10,9 +10,9 @@ namespace CorporateAPI.Application.DTOs.Module
     {
         public CreateModuleDTO()
         {
-            Translsations=new HashSet<CreateModuleTranslationDTO>();
+            Translations = new HashSet<CreateModuleTranslationDTO>();
         }
-        public ICollection<CreateModuleTranslationDTO> Translsations { get; set; }
+        public ICollection<CreateModuleTranslationDTO> Translations { get; set; }
 
     }
 }

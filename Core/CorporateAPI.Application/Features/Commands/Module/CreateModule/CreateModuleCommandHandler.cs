@@ -23,24 +23,27 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
         public async Task<CreateModuleCommandResponse> Handle(CreateModuleCommandRequest request, CancellationToken cancellationToken)
         {
             var module = _mapper.Map<Domain.Entities.Module>(request.Module);
-            var moduleTranslations=new HashSet<ModuleTranslation>();
-            if (request.Module.Translsations != null)
+
+            if (request.Module.Translations != null)
             {
-                foreach (var moduleTranslation in request.Module.Translsations)
+                var moduleTranslations = new List<ModuleTranslation>();
+                foreach (var moduleTranslation in request.Module.Translations)
                 {
                     var translation = new ModuleTranslation
                     {
                         Locale = moduleTranslation.Locale,
                         Name = moduleTranslation.Name,
                         ModuleData = moduleTranslation.ModuleData,
+                        Module = module
                     };
                     moduleTranslations.Add(translation);
                 }
+                module.Translations = moduleTranslations;
             }
-            module.Translations = moduleTranslations;
-           
+
             await _moduleWriteRepository.AddAsync(module);
             await _moduleWriteRepository.SaveAsync();
+
             return new();
         }
     }

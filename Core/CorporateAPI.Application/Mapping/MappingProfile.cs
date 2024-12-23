@@ -24,7 +24,9 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Module, GetModuleDTO>().ReverseMap();
             CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
             CreateMap<Module,UpdateModuleDTO>().ReverseMap(); 
+
             CreateMap<Module,CreateModuleDTO>().ReverseMap(); 
+            CreateMap<ModuleTranslation,CreateModuleTranslationDTO>().ReverseMap();
         }
     }
 }
