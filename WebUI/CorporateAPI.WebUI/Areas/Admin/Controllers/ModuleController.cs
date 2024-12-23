@@ -22,7 +22,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateModule(ModuleDTO moduleDTO)
+        public async Task<IActionResult> CreateModule(CreateModuleDTO moduleDTO)
         {
             return null;
         }

@@ -15,7 +15,7 @@ namespace CorporateAPI.WebUI.DTOs.PageModule
         public int Order { get; set; }
 
         [JsonPropertyName("module")]
-        public ModuleDTO Module { get; set; } = new ModuleDTO();
+        public CreateModuleDTO Module { get; set; } = new CreateModuleDTO();
 
     }
 }
