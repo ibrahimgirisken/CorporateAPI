@@ -6,10 +6,11 @@ namespace CorporateAPI.WebUI.DTOs.Page
         public int Id { get; set; }
         public UpdatePageDTO()
         {
-            PageModuleIds = new List<int?>();
+            Modules = new List<UpdatePageDTO>();
+            Translations = new List<PageTranslationDTO>();
         }
         public int? ParentId { get; set; }
-        public List<int?> PageModuleIds { get; set; }
+        public List<UpdatePageDTO> Modules { get; set; }
         public List<PageTranslationDTO> Translations { get; set; }
     }
 }
