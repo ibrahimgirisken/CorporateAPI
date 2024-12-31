@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,22 @@ namespace CorporateAPI.Application.Features.Queries.Lang.GetByIdLang
 {
     public class GetByIdLangHandler : IRequestHandler<GetByIdLangRequest, GetByIdLangResponse>
     {
-        public Task<GetByIdLangResponse> Handle(GetByIdLangRequest request, CancellationToken cancellationToken)
+        readonly ILangReadRepository _langReadRepository;
+        readonly IMapper _mapper;
+
+        public GetByIdLangHandler(ILangReadRepository langReadRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _langReadRepository = langReadRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<GetByIdLangResponse> Handle(GetByIdLangRequest request, CancellationToken cancellationToken)
+        {
+          var lang= _mapper.Map<Domain.Entities.Lang>(await _langReadRepository.GetByIdAsync(request.Id, false));
+            return new()
+            {
+                Lang = lang
+            };
         }
     }
 }

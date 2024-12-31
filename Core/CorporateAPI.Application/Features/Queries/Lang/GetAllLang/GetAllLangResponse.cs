@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Application.DTOs.Lang;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Lang.GetAllLang
 {
     public class GetAllLangResponse
     {
-      public object LangData { get; set; }
+      public List<GetLangDTO> LangData { get; set; }
     }
 }

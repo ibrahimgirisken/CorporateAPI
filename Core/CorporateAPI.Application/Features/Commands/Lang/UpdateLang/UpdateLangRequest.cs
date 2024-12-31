@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.DTOs.Lang;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
 {
     public class UpdateLangRequest:IRequest<UpdateLangResponse>
     {
-        public int Id { get; set; }
-        public string LangCode { get; set; }
+        public UpdateLangDTO updateLangDTO{ get; set; }
     }
 }

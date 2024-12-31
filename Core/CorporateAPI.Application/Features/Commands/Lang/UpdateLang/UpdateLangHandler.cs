@@ -1,4 +1,6 @@
-﻿using CorporateAPI.Application.Repositories;
+﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Lang;
+using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,19 +13,22 @@ namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
     public class UpdateLangHandler : IRequestHandler<UpdateLangRequest, UpdateLangResponse>
     {
         readonly ILangWriteRepository _langWriteRepository;
+        readonly ILangReadRepository _langReadRepository;
+        readonly IMapper _mapper;
 
-        public UpdateLangHandler(ILangWriteRepository langWriteRepository)
+        public UpdateLangHandler(ILangWriteRepository langWriteRepository, IMapper mapper, ILangReadRepository langReadRepository)
         {
             _langWriteRepository = langWriteRepository;
+            _mapper = mapper;
+            _langReadRepository = langReadRepository;
         }
 
         public async Task<UpdateLangResponse> Handle(UpdateLangRequest request, CancellationToken cancellationToken)
         {
-            _langWriteRepository.Update(new Domain.Entities.Lang
-            {
-                Id = request.Id,
-                LangCode = request.LangCode,
-            });
+            Domain.Entities.Lang lang = await _langReadRepository.GetByIdAsync(request.updateLangDTO.Id);
+            _mapper.Map(request.updateLangDTO,lang);
+
+            _langWriteRepository.Update(lang);
             await _langWriteRepository.SaveAsync();
             return new();
         }

@@ -9,5 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Lang.GetByIdLang
 {
     public class GetByIdLangRequest:IRequest<GetByIdLangResponse>
     {
+        public int Id { get; set; }
     }
 }
