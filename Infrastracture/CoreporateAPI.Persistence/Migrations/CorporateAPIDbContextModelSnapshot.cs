@@ -118,6 +118,32 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("AspNetUsers", "dbo");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Lang", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LangCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages", "dbo");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
                     b.Property<int>("Id")

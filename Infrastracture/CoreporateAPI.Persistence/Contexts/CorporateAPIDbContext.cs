@@ -12,6 +12,7 @@ namespace CoreporateAPI.Persistence.Contexts
         public CorporateAPIDbContext(DbContextOptions options) : base(options)
         { }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Lang> Languages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

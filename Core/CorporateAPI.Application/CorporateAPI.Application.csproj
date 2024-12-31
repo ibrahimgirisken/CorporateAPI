@@ -24,4 +24,9 @@
     <ProjectReference Include="..\CorporateAPI.Domain\CorporateAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Queries\Lang\GetAllLang\" />
+    <Folder Include="Features\Queries\Lang\GetByIdLang\" />
+  </ItemGroup>
+
 </Project>
