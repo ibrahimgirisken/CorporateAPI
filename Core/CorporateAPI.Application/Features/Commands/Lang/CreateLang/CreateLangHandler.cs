@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,21 @@ namespace CorporateAPI.Application.Features.Commands.Lang.CreateLang
 {
     public class CreateLangHandler : IRequestHandler<CreateLangRequest, CreateLangResponse>
     {
-        public Task<CreateLangResponse> Handle(CreateLangRequest request, CancellationToken cancellationToken)
+        readonly ILangWriteRepository _langWriteRepository;
+
+        public CreateLangHandler(ILangWriteRepository langWriteRepository)
         {
-            throw new NotImplementedException();
+            _langWriteRepository = langWriteRepository;
+        }
+
+        public async Task<CreateLangResponse> Handle(CreateLangRequest request, CancellationToken cancellationToken)
+        {
+           await _langWriteRepository.AddAsync(new Domain.Entities.Lang
+            {
+                LangCode=request.LangCode,
+            });
+           await _langWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

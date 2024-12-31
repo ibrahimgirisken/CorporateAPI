@@ -9,5 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Lang.CreateLang
 {
     public class CreateLangRequest:IRequest<CreateLangResponse>
     {
+        public string LangCode { get; set; }
     }
 }

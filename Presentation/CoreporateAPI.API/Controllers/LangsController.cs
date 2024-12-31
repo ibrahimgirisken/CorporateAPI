@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
+using CorporateAPI.Application.Features.Commands.Lang.RemoveLang;
+using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
+using CorporateAPI.Application.Features.Queries.Lang.GetAllLang;
+using CorporateAPI.Application.Features.Queries.Lang.GetByIdLang;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -7,5 +13,45 @@ namespace CoreporateAPI.API.Controllers
     [ApiController]
     public class LangsController : ControllerBase
     {
+        readonly IMediator _mediator;
+
+        public LangsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] GetAllLangRequest getAllLangRequest)
+        {
+            GetAllLangResponse response = await _mediator.Send(getAllLangRequest);
+            return Ok(response);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get([FromRoute] GetByIdLangRequest getByIdLangRequest)
+        {
+            GetByIdLangResponse response = await _mediator.Send(getByIdLangRequest);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateLangRequest createLangRequest)
+        {
+            CreateLangResponse response = await _mediator.Send(createLangRequest);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateLangRequest updateLangRequest)
+        {
+            UpdateLangResponse response = await _mediator.Send(updateLangRequest);
+            return Ok(response);
+        }
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] RemoveLangRequest removeLangRequest)
+        {
+            RemoveLangResponse response = await _mediator.Send(removeLangRequest);
+            return Ok(response);
+        }
     }
 }

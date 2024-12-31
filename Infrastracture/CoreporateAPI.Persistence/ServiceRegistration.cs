@@ -36,6 +36,8 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IPageWriteRepository, PageWriteRepository>();
             services.AddScoped<IModuleReadRepository, ModuleReadRepository>();
             services.AddScoped<IModuleWriteRepository, ModuleWriteRepository>();
+            services.AddScoped<ILangReadRepository, LangReadRepository>();
+            services.AddScoped<ILangWriteRepository, LangWriteRepository>();
 
         }
     }

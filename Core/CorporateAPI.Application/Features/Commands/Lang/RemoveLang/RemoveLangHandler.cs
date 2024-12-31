@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,18 @@ namespace CorporateAPI.Application.Features.Commands.Lang.RemoveLang
 {
     public class RemoveLangHandler : IRequestHandler<RemoveLangRequest, RemoveLangResponse>
     {
-        public Task<RemoveLangResponse> Handle(RemoveLangRequest request, CancellationToken cancellationToken)
+        readonly ILangWriteRepository _langWriteRepository;
+
+        public RemoveLangHandler(ILangWriteRepository langWriteRepository)
         {
-            throw new NotImplementedException();
+            _langWriteRepository = langWriteRepository;
+        }
+
+        public async Task<RemoveLangResponse> Handle(RemoveLangRequest request, CancellationToken cancellationToken)
+        {
+            await _langWriteRepository.RemoveAsync(request.Id);
+            await _langWriteRepository.SaveAsync();
+            return new();
         }
     }
 }
