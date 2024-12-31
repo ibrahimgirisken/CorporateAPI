@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
 {
-    public class UpdateLangHandler:IRequestHandler<UpdateLangRequest, UpdateLangResponse>
+    public class UpdateLangHandler : IRequestHandler<UpdateLangRequest, UpdateLangResponse>
     {
+        public Task<UpdateLangResponse> Handle(UpdateLangRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

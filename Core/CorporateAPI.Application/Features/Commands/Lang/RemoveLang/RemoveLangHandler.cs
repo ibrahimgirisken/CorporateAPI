@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.RemoveLang
 {
-    public class RemoveLangHandler:IRequestHandler<RemoveLangRequest, RemoveLangResponse>
+    public class RemoveLangHandler : IRequestHandler<RemoveLangRequest, RemoveLangResponse>
     {
+        public Task<RemoveLangResponse> Handle(RemoveLangRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
