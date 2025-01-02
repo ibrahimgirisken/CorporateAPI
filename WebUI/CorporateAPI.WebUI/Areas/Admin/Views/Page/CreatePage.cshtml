@@ -1,4 +1,4 @@
-﻿@model CreatePageDTO
+﻿@model CreatePageViewModel
 @{
     ViewData["Title"] = "Yeni Sayfa Oluşturma";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,11 +9,12 @@
 <form method="post">
     <div class="form-group">
             <label>Menuler</label>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select class="form-select" aria-label="Module">
+                <option selected>select</option>
+                @foreach (var item in Model.GetModuleDTOs.Modules)
+                {
+                    <option selected>@item.Translations.FirstOrDefault(t => t.Locale == "tr")?.Name</option>
+                }
             </select>
     </div>
         <div class="form-group">
@@ -74,7 +75,7 @@
     </div>
     <div class="form-group">
         <label>Order</label>
-        <input type="number" asp-for="Order" class="form-control" />
+        <input type="number" asp-for="CreatePageDTO.Order" class="form-control" />
     </div>
     <div class="form-group">
         <button class="btn btn-outline-primary">Kaydet</button>

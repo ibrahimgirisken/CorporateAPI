@@ -1,5 +1,7 @@
-﻿using CorporateAPI.WebUI.DTOs.Page;
+﻿using CorporateAPI.WebUI.DTOs.Module;
+using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
+using CorporateAPI.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
@@ -27,9 +29,15 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
-        public IActionResult CreatePage()
+        public async Task<IActionResult> CreatePage(GetModuleDTO getModuleDTO)
         {
-            return View();
+            var modules= await _client.GetFromJsonAsync<ResultModuleDTO>("Modules");
+            var viewModel = new CreatePageViewModel
+            {
+                GetModuleDTOs = modules,
+                CreatePageDTO = new CreatePageDTO()
+            };
+            return View(viewModel);
         }
         [HttpPost]
         public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)

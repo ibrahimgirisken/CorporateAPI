@@ -3,10 +3,12 @@ namespace CorporateAPI.WebUI.DTOs.Module
 {
     public class ModuleTranslationDTO
     {
-        [JsonPropertyName("title")]
-        public string Title { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
         [JsonPropertyName("locale")]
         public string Locale { get; set; }
+        [JsonPropertyName("moduleData")]
+        public string ModuleData { get; set; }
     }
 }
