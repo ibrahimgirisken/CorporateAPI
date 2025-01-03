@@ -24,10 +24,10 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.UpdateModule.Id);
-            module=_mapper.Map<Domain.Entities.Module>(request.UpdateModule);
-            _moduleWriteRepository.Update(module);
-            await _moduleWriteRepository.SaveAsync();
+            //Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.UpdateModule.Id);
+            //module=_mapper.Map<Domain.Entities.Module>(request.UpdateModule);
+            //_moduleWriteRepository.Update(module);
+            //await _moduleWriteRepository.SaveAsync();
             return new();
         }
     }

@@ -2,7 +2,6 @@
 using CorporateAPI.Application.DTOs.Lang;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
-using CorporateAPI.Application.DTOs.PageModule;
 using CorporateAPI.Domain.Entities;
 using System;
 using System.Collections.Generic;

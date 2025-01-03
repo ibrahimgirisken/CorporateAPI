@@ -10,15 +10,13 @@ namespace CorporateAPI.Application.DTOs.Page
     {
          public CreatePageDTO()
         {
-            Modules = new HashSet<CreatePageModuleDto>();
             Translations=new HashSet<PageTranslationDTO>();
         }
         public string Image1 { get; set; }
         public string Image2 { get; set; }
         public string Image3 { get; set; }
         public int Order { get; set; }
-        public int? ParentId { get; set; }
-        public ICollection<CreatePageModuleDto> Modules { get; set; }
+        public string? ModuleIds { get; set; }
         public ICollection<PageTranslationDTO> Translations { get; set; }
     }
 }

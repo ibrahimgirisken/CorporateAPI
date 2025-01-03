@@ -11,11 +11,13 @@ namespace CorporateAPI.Application.DTOs.Page
         public int Id { get; set; }
         public UpdatePageDTO()
         {
-            Modules = new HashSet<UpdatePageModuleDTO>();
             Translations = new HashSet<PageTranslationDTO>();
         }
-        public int? ParentId { get; set; }
-        public ICollection<UpdatePageModuleDTO> Modules { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public string Image3 { get; set; }
+        public int Order { get; set; }
+        public string? ModuleIds { get; set; }
         public ICollection<PageTranslationDTO> Translations { get; set; }
     }
 }

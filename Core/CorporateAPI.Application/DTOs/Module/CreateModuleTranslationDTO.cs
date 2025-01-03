@@ -9,7 +9,8 @@ namespace CorporateAPI.Application.DTOs.Module
     public class CreateModuleTranslationDTO
     {
         public string Name { get; set; }
-        public string Locale { get; set; }
         public string ModuleData { get; set; }
+        public string Locale { get; set; }
+        public int ModuleId { get; set; }
     }
 }

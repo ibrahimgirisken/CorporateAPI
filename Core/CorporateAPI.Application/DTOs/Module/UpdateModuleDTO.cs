@@ -8,8 +8,10 @@ namespace CorporateAPI.Application.DTOs.Module
 {
     public class UpdateModuleDTO
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string ModuleData { get; set; }
+        public UpdateModuleDTO()
+        {
+            ModuleTranslations = new HashSet<CreateModuleTranslationDTO>();
+        }
+        public ICollection<CreateModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }
