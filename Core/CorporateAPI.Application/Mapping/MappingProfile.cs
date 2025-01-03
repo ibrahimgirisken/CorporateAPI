@@ -4,7 +4,6 @@ using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.PageModule;
 using CorporateAPI.Domain.Entities;
-using CorporateAPI.Domain.Entities.Relationship;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Page,CreatePageDTO>().ReverseMap(); 
             CreateMap<Page,GetPageDTO>().ReverseMap();
             CreateMap<PageTranslation, PageTranslationDTO>().ReverseMap();
-            CreateMap<PageModule,ResultPageModuleDTO>().ReverseMap();
 
             CreateMap<Module, GetModuleDTO>().ReverseMap();
             CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();

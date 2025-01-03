@@ -38,7 +38,7 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
                     };
                     moduleTranslations.Add(translation);
                 }
-                module.Translations = moduleTranslations;
+                module.ModuleTranslations = moduleTranslations;
             }
 
             await _moduleWriteRepository.AddAsync(module);

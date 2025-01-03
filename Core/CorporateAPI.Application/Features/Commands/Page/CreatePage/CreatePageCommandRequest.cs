@@ -1,5 +1,4 @@
 ﻿using CorporateAPI.Application.DTOs.Page;
-using CorporateAPI.Domain.Entities.Relationship;
 using MediatR;
 using System;
 using System.Collections.Generic;

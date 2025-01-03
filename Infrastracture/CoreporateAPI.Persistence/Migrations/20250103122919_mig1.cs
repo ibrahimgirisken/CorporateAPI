@@ -74,6 +74,33 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Menus",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Vitrin = table.Column<bool>(type: "bit", nullable: false),
+                    Footer = table.Column<bool>(type: "bit", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Menus_Menus_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "dbo",
+                        principalTable: "Menus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Module",
                 schema: "dbo",
                 columns: table => new
@@ -90,13 +117,12 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Page",
+                name: "Pages",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParentId = table.Column<int>(type: "int", nullable: true),
                     Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -107,14 +133,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Page", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Page_Page_ParentId",
-                        column: x => x.ParentId,
-                        principalSchema: "dbo",
-                        principalTable: "Page",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Pages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,7 +254,33 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModuleTranslation",
+                name: "MenuTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MenuId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MenuTranslations_Menus_MenuId",
+                        column: x => x.MenuId,
+                        principalSchema: "dbo",
+                        principalTable: "Menus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModuleTranslations",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -251,9 +296,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModuleTranslation", x => x.Id);
+                    table.PrimaryKey("PK_ModuleTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ModuleTranslation_Module_ModuleId",
+                        name: "FK_ModuleTranslations_Module_ModuleId",
                         column: x => x.ModuleId,
                         principalSchema: "dbo",
                         principalTable: "Module",
@@ -281,16 +326,16 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PageModule_Page_PageId",
+                        name: "FK_PageModule_Pages_PageId",
                         column: x => x.PageId,
                         principalSchema: "dbo",
-                        principalTable: "Page",
+                        principalTable: "Pages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PageTranslation",
+                name: "PageTranslations",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -298,7 +343,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Locale = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Brief = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -310,12 +355,12 @@ namespace CoreporateAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PageTranslation", x => x.Id);
+                    table.PrimaryKey("PK_PageTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PageTranslation_Page_PageId",
+                        name: "FK_PageTranslations_Pages_PageId",
                         column: x => x.PageId,
                         principalSchema: "dbo",
-                        principalTable: "Page",
+                        principalTable: "Pages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -367,16 +412,29 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModuleTranslation_ModuleId",
+                name: "IX_Menus_ParentId",
                 schema: "dbo",
-                table: "ModuleTranslation",
-                column: "ModuleId");
+                table: "Menus",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Page_ParentId",
+                name: "IX_MenuTranslations_MenuId",
                 schema: "dbo",
-                table: "Page",
-                column: "ParentId");
+                table: "MenuTranslations",
+                column: "MenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuTranslations_Url",
+                schema: "dbo",
+                table: "MenuTranslations",
+                column: "Url",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ModuleTranslations_ModuleId",
+                schema: "dbo",
+                table: "ModuleTranslations",
+                column: "ModuleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PageModule_ModuleId",
@@ -385,10 +443,17 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "ModuleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageTranslation_PageId",
+                name: "IX_PageTranslations_PageId",
                 schema: "dbo",
-                table: "PageTranslation",
+                table: "PageTranslations",
                 column: "PageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageTranslations_Url",
+                schema: "dbo",
+                table: "PageTranslations",
+                column: "Url",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -419,7 +484,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ModuleTranslation",
+                name: "MenuTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "ModuleTranslations",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -427,7 +496,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "PageTranslation",
+                name: "PageTranslations",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -439,11 +508,15 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "Menus",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "Module",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Page",
+                name: "Pages",
                 schema: "dbo");
         }
     }

@@ -1,7 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Common;
 using CorporateAPI.Domain.Entities.Identity;
-using CorporateAPI.Domain.Entities.Relationship;
+using CorporateAPI.Domain.Entities.Menu;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,50 +12,52 @@ namespace CoreporateAPI.Persistence.Contexts
         public CorporateAPIDbContext(DbContextOptions options) : base(options)
         { }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Menu> Menus { get; set; }
         public DbSet<Lang> Languages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
 
-            modelBuilder.Entity<Page>(entity =>
+            modelBuilder.Entity<Menu>(entity =>
             {
-                entity.ToTable("Page");
+                entity.ToTable("Menus");
                 entity.HasOne(m => m.Parent)
                 .WithMany(m => m.Children)
                 .HasForeignKey(m => m.ParentId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<MenuTranslation>(entity =>
+            {
+                entity.ToTable("MenuTranslations");
+                entity.HasIndex(mt => mt.Url).IsUnique();
+
+                entity.HasOne(mt => mt.Menu)
+                .WithMany(mt => mt.MenuTranslations)
+                .HasForeignKey(mt => mt.MenuId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
             modelBuilder.Entity<PageTranslation>(entity =>
             {
-                entity.HasOne(t=>t.Page)
-                .WithMany(t=>t.Translations)
-                .HasForeignKey(t=>t.PageId) 
+                entity.ToTable("PageTranslations");
+                entity.HasIndex(pt => pt.Url).IsUnique();
+
+                entity.HasOne(pt => pt.Page)
+                .WithMany(pt => pt.PageTranslations)
+                .HasForeignKey(pt => pt.PageId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ModuleTranslation>(entity =>
             {
-                entity.HasOne(t=>t.Module)
-                .WithMany(t=>t.Translations)
-                .HasForeignKey(t=>t.ModuleId)
+                entity.ToTable("ModuleTranslations");
+                entity.HasOne(mt => mt.Module)
+                .WithMany(mt => mt.ModuleTranslations)
+                .HasForeignKey(mt => mt.ModuleId)
                 .OnDelete(DeleteBehavior.Restrict);
-            }
-            );
-            modelBuilder.Entity<PageModule>(entity =>
-            entity.HasKey(pm => new { pm.PageId, pm.ModuleId }
-            ));
-
-            modelBuilder.Entity<PageModule>(entity =>
-            entity.HasOne(pm => pm.Page)
-            .WithMany(p=>p.Modules)
-            .HasForeignKey(pm=>pm.PageId));
-
-            modelBuilder.Entity<PageModule>(entity =>
-            entity.HasOne(pm=>pm.Module)
-            .WithMany(m=>m.Pages)
-            .HasForeignKey(pm=>pm.ModuleId));
+            });
 
             base.OnModelCreating(modelBuilder);
         }

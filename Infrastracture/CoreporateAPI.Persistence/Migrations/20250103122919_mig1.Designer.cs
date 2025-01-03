@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250102092041_mig1")]
+    [Migration("20250103122919_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -147,6 +147,80 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Languages", "dbo");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Footer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Vitrin")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Menus", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.MenuTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("Url")
+                        .IsUnique();
+
+                    b.ToTable("MenuTranslations", "dbo");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -205,7 +279,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("ModuleTranslation", "dbo");
+                    b.ToTable("ModuleTranslations", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
@@ -237,17 +311,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Page", "dbo");
+                    b.ToTable("Pages", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
@@ -296,13 +365,16 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PageId");
 
-                    b.ToTable("PageTranslation", "dbo");
+                    b.HasIndex("Url")
+                        .IsUnique();
+
+                    b.ToTable("PageTranslations", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
@@ -429,20 +501,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
-                        .WithMany("Translations")
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Module");
-                });
-
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
-                {
-                    b.HasOne("CorporateAPI.Domain.Entities.Page", "Parent")
+                    b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -450,10 +511,32 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.MenuTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Menu")
+                        .WithMany("MenuTranslations")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
+                        .WithMany("ModuleTranslations")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
-                        .WithMany("Translations")
+                        .WithMany("PageTranslations")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -531,20 +614,25 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("MenuTranslations");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
-                    b.Navigation("Pages");
+                    b.Navigation("ModuleTranslations");
 
-                    b.Navigation("Translations");
+                    b.Navigation("Pages");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
-                    b.Navigation("Children");
-
                     b.Navigation("Modules");
 
-                    b.Navigation("Translations");
+                    b.Navigation("PageTranslations");
                 });
 #pragma warning restore 612, 618
         }
