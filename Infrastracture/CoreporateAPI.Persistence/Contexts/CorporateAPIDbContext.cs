@@ -32,6 +32,7 @@ namespace CoreporateAPI.Persistence.Contexts
             {
                 entity.ToTable("MenuTranslations");
                 entity.HasIndex(mt => mt.Url).IsUnique();
+                entity.HasIndex(mt => new { mt.MenuId, mt.Locale }).IsUnique();
 
                 entity.HasOne(mt => mt.Menu)
                 .WithMany(mt => mt.MenuTranslations)
@@ -43,6 +44,7 @@ namespace CoreporateAPI.Persistence.Contexts
             {
                 entity.ToTable("PageTranslations");
                 entity.HasIndex(pt => pt.Url).IsUnique();
+                entity.HasIndex(pt => new { pt.PageId, pt.Locale }).IsUnique();
 
                 entity.HasOne(pt => pt.Page)
                 .WithMany(pt => pt.PageTranslations)
@@ -53,6 +55,7 @@ namespace CoreporateAPI.Persistence.Contexts
             modelBuilder.Entity<ModuleTranslation>(entity =>
             {
                 entity.ToTable("ModuleTranslations");
+                entity.HasIndex(mt => new { mt.ModuleId, mt.Locale }).IsUnique();
                 entity.HasOne(mt => mt.Module)
                 .WithMany(mt => mt.ModuleTranslations)
                 .HasForeignKey(mt => mt.ModuleId)
