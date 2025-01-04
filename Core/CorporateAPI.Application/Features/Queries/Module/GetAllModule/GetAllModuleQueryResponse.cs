@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetAllModule
 {
     public class GetAllModuleQueryResponse
     {
-        public List<GetModuleDTO> Modules{ get; set; }
+        public List<ResultModuleDTO> Modules{ get; set; }
     }
 }

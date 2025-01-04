@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
@@ -22,10 +23,11 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
 
         public async Task<GetByIdPageQueryResponse> Handle(GetByIdPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var page= _mapper.Map<Domain.Entities.Page>(await _pageReadRepository.GetByIdAsync(request.Id, false));
+            var page= await _pageReadRepository.GetByIdAsync(request.Id, false,includes:e=>e.PageTranslations);
+            var pageDto = _mapper.Map<GetByIdPageDTO>(page);
             return new()
             {
-                Page = page
+                Page = pageDto
             };
         }
     }

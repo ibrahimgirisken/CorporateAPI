@@ -3,11 +3,6 @@ using CorporateAPI.Application.DTOs.Lang;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Mapping
 {
@@ -16,15 +11,16 @@ namespace CorporateAPI.Application.Mapping
         public MappingProfile()
         {
             CreateMap<Page,CreatePageDTO>().ReverseMap(); 
-            CreateMap<Page,GetPageDTO>().ReverseMap();
+            CreateMap<Page,ResultPageDTO>().ReverseMap();
             CreateMap<PageTranslation, PageTranslationDTO>().ReverseMap();
+            CreateMap<Page,GetByIdPageDTO>().ReverseMap();
 
-            CreateMap<Module, GetModuleDTO>().ReverseMap();
+            CreateMap<Module, ResultModuleDTO>().ReverseMap();
             CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
             CreateMap<Module,UpdateModuleDTO>().ReverseMap(); 
 
             CreateMap<Module,CreateModuleDTO>().ReverseMap(); 
-            CreateMap<ModuleTranslation,CreateModuleTranslationDTO>().ReverseMap();
+            CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
 
             CreateMap<Lang,GetLangDTO>().ReverseMap();
             CreateMap<Lang,CreateLangDTO>().ReverseMap();

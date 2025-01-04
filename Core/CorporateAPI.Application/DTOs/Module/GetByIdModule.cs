@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Module
 {
-    public class GetModuleDTO
+    public class GetByIdModule
     {
         public int Id { get; set; }
         public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }

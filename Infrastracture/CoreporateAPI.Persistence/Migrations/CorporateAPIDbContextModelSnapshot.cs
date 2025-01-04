@@ -305,6 +305,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ModuleIds")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
@@ -372,24 +375,6 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
-                });
-
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
-                {
-                    b.Property<int>("PageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.HasKey("PageId", "ModuleId");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("PageModule", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -541,25 +526,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Page");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Relationship.PageModule", b =>
-                {
-                    b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
-                        .WithMany("Pages")
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
-                        .WithMany("Modules")
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Module");
-
-                    b.Navigation("Page");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Identity.AppRole", null)
@@ -621,14 +587,10 @@ namespace CoreporateAPI.Persistence.Migrations
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
                 {
                     b.Navigation("ModuleTranslations");
-
-                    b.Navigation("Pages");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
                 {
-                    b.Navigation("Modules");
-
                     b.Navigation("PageTranslations");
                 });
 #pragma warning restore 612, 618

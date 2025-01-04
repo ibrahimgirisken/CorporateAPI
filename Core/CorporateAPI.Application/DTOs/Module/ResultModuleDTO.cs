@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Module
 {
-    public class CreateModuleDTO
+    public class ResultModuleDTO
     {
-        public CreateModuleDTO()
-        {
-            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
-        }
+        public int Id { get; set; }
         public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
-
     }
 }

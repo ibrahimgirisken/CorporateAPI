@@ -20,13 +20,13 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
-            //var pages =_pageReadRepository.GetAll(false).Include(m => m.PageTranslations).Include(ms=>ms.Modules).ThenInclude(m=>m.Module).ToList();
-            //var pageDtos = _mapper.Map<List<GetPageDTO>>(pages);
+            var pages = _pageReadRepository.GetAll(false).Include(m => m.PageTranslations).ToList();
+            var pageDtos = _mapper.Map<List<ResultPageDTO>>(pages);
 
-            //return new()
-            //{
-            //    Pages= pageDtos,
-            //};
+            return new()
+            {
+                Pages = pageDtos,
+            };
             return new();
         }
     }

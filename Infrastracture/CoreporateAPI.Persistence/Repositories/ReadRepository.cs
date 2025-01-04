@@ -24,7 +24,7 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public IQueryable<T> GetAll(bool tracking = true)
         {
-            var query=Table.AsQueryable();
+            var query = Table.AsQueryable();
             if (!tracking)
                 query.AsNoTracking();
             return query;
@@ -32,9 +32,9 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
         {
-            var query= Table.Where(method);
+            var query = Table.Where(method);
             if (!tracking)
-               query= Table.AsNoTracking();
+                query = Table.AsNoTracking();
             return query;
 
         }
@@ -45,11 +45,22 @@ namespace CoreporateAPI.Persistence.Repositories
                 query.AsNoTracking();
             return await query.FirstOrDefaultAsync(method);
         }
-        public async Task<T> GetByIdAsync(int id, bool tracking = true)
+        public async Task<T> GetByIdAsync(
+         int id,
+         bool tracking = true,
+         params Expression<Func<T, object>>[] includes)
         {
-            var query = Table.AsNoTracking();
+            var query = Table.AsQueryable();
+
             if (!tracking)
-                query.AsNoTracking();
+                query = query.AsNoTracking();
+
+            // İlişkili tabloları dinamik olarak ekle
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
             return await query.FirstOrDefaultAsync(e => e.Id == id);
         }
 

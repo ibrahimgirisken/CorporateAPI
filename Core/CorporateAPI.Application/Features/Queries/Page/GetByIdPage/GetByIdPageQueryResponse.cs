@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
 {
     public class GetByIdPageQueryResponse
     {
-        public object Page{ get; set; }
+        public GetByIdPageDTO Page{ get; set; }
     }
 }
