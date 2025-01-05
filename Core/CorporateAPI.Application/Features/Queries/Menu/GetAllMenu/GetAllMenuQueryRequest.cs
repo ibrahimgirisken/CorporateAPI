@@ -1,0 +1,8 @@
+﻿using MediatR;
+
+namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
+{
+    public class GetAllMenuQueryRequest:IRequest<GetAllMenuQueryResponse>
+    {
+    }
+}
