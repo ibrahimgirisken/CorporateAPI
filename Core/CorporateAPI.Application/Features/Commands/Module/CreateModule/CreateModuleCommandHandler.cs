@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories;
-using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Module;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
 {
@@ -22,28 +17,25 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
 
         public async Task<CreateModuleCommandResponse> Handle(CreateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            //var module = _mapper.Map<Domain.Entities.Module>(request.Module);
-
-            //if (request.Module.Translations != null)
-            //{
-            //    var moduleTranslations = new List<ModuleTranslation>();
-            //    foreach (var moduleTranslation in request.Module.Translations)
-            //    {
-            //        var translation = new ModuleTranslation
-            //        {
-            //            Locale = moduleTranslation.Locale,
-            //            Name = moduleTranslation.Name,
-            //            ModuleData = moduleTranslation.ModuleData,
-            //            Module = module
-            //        };
-            //        moduleTranslations.Add(translation);
-            //    }
-            //    module.ModuleTranslations = moduleTranslations;
-            //}
-
-            //await _moduleWriteRepository.AddAsync(module);
-            //await _moduleWriteRepository.SaveAsync();
-
+            var module=_mapper.Map<Domain.Entities.Module.Module>(request.Module);
+            var moduleTranslations = new HashSet<Domain.Entities.Module.ModuleTranslation>();
+            if (request.Module.ModuleTranslations != null)
+            {
+                foreach (var item in request.Module.ModuleTranslations)
+                {
+                    var translation = new ModuleTranslation
+                    {
+                        Locale = item.Locale,
+                        ModuleData = item.ModuleData,
+                        Name = item.Name,
+                        ModuleId = module.Id
+                    };
+                    moduleTranslations.Add(translation);
+                }
+                module.ModuleTranslations = moduleTranslations;
+            }
+            await _moduleWriteRepository.AddAsync(module);
+            await _moduleWriteRepository.SaveAsync();
             return new();
         }
     }

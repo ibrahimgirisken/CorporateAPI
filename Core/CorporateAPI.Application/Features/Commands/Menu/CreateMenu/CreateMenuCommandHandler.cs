@@ -18,7 +18,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
 
         public async Task<CreateMenuCommandResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
         {
-           var menu =_mapper.Map<Domain.Entities.Menu.Menu>(request.MenuDto);
+            var menu = _mapper.Map<Domain.Entities.Menu.Menu>(request.MenuDto);
             var menuTranslations = new HashSet<MenuTranslation>();
             if (request.MenuDto.MenuTranslations != null)
             {

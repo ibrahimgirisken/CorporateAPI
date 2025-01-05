@@ -9,6 +9,7 @@ namespace CorporateAPI.Application.DTOs.Menu
 {
     public class GetByIdMenuDTO
     {
+        public int Id { get; set; }
         public string Image1 { get; set; }
         public string Image2 { get; set; }
         public string Image3 { get; set; }

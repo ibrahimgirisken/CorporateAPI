@@ -1,14 +1,10 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CorporateAPI.Application.DTOs.Module;
+using MediatR;
 
 namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
 {
     public class CreateModuleCommandRequest:IRequest<CreateModuleCommandResponse>
     {
-        public DTOs.Module.CreateModuleDTO Module { get; set; }
+        public CreateModuleDTO Module { get; set; }
     }
 }

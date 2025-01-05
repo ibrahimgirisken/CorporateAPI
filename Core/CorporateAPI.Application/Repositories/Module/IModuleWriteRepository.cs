@@ -1,9 +1,5 @@
-﻿using CorporateAPI.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CorporateAPI.Domain.Entities.Module;
+
 
 namespace CorporateAPI.Application.Repositories
 {

@@ -5,6 +5,7 @@ using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Menu;
+using CorporateAPI.Domain.Entities.Module;
 
 namespace CorporateAPI.Application.Mapping
 {

@@ -2,6 +2,7 @@
 using CorporateAPI.Domain.Entities.Common;
 using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Menu;
+using CorporateAPI.Domain.Entities.Module;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

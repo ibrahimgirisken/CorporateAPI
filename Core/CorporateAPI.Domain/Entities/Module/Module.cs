@@ -1,6 +1,6 @@
 ﻿using CorporateAPI.Domain.Entities.Common;
 
-namespace CorporateAPI.Domain.Entities
+namespace CorporateAPI.Domain.Entities.Module
 {
     public class Module:BaseEntity
     {

@@ -8,6 +8,7 @@ namespace CorporateAPI.Application.DTOs.Menu
 {
     public class ResultMenuDTO
     {
+        public int Id { get; set; }
         public bool Vitrin { get; set; }
         public bool Footer { get; set; }
         public int Order { get; set; }
