@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.DTOs.Menu;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
 {
     public class CreateMenuCommandRequest:IRequest<CreateMenuCommandResponse>
     {
+        public CreateMenuDTO MenuDto { get; set; }
     }
 }
