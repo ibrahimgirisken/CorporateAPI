@@ -9,5 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.RemoveMenu
 {
     public class RemoveMenuCommandRequest:IRequest<RemoveMenuCommandResponse>
     {
+        public int Id { get; set; }
     }
 }

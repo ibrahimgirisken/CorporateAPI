@@ -2,12 +2,6 @@
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 {
@@ -28,9 +22,9 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Page page = await _pageReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.PageTranslations);
+            Domain.Entities.Page page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
 
-           var pageData= _mapper.Map<Domain.Entities.Page>(page);
+            var pageData = _mapper.Map<Domain.Entities.Page>(page);
 
             var existingTranslations = pageData.PageTranslations.ToList();
             page.PageTranslations.Clear();

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.DTOs.Menu;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
 {
     public class UpdateMenuCommandRequest:IRequest<UpdateMenuCommandResponse>
     {
+        public int Id { get; set; }
+        public UpdateMenuDTO MenuDTO { get; set; }
     }
 }
