@@ -11,6 +11,7 @@ using CoreporateAPI.Persistence.Repositories;
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using CorporateAPI.Application.Repositories.Menu;
 
 namespace CoreporateAPI.Persistence
 {
@@ -32,6 +33,8 @@ namespace CoreporateAPI.Persistence
                 }
 
             ).AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
+            services.AddScoped<IMenuReadRepository, MenuReadRepository>();
+            services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
             services.AddScoped<IPageReadRepository, PageReadRepository>();
             services.AddScoped<IPageWriteRepository, PageWriteRepository>();
             services.AddScoped<IModuleReadRepository, ModuleReadRepository>();
