@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
 {
-    public class UpdateLangHandler : IRequestHandler<UpdateLangRequest, UpdateLangResponse>
+    public class UpdateLangCommandHandler : IRequestHandler<UpdateLangCommandRequest, UpdateLangCommandResponse>
     {
         readonly ILangWriteRepository _langWriteRepository;
         readonly ILangReadRepository _langReadRepository;
         readonly IMapper _mapper;
 
-        public UpdateLangHandler(ILangWriteRepository langWriteRepository, IMapper mapper, ILangReadRepository langReadRepository)
+        public UpdateLangCommandHandler(ILangWriteRepository langWriteRepository, IMapper mapper, ILangReadRepository langReadRepository)
         {
             _langWriteRepository = langWriteRepository;
             _mapper = mapper;
             _langReadRepository = langReadRepository;
         }
 
-        public async Task<UpdateLangResponse> Handle(UpdateLangRequest request, CancellationToken cancellationToken)
+        public async Task<UpdateLangCommandResponse> Handle(UpdateLangCommandRequest request, CancellationToken cancellationToken)
         {
             Domain.Entities.Lang lang = await _langReadRepository.GetByIdAsync(request.updateLangDTO.Id);
             _mapper.Map(request.updateLangDTO,lang);

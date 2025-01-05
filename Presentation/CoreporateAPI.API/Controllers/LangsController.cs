@@ -35,22 +35,22 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateLangRequest createLangRequest)
+        public async Task<IActionResult> Post(CreateLangCommandRequest createLangRequest)
         {
             CreateLangResponse response = await _mediator.Send(createLangRequest);
             return Ok(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateLangRequest updateLangRequest)
+        public async Task<IActionResult> Update(UpdateLangCommandRequest updateLangRequest)
         {
-            UpdateLangResponse response = await _mediator.Send(updateLangRequest);
+            UpdateLangCommandResponse response = await _mediator.Send(updateLangRequest);
             return Ok(response);
         }
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemoveLangRequest removeLangRequest)
+        public async Task<IActionResult> Delete([FromRoute] RemoveLangCommandRequest removeLangRequest)
         {
-            RemoveLangResponse response = await _mediator.Send(removeLangRequest);
+            RemoveLangCommandResponse response = await _mediator.Send(removeLangRequest);
             return Ok(response);
         }
     }

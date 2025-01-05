@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.CreateLang
 {
-    public class CreateLangRequest:IRequest<CreateLangResponse>
+    public class CreateLangCommandRequest:IRequest<CreateLangResponse>
     {
         public CreateLangDTO createLangDTO{ get; set; }
     }

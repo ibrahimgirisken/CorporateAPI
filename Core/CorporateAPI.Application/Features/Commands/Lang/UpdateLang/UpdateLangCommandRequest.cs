@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
 {
-    public class UpdateLangRequest:IRequest<UpdateLangResponse>
+    public class UpdateLangCommandRequest:IRequest<UpdateLangCommandResponse>
     {
         public UpdateLangDTO updateLangDTO{ get; set; }
     }

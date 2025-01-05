@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.RemoveLang
 {
-    public class RemoveLangResponse
+    public class RemoveLangCommandResponse
     {
     }
 }

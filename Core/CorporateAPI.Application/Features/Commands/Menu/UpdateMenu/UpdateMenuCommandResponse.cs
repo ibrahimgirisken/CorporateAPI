@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
+namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
 {
-    public class UpdateLangResponse
+    public class UpdateMenuCommandResponse
     {
     }
 }

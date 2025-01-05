@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.RemoveLang
 {
-    public class RemoveLangHandler : IRequestHandler<RemoveLangRequest, RemoveLangResponse>
+    public class RemoveLangCommandHandler : IRequestHandler<RemoveLangCommandRequest, RemoveLangCommandResponse>
     {
         readonly ILangWriteRepository _langWriteRepository;
 
-        public RemoveLangHandler(ILangWriteRepository langWriteRepository)
+        public RemoveLangCommandHandler(ILangWriteRepository langWriteRepository)
         {
             _langWriteRepository = langWriteRepository;
         }
 
-        public async Task<RemoveLangResponse> Handle(RemoveLangRequest request, CancellationToken cancellationToken)
+        public async Task<RemoveLangCommandResponse> Handle(RemoveLangCommandRequest request, CancellationToken cancellationToken)
         {
             await _langWriteRepository.RemoveAsync(request.Id);
             await _langWriteRepository.SaveAsync();

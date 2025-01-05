@@ -24,4 +24,9 @@
     <ProjectReference Include="..\CorporateAPI.Domain\CorporateAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Queries\Menu\GetAllMenu\" />
+    <Folder Include="Features\Queries\Menu\GetByIdMenu\" />
+  </ItemGroup>
+
 </Project>

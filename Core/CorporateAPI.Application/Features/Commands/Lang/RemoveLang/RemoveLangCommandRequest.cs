@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Lang.RemoveLang
 {
-    public class RemoveLangRequest:IRequest<RemoveLangResponse>
+    public class RemoveLangCommandRequest:IRequest<RemoveLangCommandResponse>
     {
         public int Id { get; set; }
     }
