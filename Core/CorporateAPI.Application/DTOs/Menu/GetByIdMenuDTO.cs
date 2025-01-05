@@ -10,11 +10,10 @@ namespace CorporateAPI.Application.DTOs.Menu
     public class GetByIdMenuDTO
     {
         public int Id { get; set; }
-        public string Image1 { get; set; }
-        public string Image2 { get; set; }
-        public string Image3 { get; set; }
+        public bool Vitrin { get; set; }
+        public bool Footer { get; set; }
         public int Order { get; set; }
-        public string? ModuleIds { get; set; }
-        public ICollection<PageTranslationDTO> Translations { get; set; }
+        public int? ParentId { get; set; }
+        public ICollection<MenuTranslationDTO> Translations { get; set; }
     }
 }
