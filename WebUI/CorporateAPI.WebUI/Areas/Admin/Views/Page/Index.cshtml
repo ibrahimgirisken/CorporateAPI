@@ -1,4 +1,4 @@
-﻿@model List<CorporateAPI.WebUI.DTOs.Page.GetPageDTO>
+﻿@model List<CorporateAPI.WebUI.DTOs.Page.ResultPageDTO>
 
 @{
     ViewData["Title"] = "Hakkımızda Sayfası";
@@ -15,8 +15,7 @@
     {
         <tr>
             <th>@item.Id</th>
-            <td>@item.Translations.FirstOrDefault(t => t.Locale == "tr")?.Title ?? "Başlık Yok"</td>
-            <td>@item.Children?.Count ?? 0</td>
+            <td>@item.PageTranslations.FirstOrDefault(t => t.Locale == "tr")?.Title ?? "Başlık Yok"</td>
             <td>
                 <a asp-action="Delete" asp-controller="About" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
                 <a asp-action="Update" asp-controller="About" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>

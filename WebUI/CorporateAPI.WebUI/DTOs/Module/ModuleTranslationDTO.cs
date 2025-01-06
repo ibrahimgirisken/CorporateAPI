@@ -1,14 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace CorporateAPI.WebUI.DTOs.Module
 {
     public class ModuleTranslationDTO
     {
-        [JsonPropertyName("name")]
         public string Name { get; set; }
-
-        [JsonPropertyName("locale")]
-        public string Locale { get; set; }
-        [JsonPropertyName("moduleData")]
         public string ModuleData { get; set; }
+        public string Locale { get; set; }
+        public int ModuleId { get; set; }
     }
 }

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace CorporateAPI.WebUI.DTOs.Lang
+namespace CorporateAPI.WebUI.DTOs.Module
 {
-    public class GetLangDTO
+    public class GetByIdModuleDTO
     {
         public int Id { get; set; }
-        public string LangCode { get; set; }
+        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }

@@ -11,9 +11,9 @@
             <label>Menuler</label>
             <select class="form-select" aria-label="Module">
                 <option selected>select</option>
-                @foreach (var item in Model.GetModuleDTOs.Modules)
+                @foreach (var item in Model.GetModuleDTOs.ModuleTranslations)
                 {
-                    <option selected>@item.Translations.FirstOrDefault(t => t.Locale == "tr")?.Name</option>
+                    <option selected>@item.Name</option>
                 }
             </select>
     </div>

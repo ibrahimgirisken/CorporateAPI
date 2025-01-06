@@ -1,13 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace CorporateAPI.WebUI.DTOs.Module
 {
     public class CreateModuleDTO
     {
-        [JsonPropertyName("id")]
-        public int Id { get; set; }
-
-        [JsonPropertyName("translations")]
-        public List<ModuleTranslationDTO> Translations { get; set; } = new List<ModuleTranslationDTO>();
+        public CreateModuleDTO()
+        {
+            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
+        }
+        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
 
     }
 }

@@ -223,7 +223,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("MenuTranslations", "dbo");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -245,7 +245,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Module", "dbo");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -511,9 +511,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Menu");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
+                    b.HasOne("CorporateAPI.Domain.Entities.Module.Module", "Module")
                         .WithMany("ModuleTranslations")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -591,7 +591,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("MenuTranslations");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
                 {
                     b.Navigation("ModuleTranslations");
                 });

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250104181342_mig1")]
+    [Migration("20250106054932_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -197,6 +197,10 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
 
@@ -213,15 +217,16 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuId");
-
                     b.HasIndex("Url")
+                        .IsUnique();
+
+                    b.HasIndex("MenuId", "Locale")
                         .IsUnique();
 
                     b.ToTable("MenuTranslations", "dbo");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,7 +248,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("Module", "dbo");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -259,7 +264,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModuleData")
                         .IsRequired()
@@ -277,7 +282,8 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("ModuleTranslations", "dbo");
                 });
@@ -346,7 +352,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
                         .IsRequired()
@@ -372,9 +378,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PageId");
-
                     b.HasIndex("Url")
+                        .IsUnique();
+
+                    b.HasIndex("PageId", "Locale")
                         .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
@@ -507,9 +514,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Menu");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.ModuleTranslation", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Module", "Module")
+                    b.HasOne("CorporateAPI.Domain.Entities.Module.Module", "Module")
                         .WithMany("ModuleTranslations")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -587,7 +594,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("MenuTranslations");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
                 {
                     b.Navigation("ModuleTranslations");
                 });

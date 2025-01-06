@@ -1,26 +1,20 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace CorporateAPI.WebUI.DTOs.Page
 {
     public class PageTranslationDTO
     {
-        [JsonPropertyName("title")]
-        public string Title { get; set; }
-
-        [JsonPropertyName("locale")]
+        public int Id { get; set; }
         public string Locale { get; set; }
-        [JsonPropertyName("url")]
+        public string Title { get; set; }
         public string Url { get; set; }
-        [JsonPropertyName("pageTitle")]
         public string PageTitle { get; set; }
-        [JsonPropertyName("brief")]
         public string Brief { get; set; }
-        [JsonPropertyName("metaDescription")]
         public string MetaDescription { get; set; }
-        [JsonPropertyName("content")]
-
         public string Content { get; set; }
-        [JsonPropertyName("pageId")]
-        public int PageId { get; set; }
-
     }
 }

@@ -261,6 +261,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MenuId = table.Column<int>(type: "int", nullable: false),
@@ -289,7 +290,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModuleData = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ModuleId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -314,7 +315,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -391,10 +392,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuTranslations_MenuId",
+                name: "IX_MenuTranslations_MenuId_Locale",
                 schema: "dbo",
                 table: "MenuTranslations",
-                column: "MenuId");
+                columns: new[] { "MenuId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuTranslations_Url",
@@ -404,16 +406,18 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModuleTranslations_ModuleId",
+                name: "IX_ModuleTranslations_ModuleId_Locale",
                 schema: "dbo",
                 table: "ModuleTranslations",
-                column: "ModuleId");
+                columns: new[] { "ModuleId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageTranslations_PageId",
+                name: "IX_PageTranslations_PageId_Locale",
                 schema: "dbo",
                 table: "PageTranslations",
-                column: "PageId");
+                columns: new[] { "PageId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PageTranslations_Url",
