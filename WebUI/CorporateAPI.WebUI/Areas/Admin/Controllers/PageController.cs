@@ -13,14 +13,14 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         private readonly HttpClient _client= HttpClientInstance.CreateClient();
         public async Task<IActionResult> Index()
         {
-            var response = await _client.GetFromJsonAsync<ResultPageDTO>("Pages");
+            var response = await _client.GetFromJsonAsync<List<ResultPageDTO>>("Pages");
 
-            if (response == null || response.PageTranslations == null)
+            if (response == null)
             {
-                return View(new List<ResultPageDTO>()); // Boş bir liste döner
+                return View(new List<ResultPageDTO>());
             }
 
-            return View(response.PageTranslations);
+            return View(response);
         }
 
         public async Task<IActionResult> DeletePage(int id)
@@ -29,9 +29,9 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
-        public async Task<IActionResult> CreatePage(ResultPageDTO getModuleDTO)
+        public async Task<IActionResult> CreatePage()
         {
-            var modules= await _client.GetFromJsonAsync<ResultModuleDTO>("Modules");
+            var modules= await _client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
             var viewModel = new CreatePageViewModel
             {
                 GetModuleDTOs = modules,
