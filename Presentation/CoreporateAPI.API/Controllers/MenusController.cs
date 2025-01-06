@@ -4,7 +4,6 @@ using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
 using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

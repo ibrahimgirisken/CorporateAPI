@@ -4,7 +4,6 @@ using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

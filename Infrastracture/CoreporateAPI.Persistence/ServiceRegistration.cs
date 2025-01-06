@@ -12,6 +12,7 @@ using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using CorporateAPI.Application.Repositories.Menu;
+using CorporateAPI.Application.Repositories.Banner;
 
 namespace CoreporateAPI.Persistence
 {
@@ -41,6 +42,8 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IModuleWriteRepository, ModuleWriteRepository>();
             services.AddScoped<ILangReadRepository, LangReadRepository>();
             services.AddScoped<ILangWriteRepository, LangWriteRepository>();
+            services.AddScoped<IBannerReadRepository,BannerReadRepository>();
+            services.AddScoped<IBannerWriteRepository, BannerWriteRepository>();
 
         }
     }

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.DTOs.Lang;
 using CorporateAPI.Application.DTOs.Menu;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
 
@@ -31,11 +33,15 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Module,UpdateModuleDTO>().ReverseMap(); 
             CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
 
-
             CreateMap<Lang,GetLangDTO>().ReverseMap();
             CreateMap<Lang,CreateLangDTO>().ReverseMap();
             CreateMap<Lang,UpdateLangDTO>().ReverseMap();
 
+            CreateMap<Banner, ResultBannerDTO>().ReverseMap();  
+            CreateMap<Banner,GetByIdBannerDTO>().ReverseMap();
+            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
+            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
+            CreateMap<BannerTranslation, BannerTranslationDTO>().ReverseMap();
         }
     }
 }

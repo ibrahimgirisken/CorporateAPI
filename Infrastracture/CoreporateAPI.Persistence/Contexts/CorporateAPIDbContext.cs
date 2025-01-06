@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Common;
 using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Menu;
@@ -12,9 +13,11 @@ namespace CoreporateAPI.Persistence.Contexts
     {
         public CorporateAPIDbContext(DbContextOptions options) : base(options)
         { }
-        public DbSet<Page> Pages { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<Module> Modules { get; set; }
         public DbSet<Lang> Languages { get; set; }
+        public DbSet<Banner> Banners { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -63,6 +66,15 @@ namespace CoreporateAPI.Persistence.Contexts
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<BannerTranslation>(entity =>
+            {
+                entity.ToTable("BannerTranslations");
+                entity.HasIndex(bt => new { bt.BannerId, bt.Locale }).IsUnique();
+                entity.HasOne(bt => bt.Banner)
+                .WithMany(bt => bt.BannerTranslations)
+                .HasForeignKey(bt => bt.BannerId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
             base.OnModelCreating(modelBuilder);
         }
 
