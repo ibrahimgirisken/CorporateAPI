@@ -4,8 +4,6 @@ using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
 using CorporateAPI.Application.Features.Queries.Module.GetAllModule;
 using CorporateAPI.Application.Features.Queries.Module.GetByIdModule;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers

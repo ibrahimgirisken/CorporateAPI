@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 {
@@ -24,10 +19,16 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            //Domain.Entities.Module module = await _moduleReadRepository.GetByIdAsync(request.UpdateModule.Id);
-            //module=_mapper.Map<Domain.Entities.Module>(request.UpdateModule);
-            //_moduleWriteRepository.Update(module);
-            //await _moduleWriteRepository.SaveAsync();
+            var module=await _moduleReadRepository.GetByIdAsync(request.UpdateModule.Id,false,includes:e=>e.ModuleTranslations);
+            var existingTranslations=module.ModuleTranslations.ToList();
+            var moduleData=_mapper.Map<Domain.Entities.Module.Module>(module);
+            module.ModuleTranslations.Clear();
+            foreach (var translationDto in request.UpdateModule.ModuleTranslations)
+            {
+                var translation=existingTranslations.FirstOrDefault(t=>t.Locale==translationDto.Locale) ?? new Domain.Entities.Module.ModuleTranslation();
+            }
+            _moduleWriteRepository.Update(module);
+            await _moduleWriteRepository.SaveAsync();
             return new();
         }
     }

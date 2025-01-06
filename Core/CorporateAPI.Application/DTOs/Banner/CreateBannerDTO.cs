@@ -8,5 +8,14 @@ namespace CorporateAPI.Application.DTOs.Banner
 {
     public class CreateBannerDTO
     {
+        public CreateBannerDTO()
+        {
+            BannerTranslations=new HashSet<BannerTranslationDTO>();
+        }
+        public string DesktopImage { get; set; }
+        public string TableteImage { get; set; }
+        public string MobileImage { get; set; }
+        public int Order { get; set; }
+        public ICollection<BannerTranslationDTO> BannerTranslations { get; set; }
     }
 }
