@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 {
-    public class GetByIdQueryRequest:IRequest<GetByIdQueryResponse>
+    public class GetByIdBannerQueryRequest:IRequest<GetByIdBannerQueryResponse>
     {
         public int Id { get; set; }
     }
