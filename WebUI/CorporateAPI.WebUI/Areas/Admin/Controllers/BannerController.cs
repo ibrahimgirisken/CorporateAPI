@@ -29,6 +29,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var langs=await _client.GetFromJsonAsync<List<ResultLangDTO>>("langs");
             if (langs == null || !langs.Any())
             {
+                // Hata durumunu işleyebilirsiniz.
                 return View("Error", "Dil verisi alınamadı.");
             }
             var model = new CreateBannerViewModel
@@ -37,6 +38,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
                 BannerTranslations = new List<BannerTranslationDTO>()
             };
 
+            // Eksik diller için boş BannerTranslation ekle
             foreach (var lang in model.Langs)
             {
                 if (!model.BannerTranslations.Any(bt => bt.Locale == lang.LangCode))
