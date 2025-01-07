@@ -33,7 +33,7 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Module,UpdateModuleDTO>().ReverseMap(); 
             CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
 
-            CreateMap<Lang,GetLangDTO>().ReverseMap();
+            CreateMap<Lang,ResultLangDTO>().ReverseMap();
             CreateMap<Lang,CreateLangDTO>().ReverseMap();
             CreateMap<Lang,UpdateLangDTO>().ReverseMap();
 

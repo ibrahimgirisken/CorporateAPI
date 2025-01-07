@@ -24,7 +24,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllBannerQueryRequest getAllBannerQueryRequest)
         {
             GetAllBannerQueryResponse response =await _mediator.Send(getAllBannerQueryRequest);
-            return Ok(response);
+            return Ok(response.Banners);
         }
 
         [HttpGet("{Id}")]

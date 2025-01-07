@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Lang
 {
-    public class GetLangDTO
+    public class ResultLangDTO
     {
         public int Id { get; set; }
         public string LangCode { get; set; }

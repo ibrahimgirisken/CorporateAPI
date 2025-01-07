@@ -24,7 +24,7 @@ namespace CorporateAPI.Application.Features.Queries.Lang.GetAllLang
         public async Task<GetAllLangResponse> Handle(GetAllLangRequest request, CancellationToken cancellationToken)
         {
            var langs= _langReadRepository.GetAll(false).ToList();
-           var langDatas= _mapper.Map<List<Domain.Entities.Lang>, List<GetLangDTO>>(langs);  
+           var langDatas= _mapper.Map<List<Domain.Entities.Lang>, List<ResultLangDTO>>(langs);  
 
             var response = new GetAllLangResponse()
             {

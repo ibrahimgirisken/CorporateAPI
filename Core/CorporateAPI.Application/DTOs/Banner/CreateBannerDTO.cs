@@ -16,6 +16,7 @@ namespace CorporateAPI.Application.DTOs.Banner
         public string TableteImage { get; set; }
         public string MobileImage { get; set; }
         public int Order { get; set; }
+        public bool IsDeleted { get; set; }
         public ICollection<BannerTranslationDTO> BannerTranslations { get; set; }
     }
 }

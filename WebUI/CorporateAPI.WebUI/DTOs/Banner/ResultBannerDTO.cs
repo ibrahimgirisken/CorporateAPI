@@ -10,15 +10,10 @@ namespace CorporateAPI.WebUI.DTOs.Banner
 {
     public class ResultBannerDTO
     {
-        [JsonPropertyName("id")]
         public int Id { get; set; }
-        [JsonPropertyName("desktopImage")]
         public string DesktopImage { get; set; }
-        [JsonPropertyName("tableteImage")]
         public string TableteImage { get; set; }
-        [JsonPropertyName("mobileImage")]
         public string MobileImage { get; set; }
-        [JsonPropertyName("order")]
         public int Order { get; set; }
         public ICollection<BannerTranslationDTO> BannerTranslations { get; set; }
     }

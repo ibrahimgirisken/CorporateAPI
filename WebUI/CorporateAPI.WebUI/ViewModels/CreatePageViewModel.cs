@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Module;
+﻿using CorporateAPI.WebUI.DTOs.Banner;
+using CorporateAPI.WebUI.DTOs.Module;
 using CorporateAPI.WebUI.DTOs.Page;
 
 namespace CorporateAPI.WebUI.ViewModels

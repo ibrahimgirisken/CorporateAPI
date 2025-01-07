@@ -1,5 +1,8 @@
-﻿using CorporateAPI.WebUI.DTOs.Banner;
+﻿using CorporateAPI.Domain.Entities.Banner;
+using CorporateAPI.WebUI.DTOs.Banner;
+using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.Helpers;
+using CorporateAPI.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
@@ -23,7 +26,28 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateBanner()
         {
-            return View();
+            var langs=await _client.GetFromJsonAsync<List<ResultLangDTO>>("langs");
+            if (langs == null || !langs.Any())
+            {
+                return View("Error", "Dil verisi alınamadı.");
+            }
+            var model = new CreateBannerViewModel
+            {
+                Langs = langs,
+                BannerTranslations = new List<BannerTranslationDTO>()
+            };
+
+            foreach (var lang in model.Langs)
+            {
+                if (!model.BannerTranslations.Any(bt => bt.Locale == lang.LangCode))
+                {
+                    model.BannerTranslations.Add(new BannerTranslationDTO
+                    {
+                        Locale = lang.LangCode
+                    });
+                }
+            }
+            return View(model);
         }
 
         [HttpPost]

@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Lang.GetAllLang
 {
     public class GetAllLangResponse
     {
-      public List<GetLangDTO> LangData { get; set; }
+      public List<ResultLangDTO> LangData { get; set; }
     }
 }

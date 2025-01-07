@@ -4,7 +4,6 @@ using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
 using CorporateAPI.Application.Features.Queries.Lang.GetAllLang;
 using CorporateAPI.Application.Features.Queries.Lang.GetByIdLang;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -24,7 +23,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllLangRequest getAllLangRequest)
         {
             GetAllLangResponse response = await _mediator.Send(getAllLangRequest);
-            return Ok(response);
+            return Ok(response.LangData);
         }
 
         [HttpGet("{Id}")]
