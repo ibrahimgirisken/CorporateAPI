@@ -27,35 +27,35 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateBanner()
         {
             var langs=await _client.GetFromJsonAsync<List<ResultLangDTO>>("langs");
-            if (langs == null || !langs.Any())
-            {
-                // Hata durumunu işleyebilirsiniz.
-                return View("Error", "Dil verisi alınamadı.");
-            }
             var model = new CreateBannerViewModel
             {
+                CreateBannerDTO = new CreateBannerDTO(),
                 Langs = langs,
-                BannerTranslations = new List<BannerTranslationDTO>()
-            };
-
-            // Eksik diller için boş BannerTranslation ekle
-            foreach (var lang in model.Langs)
-            {
-                if (!model.BannerTranslations.Any(bt => bt.Locale == lang.LangCode))
-                {
-                    model.BannerTranslations.Add(new BannerTranslationDTO
-                    {
-                        Locale = lang.LangCode
-                    });
-                }
-            }
+                BannerTranslations = new List<BannerTranslationDTO>() // Boş listeyle başlatılıyor
+    };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBanner(CreateBannerDTO createBannerDTO)
+        public async Task<IActionResult> CreateBanner(CreateBannerViewModel model)
         {
-            await _client.PostAsJsonAsync("banners", createBannerDTO);
+            if (!ModelState.IsValid)
+            {
+                // Eğer model doğrulama başarısızsa, form tekrar gösterilir
+                return View(model);
+            }
+
+            // CreateBannerDTO ve BannerTranslations'ı kullanarak API'ye gönderim
+            var createBannerDTO = model.CreateBannerDTO;
+            createBannerDTO.BannerTranslations = model.BannerTranslations;
+
+            var response = await _client.PostAsJsonAsync("banners", createBannerDTO);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "An error occurred while creating the banner.");
+                return View(model);
+            }
 
             return RedirectToAction(nameof(Index));
         }

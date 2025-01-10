@@ -4,97 +4,72 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<form method="post">
-    <div class="card-body">
-        <div class="form-group">
-            <label for="exampleInputPassword1">Masaüstü Görsel</label>
-            <input type="text" asp-for="CreateBannerDTO.DesktopImage" class="form-control" id="exampleInputPassword1" placeholder="Masaüstü Görsel">
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputPassword2">Tablet Görsel</label>
-            <input type="text" asp-for="CreateBannerDTO.TableteImage" class="form-control" id="exampleInputPassword2" placeholder="Tablet Görsel">
-        </div>
-
-        <div class="form-group">
-            <label for="exampleInputPassword3">Mobil Görsel</label>
-            <input type="text" asp-for="CreateBannerDTO.MobileImage" class="form-control" id="exampleInputPassword3" placeholder="Mobil Görsel">
-        </div>
+<form asp-action="CreateBanner" method="post">
+    <!-- Desktop, Tablet ve Mobil Görseller -->
+    <div class="form-group">
+        <label asp-for="CreateBannerDTO.DesktopImage">Masaüstü Görsel</label>
+        <input type="text" class="form-control" asp-for="CreateBannerDTO.DesktopImage" placeholder="Masaüstü Görsel">
     </div>
 
+    <div class="form-group">
+        <label asp-for="CreateBannerDTO.TableteImage">Tablet Görsel</label>
+        <input type="text" class="form-control" asp-for="CreateBannerDTO.TableteImage" placeholder="Tablet Görsel">
+    </div>
 
-    <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-        @foreach (var lang in Model.Langs)
+    <div class="form-group">
+        <label asp-for="CreateBannerDTO.MobileImage">Mobil Görsel</label>
+        <input type="text" class="form-control" asp-for="CreateBannerDTO.MobileImage" placeholder="Mobil Görsel">
+    </div>
+
+    <!-- Nav Tab: Çeviriler (BannerTranslations) -->
+    <ul class="nav nav-tabs" id="translation-tab" role="tablist">
+        @for (int i = 0; i < Model.BannerTranslations.Count; i++)
         {
+            var locale = Model.BannerTranslations[i].Locale;
             <li class="nav-item">
-                <a class="nav-link @((lang.LangCode == "tr") ? "active" : "")"
-                   id="@($"custom-content-below-{lang.LangCode}-tab")"
-                   data-bs-toggle="pill"
-                   href="@($"#custom-content-below-{lang.LangCode}")"
-                   role="tab"
-                   aria-controls="@($"custom-content-below-{lang.LangCode}")"
-                   aria-selected="@(lang.LangCode == "tr" ? "true" : "false")">
-                    @lang.LangCode.ToUpper()
+                <a class="nav-link @(i == 0 ? "active" : "")" id="tab-@locale" data-bs-toggle="pill" href="#content-@locale" role="tab" aria-controls="content-@locale" aria-selected="@(i == 0)">
+                    @locale.ToUpper()
                 </a>
             </li>
         }
     </ul>
 
-    <div class="tab-content" id="custom-content-below-tabContent">
-        @foreach (var lang in Model.Langs)
+    <div class="tab-content" id="translation-tabContent">
+        @for (int i = 0; i < Model.BannerTranslations.Count; i++)
         {
-            var translation = Model.BannerTranslations.FirstOrDefault(bt => bt.Locale == lang.LangCode);
-            if (translation != null)
-            {
-                <div class="tab-pane fade @(lang.LangCode == "tr" ? "active show" : "")"
-                     id="@($"custom-content-below-{lang.LangCode}")"
-                     role="tabpanel"
-                     aria-labelledby="@($"custom-content-below-{lang.LangCode}-tab")">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="@($"{lang.LangCode}-Lang")">Dil (@lang.LangCode.ToUpper())</label>
-                            <input type="text" asp-for="@translation.Locale" class="form-control"
-                                   id="@($"{lang.LangCode}-Lang")" placeholder="Lang">
-                        </div> 
-
-                        <div class="form-group">
-                            <label for="@($"{lang.LangCode}-Url")">Url (@lang.LangCode.ToUpper())</label>
-                            <input type="text" asp-for="@translation.Url" class="form-control"
-                                   id="@($"{lang.LangCode}-Url")" placeholder="Url">
-                        </div> 
-
-                        <div class="form-group">
-                            <label for="@($"{lang.LangCode}-Title")">Başlık (@lang.LangCode.ToUpper())</label>
-                            <input type="text" asp-for="@translation.Title" class="form-control"
-                                   id="@($"{lang.LangCode}-Title")" placeholder="Başlık">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="@($"{lang.LangCode}-Content")">İçerik (@lang.LangCode.ToUpper())</label>
-                            <textarea asp-for="@translation.Content" cols="25" rows="3" class="form-control"
-                                      id="@($"{lang.LangCode}-Content")" placeholder="İçerik"></textarea>
-                        </div>
-                    </div>
+            var locale = Model.BannerTranslations[i].Locale;
+            <div class="tab-pane fade @(i == 0 ? "show active" : "")" id="content-@locale" role="tabpanel" aria-labelledby="tab-@locale">
+                <div class="form-group">
+                    <label asp-for="@($"BannerTranslations[{i}].Locale")">Dil (@locale.ToUpper())</label>
+                    <input type="text" class="form-control" asp-for="@($"BannerTranslations[{i}].Locale")" readonly>
                 </div>
-            }
+                <div class="form-group">
+                    <label asp-for="@($"BannerTranslations[{i}].Url")">URL (@locale.ToUpper())</label>
+                    <input type="text" class="form-control" asp-for="@($"BannerTranslations[{i}].Url")">
+                </div>
+                <div class="form-group">
+                    <label asp-for="@($"BannerTranslations[{i}].Title")">Başlık (@locale.ToUpper())</label>
+                    <input type="text" class="form-control" asp-for="@($"BannerTranslations[{i}].Title")">
+                </div>
+                <div class="form-group">
+                    <label asp-for="@($"BannerTranslations[{i}].Content")">İçerik (@locale.ToUpper())</label>
+                    <textarea class="form-control" asp-for="@($"BannerTranslations[{i}].Content")"></textarea>
+                </div>
+            </div>
         }
     </div>
 
-    <div class="card-body">
-        <div class="form-group">
-            <label for="exampleInputPassword4">Sıra</label>
-            <input type="text" asp-for="CreateBannerDTO.Order" class="form-control" id="exampleInputPassword4" placeholder="Sıra">
-        </div>
-        <div class="form-group">
-            <label>Durum</label><br>
-            <input type="checkbox" asp-for="CreateBannerDTO.IsDeleted" checked data-bootstrap-switch>
-        </div>
+    <!-- Sıra ve Durum -->
+    <div class="form-group">
+        <label asp-for="CreateBannerDTO.Order">Sıra</label>
+        <input type="number" class="form-control" asp-for="CreateBannerDTO.Order" placeholder="Sıra">
     </div>
 
+    <div class="form-group">
+        <label asp-for="CreateBannerDTO.IsDeleted">Durum</label>
+        <input type="checkbox" class="form-check-input" asp-for="CreateBannerDTO.IsDeleted">
+    </div>
 
-
-
-
-    <br />
+    <!-- Submit Button -->
     <button type="submit" class="btn btn-primary">Kaydet</button>
 </form>
