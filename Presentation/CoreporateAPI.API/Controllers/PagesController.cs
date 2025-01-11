@@ -27,7 +27,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllPageQueryRequest getAllPageQueryRequest)
         {
             GetAllPageQueryResponse response=await _mediator.Send(getAllPageQueryRequest);
-            return Ok(response);
+            return Ok(response.Pages);
         }
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get([FromRoute] GetByIdPageQueryRequest getByIdPageQueryRequest)

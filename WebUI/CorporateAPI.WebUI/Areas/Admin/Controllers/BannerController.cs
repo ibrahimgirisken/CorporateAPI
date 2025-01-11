@@ -1,5 +1,4 @@
-﻿using CorporateAPI.Domain.Entities.Banner;
-using CorporateAPI.WebUI.DTOs.Banner;
+﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.Helpers;
 using CorporateAPI.WebUI.ViewModels;

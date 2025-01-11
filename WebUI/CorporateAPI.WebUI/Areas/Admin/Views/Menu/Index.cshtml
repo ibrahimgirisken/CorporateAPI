@@ -1,23 +1,26 @@
-﻿@model List<ResultBannerDTO>
+﻿@model List<ResultMenuDTO>
 @{
-    ViewData["Title"] = "Banner Sayfası";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 
 <table class="table table-hover">
     <tr>
         <th>#</th>
-        <th>Görsel</th>
         <th>Başlık</th>
         <th>Sıra</th>
+        <th>Vitrin</th>
+        <th>Footer</th>
         <th>İşlemler</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>@item.Id</td>
-            <td><img src="@item.DesktopImage" style="height:75px;width:75px" /></td>
-            <td>@item.BannerTranslations.FirstOrDefault(t => t.Locale == "tr")?.Title</td>
+            <td>@item.MenuTranslations.FirstOrDefault(t => t.Locale == "tr").Title</td>
+            <td>@item.Vitrin</td>
+            <td>@item.Footer</td>
             <td>@item.Order</td>
             <td>
                 <a asp-action="DeleteBanner" asp-controller="Banner" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>

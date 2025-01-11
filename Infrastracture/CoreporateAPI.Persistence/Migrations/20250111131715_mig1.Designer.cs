@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250106054932_mig1")]
+    [Migration("20250111131715_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -25,6 +25,87 @@ namespace CoreporateAPI.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.Banner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DesktopImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MobileImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TableteImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banners", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.BannerTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BannerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BannerId", "Locale")
+                        .IsUnique();
+
+                    b.ToTable("BannerTranslations", "dbo");
+                });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Identity.AppRole", b =>
                 {
@@ -245,7 +326,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Module", "dbo");
+                    b.ToTable("Modules", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
@@ -493,6 +574,17 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.BannerTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Banner.Banner", "Banner")
+                        .WithMany("BannerTranslations")
+                        .HasForeignKey("BannerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Banner");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Parent")
@@ -585,6 +677,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.Banner", b =>
+                {
+                    b.Navigation("BannerTranslations");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>

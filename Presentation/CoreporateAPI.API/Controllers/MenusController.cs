@@ -23,7 +23,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllMenuQueryRequest getAllMenuQueryRequest)
         {
             GetAllMenuQueryResponse response = await _mediator.Send(getAllMenuQueryRequest);
-            return Ok(response);
+            return Ok(response.menusDto);
         }
 
         [HttpGet("{Id}")]

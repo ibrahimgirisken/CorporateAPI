@@ -11,9 +11,10 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class PageController() : Controller
     {
         private readonly HttpClient _client= HttpClientInstance.CreateClient();
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var response = await _client.GetFromJsonAsync<List<ResultPageDTO>>("Pages");
+            var response = await _client.GetFromJsonAsync<List<ResultPageDTO>>("pages");
 
             if (response == null)
             {
@@ -22,16 +23,10 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 
             return View(response);
         }
-
-        public async Task<IActionResult> DeletePage(int id)
-        {
-            await _client.DeleteAsync("Pages/{id}");
-            return RedirectToAction(nameof(Index));
-        }
         [HttpGet]
         public async Task<IActionResult> CreatePage()
         {
-            var modules= await _client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
+            var modules = await _client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
             var viewModel = new CreatePageViewModel
             {
                 GetModuleDTOs = modules,
@@ -45,18 +40,25 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             await _client.PostAsJsonAsync("Pages", pageDTO);
             return RedirectToAction(nameof(Index));
         }
-
+        [HttpGet]
         public async Task<IActionResult> UpdatePage(int id)
         {
             CreatePageDTO response= await _client.GetFromJsonAsync<CreatePageDTO>($"Pages/{id}");
             return View(response);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdatePage(UpdatePageDTO updatePageDTO)
         {
             await _client.PutAsJsonAsync("Pages", updatePageDTO);
             return RedirectToAction(nameof(Index));
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeletePage(int id)
+        {
+            await _client.DeleteAsync("Pages/{id}");
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

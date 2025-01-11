@@ -24,7 +24,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery]GetAllModuleQueryRequest getAllModuleQueryRequest)
         {
             GetAllModuleQueryResponse response=await _mediator.Send(getAllModuleQueryRequest);
-            return Ok(response);
+            return Ok(response.Modules);
         }
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get([FromRoute] GetByIdModuleQueryRequest getByIdModuleQueryRequest)
