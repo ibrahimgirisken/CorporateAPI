@@ -2,7 +2,6 @@
 using CorporateAPI.WebUI.DTOs.Module;
 using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
-using CorporateAPI.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
@@ -38,7 +37,8 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)
         {
-            await _client.PostAsJsonAsync("Pages", pageDTO);
+            PageRequestDTO data = new() { PageDto = pageDTO };
+            await _client.PostAsJsonAsync("Pages", data);
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
