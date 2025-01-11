@@ -10,6 +10,6 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
 {
     public class CreateBannerCommandRequest:IRequest<CreateBannerCommandResponse>
     {
-        public CreateBannerDTO Banner { get; set; }
+        public CreateBannerDTO BannerDTO { get; set; }
     }
 }

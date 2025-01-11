@@ -16,7 +16,6 @@
                 <option value="3">Three</option>
             </select>
         </div>
-
         <div class="form-group">
             <label>Resim1</label>
             <input type="text" name="Image1" class="form-control" />
@@ -29,12 +28,6 @@
             <label>Resim3</label>
             <input type="text" name="Image3" class="form-control" />
         </div>
-
-        <div class="form-group">
-            <label>Sıra</label>
-            <input type="number" name="Order" class="form-control" />
-        </div>
-
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @foreach (var lang in Model.Translations)
             {
@@ -81,6 +74,10 @@
                     </div>
                 </div>
             }
+        </div>
+        <div class="form-group">
+            <label>Sıra</label>
+            <input type="number" name="Order" class="form-control" />
         </div>
         <input type="submit" value="Verileri Gönder"/>
 

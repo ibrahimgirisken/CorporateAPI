@@ -9,9 +9,9 @@ namespace CorporateAPI.WebUI.DTOs.Banner
 {
     public class BannerTranslationDTO
     {
-        public string Locale { get; set; }
-        public string Url { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string? Locale { get; set; }
+        public string? Url { get; set; }
+        public string? Title { get; set; }
+        public string? Content { get; set; }
     }
 }

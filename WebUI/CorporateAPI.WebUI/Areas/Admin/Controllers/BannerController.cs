@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
 using CorporateAPI.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -25,37 +26,19 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateBanner()
         {
-            var langs=await _client.GetFromJsonAsync<List<ResultLangDTO>>("langs");
-            var model = new CreateBannerViewModel
+            var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var model = new CreateBannerDTO
             {
-                CreateBannerDTO = new CreateBannerDTO(),
-                Langs = langs,
-                BannerTranslations = new List<BannerTranslationDTO>() // Boş listeyle başlatılıyor
-    };
+                BannerTranslations = langs.Select(lang => new BannerTranslationDTO { Locale = lang.LangCode }).ToList()
+            };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBanner(CreateBannerViewModel model)
+        public async Task<IActionResult> CreateBanner(CreateBannerDTO bannerDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                // Eğer model doğrulama başarısızsa, form tekrar gösterilir
-                return View(model);
-            }
-
-            // CreateBannerDTO ve BannerTranslations'ı kullanarak API'ye gönderim
-            var createBannerDTO = model.CreateBannerDTO;
-            createBannerDTO.BannerTranslations = model.BannerTranslations;
-
-            var response = await _client.PostAsJsonAsync("banners", createBannerDTO);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                ModelState.AddModelError("", "An error occurred while creating the banner.");
-                return View(model);
-            }
-
+            BannerRequestDTO data = new() { BannerDTO = bannerDTO };
+            await _client.PostAsJsonAsync("Banners", data);
             return RedirectToAction(nameof(Index));
         }
 

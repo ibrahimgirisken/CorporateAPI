@@ -1,75 +1,62 @@
-﻿@model CreateBannerViewModel
+﻿@model CreateBannerDTO
 @{
     ViewData["Title"] = "Yeni Banner Ekleme Sayfası";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<form asp-action="CreateBanner" method="post">
-    <!-- Desktop, Tablet ve Mobil Görseller -->
+<div class="container-fluid my-5">
+<form method="post" class="form-group">
     <div class="form-group">
-        <label asp-for="CreateBannerDTO.DesktopImage">Masaüstü Görsel</label>
-        <input type="text" class="form-control" asp-for="CreateBannerDTO.DesktopImage" placeholder="Masaüstü Görsel">
+        <label>Resim1</label>
+        <input type="text" name="DesktopImage" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Resim2</label>
+        <input type="text" name="TableteImage" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Resim3</label>
+        <input type="text" name="MobileImage" class="form-control" />
     </div>
 
-    <div class="form-group">
-        <label asp-for="CreateBannerDTO.TableteImage">Tablet Görsel</label>
-        <input type="text" class="form-control" asp-for="CreateBannerDTO.TableteImage" placeholder="Tablet Görsel">
-    </div>
-
-    <div class="form-group">
-        <label asp-for="CreateBannerDTO.MobileImage">Mobil Görsel</label>
-        <input type="text" class="form-control" asp-for="CreateBannerDTO.MobileImage" placeholder="Mobil Görsel">
-    </div>
-
-    <!-- Nav Tab: Çeviriler (BannerTranslations) -->
-    <ul class="nav nav-tabs" id="translation-tab" role="tablist">
-        @for (int i = 0; i < Model.BannerTranslations.Count; i++)
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        @foreach (var lang in Model.BannerTranslations)
         {
-            var locale = Model.BannerTranslations[i].Locale;
-            <li class="nav-item">
-                <a class="nav-link @(i == 0 ? "active" : "")" id="tab-@locale" data-bs-toggle="pill" href="#content-@locale" role="tab" aria-controls="content-@locale" aria-selected="@(i == 0)">
-                    @locale.ToUpper()
-                </a>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale-tab" data-bs-toggle="tab" data-bs-target="#@lang.Locale" type="button" role="tab" aria-controls="@lang.Locale" aria-selected="@(lang.Locale == "tr" ? "true" : "false")">
+                    <img width="15" height="15" src="~/icons/@(lang.Locale).svg" />@lang.Locale
+                </button>
             </li>
         }
     </ul>
 
-    <div class="tab-content" id="translation-tabContent">
+    <div class="tab-content mt-3" id="myTabContent">
         @for (int i = 0; i < Model.BannerTranslations.Count; i++)
         {
-            var locale = Model.BannerTranslations[i].Locale;
-            <div class="tab-pane fade @(i == 0 ? "show active" : "")" id="content-@locale" role="tabpanel" aria-labelledby="tab-@locale">
-                <div class="form-group">
-                    <label asp-for="@($"BannerTranslations[{i}].Locale")">Dil (@locale.ToUpper())</label>
-                    <input type="text" class="form-control" asp-for="@($"BannerTranslations[{i}].Locale")" readonly>
-                </div>
-                <div class="form-group">
-                    <label asp-for="@($"BannerTranslations[{i}].Url")">URL (@locale.ToUpper())</label>
-                    <input type="text" class="form-control" asp-for="@($"BannerTranslations[{i}].Url")">
-                </div>
-                <div class="form-group">
-                    <label asp-for="@($"BannerTranslations[{i}].Title")">Başlık (@locale.ToUpper())</label>
-                    <input type="text" class="form-control" asp-for="@($"BannerTranslations[{i}].Title")">
-                </div>
-                <div class="form-group">
-                    <label asp-for="@($"BannerTranslations[{i}].Content")">İçerik (@locale.ToUpper())</label>
-                    <textarea class="form-control" asp-for="@($"BannerTranslations[{i}].Content")"></textarea>
+            var lang = Model.BannerTranslations.ToList()[i];
+            <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
+                <div class="card-body">
+                    <input type="hidden" name="Translations[@i].Locale" value="@lang.Locale" />
+                    <div class="form-group">
+                        <label for="Url">Url</label>
+                        <input type="text" name="Translations[@i].Url" class="form-control" value="@lang.Url" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Title">Başlık</label>
+                        <input type="text" name="Translations[@i].Title" class="form-control" value="@lang.Title" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Content">Açıklama</label>
+                        <textarea class="form-control" name="Translations[@i].Content">@lang.Content</textarea>
+                    </div>
                 </div>
             </div>
         }
     </div>
-
-    <!-- Sıra ve Durum -->
     <div class="form-group">
-        <label asp-for="CreateBannerDTO.Order">Sıra</label>
-        <input type="number" class="form-control" asp-for="CreateBannerDTO.Order" placeholder="Sıra">
+        <label>Sıra</label>
+        <input type="number" name="Order" class="form-control" />
     </div>
+    <input type="submit" value="Verileri Gönder" />
 
-    <div class="form-group">
-        <label asp-for="CreateBannerDTO.IsDeleted">Durum</label>
-        <input type="checkbox" class="form-check-input" asp-for="CreateBannerDTO.IsDeleted">
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary">Kaydet</button>
 </form>
+</div>

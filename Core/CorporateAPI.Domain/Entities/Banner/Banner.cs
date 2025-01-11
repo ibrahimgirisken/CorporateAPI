@@ -9,10 +9,10 @@ namespace CorporateAPI.Domain.Entities.Banner
 {
     public class Banner: BaseEntity
     {
-        public string DesktopImage { get; set; }
-        public string TableteImage { get; set; }
-        public string MobileImage { get; set; }
+        public string? DesktopImage { get; set; }
+        public string? TableteImage { get; set; }
+        public string? MobileImage { get; set; }
         public int Order { get; set; }
-        public ICollection<BannerTranslation> BannerTranslations { get; set; }
+        public ICollection<BannerTranslation>? BannerTranslations { get; set; }
     }
 }
