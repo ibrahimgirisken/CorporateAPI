@@ -4,6 +4,7 @@ using CoreporateAPI.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    partial class CorporateAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111150022_mig2")]
+    partial class mig2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,12 +389,15 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image2")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image3")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -420,9 +426,11 @@ namespace CoreporateAPI.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Brief")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -432,35 +440,38 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Locale")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PageId")
                         .HasColumnType("int");
 
                     b.Property<string>("PageTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Url")
-                        .IsUnique()
-                        .HasFilter("[Url] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PageId", "Locale")
-                        .IsUnique()
-                        .HasFilter("[Locale] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
                 });

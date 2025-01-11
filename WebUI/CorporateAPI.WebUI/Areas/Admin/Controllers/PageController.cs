@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Module;
+﻿using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Module;
 using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
 using CorporateAPI.WebUI.ViewModels;
@@ -27,12 +28,17 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreatePage()
         {
             var modules = await _client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
-            var viewModel = new CreatePageViewModel
+            var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("langs");
+            var model = new CreatePageDTO
             {
-                GetModuleDTOs = modules,
-                CreatePageDTO = new CreatePageDTO()
+                Translations = langs.Select(lang => new PageTranslationDTO { Locale = lang.LangCode}).ToList()
             };
-            return View(viewModel);
+            //var viewModel = new CreatePageViewModel
+            //{
+            //    GetModuleDTOs = modules,
+            //    CreatePageDTO = model,
+            //};
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)

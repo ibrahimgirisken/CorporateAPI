@@ -1,4 +1,4 @@
-﻿@model CreatePageViewModel
+﻿@model CreatePageDTO
 @{
     ViewData["Title"] = "Yeni Sayfa Oluşturma";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -6,17 +6,7 @@
 
 
 <div class="container-fluid my-5">
-<form method="post">
-    <div class="form-group">
-            <label>Menuler</label>
-            <select class="form-select" aria-label="Module">
-                <option selected>select</option>
-                @foreach (var item in Model.GetModuleDTOs)
-                {
-                    <option selected>@item.ModuleTranslations.FirstOrDefault(t => t.Locale == "tr")?.Name</option>
-                }
-            </select>
-    </div>
+    <form method="post">
         <div class="form-group">
             <label>Moduller</label>
             <select class="form-select" aria-label="Default select example">
@@ -26,60 +16,70 @@
                 <option value="3">Three</option>
             </select>
         </div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><img width="15" height:"15" src="~/icons/tr.svg" />Türkçe</button>
-        </li>
-        <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><img width="15" height:"15" src="~/icons/en.svg" />English</button>
-        </li>
-        <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false"><img width="15" height:"15" src="~/icons/de.svg" />Deutche</button>
-        </li>
-    </ul>
-
-    <div class="tab-content mt-3" id="myTabContent">
-
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Başlık</label>
-                    <input type="text" name="trTitle" class="form-control" id="exampleInputPassword1" placeholder="Başlık">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">SEO Sayfa Url</label>
-                    <input type="text" name="trUrl" class="form-control" id="exampleInputPassword1" placeholder="SEO Sayfa Url">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Sayfa İçi Başlık</label>
-                    <input type="text" name="trPageTitle" class="form-control" id="exampleInputPassword1" placeholder="Sayfa İçi Başlık">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Kısa Açıklama</label>
-                    <input type="text" name="trBrief" class="form-control" id="exampleInputPassword1" placeholder="Kısa Açıklama">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Keywords</label>
-                    <input type="text" name="trKeywords" class="form-control" id="exampleInputPassword1" placeholder="Keywords">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Description</label>
-                    <input type="text" name="trDescription" class="form-control" id="exampleInputPassword1" placeholder="Description">
-                </div>
-                <div class="form-group">
-                    <label for="floatingTextarea1">Açıklama</label>
-                    <textarea class="form-control" name="trContent" placeholder="De Açıklama" id="floatingTextarea1"></textarea>
-                </div>
-            </div>
+        <div class="form-group">
+            <label>Resim1</label>
+            <input type="text" asp-for="@Model.Image1" class="form-control" />
         </div>
-    </div>
-    <div class="form-group">
-        <label>Order</label>
-        <input type="number" asp-for="CreatePageDTO.Order" class="form-control" />
-    </div>
-    <div class="form-group">
-        <button class="btn btn-outline-primary">Kaydet</button>
-    </div>
-</form>
+        <div class="form-group">
+            <label>Resim2</label>
+            <input type="text" asp-for="@Model.Image2" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Resim3</label>
+            <input type="text" asp-for="@Model.Image3" class="form-control" />
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @foreach (var lang in Model.Translations)
+            {
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale-tab" data-bs-toggle="tab" data-bs-target="#@lang.Locale" type="button" role="tab" aria-controls="@lang.Locale" aria-selected="@(lang.Locale == "tr" ? "true" : "false")">
+                        <img width="15" height="15" src="~/icons/@(lang.Locale).svg" />@lang.Locale
+                    </button>
+                </li>
+            }
+        </ul>
+
+        <div class="tab-content mt-3" id="myTabContent">
+            @foreach (var lang in Model.Translations)
+            {
+                <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Locale" value="@lang.Locale" hidden class="form-control" id="exampleInputPassword1" placeholder="Dil">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Başlık</label>
+                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Title" class="form-control" id="exampleInputPassword1" placeholder="Başlık">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Url</label>
+                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Url" class="form-control" id="exampleInputPassword1" placeholder="Sayfa Url">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Sayfa Başlık</label>
+                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].PageTitle" class="form-control" id="exampleInputPassword1" placeholder="Sayfa Başlık">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Kısa Açıklama</label>
+                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Brief" class="form-control" id="exampleInputPassword1" placeholder="Kısa Açıklama">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Meta Açıklama</label>
+                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].MetaDescription" class="form-control" id="exampleInputPassword1" placeholder="Meta Açıklama">
+                        </div>
+                        <div class="form-group">
+                            <label for="floatingTextarea1">Açıklama</label>
+                            <textarea class="form-control" name="Translations[@Model.Translations.ToList().IndexOf(lang)].MetaDescription" placeholder="Açıklama" id="floatingTextarea1"></textarea>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label>Sıra</label>
+            <input type="number" asp-for="@Model.Order" class="form-control" placeholder="Sıra" />
+        </div>
+            <button class="btn btn-outline-primary">Kaydet</button>
+    </form>
 
 </div>
