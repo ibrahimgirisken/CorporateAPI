@@ -6,28 +6,35 @@
 
 
 <div class="container-fluid my-5">
-    <form method="post">
+    <form method="post" asp-controller="Page" asp-action="CreatePage">
         <div class="form-group">
             <label>Moduller</label>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
+            <select class="form-select" name="ModuleIds">
+                <option value="0" selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
         </div>
+
         <div class="form-group">
             <label>Resim1</label>
-            <input type="text" asp-for="@Model.Image1" class="form-control" />
+            <input type="text" name="Image1" class="form-control" />
         </div>
         <div class="form-group">
             <label>Resim2</label>
-            <input type="text" asp-for="@Model.Image2" class="form-control" />
+            <input type="text" name="Image2" class="form-control" />
         </div>
         <div class="form-group">
             <label>Resim3</label>
-            <input type="text" asp-for="@Model.Image3" class="form-control" />
+            <input type="text" name="Image3" class="form-control" />
         </div>
+
+        <div class="form-group">
+            <label>Sıra</label>
+            <input type="number" name="Order" class="form-control" />
+        </div>
+
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @foreach (var lang in Model.Translations)
             {
@@ -40,46 +47,44 @@
         </ul>
 
         <div class="tab-content mt-3" id="myTabContent">
-            @foreach (var lang in Model.Translations)
+            @for (int i = 0; i < Model.Translations.Count; i++)
             {
+                var lang = Model.Translations.ToList()[i];
                 <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
                     <div class="card-body">
+                        <input type="hidden" name="Translations[@i].Locale" value="@lang.Locale" />
+
                         <div class="form-group">
-                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Locale" value="@lang.Locale" hidden class="form-control" id="exampleInputPassword1" placeholder="Dil">
+                            <label for="Title">Başlık</label>
+                            <input type="text" name="Translations[@i].Title" class="form-control" value="@lang.Title" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Başlık</label>
-                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Title" class="form-control" id="exampleInputPassword1" placeholder="Başlık">
+                            <label for="Url">Url</label>
+                            <input type="text" name="Translations[@i].Url" class="form-control" value="@lang.Url" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Url</label>
-                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Url" class="form-control" id="exampleInputPassword1" placeholder="Sayfa Url">
+                            <label for="PageTitle">Sayfa Başlık</label>
+                            <input type="text" name="Translations[@i].PageTitle" class="form-control" value="@lang.PageTitle" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Sayfa Başlık</label>
-                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].PageTitle" class="form-control" id="exampleInputPassword1" placeholder="Sayfa Başlık">
+                            <label for="Brief">Kısa Açıklama</label>
+                            <input type="text" name="Translations[@i].Brief" class="form-control" value="@lang.Brief" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Kısa Açıklama</label>
-                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].Brief" class="form-control" id="exampleInputPassword1" placeholder="Kısa Açıklama">
+                            <label for="MetaDescription">Meta Açıklama</label>
+                            <input type="text" name="Translations[@i].MetaDescription" class="form-control" value="@lang.MetaDescription" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Meta Açıklama</label>
-                            <input type="text" name="Translations[@Model.Translations.ToList().IndexOf(lang)].MetaDescription" class="form-control" id="exampleInputPassword1" placeholder="Meta Açıklama">
-                        </div>
-                        <div class="form-group">
-                            <label for="floatingTextarea1">Açıklama</label>
-                            <textarea class="form-control" name="Translations[@Model.Translations.ToList().IndexOf(lang)].MetaDescription" placeholder="Açıklama" id="floatingTextarea1"></textarea>
+                            <label for="Content">Açıklama</label>
+                            <textarea class="form-control" name="Translations[@i].Content">@lang.Content</textarea>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <div class="form-group">
-            <label>Sıra</label>
-            <input type="number" asp-for="@Model.Order" class="form-control" placeholder="Sıra" />
-        </div>
-            <button class="btn btn-outline-primary">Kaydet</button>
+
+        <button class="btn btn-outline-primary">Kaydet</button>
     </form>
+
 
 </div>

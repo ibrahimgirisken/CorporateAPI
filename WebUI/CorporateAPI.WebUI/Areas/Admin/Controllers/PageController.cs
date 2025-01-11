@@ -15,7 +15,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var response = await _client.GetFromJsonAsync<List<ResultPageDTO>>("pages");
+            var response = await _client.GetFromJsonAsync<List<ResultPageDTO>>("Pages");
 
             if (response == null)
             {
@@ -28,16 +28,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreatePage()
         {
             var modules = await _client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
-            var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("langs");
+            var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var model = new CreatePageDTO
             {
                 Translations = langs.Select(lang => new PageTranslationDTO { Locale = lang.LangCode}).ToList()
             };
-            //var viewModel = new CreatePageViewModel
-            //{
-            //    GetModuleDTOs = modules,
-            //    CreatePageDTO = model,
-            //};
             return View(model);
         }
         [HttpPost]
