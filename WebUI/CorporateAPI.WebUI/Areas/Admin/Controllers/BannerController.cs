@@ -29,7 +29,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var model = new CreateBannerDTO
             {
-                BannerTranslations = langs.Select(lang => new BannerTranslationDTO { Locale = lang.LangCode }).ToList()
+                Translations = langs.Select(lang => new BannerTranslationDTO { Locale = lang.LangCode }).ToList()
             };
             return View(model);
         }
@@ -37,8 +37,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBanner(CreateBannerDTO bannerDTO)
         {
-            BannerRequestDTO data = new() { BannerDTO = bannerDTO };
-            await _client.PostAsJsonAsync("Banners", data);
+            await _client.PostAsJsonAsync("Banners", bannerDTO);
             return RedirectToAction(nameof(Index));
         }
 

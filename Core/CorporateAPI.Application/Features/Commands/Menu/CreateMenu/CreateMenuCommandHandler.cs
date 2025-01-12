@@ -8,7 +8,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
     public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommandRequest, CreateMenuCommandResponse>
     {
         readonly IMenuWriteRepository _menuWriteRepository;
-
         readonly IMapper _mapper;
         public CreateMenuCommandHandler(IMenuWriteRepository menuWriteRepository, IMapper mapper)
         {
@@ -18,11 +17,11 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
 
         public async Task<CreateMenuCommandResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
         {
-            var menu = _mapper.Map<Domain.Entities.Menu.Menu>(request.MenuDto);
+            var menu = _mapper.Map<Domain.Entities.Menu.Menu>(request);
             var menuTranslations = new HashSet<MenuTranslation>();
-            if (request.MenuDto.MenuTranslations != null)
+            if (request.Translations != null)
             {
-                foreach (var item in request.MenuDto.MenuTranslations)
+                foreach (var item in request.Translations)
                 {
                     var translation = new MenuTranslation
                     {

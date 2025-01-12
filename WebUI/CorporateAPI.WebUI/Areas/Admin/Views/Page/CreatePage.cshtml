@@ -1,15 +1,13 @@
 ﻿@model CreatePageDTO
 @{
-    ViewData["Title"] = "Yeni Sayfa Oluşturma";
+    ViewData["Title"] = "Yeni Sayfa Ekleme";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-
 <div class="container-fluid my-5">
     <form method="post" class="form-group">
         <div class="form-group">
             <label>Moduller</label>
-            <select class="form-select" name="ModuleIds">
+            <select class="form-select" name="@Model.ModuleIds">
                 <option value="0" selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -18,15 +16,15 @@
         </div>
         <div class="form-group">
             <label>Resim1</label>
-            <input type="text" name="Image1" class="form-control" />
+            <input type="text" name="@Model.Image1" class="form-control" />
         </div>
         <div class="form-group">
             <label>Resim2</label>
-            <input type="text" name="Image2" class="form-control" />
+            <input type="text" name="@Model.Image2" class="form-control" />
         </div>
         <div class="form-group">
             <label>Resim3</label>
-            <input type="text" name="Image3" class="form-control" />
+            <input type="text" name="@Model.Image3" class="form-control" />
         </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @foreach (var lang in Model.Translations)
@@ -49,27 +47,27 @@
 
                         <div class="form-group">
                             <label for="Title">Başlık</label>
-                            <input type="text" name="Translations[@i].Title" class="form-control" value="@lang.Title" />
+                            <input type="text" name="Translations[@i].Title" class="form-control"/>
                         </div>
                         <div class="form-group">
                             <label for="Url">Url</label>
-                            <input type="text" name="Translations[@i].Url" class="form-control" value="@lang.Url" />
+                            <input type="text" name="Translations[@i].Url" class="form-control"/>
                         </div>
                         <div class="form-group">
                             <label for="PageTitle">Sayfa Başlık</label>
-                            <input type="text" name="Translations[@i].PageTitle" class="form-control" value="@lang.PageTitle" />
+                            <input type="text" name="Translations[@i].PageTitle" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="Brief">Kısa Açıklama</label>
-                            <input type="text" name="Translations[@i].Brief" class="form-control" value="@lang.Brief" />
+                            <input type="text" name="Translations[@i].Brief" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="MetaDescription">Meta Açıklama</label>
-                            <input type="text" name="Translations[@i].MetaDescription" class="form-control" value="@lang.MetaDescription" />
+                            <input type="text" name="Translations[@i].MetaDescription" class="form-control"/>
                         </div>
                         <div class="form-group">
                             <label for="Content">Açıklama</label>
-                            <textarea class="form-control" name="Translations[@i].Content">@lang.Content</textarea>
+                            <textarea class="form-control" name="Translations[@i].Content"></textarea>
                         </div>
                     </div>
                 </div>
@@ -77,7 +75,7 @@
         </div>
         <div class="form-group">
             <label>Sıra</label>
-            <input type="number" name="Order" class="form-control" />
+            <input type="number" name="@Model.Order" class="form-control" value="1" />
         </div>
         <input type="submit" value="Verileri Gönder"/>
 

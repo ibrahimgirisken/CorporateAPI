@@ -4,7 +4,7 @@ namespace CorporateAPI.Domain.Entities
 {
     public class PageTranslation:BaseEntity
     {
-        public string? Locale { get; set; }
+        public string Locale { get; set; }
         public string? Title { get; set; }
         public string? Url { get; set; }
         public string? PageTitle { get; set; }

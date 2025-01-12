@@ -25,7 +25,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
         {
             var menu=await _menuReadRepository.GetByIdAsync(request.Id, false,includes:e=>e.MenuTranslations);
 
-            var menuData= _mapper.Map<GetByIdMenuDTO>(menu);
+            var menuData= _mapper.Map<ResultMenuDTO>(menu);
 
             return new()
             {

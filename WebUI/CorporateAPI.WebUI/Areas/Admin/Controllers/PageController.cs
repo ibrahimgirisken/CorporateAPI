@@ -37,8 +37,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)
         {
-            PageRequestDTO data = new() { PageDto = pageDTO };
-            await _client.PostAsJsonAsync("Pages", data);
+            await _client.PostAsJsonAsync("Pages", pageDTO);
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]

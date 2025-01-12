@@ -21,11 +21,11 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 
         public async Task<CreatePageCommandResponse> Handle(CreatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            var page = _mapper.Map<Domain.Entities.Page>(request.PageDto);
+            var page = _mapper.Map<Domain.Entities.Page>(request);
             var pageTranslations = new HashSet<PageTranslation>();
-            if (request.PageDto.Translations != null)
+            if (request.Translations != null)
             {
-                foreach (var item in request.PageDto.Translations)
+                foreach (var item in request.Translations)
                 {
                     var translation = new PageTranslation
                     {

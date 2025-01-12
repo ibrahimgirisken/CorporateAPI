@@ -18,11 +18,11 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
 
         public async Task<CreateBannerCommandResponse> Handle(CreateBannerCommandRequest request, CancellationToken cancellationToken)
         {
-            var banner=_mapper.Map<Domain.Entities.Banner.Banner>(request.BannerDTO);
+            var banner=_mapper.Map<Domain.Entities.Banner.Banner>(request);
             var bannerTranslations = new HashSet<Domain.Entities.Banner.BannerTranslation>();
-            if(request.BannerDTO.BannerTranslations!=null)
+            if(request.Translations!=null)
             {
-                foreach (var item in request.BannerDTO.BannerTranslations)
+                foreach (var item in request.Translations)
                 {
                     var translation = new BannerTranslation
                     {

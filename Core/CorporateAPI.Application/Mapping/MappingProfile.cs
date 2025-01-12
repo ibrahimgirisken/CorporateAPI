@@ -4,6 +4,9 @@ using CorporateAPI.Application.DTOs.Lang;
 using CorporateAPI.Application.DTOs.Menu;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
+using CorporateAPI.Application.Features.Commands.Banner.CreateBanner;
+using CorporateAPI.Application.Features.Commands.Menu.CreateMenu;
+using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Menu;
@@ -15,17 +18,20 @@ namespace CorporateAPI.Application.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<Menu,CreateMenuCommandRequest>().ReverseMap();
             CreateMap<Menu,ResultMenuDTO>().ReverseMap();
-            CreateMap<Menu,GetByIdMenuDTO>().ReverseMap();
-            CreateMap<Menu,CreateMenuDTO>().ReverseMap();
             CreateMap<Menu,UpdateMenuDTO>().ReverseMap();
             CreateMap<MenuTranslation,MenuTranslationDTO>().ReverseMap();
 
-            CreateMap<Page,ResultPageDTO>().ReverseMap();
-            CreateMap<Page,GetByIdPageDTO>().ReverseMap();
-            CreateMap<Page,CreatePageDTO>().ReverseMap(); 
+            CreateMap<Page,CreatePageCommandRequest>().ReverseMap();
+            CreateMap<Page,ResultPageDTO>().ReverseMap(); 
             CreateMap<Page,UpdatePageDTO>().ReverseMap();
             CreateMap<PageTranslation, PageTranslationDTO>().ReverseMap();
+
+            CreateMap<Banner, CreateBannerCommandRequest>().ReverseMap();
+            CreateMap<Banner, ResultBannerDTO>().ReverseMap();
+            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
+            CreateMap<BannerTranslation, BannerTranslationDTO>().ReverseMap();
 
             CreateMap<Module,ResultModuleDTO>().ReverseMap();
             CreateMap<Module,GetByIdModuleDTO>().ReverseMap();
@@ -37,11 +43,7 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Lang,CreateLangDTO>().ReverseMap();
             CreateMap<Lang,UpdateLangDTO>().ReverseMap();
 
-            CreateMap<Banner, ResultBannerDTO>().ReverseMap();  
-            CreateMap<Banner,GetByIdBannerDTO>().ReverseMap();
-            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
-            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
-            CreateMap<BannerTranslation, BannerTranslationDTO>().ReverseMap();
+
         }
     }
 }

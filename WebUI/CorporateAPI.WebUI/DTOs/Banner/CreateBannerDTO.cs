@@ -10,13 +10,13 @@ namespace CorporateAPI.WebUI.DTOs.Banner
     {
         public CreateBannerDTO()
         {
-            BannerTranslations = new HashSet<BannerTranslationDTO>();
+            Translations = new HashSet<BannerTranslationDTO>();
         }
         public string? DesktopImage { get; set; }
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
-        public int Order { get; set; }
-        public bool IsDeleted { get; set; }
-        public ICollection<BannerTranslationDTO> BannerTranslations { get; set; }
+        public int Order { get; set; } = 1;
+        public bool IsDeleted { get; set; }=false;
+        public ICollection<BannerTranslationDTO> Translations { get; set; }
     }
 }

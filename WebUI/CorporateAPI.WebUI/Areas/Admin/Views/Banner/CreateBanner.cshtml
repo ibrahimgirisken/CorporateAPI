@@ -19,7 +19,7 @@
     </div>
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        @foreach (var lang in Model.BannerTranslations)
+        @foreach (var lang in Model.Translations)
         {
             <li class="nav-item" role="presentation">
                 <button class="nav-link @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale-tab" data-bs-toggle="tab" data-bs-target="#@lang.Locale" type="button" role="tab" aria-controls="@lang.Locale" aria-selected="@(lang.Locale == "tr" ? "true" : "false")">
@@ -30,23 +30,23 @@
     </ul>
 
     <div class="tab-content mt-3" id="myTabContent">
-        @for (int i = 0; i < Model.BannerTranslations.Count; i++)
+        @for (int i = 0; i < Model.Translations.Count; i++)
         {
-            var lang = Model.BannerTranslations.ToList()[i];
+            var lang = Model.Translations.ToList()[i];
             <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
                 <div class="card-body">
-                    <input type="hidden" name="Translations[@i].Locale" value="@lang.Locale" />
+                    <input type="hidden" name="Translations[@i].Locale"/>
                     <div class="form-group">
                         <label for="Url">Url</label>
-                        <input type="text" name="Translations[@i].Url" class="form-control" value="@lang.Url" />
+                        <input type="text" name="Translations[@i].Url" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label for="Title">Başlık</label>
-                        <input type="text" name="Translations[@i].Title" class="form-control" value="@lang.Title" />
+                        <input type="text" name="Translations[@i].Title" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label for="Content">Açıklama</label>
-                        <textarea class="form-control" name="Translations[@i].Content">@lang.Content</textarea>
+                            <textarea name="Translations[@i].Content" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -56,6 +56,10 @@
         <label>Sıra</label>
         <input type="number" name="Order" class="form-control" />
     </div>
+        <div class="form-group">
+            <label>Sıra</label>
+            <input type="checkbox" name="IsDeleted" class="form-control" />
+        </div>
     <input type="submit" value="Verileri Gönder" />
 
 </form>

@@ -4,7 +4,16 @@ using MediatR;
 namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
 {
     public class CreateMenuCommandRequest:IRequest<CreateMenuCommandResponse>
-    {
-        public CreateMenuDTO MenuDto { get; set; }
+    {        public CreateMenuCommandRequest()
+        {
+            Children = new HashSet<CreateMenuCommandRequest>();
+            Translations = new HashSet<MenuTranslationDTO>();
+        }
+        public bool Vitrin { get; set; }
+        public bool Footer { get; set; }
+        public int Order { get; set; }
+        public int? ParentId { get; set; }
+        public ICollection<CreateMenuCommandRequest> Children { get; set; }
+        public ICollection<MenuTranslationDTO> Translations { get; set; }
     }
 }

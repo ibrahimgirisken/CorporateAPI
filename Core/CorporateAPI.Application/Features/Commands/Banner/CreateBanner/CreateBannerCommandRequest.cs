@@ -10,6 +10,15 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
 {
     public class CreateBannerCommandRequest:IRequest<CreateBannerCommandResponse>
     {
-        public CreateBannerDTO BannerDTO { get; set; }
+        public CreateBannerCommandRequest()
+        {
+            Translations = new HashSet<BannerTranslationDTO>();
+        }
+        public string? DesktopImage { get; set; }
+        public string? TableteImage { get; set; }
+        public string? MobileImage { get; set; }
+        public int Order { get; set; } = 1;
+        public bool IsDeleted { get; set; } = false;
+        public ICollection<BannerTranslationDTO> Translations { get; set; }
     }
 }

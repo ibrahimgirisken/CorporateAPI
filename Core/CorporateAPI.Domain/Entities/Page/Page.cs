@@ -10,6 +10,6 @@ namespace CorporateAPI.Domain.Entities
         public string? Image3 { get; set; }
         public int Order { get; set; }
         public string? ModuleIds { get; set; }
-        public ICollection<PageTranslation>? PageTranslations { get; set; }
+        public ICollection<PageTranslation> PageTranslations { get; set; }
     }
 }

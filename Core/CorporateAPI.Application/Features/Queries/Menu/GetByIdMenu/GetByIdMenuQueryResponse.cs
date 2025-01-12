@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
 {
     public class GetByIdMenuQueryResponse
     {
-        public GetByIdMenuDTO Menu { get; set; }
+        public ResultMenuDTO Menu { get; set; }
     }
 }
