@@ -12,6 +12,6 @@ namespace CorporateAPI.Domain.Entities
         public string? MetaDescription { get; set; }
         public string? Content { get; set; }
         public int PageId { get; set; }
-        public Page? Page { get; set; }
+        public Page Page { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
         public async Task<GetByIdBannerQueryResponse> Handle(GetByIdBannerQueryRequest request, CancellationToken cancellationToken)
         {
             var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: e => e.BannerTranslations);
-            var bannerDto=_mapper.Map<GetByIdBannerDTO>(banner);
+            var bannerDto=_mapper.Map<ResultBannerDTO>(banner);
             return new()
             {
                 Banner = bannerDto

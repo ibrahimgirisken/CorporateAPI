@@ -7,7 +7,7 @@
     <form method="post" class="form-group">
         <div class="form-group">
             <label>Moduller</label>
-            <select class="form-select" name="@Model.ModuleIds">
+            <select class="form-select" name="@nameof(Model.ModuleIds)">
                 <option value="0" selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -16,18 +16,18 @@
         </div>
         <div class="form-group">
             <label>Resim1</label>
-            <input type="text" name="@Model.Image1" class="form-control" />
+            <input type="text" name="@nameof(Model.Image1)" class="form-control" />
         </div>
         <div class="form-group">
             <label>Resim2</label>
-            <input type="text" name="@Model.Image2" class="form-control" />
+            <input type="text" name="@nameof(Model.Image2)" class="form-control" />
         </div>
         <div class="form-group">
             <label>Resim3</label>
-            <input type="text" name="@Model.Image3" class="form-control" />
+            <input type="text" name="@nameof(Model.Image3)" class="form-control" />
         </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            @foreach (var lang in Model.Translations)
+            @foreach (var lang in Model.PageTranslations)
             {
                 <li class="nav-item" role="presentation">
                     <button class="nav-link @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale-tab" data-bs-toggle="tab" data-bs-target="#@lang.Locale" type="button" role="tab" aria-controls="@lang.Locale" aria-selected="@(lang.Locale == "tr" ? "true" : "false")">
@@ -38,36 +38,36 @@
         </ul>
 
         <div class="tab-content mt-3" id="myTabContent">
-            @for (int i = 0; i < Model.Translations.Count; i++)
+            @for (int i = 0; i < Model.PageTranslations.Count; i++)
             {
-                var lang = Model.Translations.ToList()[i];
+                var lang = Model.PageTranslations.ToList()[i];
                 <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
                     <div class="card-body">
-                        <input type="hidden" name="Translations[@i].Locale" value="@lang.Locale" />
+                        <input type="hidden" name="PageTranslations[@i].Locale" value="@lang.Locale" />
 
                         <div class="form-group">
                             <label for="Title">Başlık</label>
-                            <input type="text" name="Translations[@i].Title" class="form-control"/>
+                            <input type="text" name="PageTranslations[@i].Title" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="Url">Url</label>
-                            <input type="text" name="Translations[@i].Url" class="form-control"/>
+                            <input type="text" name="PageTranslations[@i].Url" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="PageTitle">Sayfa Başlık</label>
-                            <input type="text" name="Translations[@i].PageTitle" class="form-control" />
+                            <input type="text" name="PageTranslations[@i].PageTitle" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="Brief">Kısa Açıklama</label>
-                            <input type="text" name="Translations[@i].Brief" class="form-control" />
+                            <input type="text" name="PageTranslations[@i].Brief" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="MetaDescription">Meta Açıklama</label>
-                            <input type="text" name="Translations[@i].MetaDescription" class="form-control"/>
+                            <input type="text" name="PageTranslations[@i].MetaDescription" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="Content">Açıklama</label>
-                            <textarea class="form-control" name="Translations[@i].Content"></textarea>
+                            <textarea class="form-control" name="PageTranslations[@i].Content"></textarea>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
         </div>
         <div class="form-group">
             <label>Sıra</label>
-            <input type="number" name="@Model.Order" class="form-control" value="1" />
+            <input type="number" name="@nameof(Model.Order)" class="form-control" value=1 />
         </div>
         <input type="submit" value="Verileri Gönder"/>
 

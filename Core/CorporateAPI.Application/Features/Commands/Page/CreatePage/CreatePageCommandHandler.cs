@@ -23,9 +23,9 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         {
             var page = _mapper.Map<Domain.Entities.Page>(request);
             var pageTranslations = new HashSet<PageTranslation>();
-            if (request.Translations != null)
+            if (request.PageTranslations != null)
             {
-                foreach (var item in request.Translations)
+                foreach (var item in request.PageTranslations)
                 {
                     var translation = new PageTranslation
                     {

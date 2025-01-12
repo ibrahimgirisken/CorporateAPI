@@ -5,6 +5,10 @@ namespace CorporateAPI.Domain.Entities
 {
     public class Page:BaseEntity
     {
+        public Page()
+        {
+            PageTranslations=new HashSet<PageTranslation>();
+        }
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }
         public string? Image3 { get; set; }

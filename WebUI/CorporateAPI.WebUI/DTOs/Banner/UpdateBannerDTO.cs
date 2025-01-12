@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Domain.Entities.Banner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

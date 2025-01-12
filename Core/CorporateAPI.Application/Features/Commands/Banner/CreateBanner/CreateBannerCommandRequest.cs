@@ -12,13 +12,13 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
     {
         public CreateBannerCommandRequest()
         {
-            Translations = new HashSet<BannerTranslationDTO>();
+            BannerTranslations = new HashSet<BannerTranslationDTO>();
         }
         public string? DesktopImage { get; set; }
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
         public int Order { get; set; } = 1;
         public bool IsDeleted { get; set; } = false;
-        public ICollection<BannerTranslationDTO> Translations { get; set; }
+        public ICollection<BannerTranslationDTO> BannerTranslations { get; set; }
     }
 }

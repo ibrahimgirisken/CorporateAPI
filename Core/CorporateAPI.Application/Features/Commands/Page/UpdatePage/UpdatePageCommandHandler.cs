@@ -26,7 +26,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
             var existingTranslations = pageData.PageTranslations.ToList();
             page.PageTranslations.Clear();
-            foreach (var translationDto in request.PageDTO.Translations)
+            foreach (var translationDto in request.PageDTO.PageTranslations)
             {
                 var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDto.Locale) ?? new PageTranslation();
                 _mapper.Map(translationDto, translation);

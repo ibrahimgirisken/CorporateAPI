@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 {
     public class GetByIdBannerQueryResponse
     {
-        public GetByIdBannerDTO Banner{ get; set; }
+        public ResultBannerDTO Banner { get; set; }
     }
 }

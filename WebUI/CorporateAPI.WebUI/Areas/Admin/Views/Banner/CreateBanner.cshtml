@@ -7,19 +7,19 @@
 <form method="post" class="form-group">
     <div class="form-group">
         <label>Resim1</label>
-        <input type="text" name="DesktopImage" class="form-control" />
+            <input type="text" name="@nameof(Model.DesktopImage)" class="form-control" />
     </div>
     <div class="form-group">
         <label>Resim2</label>
-        <input type="text" name="TableteImage" class="form-control" />
+            <input type="text" name="@nameof(Model.TableteImage)" class="form-control" />
     </div>
     <div class="form-group">
         <label>Resim3</label>
-        <input type="text" name="MobileImage" class="form-control" />
+            <input type="text" name="@nameof(Model.MobileImage)" class="form-control" />
     </div>
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        @foreach (var lang in Model.Translations)
+        @foreach (var lang in Model.BannerTranslations)
         {
             <li class="nav-item" role="presentation">
                 <button class="nav-link @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale-tab" data-bs-toggle="tab" data-bs-target="#@lang.Locale" type="button" role="tab" aria-controls="@lang.Locale" aria-selected="@(lang.Locale == "tr" ? "true" : "false")">
@@ -30,23 +30,23 @@
     </ul>
 
     <div class="tab-content mt-3" id="myTabContent">
-        @for (int i = 0; i < Model.Translations.Count; i++)
+            @for (int i = 0; i < Model.BannerTranslations.Count; i++)
         {
-            var lang = Model.Translations.ToList()[i];
+                var lang = Model.BannerTranslations.ToList()[i];
             <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
                 <div class="card-body">
-                    <input type="hidden" name="Translations[@i].Locale"/>
+                        <input type="hidden" name="BannerTranslations[@i].Locale" value="@lang.Locale"/>
                     <div class="form-group">
                         <label for="Url">Url</label>
-                        <input type="text" name="Translations[@i].Url" class="form-control"/>
+                            <input type="text" name="BannerTranslations[@i].Url" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="Title">Başlık</label>
-                        <input type="text" name="Translations[@i].Title" class="form-control"/>
+                            <input type="text" name="BannerTranslations[@i].Title" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="Content">Açıklama</label>
-                            <textarea name="Translations[@i].Content" class="form-control"></textarea>
+                            <textarea name="BannerTranslations[@i].Content" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -54,11 +54,10 @@
     </div>
     <div class="form-group">
         <label>Sıra</label>
-        <input type="number" name="Order" class="form-control" />
+            <input type="number" name="@nameof(Model.Order)" class="form-control" value=1 />
     </div>
         <div class="form-group">
-            <label>Sıra</label>
-            <input type="checkbox" name="IsDeleted" class="form-control" />
+            <input class="form-check-input mt-0" name="@nameof(Model.IsDeleted)" type="checkbox" aria-label="Durum" value="true">
         </div>
     <input type="submit" value="Verileri Gönder" />
 

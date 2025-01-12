@@ -30,7 +30,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var model = new CreatePageDTO
             {
-                Translations = langs.Select(lang => new PageTranslationDTO { Locale = lang.LangCode}).ToList()
+                PageTranslations = langs.Select(lang => new PageTranslationDTO { Locale = lang.LangCode}).ToList()
             };
             return View(model);
         }
