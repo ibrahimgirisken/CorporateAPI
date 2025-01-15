@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250111211702_mig4")]
-    partial class mig4
+    [Migration("20250113052927_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,6 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -86,14 +85,12 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -291,20 +288,19 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Url")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("MenuId", "Locale")
                         .IsUnique();
@@ -432,6 +428,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Locale")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
@@ -459,8 +456,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("PageId", "Locale")
-                        .IsUnique()
-                        .HasFilter("[Locale] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
                 });

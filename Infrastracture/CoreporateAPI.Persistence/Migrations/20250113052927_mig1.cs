@@ -63,9 +63,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DesktopImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TableteImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MobileImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DesktopImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TableteImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MobileImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -84,6 +84,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LangCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -143,9 +145,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
                     ModuleIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -282,9 +284,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BannerId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -310,8 +312,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     MenuId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -364,12 +366,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PageId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -458,7 +460,8 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "MenuTranslations",
                 column: "Url",
-                unique: true);
+                unique: true,
+                filter: "[Url] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ModuleTranslations_ModuleId_Locale",
@@ -479,7 +482,8 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "PageTranslations",
                 column: "Url",
-                unique: true);
+                unique: true,
+                filter: "[Url] IS NOT NULL");
         }
 
         /// <inheritdoc />

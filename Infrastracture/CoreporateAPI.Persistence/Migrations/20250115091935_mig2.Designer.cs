@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250112131603_mig6")]
-    partial class mig6
+    [Migration("20250115091935_mig2")]
+    partial class mig2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,6 +99,82 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("BannerTranslations", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Homes", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.HomeTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdditionalData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HomeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HomeId", "Locale")
+                        .IsUnique();
+
+                    b.ToTable("HomeTranslations", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Identity.AppRole", b =>
@@ -578,6 +654,17 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Banner");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.HomeTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Home.Home", "Home")
+                        .WithMany("HomeTranslations")
+                        .HasForeignKey("HomeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Home");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Parent")
@@ -675,6 +762,11 @@ namespace CoreporateAPI.Persistence.Migrations
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.Banner", b =>
                 {
                     b.Navigation("BannerTranslations");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
+                {
+                    b.Navigation("HomeTranslations");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>

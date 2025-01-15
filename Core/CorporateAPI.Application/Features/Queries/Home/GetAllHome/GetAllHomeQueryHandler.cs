@@ -1,0 +1,17 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CorporateAPI.Application.Features.Queries.Home.GetAllHome
+{
+    public class GetAllHomeQueryHandler : IRequestHandler<GetAllHomeQueryRequest, GetAllHomeQueryResponse>
+    {
+        public Task<GetAllHomeQueryResponse> Handle(GetAllHomeQueryRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Common;
+using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
@@ -15,6 +16,7 @@ namespace CoreporateAPI.Persistence.Contexts
         { }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Home> Homes{ get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Lang> Languages { get; set; }
         public DbSet<Banner> Banners { get; set; }
@@ -65,6 +67,17 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(mt => mt.ModuleId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.Entity<HomeTranslation>(entity =>
+            {
+                entity.ToTable("HomeTranslations");
+                entity.HasIndex(ht => new { ht.HomeId, ht.Locale }).IsUnique();
+                entity.HasOne(bt => bt.Home)
+                .WithMany(ht=>ht.HomeTranslations)
+                .HasForeignKey(ht=>ht.HomeId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<BannerTranslation>(entity =>
             {
