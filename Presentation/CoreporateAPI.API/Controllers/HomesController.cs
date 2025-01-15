@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using CorporateAPI.Application.Features.Commands.Home.CreateHome;
+﻿using CorporateAPI.Application.Features.Commands.Home.CreateHome;
 using CorporateAPI.Application.Features.Commands.Home.RemoveHome;
 using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
 using CorporateAPI.Application.Features.Queries.Home.GetAllHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByIdHome;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -37,12 +35,13 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create( CreateHomeCommandRequest createHomeCommandRequest)
+        public async Task<IActionResult> Post(CreateHomeCommandRequest createHomeCommandRequest)
         {
           CreateHomeCommandResponse response= await _mediator.Send(createHomeCommandRequest);
             return StatusCode((int)HttpStatusCode.Created);
         }
-        [HttpPost]
+
+        [HttpPut]
         public async Task<IActionResult> Update(UpdateHomeCommandRequest updateHomeCommandRequest)
         {
           UpdateHomeCommandResponse response= await _mediator.Send(updateHomeCommandRequest);

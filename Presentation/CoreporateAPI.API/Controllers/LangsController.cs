@@ -40,7 +40,7 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Update(UpdateLangCommandRequest updateLangRequest)
         {
             UpdateLangCommandResponse response = await _mediator.Send(updateLangRequest);

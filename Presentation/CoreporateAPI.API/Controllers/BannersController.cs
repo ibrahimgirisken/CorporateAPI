@@ -47,8 +47,7 @@ namespace CoreporateAPI.API.Controllers
             UpdateBannerCommandResponse response = await _mediator.Send(updateBannerCommandRequest);
             return Ok(response);
         }
-
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete([FromRoute] RemoveBannerCommandRequest removeBannerCommandRequest)
         {
             RemoveBannerCommandResponse response = await _mediator.Send(removeBannerCommandRequest);
