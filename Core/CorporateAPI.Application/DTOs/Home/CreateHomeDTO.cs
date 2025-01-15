@@ -1,5 +1,4 @@
-﻿using CorporateAPI.Domain.Entities.Home;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.DTOs.Home
 {
-    public class ResultHomeDTO
+    public class CreateHomeDTO
     {
+        public CreateHomeDTO()
+        {
+            HomeTranslations=new HashSet<HomeTranslationDTO>();
+        }
         public int Id { get; set; }
         public string ContentType { get; set; }
         public int Order { get; set; }
