@@ -8,12 +8,11 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
     public class CreateBannerCommandHandler : IRequestHandler<CreateBannerCommandRequest, CreateBannerCommandResponse>
     {
         readonly IBannerWriteRepository _bannerWriteRepository;
-
         readonly IMapper _mapper;
         public CreateBannerCommandHandler(IBannerWriteRepository bannerWriteRepository, IMapper mapper)
         {
-            _bannerWriteRepository = bannerWriteRepository;
             _mapper = mapper;
+            _bannerWriteRepository = bannerWriteRepository;
         }
 
         public async Task<CreateBannerCommandResponse> Handle(CreateBannerCommandRequest request, CancellationToken cancellationToken)
@@ -26,8 +25,8 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
                 {
                     var translation = new BannerTranslation
                     {
-                        Content = item.Content,
                         Locale = item.Locale,
+                        Content = item.Content,
                         Title = item.Title,
                         Url = item.Url,
                     };

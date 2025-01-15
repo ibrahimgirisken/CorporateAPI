@@ -1,16 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CoreporateAPI.Persistence.Contexts;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CorporateAPI.Application.Repositories;
 using CoreporateAPI.Persistence.Repositories;
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using CorporateAPI.Application.Repositories.Menu;
 using CorporateAPI.Application.Repositories.Banner;
 using CorporateAPI.Application.Repositories.Home;

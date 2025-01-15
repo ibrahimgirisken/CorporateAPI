@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.DTOs.Home;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 {
     public class UpdateHomeCommandRequest:IRequest<UpdateHomeCommandResponse>
     {
+        public UpdateHomeDTO HomeDTO{ get; set; }
     }
 }
