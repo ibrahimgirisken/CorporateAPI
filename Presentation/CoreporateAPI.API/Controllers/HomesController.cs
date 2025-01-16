@@ -38,7 +38,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)
         {
             GetByContentTypeHomeQueryResponse response = await _mediator.Send(getByContentTypeHomeQueryRequest);
-            return Ok(response);
+            return Ok(response.homeDTO);
         }
         [HttpPost]
         public async Task<IActionResult> Post(CreateHomeCommandRequest createHomeCommandRequest)

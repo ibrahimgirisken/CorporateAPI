@@ -9,7 +9,7 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
 		HttpClient _client=HttpClientInstance.CreateClient();
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
-			var about =await _client.GetFromJsonAsync<ResultHomeDTO>("Home/about");
+			var about =await _client.GetFromJsonAsync<ResultHomeDTO>("Homes/Home/about");
 			return View(about); 
 		}
 	}
