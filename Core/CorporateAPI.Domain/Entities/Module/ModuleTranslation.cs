@@ -9,9 +9,9 @@ namespace CorporateAPI.Domain.Entities.Module
 {
     public class ModuleTranslation:BaseEntity
     {
+        public string Locale { get; set; }
         public string Name { get; set; }
         public string ModuleData { get; set; }
-        public string Locale { get; set; }
         public int ModuleId { get; set; }
         public Module Module { get; set; }
     }

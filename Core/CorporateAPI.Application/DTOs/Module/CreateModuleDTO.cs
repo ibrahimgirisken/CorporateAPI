@@ -8,6 +8,9 @@ namespace CorporateAPI.Application.DTOs.Module
 {
     public class CreateModuleDTO
     {
+        public string ContentType { get; set; }
+        public int Order { get; set; }
+        public bool Status { get; set; }
         public CreateModuleDTO()
         {
             ModuleTranslations = new HashSet<ModuleTranslationDTO>();

@@ -23,7 +23,7 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
 
         public async Task<GetByIdModuleQueryResponse> Handle(GetByIdModuleQueryRequest request, CancellationToken cancellationToken)
         {
-            var module = _mapper.Map<Domain.Entities.Module.Module>(await _moduleReadRepository.GetByIdAsync(request.Id,false));
+            var module = _mapper.Map<Domain.Entities.Module.Module>(await _moduleReadRepository.GetByIdAsync(request.Id, false,includes:e=>e.ModuleTranslations));
             var moduleDto=_mapper.Map<ResultModuleDTO>(module);
 
             return new()
