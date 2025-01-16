@@ -25,8 +25,8 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 
         public async Task<UpdateHomeCommandResponse> Handle(UpdateHomeCommandRequest request, CancellationToken cancellationToken)
         {
-            var home=await _homeReadRepository.GetByIdAsync(request.HomeDTO.Id,false,includes:e=>e.HomeTranslations);
-            foreach (var translsationDto in request.HomeDTO.HomeTranslations)
+            var home=await _homeReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.HomeTranslations);
+            foreach (var translsationDto in request.HomeTranslations)
             {
                 var existingTranslation = home.HomeTranslations.FirstOrDefault(t => t.Locale == translsationDto.Locale);
                 if (existingTranslation!=null)

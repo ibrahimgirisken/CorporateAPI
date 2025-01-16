@@ -10,6 +10,8 @@ namespace CorporateAPI.Application.Features.Commands.Lang.CreateLang
 {
     public class CreateLangCommandRequest:IRequest<CreateLangResponse>
     {
-        public CreateLangDTO createLangDTO{ get; set; }
+        public string LangCode { get; set; }
+        public string Title { get; set; }
+        public string Image { get; set; }
     }
 }

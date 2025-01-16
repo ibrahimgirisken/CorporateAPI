@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
         {
            var menu =await _menuReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.MenuTranslations);
-            foreach (var translsationDto in request.MenuDTO.MenuTranslations)
+            foreach (var translsationDto in request.MenuTranslations)
             {
                 var existingTranslation=menu.MenuTranslations.FirstOrDefault(t=>t.Locale==translsationDto.Locale);
                 if (existingTranslation != null) 

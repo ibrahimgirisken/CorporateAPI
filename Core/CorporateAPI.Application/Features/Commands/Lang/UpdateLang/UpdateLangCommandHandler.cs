@@ -25,8 +25,8 @@ namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
 
         public async Task<UpdateLangCommandResponse> Handle(UpdateLangCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Lang lang = await _langReadRepository.GetByIdAsync(request.updateLangDTO.Id);
-            _mapper.Map(request.updateLangDTO,lang);
+            Domain.Entities.Lang lang = await _langReadRepository.GetByIdAsync(request.Id);
+            _mapper.Map(request,lang);
 
             _langWriteRepository.Update(lang);
             await _langWriteRepository.SaveAsync();

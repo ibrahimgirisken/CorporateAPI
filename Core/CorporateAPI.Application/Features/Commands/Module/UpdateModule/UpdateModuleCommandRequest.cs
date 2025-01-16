@@ -10,6 +10,11 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 {
     public class UpdateModuleCommandRequest:IRequest<UpdateModuleCommandResponse>
     {
-        public UpdateModuleDTO UpdateModule{ get; set; }
+        public int Id { get; set; }
+        public UpdateModuleCommandRequest()
+        {
+            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
+        }
+        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }

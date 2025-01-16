@@ -22,7 +22,7 @@ namespace CorporateAPI.Application.Features.Commands.Lang.CreateLang
 
         public async Task<CreateLangResponse> Handle(CreateLangCommandRequest request, CancellationToken cancellationToken)
         {
-            var langs=_mapper.Map<Domain.Entities.Lang>(request.createLangDTO);
+            var langs=_mapper.Map<Domain.Entities.Lang>(request);
             await _langWriteRepository.AddAsync(langs);
             await _langWriteRepository.SaveAsync();
             return new();

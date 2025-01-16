@@ -20,8 +20,8 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            var module=await _moduleReadRepository.GetByIdAsync(request.UpdateModule.Id,false,includes:e=>e.ModuleTranslations);
-            foreach (var translationDto in request.UpdateModule.ModuleTranslations)
+            var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ModuleTranslations);
+            foreach (var translationDto in request.ModuleTranslations)
             {
                var existingTranslation=module.ModuleTranslations.FirstOrDefault(t=>t.Locale==translationDto.Locale);
                 if (existingTranslation!=null)

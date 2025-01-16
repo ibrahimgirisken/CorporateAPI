@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
             var page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
-            foreach (var translsationDto in request.PageDTO.PageTranslations)
+            foreach (var translsationDto in request.PageTranslations)
             {
                 var existingTranslsation=page.PageTranslations.FirstOrDefault(t=>t.Locale == translsationDto.Locale);
                 if (existingTranslsation!=null)

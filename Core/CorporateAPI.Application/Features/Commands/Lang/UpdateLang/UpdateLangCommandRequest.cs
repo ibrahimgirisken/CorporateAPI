@@ -10,6 +10,9 @@ namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
 {
     public class UpdateLangCommandRequest:IRequest<UpdateLangCommandResponse>
     {
-        public UpdateLangDTO updateLangDTO{ get; set; }
+        public int Id { get; set; }
+        public string LangCode { get; set; }
+        public string Title { get; set; }
+        public string Image { get; set; }
     }
 }
