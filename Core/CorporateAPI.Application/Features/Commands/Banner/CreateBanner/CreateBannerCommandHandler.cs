@@ -18,21 +18,9 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
         public async Task<CreateBannerCommandResponse> Handle(CreateBannerCommandRequest request, CancellationToken cancellationToken)
         {
             var banner=_mapper.Map<Domain.Entities.Banner.Banner>(request);
-            var bannerTranslations = new HashSet<BannerTranslation>();
-            if(request.BannerTranslations!=null)
+            if (request.BannerTranslations!=null)
             {
-                foreach (var item in request.BannerTranslations)
-                {
-                    var translation = new BannerTranslation
-                    {
-                        Locale = item.Locale,
-                        Content = item.Content,
-                        Title = item.Title,
-                        Url = item.Url,
-                    };
-                    bannerTranslations.Add(translation);
-                }
-                banner.BannerTranslations = bannerTranslations;
+               banner.BannerTranslations=_mapper.Map<ICollection<BannerTranslation>>(request.BannerTranslations);
             }
             await _bannerWriteRepository.AddAsync(banner);
             await _bannerWriteRepository.SaveAsync();

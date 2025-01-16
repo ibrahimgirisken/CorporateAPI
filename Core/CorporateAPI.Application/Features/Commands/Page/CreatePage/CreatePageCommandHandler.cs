@@ -22,25 +22,9 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         public async Task<CreatePageCommandResponse> Handle(CreatePageCommandRequest request, CancellationToken cancellationToken)
         {
             var page = _mapper.Map<Domain.Entities.Page>(request);
-            var pageTranslations = new HashSet<PageTranslation>();
-            if (request.PageTranslations != null)
+           if (request.PageTranslations != null)
             {
-                foreach (var item in request.PageTranslations)
-                {
-                    var translation = new PageTranslation
-                    {
-                        Locale = item.Locale,
-                        Title = item.Title,
-                        Brief = item.Brief,
-                        Content = item.Content,
-                        PageId = page.Id,
-                        MetaDescription = item.MetaDescription,
-                        PageTitle = item.PageTitle,
-                        Url = item.Url
-                    };
-                    pageTranslations.Add(translation);
-                }
-            page.PageTranslations = pageTranslations;
+               page.PageTranslations=_mapper.Map<ICollection<PageTranslation>>(request.PageTranslations);
             }
             await _pageWriteRepository.AddAsync(page);
             await _pageWriteRepository.SaveAsync();
