@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories.Banner;
+using CorporateAPI.Domain.Entities.Banner;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,18 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
         public async Task<UpdateBannerCommandResponse> Handle(UpdateBannerCommandRequest request, CancellationToken cancellationToken)
         {
             var banner =await _bannerReadRepository.GetByIdAsync(request.UpdateBannerDTO.Id,false,includes:e=>e.BannerTranslations);
-            var existingTranslations=banner.BannerTranslations.ToList();
-            var bannerData = _mapper.Map<Domain.Entities.Banner.Banner>(banner);
-            banner.BannerTranslations.Clear();
-            foreach (var translationDto in existingTranslations)
+            foreach (var translsationDto in request.UpdateBannerDTO.BannerTranslations)
             {
-                var translation=existingTranslations.FirstOrDefault(t=>t.Locale==translationDto.Locale)?? new Domain.Entities.Banner.BannerTranslation();
+                var existingTranslation=banner.BannerTranslations.FirstOrDefault(t=>t.Locale== translsationDto.Locale);
+                if (existingTranslation != null) 
+                {
+                    _mapper.Map(translsationDto, existingTranslation);
+                }
+                else
+                {
+                    var newTranslation=_mapper.Map<BannerTranslation>(translsationDto);
+                    banner.BannerTranslations.Add(newTranslation);
+                }
             }
             _bannerWriteRepository.Update(banner);
             await _bannerWriteRepository.SaveAsync();

@@ -20,19 +20,21 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
 
         public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
         {
-           Domain.Entities.Menu.Menu menu =await _menuReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.MenuTranslations);
-
-            var menuData=_mapper.Map<Domain.Entities.Menu.Menu>(menu);
-            
-            var existingTranslations = menuData.MenuTranslations.ToList();  
-            menu.MenuTranslations.Clear();
-            foreach (var translationDTO in request.MenuDTO.MenuTranslations)
+           var menu =await _menuReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.MenuTranslations);
+            foreach (var translsationDto in request.MenuDTO.MenuTranslations)
             {
-                var translation=existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale) ?? new MenuTranslation();
-                _mapper.Map(translationDTO, translation);  
-                menuData.MenuTranslations.Add(translation);
+                var existingTranslation=menu.MenuTranslations.FirstOrDefault(t=>t.Locale==translsationDto.Locale);
+                if (existingTranslation != null) 
+                {
+                    _mapper.Map(translsationDto, existingTranslation);
+                }
+                else
+                {
+                    var newTranslation=_mapper.Map<MenuTranslation>(translsationDto);
+                    menu.MenuTranslations.Add(newTranslation);
+                }
             }
-            _menuWriteRepository.Update(menuData);
+            _menuWriteRepository.Update(menu);
             await _menuWriteRepository.SaveAsync();
             return new();
 

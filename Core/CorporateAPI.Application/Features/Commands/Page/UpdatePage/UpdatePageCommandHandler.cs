@@ -20,22 +20,22 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Page page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
-
-            var pageData = _mapper.Map<Domain.Entities.Page>(page);
-
-            var existingTranslations = pageData.PageTranslations.ToList();
-            page.PageTranslations.Clear();
-            foreach (var translationDto in request.PageDTO.PageTranslations)
+            var page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
+            foreach (var translsationDto in request.PageDTO.PageTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDto.Locale) ?? new PageTranslation();
-                _mapper.Map(translationDto, translation);
-                pageData.PageTranslations.Add(translation);
+                var existingTranslsation=page.PageTranslations.FirstOrDefault(t=>t.Locale == translsationDto.Locale);
+                if (existingTranslsation!=null)
+                {
+                    _mapper.Map(translsationDto, existingTranslsation);
+                }
+                else
+                {
+                    var newTranslsation=_mapper.Map<PageTranslation>(translsationDto);
+                    page.PageTranslations.Add(newTranslsation);
+                }
             }
-
-            _pageWriteRepository.Update(pageData);
+            _pageWriteRepository.Update(page);
             await _pageWriteRepository.SaveAsync();
-
             return new();
         }
     }

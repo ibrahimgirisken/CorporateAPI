@@ -26,12 +26,18 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
         public async Task<UpdateHomeCommandResponse> Handle(UpdateHomeCommandRequest request, CancellationToken cancellationToken)
         {
             var home=await _homeReadRepository.GetByIdAsync(request.HomeDTO.Id,false,includes:e=>e.HomeTranslations);
-            var existingTranslations = home.HomeTranslations.ToList();
-            var homeData=_mapper.Map<Domain.Entities.Home.Home>(home);
-            home.HomeTranslations.Clear();
-            foreach (var item in existingTranslations)
+            foreach (var translsationDto in request.HomeDTO.HomeTranslations)
             {
-                var translsation = existingTranslations.FirstOrDefault(t => t.Locale == item.Locale) ?? new Domain.Entities.Home.HomeTranslation();
+                var existingTranslation = home.HomeTranslations.FirstOrDefault(t => t.Locale == translsationDto.Locale);
+                if (existingTranslation!=null)
+                {
+                    _mapper.Map(translsationDto, existingTranslation);
+                }
+                else
+                {
+                    var newTranslation = _mapper.Map<Domain.Entities.Home.HomeTranslation>(translsationDto);
+                    home.HomeTranslations.Add(newTranslation);
+                }
             }
             _homeWriteRepository.Update(home);
             await _homeWriteRepository.SaveAsync();
