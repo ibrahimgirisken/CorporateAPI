@@ -1,4 +1,10 @@
-﻿<section class="srex-about-us-one srex-section">
+﻿@using CorporateAPI.WebUI.DTOs.Home
+@model ResultHomeDTO
+@foreach (var item in Model.HomeTranslations)
+{
+    <h1>@item.Url</h1>
+}
+<section class="srex-about-us-one srex-section">
     <div class="srex-about-us-one__container">
         <div class="row align-items-center">
             <div class="col-lg-6 col-12">

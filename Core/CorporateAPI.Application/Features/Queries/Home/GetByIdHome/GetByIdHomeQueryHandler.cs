@@ -2,11 +2,6 @@
 using CorporateAPI.Application.DTOs.Home;
 using CorporateAPI.Application.Repositories.Home;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Queries.Home.GetByIdHome
 {
@@ -23,11 +18,11 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetByIdHome
 
         public async Task<GetByIdHomeQueryResponse> Handle(GetByIdHomeQueryRequest request, CancellationToken cancellationToken)
         {
-            var home= await _homeReadRepository.GetByIdAsync(request.Id);
-            var respose= _mapper.Map<ResultHomeDTO>(home);
+            var home= await _homeReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.HomeTranslations);
+            var resposeDto= _mapper.Map<ResultHomeDTO>(home);
             return new()
             {
-                homeDTO=respose,
+                home= resposeDto,
             };
         }
     }

@@ -68,6 +68,11 @@ namespace CoreporateAPI.Persistence.Contexts
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<Home>(entity =>
+            {
+                entity.HasIndex(h=>h.ContentType).IsUnique();
+            });
+
             modelBuilder.Entity<HomeTranslation>(entity =>
             {
                 entity.ToTable("HomeTranslations");

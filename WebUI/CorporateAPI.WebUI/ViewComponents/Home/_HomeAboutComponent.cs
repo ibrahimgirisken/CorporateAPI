@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CorporateAPI.WebUI.DTOs.Home;
+using CorporateAPI.WebUI.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.ViewComponents.Home
 {
 	public class _HomeAboutComponent:ViewComponent
 	{
-		public IViewComponentResult Invoke()
+		HttpClient _client=HttpClientInstance.CreateClient();
+		public async Task<IViewComponentResult> InvokeAsync()
 		{
-
-		return View(); 
+			var about =await _client.GetFromJsonAsync<ResultHomeDTO>("Home/about");
+			return View(about); 
 		}
 	}
 }

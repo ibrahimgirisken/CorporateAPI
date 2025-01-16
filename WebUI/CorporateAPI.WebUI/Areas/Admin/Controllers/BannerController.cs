@@ -1,8 +1,6 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
-using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
-using CorporateAPI.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers

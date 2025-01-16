@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Features.Commands.Home.RemoveHome;
 using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
 using CorporateAPI.Application.Features.Queries.Home.GetAllHome;
+using CorporateAPI.Application.Features.Queries.Home.GetByContentTypeHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByIdHome;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,12 @@ namespace CoreporateAPI.API.Controllers
             GetByIdHomeQueryResponse response=await _mediator.Send(getByIdHomeQueryRequest);
             return Ok(response);
         }
-
+        [HttpGet("Home/{ContentType}")]
+        public async Task<IActionResult> Get([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)
+        {
+            GetByContentTypeHomeQueryResponse response = await _mediator.Send(getByContentTypeHomeQueryRequest);
+            return Ok(response);
+        }
         [HttpPost]
         public async Task<IActionResult> Post(CreateHomeCommandRequest createHomeCommandRequest)
         {

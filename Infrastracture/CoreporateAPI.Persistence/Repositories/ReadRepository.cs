@@ -38,13 +38,6 @@ namespace CoreporateAPI.Persistence.Repositories
             return query;
 
         }
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
-        {
-            var query = Table.AsNoTracking();
-            if (!tracking)
-                query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(method);
-        }
         public async Task<T> GetByIdAsync(
          int id,
          bool tracking = true,
@@ -64,5 +57,17 @@ namespace CoreporateAPI.Persistence.Repositories
             return await query.FirstOrDefaultAsync(e => e.Id == id);
         }
 
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)
+        {
+            var query = Table.AsNoTracking();
+            if (!tracking)
+                query.AsNoTracking();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.FirstOrDefaultAsync(method);
+        }
     }
 }
