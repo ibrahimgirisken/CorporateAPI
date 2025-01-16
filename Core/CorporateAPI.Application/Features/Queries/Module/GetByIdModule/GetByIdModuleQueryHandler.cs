@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Menu;
+using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.Repositories;
 using MediatR;
 using System;
@@ -22,10 +24,11 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
         public async Task<GetByIdModuleQueryResponse> Handle(GetByIdModuleQueryRequest request, CancellationToken cancellationToken)
         {
             var module = _mapper.Map<Domain.Entities.Module.Module>(await _moduleReadRepository.GetByIdAsync(request.Id,false));
+            var moduleDto=_mapper.Map<ResultModuleDTO>(module);
 
             return new()
             {
-                Module = module
+                Module = moduleDto
             };
         }
     }

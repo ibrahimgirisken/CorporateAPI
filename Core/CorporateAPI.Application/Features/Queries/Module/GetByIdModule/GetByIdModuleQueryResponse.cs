@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Application.DTOs.Module;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
 {
     public class GetByIdModuleQueryResponse
     {
-        public object Module { get; set; }
+        public ResultModuleDTO Module { get; set; }
     }
 }

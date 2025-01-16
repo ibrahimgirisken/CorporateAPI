@@ -11,6 +11,9 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
     public class UpdateModuleCommandRequest:IRequest<UpdateModuleCommandResponse>
     {
         public int Id { get; set; }
+        public string ContentType { get; set; }
+        public int Order { get; set; }
+        public bool Status { get; set; }
         public UpdateModuleCommandRequest()
         {
             ModuleTranslations = new HashSet<ModuleTranslationDTO>();

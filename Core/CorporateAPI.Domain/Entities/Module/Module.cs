@@ -4,6 +4,9 @@ namespace CorporateAPI.Domain.Entities.Module
 {
     public class Module:BaseEntity
     {
+        public string ContentType { get; set; }
+        public int Order { get; set; }
+        public bool Status { get; set; }
         public ICollection<ModuleTranslation> ModuleTranslations { get; set; }
     }
 }
