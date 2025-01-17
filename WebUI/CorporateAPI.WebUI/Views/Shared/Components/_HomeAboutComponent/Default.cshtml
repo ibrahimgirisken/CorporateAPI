@@ -1,11 +1,11 @@
 ﻿@model ResultHomeDTO
 <section class="srex-about-us-one srex-section">
-@foreach (var item in Model.HomeTranslations)
+    @foreach (var item in Model.HomeTranslations)
     {
         <h1>@item.Url</h1>
         <h1>@item.Content</h1>
     }
-    @ViewBag.lang
+
     <div class="srex-about-us-one__container">
         <div class="row align-items-center">
             <div class="col-lg-6 col-12">

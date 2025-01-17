@@ -38,6 +38,12 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet("Home/{ContentType}")]
         public async Task<IActionResult> Get([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)
         {
+            //var language = HttpContext.Request.Headers["Accept-Language"].ToString();
+            //if (string.IsNullOrEmpty(language))
+            //{
+            //    language = "en";
+            //}
+            //getByContentTypeHomeQueryRequest.Language = language;
             GetByContentTypeHomeQueryResponse response = await _mediator.Send(getByContentTypeHomeQueryRequest);
             return Ok(response.homeDTO);
         }

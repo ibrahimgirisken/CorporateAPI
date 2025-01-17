@@ -13,6 +13,6 @@ namespace CorporateAPI.Application.DTOs.Home
         public string ContentType { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
-        public ICollection<HomeTranslationDTO> HomeTranslations { get; set; }
+        public List<HomeTranslationDTO> HomeTranslations { get; set; }
     }
 }

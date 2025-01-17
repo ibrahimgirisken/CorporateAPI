@@ -22,11 +22,11 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetByContentTypeHome
 
         public async Task<GetByContentTypeHomeQueryResponse> Handle(GetByContentTypeHomeQueryRequest request, CancellationToken cancellationToken)
         {
-            var home = await _homeReadRepository.GetSingleAsync(p=>p.ContentType==request.ContentType,false,includes:e=>e.HomeTranslations);
-            var response=_mapper.Map<ResultHomeDTO>(home);
+            var home = await _homeReadRepository.GetSingleAsync(p => p.ContentType == request.ContentType, false, includes: e => e.HomeTranslations);
+            var response = _mapper.Map<ResultHomeDTO>(home);
             return new()
             {
-               homeDTO=response 
+                homeDTO = response
             };
         }
     }

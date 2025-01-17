@@ -17,12 +17,12 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
 
         public async Task<IViewComponentResult> InvokeAsync()
 		{
+            var language=_detectionService.GetLanguage();
             var values = await _client.GetFromJsonAsync<ResultHomeDTO>("Homes/Home/about");
             if (values == null)
             {
-                return View(new List<ResultHomeDTO>());
+                return View(new ResultHomeDTO());
             }
-            ViewBag.lang=_detectionService.GetLanguage();
             return View(values);
         }
 	}
