@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace CorporateAPI.WebUI.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {

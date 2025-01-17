@@ -1,23 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Globalization;
 
 namespace CorporateAPI.WebUI.Controllers
 {
     public class BaseController : Controller
     {
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public string LANGUAGE_CODE()
         {
-            base.OnActionExecuting(context);
+            return CultureInfo.CurrentCulture.Name;
+        }
 
-            var language = HttpContext.Request.Headers["Accept-Language"].ToString();
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            var culture = context.RouteData.Values["culture"]?.ToString() ?? "en";
 
-            if (string.IsNullOrEmpty(language))
-            {
-                language = "en"; // Varsayılan dil
-            }
+            var cultureInfo = new CultureInfo(culture);
+            CultureInfo.CurrentCulture = cultureInfo;
+            CultureInfo.CurrentUICulture = cultureInfo;
 
-            // Dil bilgisini HttpContext.Items içine kaydediyoruz
-            HttpContext.Items["Language"] = language;
+            await next();
         }
     }
 }

@@ -8,6 +8,13 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
 	public class _HomeAboutComponent:ViewComponent
 	{
 		HttpClient _client=HttpClientInstance.CreateClient();
+        IDetectionService _detectionService;
+
+        public _HomeAboutComponent(IDetectionService detectionService)
+        {
+            _detectionService = detectionService;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
 		{
             var values = await _client.GetFromJsonAsync<ResultHomeDTO>("Homes/Home/about");
@@ -15,6 +22,7 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
             {
                 return View(new List<ResultHomeDTO>());
             }
+            ViewBag.lang=_detectionService.GetLanguage();
             return View(values);
         }
 	}
