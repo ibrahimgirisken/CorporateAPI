@@ -9,7 +9,6 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
         public _HomeAboutComponent(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
         }
-
         public async Task<IViewComponentResult> InvokeAsync()
 		{
            return await InvokeGenericAsync<ResultHomeDTO>("Homes/Home/about");

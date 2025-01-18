@@ -13,7 +13,6 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
         public _HomeSponsorComponent(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
         }
-
         public async Task<IViewComponentResult> InvokeAsync()
         {
             return await InvokeGenericAsync<ResultHomeDTO>("Homes/Home/sponsor");
