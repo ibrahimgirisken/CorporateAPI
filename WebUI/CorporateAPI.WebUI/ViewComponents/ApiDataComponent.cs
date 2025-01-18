@@ -1,39 +1,44 @@
 ﻿using CorporateAPI.WebUI.Helpers;
+using CorporateAPI.WebUI.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Globalization;
+using System.Net;
 
 namespace CorporateAPI.WebUI.ViewComponents
 {
     public class ApiDataComponent<T> : ViewComponent
     {
-        HttpClient _client = HttpClientInstance.CreateClient();
-        public async Task<IViewComponentResult> InvokeGenericAsync(string url)
+        protected readonly IHttpClientFactory _httpClientFactory;
+        public ApiDataComponent(IHttpClientFactory httpClientFactory)
         {
-            var response = await _client.GetAsync(url);
+            _httpClientFactory = httpClientFactory;
+        }
 
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+        public async Task<IViewComponentResult> InvokeGenericAsync<T>(string endpoint) where T : class
+        {
+            var language = RouteData.Values["language"]?.ToString() ?? CultureInfo.CurrentUICulture.Name;
+            var client = _httpClientFactory.CreateClient("Admin");
+            client.DefaultRequestHeaders.Add("Accept-Language", language);
+
+            var response = await client.GetAsync(endpoint);
+
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                // 204 No Content dönerse boş bir model döndür
-                return View(Activator.CreateInstance<T>());
+                return View(default(T));
             }
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
-
-                if (string.IsNullOrEmpty(content))
-                {
-                    // İçerik boşsa yine boş model döndür
-                    return View(Activator.CreateInstance<T>());
-                }
-
-                var values = JsonConvert.DeserializeObject<T>(content);
-                return View(values);
+                throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
             }
-            else
+            try
             {
-                // Eğer başarısız bir API yanıtı alınırsa, boş model döndür
-                return View(Activator.CreateInstance<T>());
+                var result = await response.Content.ReadFromJsonAsync<T>();
+                return View(result ?? default(T));             }
+            catch (JsonException ex)
+            {
+                throw new Exception("Error deserializing JSON response.", ex);
             }
         }
     }

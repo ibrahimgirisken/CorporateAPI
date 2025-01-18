@@ -9,7 +9,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     [Route("[area]/[controller]/[action]/{id?}")]
     public class BannerController : Controller
     {
-        private readonly HttpClient _client = HttpClientInstance.CreateClient();
+        private readonly HttpClient _client;
+
+        public BannerController(HttpClient client)
+        {
+            _client = client;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {

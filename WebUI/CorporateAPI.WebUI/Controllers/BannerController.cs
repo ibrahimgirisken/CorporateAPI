@@ -6,7 +6,13 @@ namespace CorporateAPI.WebUI.Controllers
 {
     public class BannerController : Controller
     {
-        private readonly HttpClient _client=HttpClientInstance.CreateClient();
+        private readonly HttpClient _client;
+
+        public BannerController(HttpClient client)
+        {
+            _client = client;
+        }
+
         public async Task<IActionResult> Index()
         {
             var values=await _client.GetFromJsonAsync<List<ResultBannerDTO>>("Banners");

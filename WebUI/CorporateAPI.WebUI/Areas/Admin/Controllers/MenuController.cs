@@ -8,7 +8,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     [Route("[area]/[controller]/[action]/{id?}")]
     public class MenuController : Controller
     {
-        private readonly HttpClient _client=HttpClientInstance.CreateClient();
+        private readonly HttpClient _client;
+
+        public MenuController(HttpClient client)
+        {
+            _client = client;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
