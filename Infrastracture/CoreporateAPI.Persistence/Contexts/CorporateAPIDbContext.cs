@@ -16,7 +16,7 @@ namespace CoreporateAPI.Persistence.Contexts
         { }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Page> Pages { get; set; }
-        public DbSet<Home> Homes{ get; set; }
+        public DbSet<Home> Homes { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Lang> Languages { get; set; }
         public DbSet<Banner> Banners { get; set; }
@@ -25,24 +25,20 @@ namespace CoreporateAPI.Persistence.Contexts
         {
             modelBuilder.HasDefaultSchema("dbo");
 
-            modelBuilder.Entity<Menu>(entity =>
-            {
-                entity.ToTable("Menus");
-                entity.HasOne(m => m.Parent)
-                .WithMany(m => m.Children)
-                .HasForeignKey(m => m.ParentId)
-                .OnDelete(DeleteBehavior.Restrict);
-            });
-
             modelBuilder.Entity<MenuTranslation>(entity =>
             {
                 entity.ToTable("MenuTranslations");
                 entity.HasIndex(mt => mt.Url).IsUnique();
-                entity.HasIndex(mt => new { mt.MenuId, mt.Locale }).IsUnique();
 
                 entity.HasOne(mt => mt.Menu)
                 .WithMany(mt => mt.MenuTranslations)
                 .HasForeignKey(mt => mt.MenuId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(ml=>ml.Language)
+                .WithMany(l=>l.MenuTranslations)
+                .HasForeignKey(ml=>ml.Locale)
+                .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -50,49 +46,69 @@ namespace CoreporateAPI.Persistence.Contexts
             {
                 entity.ToTable("PageTranslations");
                 entity.HasIndex(pt => pt.Url).IsUnique();
-                entity.HasIndex(pt => new { pt.PageId, pt.Locale }).IsUnique();
 
                 entity.HasOne(pt => pt.Page)
                 .WithMany(pt => pt.PageTranslations)
                 .HasForeignKey(pt => pt.PageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(pt=>pt.Language)
+                .WithMany(l=>l.PageTranslations)
+                .HasForeignKey(pt=>pt.Locale)
+                .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ModuleTranslation>(entity =>
             {
                 entity.ToTable("ModuleTranslations");
-                entity.HasIndex(mt => new { mt.ModuleId, mt.Locale }).IsUnique();
                 entity.HasOne(mt => mt.Module)
                 .WithMany(mt => mt.ModuleTranslations)
                 .HasForeignKey(mt => mt.ModuleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(ml=>ml.Language)
+                .WithMany(l=>l.ModuleTranslations)
+                .HasForeignKey(ml=>ml.Locale)
+                .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Home>(entity =>
             {
-                entity.HasIndex(h=>h.ContentType).IsUnique();
+                entity.HasIndex(h => h.ContentType).IsUnique();
             });
 
             modelBuilder.Entity<HomeTranslation>(entity =>
             {
                 entity.ToTable("HomeTranslations");
-                entity.HasIndex(ht => new { ht.HomeId, ht.Locale }).IsUnique();
                 entity.HasOne(bt => bt.Home)
-                .WithMany(ht=>ht.HomeTranslations)
-                .HasForeignKey(ht=>ht.HomeId)
+                .WithMany(ht => ht.HomeTranslations)
+                .HasForeignKey(ht => ht.HomeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(ht=>ht.Language)
+                .WithMany(l=>l.HomeTranslations)
+                .HasForeignKey(bt => bt.Locale)
+                .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
             });
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<BannerTranslation>(entity =>
             {
                 entity.ToTable("BannerTranslations");
-                entity.HasIndex(bt => new { bt.BannerId, bt.Locale }).IsUnique();
                 entity.HasOne(bt => bt.Banner)
                 .WithMany(bt => bt.BannerTranslations)
                 .HasForeignKey(bt => bt.BannerId)
                 .OnDelete(DeleteBehavior.Restrict);
-            });
+
+                entity.HasOne(bt => bt.Language)
+                .WithMany(l => l.BannerTranslations)
+                .HasForeignKey(bt => bt.Locale)     
+                .HasPrincipalKey(l => l.LangCode)   
+                .OnDelete(DeleteBehavior.Restrict); 
+             });
+
             base.OnModelCreating(modelBuilder);
         }
 

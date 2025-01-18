@@ -2,11 +2,12 @@
 
 namespace CorporateAPI.WebUI.ViewComponents.Home
 {
-	public class _HomeBlogsComponent:ViewComponent
-	{
-		public IViewComponentResult Invoke()
-		{
+    public class _HomeBlogsComponent : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View();
+        }
+    }
 
-		return View(); }
-	}
 }

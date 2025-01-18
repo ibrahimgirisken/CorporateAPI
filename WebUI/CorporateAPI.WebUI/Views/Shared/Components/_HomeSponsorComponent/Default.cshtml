@@ -1,4 +1,13 @@
-﻿<div class="srex-sponsor srex-section">
+﻿@model ResultHomeDTO
+<div class="srex-sponsor srex-section">
+    @if (Model != null && Model.HomeTranslations != null && Model.HomeTranslations.Any())
+    {
+        @foreach (var item in Model.HomeTranslations)
+        {
+            <h1>@item.Url</h1>
+            <h1>@item.Content</h1>
+        }
+    }
     <div class="container">
         <div class="srex-sponsor__items wow fadeInUp" data-wow-duration="1.5s">
             <a href="#" class="zirox-brand__items-item">

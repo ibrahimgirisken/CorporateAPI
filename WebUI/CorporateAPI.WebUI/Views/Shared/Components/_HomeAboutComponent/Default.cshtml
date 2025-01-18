@@ -1,9 +1,12 @@
 ﻿@model ResultHomeDTO
 <section class="srex-about-us-one srex-section">
-    @foreach (var item in Model.HomeTranslations)
+    @if (Model != null && Model.HomeTranslations != null && Model.HomeTranslations.Any())
     {
-        <h1>@item.Url</h1>
-        <h1>@item.Content</h1>
+        @foreach (var item in Model.HomeTranslations)
+        {
+            <h1>@item.Url</h1>
+            <h1>@item.Content</h1>
+        }
     }
 
     <div class="srex-about-us-one__container">

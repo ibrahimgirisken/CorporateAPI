@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Domain.Entities.Module
 {
-    public class ModuleTranslation:BaseEntity
+    public class ModuleTranslation: BaseTranslation
     {
-        public string Locale { get; set; }
         public string Name { get; set; }
         public string ModuleData { get; set; }
         public int ModuleId { get; set; }

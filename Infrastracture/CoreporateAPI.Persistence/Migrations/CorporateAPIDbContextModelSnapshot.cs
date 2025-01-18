@@ -92,8 +92,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BannerId", "Locale")
-                        .IsUnique();
+                    b.HasIndex("BannerId");
+
+                    b.HasIndex("Locale");
 
                     b.ToTable("BannerTranslations", "dbo");
                 });
@@ -171,8 +172,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HomeId", "Locale")
-                        .IsUnique();
+                    b.HasIndex("HomeId");
+
+                    b.HasIndex("Locale");
 
                     b.ToTable("HomeTranslations", "dbo");
                 });
@@ -292,7 +294,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("LangCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -374,12 +376,13 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Locale");
+
+                    b.HasIndex("MenuId");
+
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
-
-                    b.HasIndex("MenuId", "Locale")
-                        .IsUnique();
 
                     b.ToTable("MenuTranslations", "dbo");
                 });
@@ -450,8 +453,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleId", "Locale")
-                        .IsUnique();
+                    b.HasIndex("Locale");
+
+                    b.HasIndex("ModuleId");
 
                     b.ToTable("ModuleTranslations", "dbo");
                 });
@@ -537,12 +541,13 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Locale");
+
+                    b.HasIndex("PageId");
+
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
-
-                    b.HasIndex("PageId", "Locale")
-                        .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
                 });
@@ -661,7 +666,16 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                        .WithMany("BannerTranslations")
+                        .HasForeignKey("Locale")
+                        .HasPrincipalKey("LangCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Banner");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.HomeTranslation", b =>
@@ -672,48 +686,83 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                        .WithMany("HomeTranslations")
+                        .HasForeignKey("Locale")
+                        .HasPrincipalKey("LangCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Home");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.MenuTranslation", b =>
                 {
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                        .WithMany("MenuTranslations")
+                        .HasForeignKey("Locale")
+                        .HasPrincipalKey("LangCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Menu")
                         .WithMany("MenuTranslations")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Language");
+
                     b.Navigation("Menu");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                        .WithMany("ModuleTranslations")
+                        .HasForeignKey("Locale")
+                        .HasPrincipalKey("LangCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CorporateAPI.Domain.Entities.Module.Module", "Module")
                         .WithMany("ModuleTranslations")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Language");
+
                     b.Navigation("Module");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
                 {
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                        .WithMany("PageTranslations")
+                        .HasForeignKey("Locale")
+                        .HasPrincipalKey("LangCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
                         .WithMany("PageTranslations")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Language");
 
                     b.Navigation("Page");
                 });
@@ -777,6 +826,19 @@ namespace CoreporateAPI.Persistence.Migrations
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
                 {
                     b.Navigation("HomeTranslations");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Lang", b =>
+                {
+                    b.Navigation("BannerTranslations");
+
+                    b.Navigation("HomeTranslations");
+
+                    b.Navigation("MenuTranslations");
+
+                    b.Navigation("ModuleTranslations");
+
+                    b.Navigation("PageTranslations");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>

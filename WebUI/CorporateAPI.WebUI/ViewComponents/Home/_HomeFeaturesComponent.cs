@@ -4,10 +4,9 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
 {
 	public class _HomeFeaturesComponent:ViewComponent
 	{
-		public IViewComponentResult Invoke()
-		{
-
-		return View(); 
-		}
-	}
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View();
+        }
+    }
 }

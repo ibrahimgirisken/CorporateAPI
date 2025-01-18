@@ -57,7 +57,23 @@ namespace CoreporateAPI.Persistence.Repositories
             return entityEntry.State==EntityState.Modified;
         }
         public async Task<int> SaveAsync()
-       =>await _context.SaveChangesAsync();
+        {
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var result = await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    return result;
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
+        }
 
     }
 }

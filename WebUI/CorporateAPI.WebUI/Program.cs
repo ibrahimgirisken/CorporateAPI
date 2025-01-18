@@ -2,6 +2,7 @@ using CorporateAPI.WebUI.Services.Abstract;
 using CorporateAPI.WebUI.Services.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(10);

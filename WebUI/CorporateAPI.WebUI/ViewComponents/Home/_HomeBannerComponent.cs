@@ -4,7 +4,7 @@ namespace CorporateAPI.WebUI.ViewComponents.Home
 {
     public class _HomeBannerComponent:ViewComponent
     {
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             return View();
         }

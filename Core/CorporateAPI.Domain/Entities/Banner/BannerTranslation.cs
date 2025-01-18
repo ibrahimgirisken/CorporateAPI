@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Domain.Entities.Banner
 {
-    public class BannerTranslation:BaseEntity
+    public class BannerTranslation:BaseTranslation
     {
-        public string Locale { get; set; }
         public string? Url { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
