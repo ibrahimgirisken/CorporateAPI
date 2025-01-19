@@ -18,7 +18,8 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
 
         public async Task<GetAllMenuQueryResponse> Handle(GetAllMenuQueryRequest request, CancellationToken cancellationToken)
         {
-            var menus= _menuReadRepository.GetAll(false).Include(e=>e.MenuTranslations).ToList();
+            var language = request.Language ?? "en";
+            var menus= _menuReadRepository.GetAll(false).Include(e=>e.MenuTranslations.Where(l=>l.Locale==language)).ToList();
             var menusData= _mapper.Map<List<ResultMenuDTO>>(menus);
             return new()
             {

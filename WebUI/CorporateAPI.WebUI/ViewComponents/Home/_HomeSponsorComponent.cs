@@ -1,6 +1,4 @@
 ﻿using CorporateAPI.WebUI.DTOs.Home;
-using CorporateAPI.WebUI.Helpers;
-using CorporateAPI.WebUI.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Globalization;

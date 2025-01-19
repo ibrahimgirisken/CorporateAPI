@@ -22,6 +22,12 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllMenuQueryRequest getAllMenuQueryRequest)
         {
+            string language = Request.Headers["Accept-Language".ToString()];
+            if (string.IsNullOrEmpty(language))
+            {
+                language = "en"; // Varsayılan dil
+            }
+            getAllMenuQueryRequest.Language = language;
             GetAllMenuQueryResponse response = await _mediator.Send(getAllMenuQueryRequest);
             return Ok(response.menusDto);
         }

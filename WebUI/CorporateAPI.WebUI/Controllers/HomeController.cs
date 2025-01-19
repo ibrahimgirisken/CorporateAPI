@@ -1,16 +1,33 @@
-using CorporateAPI.WebUI.DTOs.Home;
-using CorporateAPI.WebUI.Helpers;
-using CorporateAPI.WebUI.Models;
+using CorporateAPI.WebUI.DTOs.Menu;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using System.Globalization;
 
 namespace CorporateAPI.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public HomeController(IHttpClientFactory httpClientFactory)
         {
-            return View();
+            _httpClientFactory = httpClientFactory;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var language = RouteData.Values["language"]?.ToString() ?? CultureInfo.CurrentUICulture.Name;
+            var client = _httpClientFactory.CreateClient("Admin");
+            client.DefaultRequestHeaders.Add("Accept-Language", language);
+            var response = await client.GetAsync("Menus");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+            }
+
+            var menuData = await response.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
+
+            return View(menuData); // View'a veri gönderiyoruz
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CorporateAPI.WebUI.Services.Abstract;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 
 namespace CorporateAPI.WebUI.Helpers

@@ -26,7 +26,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllHomeQueryRequest getAllHomeQueryRequest)
         {
             GetAllHomeQueryResponse response=await _mediator.Send(getAllHomeQueryRequest);
-            return Ok(response);
+            return Ok(response.Homes);
         }
 
         [HttpGet("{Id}")]

@@ -1,48 +1,33 @@
-using CorporateAPI.WebUI.Services.Abstract;
-using CorporateAPI.WebUI.Services.Concrete;
+using CorporateAPI.WebUI.ViewComponents;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(10);
-    options.Limits.RequestHeadersTimeout = TimeSpan.FromSeconds(30);
-});
+// HttpClient tanýmý
 builder.Services.AddHttpClient("Admin", (options) =>
 {
     options.BaseAddress = new Uri("https://localhost:7272/api/");
 });
 
+// Gerekli servisler
+builder.Services.AddScoped(typeof(ApiDataComponent<>));
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<IDetectionService, DetectionService>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-
-
-
+// Desteklenen diller ve varsayýlan kültür
 var supportedCultures = new[] { "en", "tr", "de" };
 var localizationOptions = new RequestLocalizationOptions
 {
-    DefaultRequestCulture = new RequestCulture("en"),
+    DefaultRequestCulture = new RequestCulture("tr"),
     SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList(),
     SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList()
 };
 
-
-
-
-
 var app = builder.Build();
 
-
-
-
+// Localization Middleware
 app.UseRequestLocalization(localizationOptions);
-
 
 if (!app.Environment.IsDevelopment())
 {
@@ -55,6 +40,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Route üzerinden dil ayarý middleware
 app.Use(async (context, next) =>
 {
     var language = context.Request.RouteValues["language"]?.ToString();
@@ -69,8 +55,7 @@ app.Use(async (context, next) =>
         }
         catch (CultureNotFoundException)
         {
-            // Desteklenmeyen dil durumunda varsayýlan dil ayarlanabilir
-            var defaultCulture = new CultureInfo("en");
+            var defaultCulture = new CultureInfo("tr");
             CultureInfo.CurrentCulture = defaultCulture;
             CultureInfo.CurrentUICulture = defaultCulture;
         }
@@ -79,20 +64,15 @@ app.Use(async (context, next) =>
     await next.Invoke();
 });
 
-
-
 app.UseAuthorization();
 
+// Route tanýmlarý
 app.MapControllerRoute(
     name: "default",
     pattern: "{language=en}/{controller=Home}/{action=Index}/{id?}");
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
-});
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
