@@ -1,81 +1,85 @@
-﻿@model CreatePageDTO
+﻿@model CreatePageViewModel
 @{
     ViewData["Title"] = "Yeni Sayfa Ekleme";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
-    <form method="post" class="form-group">
+    <form method="post" action="CreatePage">
         <div class="form-group">
-            <label>Moduller</label>
-            <select class="form-select" name="@nameof(Model.ModuleIds)">
-                <option value="0" selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <label asp-for="CreatePageDTO.ModuleIds"></label>
+            <select class="form-select" asp-for="CreatePageDTO.ModuleIds">
+                <option value="0" selected>Seç</option>
+                @foreach (var item in Model.GetModuleDTOs)
+                {
+                    <option value="@item.Id">
+                        @item.ContentType
+                    </option>
+                }
             </select>
         </div>
         <div class="form-group">
-            <label>Resim1</label>
-            <input type="text" name="@nameof(Model.Image1)" class="form-control" />
+            <label asp-for="CreatePageDTO.Image1"></label>
+            <input asp-for="CreatePageDTO.Image1" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Resim2</label>
-            <input type="text" name="@nameof(Model.Image2)" class="form-control" />
+            <label asp-for="CreatePageDTO.Image2"></label>
+            <input asp-for="CreatePageDTO.Image2" class="form-control" />
         </div>
         <div class="form-group">
-            <label>Resim3</label>
-            <input type="text" name="@nameof(Model.Image3)" class="form-control" />
+            <label asp-for="CreatePageDTO.Image3"></label>
+            <input asp-for="CreatePageDTO.Image3" class="form-control" />
         </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            @foreach (var lang in Model.PageTranslations)
+            @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
             {
+                var lang = Model.GetLangDTOs[i];
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale-tab" data-bs-toggle="tab" data-bs-target="#@lang.Locale" type="button" role="tab" aria-controls="@lang.Locale" aria-selected="@(lang.Locale == "tr" ? "true" : "false")">
-                        <img width="15" height="15" src="~/icons/@(lang.Locale).svg" />@lang.Locale
+                    <button class="nav-link @(lang.LangCode == "tr" ? "active" : "")" id="@lang.LangCode-tab" data-bs-toggle="tab" data-bs-target="#@lang.LangCode" type="button" role="tab" aria-controls="@lang.LangCode" aria-selected="@(lang.LangCode == "tr" ? "true" : "false")">
+                        <img width="15" height="15" src="~/icons/@(lang.LangCode).svg" />@lang.LangCode
                     </button>
                 </li>
             }
         </ul>
-
         <div class="tab-content mt-3" id="myTabContent">
-            @for (int i = 0; i < Model.PageTranslations.Count; i++)
+            @for (int i = 0; i < Model.CreatePageDTO.PageTranslations.Count; i++)
             {
-                var lang = Model.PageTranslations.ToList()[i];
+                var lang = Model.CreatePageDTO.PageTranslations.ToList()[i];
                 <div class="tab-pane fade show @(lang.Locale == "tr" ? "active" : "")" id="@lang.Locale" role="tabpanel" aria-labelledby="@lang.Locale-tab">
                     <div class="card-body">
-                        <input type="hidden" name="PageTranslations[@i].Locale" value="@lang.Locale" />
+                        <input type="hidden" asp-for="PageTranslations[@i].Locale" value="@lang.Locale" />
 
                         <div class="form-group">
-                            <label for="Title">Başlık</label>
-                            <input type="text" name="PageTranslations[@i].Title" class="form-control" />
+                            <label asp-for="PageTranslations[@i].Title"></label>
+                            <input asp-for="PageTranslations[@i].Title" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="Url">Url</label>
-                            <input type="text" name="PageTranslations[@i].Url" class="form-control" />
+                            <label asp-for="PageTranslations[@i].Url"></label>
+                            <input asp-for="PageTranslations[@i].Url" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="PageTitle">Sayfa Başlık</label>
-                            <input type="text" name="PageTranslations[@i].PageTitle" class="form-control" />
+                            <label asp-for="PageTranslations[@i].PageTitle"></label>
+                            <input asp-for="PageTranslations[@i].PageTitle." class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="Brief">Kısa Açıklama</label>
-                            <input type="text" name="PageTranslations[@i].Brief" class="form-control" />
+                            <label asp-for="PageTranslations[@i].Brief"></label>
+                            <input asp-for="PageTranslations[@i].Brief" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="MetaDescription">Meta Açıklama</label>
-                            <input type="text" name="PageTranslations[@i].MetaDescription" class="form-control" />
+                            <label asp-for="PageTranslations[@i].MetaDescription"></label>
+                            <input asp-for="PageTranslations[@i].MetaDescription" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="Content">Açıklama</label>
-                            <textarea class="form-control" name="PageTranslations[@i].Content"></textarea>
+                            <label asp-for="PageTranslations[@i].Content"></label>
+                            <textarea asp-for="PageTranslations[@i].Content" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
             }
         </div>
+
         <div class="form-group">
-            <label>Sıra</label>
-            <input type="number" name="@nameof(Model.Order)" class="form-control" value=1 />
+            <label asp-for="CreatePageDTO.Order"></label>
+            <input t asp-for="CreatePageDTO.Order" class="form-control" value=1 />
         </div>
         <input type="submit" value="Verileri Gönder"/>
 

@@ -1,4 +1,8 @@
-﻿using CorporateAPI.WebUI.DTOs.Page;
+﻿using CorporateAPI.Domain.Entities;
+using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Module;
+using CorporateAPI.WebUI.DTOs.Page;
+using CorporateAPI.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 
@@ -6,7 +10,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class PageController: Controller
+    public class PageController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -30,13 +34,24 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CreatePage()
         {
-            //var modules = await _client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
-            //var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            //var model = new CreatePageDTO
-            //{
-            //    PageTranslations = langs.Select(lang => new PageTranslationDTO { Locale = lang.LangCode}).ToList()
-            //};
-            return View();
+            var client = _httpClientFactory.CreateClient("Admin");
+            var modules = await client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var createPageDTO = new CreatePageDTO
+            {
+                PageTranslations = langs.Select(lang => new PageTranslationDTO
+                {
+                    Locale = lang.LangCode 
+                }).ToList()
+            };
+            var model = new CreatePageViewModel
+            {
+                CreatePageDTO = createPageDTO,
+                GetLangDTOs = langs,
+                GetModuleDTOs = modules
+            };
+
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)

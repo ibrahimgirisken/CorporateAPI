@@ -28,7 +28,7 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetAllModule
             var moduleDtos = _mapper.Map<List<ResultModuleDTO>>(modules);
             return new()
             {
-                Modules = moduleDtos
+                ModulesDto = moduleDtos
             };
         }
     }

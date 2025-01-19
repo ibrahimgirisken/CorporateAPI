@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.Application.Features.Commands.Module.CreateModule;
 using CorporateAPI.Application.Features.Commands.Module.RemoveModule;
 using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
+using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using CorporateAPI.Application.Features.Queries.Module.GetAllModule;
 using CorporateAPI.Application.Features.Queries.Module.GetByIdModule;
 using MediatR;
@@ -23,8 +24,17 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]GetAllModuleQueryRequest getAllModuleQueryRequest)
         {
-            GetAllModuleQueryResponse response=await _mediator.Send(getAllModuleQueryRequest);
-            return Ok(response.Modules);
+            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
+            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
+            string language = Request.Headers["Accept-Language".ToString()];
+            if (string.IsNullOrEmpty(language))
+            {
+                language = "en"; // Varsayılan dil
+            }
+            getAllModuleQueryRequest.Language = language;
+            getAllModuleQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
+            GetAllModuleQueryResponse response = await _mediator.Send(getAllModuleQueryRequest);
+            return Ok(response.ModulesDto);
         }
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get([FromRoute] GetByIdModuleQueryRequest getByIdModuleQueryRequest)
