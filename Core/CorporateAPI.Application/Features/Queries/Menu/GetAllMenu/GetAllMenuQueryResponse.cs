@@ -4,6 +4,6 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
 {
     public class GetAllMenuQueryResponse
     {
-        public List<ResultMenuDTO> menusDto{ get; set; }
+        public List<ResultMenuDTO> MenusDto{ get; set; }
     }
 }

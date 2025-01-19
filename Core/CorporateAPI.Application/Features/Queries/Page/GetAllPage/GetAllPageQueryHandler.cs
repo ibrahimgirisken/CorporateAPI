@@ -25,7 +25,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
             return new()
             {
-                Pages = pageDtos,
+                PagesDto = pageDtos,
             };
         }
     }

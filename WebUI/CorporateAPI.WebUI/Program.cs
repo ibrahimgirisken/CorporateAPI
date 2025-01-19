@@ -55,7 +55,7 @@ app.Use(async (context, next) =>
         }
         catch (CultureNotFoundException)
         {
-            var defaultCulture = new CultureInfo("tr");
+            var defaultCulture = new CultureInfo("en");
             CultureInfo.CurrentCulture = defaultCulture;
             CultureInfo.CurrentUICulture = defaultCulture;
         }

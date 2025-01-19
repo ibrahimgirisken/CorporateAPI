@@ -22,14 +22,17 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllMenuQueryRequest getAllMenuQueryRequest)
         {
+            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
+            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
             string language = Request.Headers["Accept-Language".ToString()];
             if (string.IsNullOrEmpty(language))
             {
                 language = "en"; // Varsayılan dil
             }
             getAllMenuQueryRequest.Language = language;
+            getAllMenuQueryRequest.IncludeAllLanguages= includeAllLanguagesFlag;
             GetAllMenuQueryResponse response = await _mediator.Send(getAllMenuQueryRequest);
-            return Ok(response.menusDto);
+            return Ok(response.MenusDto);
         }
 
         [HttpGet("{Id}")]

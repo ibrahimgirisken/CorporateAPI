@@ -18,12 +18,21 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetAllMenu
 
         public async Task<GetAllMenuQueryResponse> Handle(GetAllMenuQueryRequest request, CancellationToken cancellationToken)
         {
+             if (request.IncludeAllLanguages)
+            {
+               var menuTranslations = _menuReadRepository.GetAll(false).Include(e => e.MenuTranslations).ToList();
+                var menusDatas = _mapper.Map<List<ResultMenuDTO>>(menuTranslations);
+                return new()
+                {
+                    MenusDto = menusDatas
+                };
+            }
             var language = request.Language ?? "en";
             var menus= _menuReadRepository.GetAll(false).Include(e=>e.MenuTranslations.Where(l=>l.Locale==language)).ToList();
             var menusData= _mapper.Map<List<ResultMenuDTO>>(menus);
             return new()
             {
-                menusDto= menusData
+                MenusDto= menusData
             };
         }
     }

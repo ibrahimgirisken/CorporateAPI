@@ -9,5 +9,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 {
     public class GetAllPageQueryRequest:IRequest<GetAllPageQueryResponse>
     {
+        public string? Language { get; set; }
+        public bool IncludeAllLanguages { get; set; }
     }
 }
