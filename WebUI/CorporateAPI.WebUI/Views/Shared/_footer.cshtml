@@ -1,4 +1,5 @@
-﻿<footer class="srex-footer-two">
+﻿@model List<ResultMenuDTO>
+<footer class="srex-footer-two">
     <div class="container">
         <div class="srex-footer-two__top__content">
             <ul class="srex-footer-two__top__content__contact d-flex justify-content-between">
@@ -63,21 +64,15 @@
                         <h4>Useful Links</h4>
                         <div class="srex-footer__links__content">
                             <ul class="srex-footer__links__list">
-                                <li>
-                                    <a href="#">About US</a>
-                                </li>
-                                <li>
-                                    <a href="#">Our Service</a>
-                                </li>
-                                <li>
-                                    <a href="#">What We Do</a>
-                                </li>
-                                <li>
-                                    <a href="#">Out Team</a>
-                                </li>
-                                <li>
-                                    <a href="#">Contact</a>
-                                </li>
+                                @foreach (var item in Model)
+                                {
+                                    foreach (var menu in item.MenuTranslations)
+                                    {
+                                        <li>
+                                            <a href="@menu.Locale/@menu.Url">@menu.Title</a>
+                                        </li>
+                                    }                      
+                                }
                             </ul>
                         </div>
                     </div>
