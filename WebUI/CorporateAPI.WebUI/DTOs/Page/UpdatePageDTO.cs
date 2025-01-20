@@ -11,7 +11,7 @@ namespace CorporateAPI.WebUI.DTOs.Page
         public int Id { get; set; }
         public UpdatePageDTO()
         {
-            PageTranslations = new List<PageTranslationDTO>();
+            PageTranslations = new List<PageTranslationDTO>();            
         }
         public string Image1 { get; set; }
         public string Image2 { get; set; }

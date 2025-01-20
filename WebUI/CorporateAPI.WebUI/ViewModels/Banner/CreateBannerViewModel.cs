@@ -1,7 +1,7 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
 
-namespace CorporateAPI.WebUI.ViewModels
+namespace CorporateAPI.WebUI.ViewModels.Banner
 {
     public class CreateBannerViewModel
     {
