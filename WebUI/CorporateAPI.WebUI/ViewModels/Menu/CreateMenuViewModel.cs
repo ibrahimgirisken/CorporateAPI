@@ -5,7 +5,7 @@ namespace CorporateAPI.WebUI.ViewModels.Menu
 {
     public class CreateMenuViewModel
     {
-        public UpdateMenuDTO UpdateMenuDTO { get; set; }
+        public CreateMenuDTO CreateMenuDTO { get; set; }
         public List<ResultLangDTO> GetLangDTOs
         {
             get; set;

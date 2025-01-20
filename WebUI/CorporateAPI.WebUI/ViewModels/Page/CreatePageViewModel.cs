@@ -6,7 +6,7 @@ namespace CorporateAPI.WebUI.ViewModels.Page
 {
     public class CreatePageViewModel
     {
-        public UpdatePageDTO UpdatePageDTO { get; set; }
+        public CreatePageDTO CreatePageDTO { get; set; }
         public List<ResultModuleDTO> GetModuleDTOs { get; set; }
         public List<ResultLangDTO> GetLangDTOs
         {

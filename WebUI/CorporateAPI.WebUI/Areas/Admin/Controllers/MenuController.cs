@@ -2,6 +2,7 @@
 using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.ViewModels.Menu;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -34,7 +35,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var updateMenuDTO = new UpdateMenuDTO
+            var createMenuDTO = new CreateMenuDTO
             {
                 MenuTranslations = langs.Select(lang => new MenuTranslationDTO
                 {
@@ -43,18 +44,18 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             };
             var model = new CreateMenuViewModel
             {
-                UpdateMenuDTO = updateMenuDTO,
+                CreateMenuDTO = createMenuDTO,
                 GetLangDTOs = langs
             };
 
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateMenu(CreateMenuViewModel createMenuViewModel)
+        public async Task<IActionResult> UpdateMenu(CreateMenuViewModel createMenuViewModel)
         {
-            UpdateMenuDTO menuDto = createMenuViewModel.UpdateMenuDTO;
+            CreateMenuDTO menuDto = createMenuViewModel.CreateMenuDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PostAsJsonAsync<UpdateMenuDTO>("Menus", menuDto);
+            await client.PostAsJsonAsync<CreateMenuDTO>("Menus", menuDto);
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]

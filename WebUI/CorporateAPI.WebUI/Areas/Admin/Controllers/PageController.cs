@@ -35,7 +35,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient("Admin");
             var modules = await client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var UpdatePageDTO = new UpdatePageDTO
+            var CreatePageDTO = new CreatePageDTO
             {
                 PageTranslations = langs.Select(lang => new PageTranslationDTO
                 {
@@ -44,7 +44,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             };
             var model = new CreatePageViewModel
             {
-                UpdatePageDTO = UpdatePageDTO,
+                CreatePageDTO = CreatePageDTO,
                 GetLangDTOs = langs,
                 GetModuleDTOs = modules
             };
@@ -54,9 +54,9 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePage(CreatePageViewModel createPageViewModel)
         {
-            UpdatePageDTO pageDto = createPageViewModel.UpdatePageDTO;
+            CreatePageDTO pageDto = createPageViewModel.CreatePageDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PostAsJsonAsync<UpdatePageDTO>("Pages", pageDto);
+            await client.PostAsJsonAsync<CreatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
