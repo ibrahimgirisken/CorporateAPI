@@ -27,7 +27,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
             var pageDto = _mapper.Map<ResultPageDTO>(page);
             return new()
             {
-                Page = pageDto
+                PageDto = pageDto
             };
         }
     }

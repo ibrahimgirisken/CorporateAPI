@@ -43,7 +43,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdPageQueryRequest getByIdPageQueryRequest)
         {
             GetByIdPageQueryResponse response = await _mediator.Send(getByIdPageQueryRequest);
-            return Ok(response);
+            return Ok(response.PageDto);
         }
         [HttpPost]
         public async Task<IActionResult> Post(CreatePageCommandRequest createPageCommandRequest)

@@ -67,16 +67,10 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient("Admin");
             var modules = await client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var UpdatePageDTO = new UpdatePageDTO
+            var resultPageDTO = await client.GetFromJsonAsync<UpdatePageDTO>($"Pages/{id}");
+            var model = new UpdatePageViewModel
             {
-                PageTranslations = langs.Select(lang => new PageTranslationDTO
-                {
-                    Locale = lang.LangCode
-                }).ToList()
-            };
-            var model = new CreatePageViewModel
-            {
-                UpdatePageDTO = UpdatePageDTO,
+                UpdatePageDTO = resultPageDTO,
                 GetLangDTOs = langs,
                 GetModuleDTOs = modules
             };
@@ -89,7 +83,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             UpdatePageDTO pageDto = updatePageViewModel.UpdatePageDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PostAsJsonAsync<UpdatePageDTO>("Pages", pageDto);
+            await client.PutAsJsonAsync<UpdatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));
         }
         [HttpDelete]
