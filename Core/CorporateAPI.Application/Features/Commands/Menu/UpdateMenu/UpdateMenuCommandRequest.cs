@@ -14,14 +14,14 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public int Id { get; set; }
         public UpdateMenuCommandRequest()
         {
-            Children = new HashSet<CreateMenuCommandRequest>();
-            MenuTranslations = new HashSet<MenuTranslationDTO>();
+            Children = new List<CreateMenuCommandRequest>();
+            MenuTranslations = new List<MenuTranslationDTO>();
         }
         public bool Vitrin { get; set; }
         public bool Footer { get; set; }
         public int Order { get; set; }
         public int? ParentId { get; set; }
-        public ICollection<CreateMenuCommandRequest> Children { get; set; }
-        public ICollection<MenuTranslationDTO> MenuTranslations { get; set; }
+        public List<CreateMenuCommandRequest> Children { get; set; }
+        public List<MenuTranslationDTO> MenuTranslations { get; set; }
     }
 }

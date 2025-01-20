@@ -16,8 +16,8 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
         public bool Status { get; set; }
         public UpdateModuleCommandRequest()
         {
-            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
+            ModuleTranslations = new List<ModuleTranslationDTO>();
         }
-        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }
