@@ -39,7 +39,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdMenuQueryRequest getByIdMenuQueryRequest)
         {
             GetByIdMenuQueryResponse response = await _mediator.Send(getByIdMenuQueryRequest);
-            return Ok(response);
+            return Ok(response.MenuDto);
         }
 
         [HttpPost]

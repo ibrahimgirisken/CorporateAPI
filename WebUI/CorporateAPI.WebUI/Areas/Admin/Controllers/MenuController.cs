@@ -65,7 +65,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var menus = await client.GetFromJsonAsync<List<ResultMenuDTO>>("Menus?IncludeAllLanguages=true");
-            var resultMenuDTO = await client.GetFromJsonAsync<UpdateMenuDTO>($"Pages/{id}");
+            var resultMenuDTO = await client.GetFromJsonAsync<UpdateMenuDTO>($"Menus/{id}");
             var model = new UpdateMenuViewModel
             {
                 UpdateMenuDTO = resultMenuDTO,

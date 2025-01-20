@@ -29,7 +29,7 @@ namespace CorporateAPI.Application.Features.Queries.Menu.GetByIdMenu
 
             return new()
             {
-                Menu= menuData
+                MenuDto= menuData
             };
         }
     }
