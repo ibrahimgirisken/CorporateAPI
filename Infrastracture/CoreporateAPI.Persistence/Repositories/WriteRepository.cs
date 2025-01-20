@@ -36,12 +36,17 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public bool Remove(T model)
         {
-          EntityEntry<T> entityEntry= Table.Remove(model);
-          return entityEntry.State==EntityState.Deleted;
+            model.IsDeleted = true;
+            Table.Update(model);
+            return true;
         }
         public bool RemoveRange(List<T> datas)
         {
-            Table.RemoveRange(datas);
+            foreach (var data in datas)
+            {
+             data.IsDeleted = true;
+            }
+            Table.UpdateRange(datas);
             return true;
         }
 

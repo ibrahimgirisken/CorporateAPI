@@ -1,6 +1,10 @@
-﻿using CorporateAPI.WebUI.DTOs.Menu;
+﻿using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.Helpers;
+using CorporateAPI.WebUI.ViewModels.Menu;
+using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -26,6 +30,64 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             }
             var menuData = await response.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
             return View(menuData);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateMenu()
+        {
+            var client = _httpClientFactory.CreateClient("Admin");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var updateMenuDTO = new UpdateMenuDTO
+            {
+                MenuTranslations = langs.Select(lang => new MenuTranslationDTO
+                {
+                    Locale = lang.LangCode
+                }).ToList()
+            };
+            var model = new CreateMenuViewModel
+            {
+                UpdateMenuDTO = updateMenuDTO,
+                GetLangDTOs = langs
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateMenu(CreateMenuViewModel createMenuViewModel)
+        {
+            UpdateMenuDTO menuDto = createMenuViewModel.UpdateMenuDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PostAsJsonAsync<UpdateMenuDTO>("Menus", menuDto);
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public async Task<IActionResult> UpdateMenu(int id)
+        {
+            var client = _httpClientFactory.CreateClient("Admin");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var resultMenuDTO = await client.GetFromJsonAsync<UpdateMenuDTO>($"Pages/{id}");
+            var model = new UpdateMenuViewModel
+            {
+                UpdateMenuDTO = resultMenuDTO,
+                GetLangDTOs = langs
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMenu(UpdateMenuViewModel updateMenuViewModel)
+        {
+            UpdateMenuDTO menuDto = updateMenuViewModel.UpdateMenuDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PutAsJsonAsync<UpdateMenuDTO>("Menus", menuDto);
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteMenu(int id)
+        {
+            //await _client.DeleteAsync("Pages/{id}");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
