@@ -10,6 +10,8 @@ namespace CorporateAPI.WebUI.DTOs.Module
     {
         public int Id { get; set; }
         public string ContentType { get; set; }
-        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public int Order { get; set; }
+        public bool Status { get; set; }
+        public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }
