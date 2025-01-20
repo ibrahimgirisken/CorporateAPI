@@ -1,6 +1,6 @@
 ﻿@model List<ResultMenuDTO>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Menuler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -23,8 +23,8 @@
             <td>@item.Footer</td>
             <td>@item.Order</td>
             <td>
-                <a asp-action="DeleteBanner" asp-controller="Banner" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
-                <a asp-action="UpdateBanner" asp-controller="Banner" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
+                <a asp-action="DeleteMenu" asp-controller="Menu" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
+                <a asp-action="UpdateMenu" asp-controller="Menu" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
             </td>
         </tr>
     }

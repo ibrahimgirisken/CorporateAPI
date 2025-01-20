@@ -2,7 +2,6 @@
 using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.ViewModels.Menu;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -35,6 +34,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var menus = await client.GetFromJsonAsync<List<ResultMenuDTO>>("Menus?IncludeAllLanguages=true");
             var createMenuDTO = new CreateMenuDTO
             {
                 MenuTranslations = langs.Select(lang => new MenuTranslationDTO
@@ -45,13 +45,14 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var model = new CreateMenuViewModel
             {
                 CreateMenuDTO = createMenuDTO,
-                GetLangDTOs = langs
+                GetLangDTOs = langs,
+                ResultMenus=menus
             };
 
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateMenu(CreateMenuViewModel createMenuViewModel)
+        public async Task<IActionResult> CreateMenu(CreateMenuViewModel createMenuViewModel)
         {
             CreateMenuDTO menuDto = createMenuViewModel.CreateMenuDTO;
             var client = _httpClientFactory.CreateClient("Admin");
@@ -63,11 +64,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var menus = await client.GetFromJsonAsync<List<ResultMenuDTO>>("Menus?IncludeAllLanguages=true");
             var resultMenuDTO = await client.GetFromJsonAsync<UpdateMenuDTO>($"Pages/{id}");
             var model = new UpdateMenuViewModel
             {
                 UpdateMenuDTO = resultMenuDTO,
-                GetLangDTOs = langs
+                GetLangDTOs = langs,
+                ResultMenus=menus
             };
 
             return View(model);
