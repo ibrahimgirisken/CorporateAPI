@@ -54,9 +54,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CreatePage(CreatePageDTO pageDTO)
+        public async Task<IActionResult> CreatePage(CreatePageViewModel createPageViewModel)
         {
-            //await _client.PostAsJsonAsync("Pages", pageDTO);
+            CreatePageDTO pageDto = createPageViewModel.CreatePageDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PostAsJsonAsync<CreatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]

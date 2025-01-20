@@ -24,7 +24,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
             var page = _mapper.Map<Domain.Entities.Page>(request);
            if (request.PageTranslations != null)
             {
-               page.PageTranslations=_mapper.Map<ICollection<PageTranslation>>(request.PageTranslations);
+               page.PageTranslations=_mapper.Map<List<PageTranslation>>(request.PageTranslations);
             }
             await _pageWriteRepository.AddAsync(page);
             await _pageWriteRepository.SaveAsync();

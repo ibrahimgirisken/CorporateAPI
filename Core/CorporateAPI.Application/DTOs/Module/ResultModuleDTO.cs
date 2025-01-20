@@ -12,6 +12,6 @@ namespace CorporateAPI.Application.DTOs.Module
         public string ContentType { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
-        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }

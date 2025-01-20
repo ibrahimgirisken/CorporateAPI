@@ -20,7 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
             var menu = _mapper.Map<Domain.Entities.Menu.Menu>(request);
             if (request.Translations != null)
             {
-                menu.MenuTranslations=_mapper.Map<ICollection<MenuTranslation>>(request.Translations);
+                menu.MenuTranslations=_mapper.Map<List<MenuTranslation>>(request.Translations);
             }
             await _menuWriteRepository.AddAsync(menu);
             await _menuWriteRepository.SaveAsync();

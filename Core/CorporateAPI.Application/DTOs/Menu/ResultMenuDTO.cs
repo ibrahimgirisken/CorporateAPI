@@ -13,7 +13,7 @@ namespace CorporateAPI.Application.DTOs.Menu
         public bool Footer { get; set; }
         public int Order { get; set; }
         public int? ParentId { get; set; }
-        public ICollection<ResultMenuDTO> Children { get; set; }
-        public ICollection<MenuTranslationDTO> MenuTranslations { get; set; }
+        public List<ResultMenuDTO> Children { get; set; }
+        public List<MenuTranslationDTO> MenuTranslations { get; set; }
     }
 }

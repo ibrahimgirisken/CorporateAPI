@@ -11,13 +11,13 @@ namespace CorporateAPI.WebUI.DTOs.Page
         public int Id { get; set; }
         public UpdatePageDTO()
         {
-            PageTranslations = new HashSet<PageTranslationDTO>();
+            PageTranslations = new List<PageTranslationDTO>();
         }
         public string Image1 { get; set; }
         public string Image2 { get; set; }
         public string Image3 { get; set; }
         public int Order { get; set; }
         public string? ModuleIds { get; set; }
-        public ICollection<PageTranslationDTO> PageTranslations { get; set; }
+        public List<PageTranslationDTO> PageTranslations { get; set; }
     }
 }

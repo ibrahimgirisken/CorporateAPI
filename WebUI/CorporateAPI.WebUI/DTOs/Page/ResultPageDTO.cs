@@ -14,6 +14,6 @@ namespace CorporateAPI.WebUI.DTOs.Page
         public string Image3 { get; set; }
         public int Order { get; set; }
         public string? ModuleIds { get; set; }
-        public ICollection<PageTranslationDTO> PageTranslations { get; set; }
+        public List<PageTranslationDTO> PageTranslations { get; set; }
     }
 }

@@ -11,12 +11,12 @@ namespace CorporateAPI.Domain.Entities.Banner
     {
         public Banner()
         {
-            BannerTranslations=new HashSet<BannerTranslation>();
+            BannerTranslations=new List<BannerTranslation>();
         }
         public string? DesktopImage { get; set; }
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
         public int Order { get; set; }
-        public ICollection<BannerTranslation> BannerTranslations { get; set; }
+        public List<BannerTranslation> BannerTranslations { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace CorporateAPI.Domain.Entities.Module
         public string ContentType { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
-        public ICollection<ModuleTranslation> ModuleTranslations { get; set; }
+        public List<ModuleTranslation> ModuleTranslations { get; set; }
     }
 }

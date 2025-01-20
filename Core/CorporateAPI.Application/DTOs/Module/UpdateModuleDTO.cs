@@ -11,8 +11,8 @@ namespace CorporateAPI.Application.DTOs.Module
         public int Id { get; set; }
         public UpdateModuleDTO()
         {
-            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
+            ModuleTranslations = new List<ModuleTranslationDTO>();
         }
-        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
     }
 }

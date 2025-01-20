@@ -20,7 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
             var module=_mapper.Map<Domain.Entities.Module.Module>(request.Module);
             if (request.Module.ModuleTranslations != null)
             {
-               module.ModuleTranslations=_mapper.Map<ICollection<ModuleTranslation>>(request.Module.ModuleTranslations);
+               module.ModuleTranslations=_mapper.Map<List<ModuleTranslation>>(request.Module.ModuleTranslations);
             }
             await _moduleWriteRepository.AddAsync(module);
             await _moduleWriteRepository.SaveAsync();

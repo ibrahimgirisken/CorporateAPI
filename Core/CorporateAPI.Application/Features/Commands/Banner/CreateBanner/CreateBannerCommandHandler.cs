@@ -20,7 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
             var banner=_mapper.Map<Domain.Entities.Banner.Banner>(request);
             if (request.BannerTranslations!=null)
             {
-               banner.BannerTranslations=_mapper.Map<ICollection<BannerTranslation>>(request.BannerTranslations);
+               banner.BannerTranslations=_mapper.Map<List<BannerTranslation>>(request.BannerTranslations);
             }
             await _bannerWriteRepository.AddAsync(banner);
             await _bannerWriteRepository.SaveAsync();

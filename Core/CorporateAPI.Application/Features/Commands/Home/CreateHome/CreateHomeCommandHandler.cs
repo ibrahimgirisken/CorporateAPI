@@ -26,7 +26,7 @@ namespace CorporateAPI.Application.Features.Commands.Home.CreateHome
             var home = _mapper.Map<Domain.Entities.Home.Home>(request);
             if (request.HomeTranslations != null)
             {
-                home.HomeTranslations=_mapper.Map<ICollection<HomeTranslation>>(request.HomeTranslations);
+                home.HomeTranslations=_mapper.Map<List<HomeTranslation>>(request.HomeTranslations);
             }
             await _homeWriteRepository.AddAsync(home);
             await _homeWriteRepository.SaveAsync();
