@@ -1,10 +1,8 @@
-﻿using CorporateAPI.Domain.Entities;
-using CorporateAPI.WebUI.DTOs.Lang;
+﻿using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Module;
 using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
