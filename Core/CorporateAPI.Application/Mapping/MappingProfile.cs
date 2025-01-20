@@ -29,7 +29,8 @@ namespace CorporateAPI.Application.Mapping
         {
             CreateMap<Menu,CreateMenuCommandRequest>().ReverseMap();
             CreateMap<Menu,ResultMenuDTO>().ReverseMap();
-            CreateMap<Menu,UpdateMenuCommandRequest>().ReverseMap();
+            CreateMap<UpdateMenuCommandRequest, Menu>()
+            .ForMember(dest => dest.MenuTranslations, opt => opt.Ignore());
             CreateMap<MenuTranslation,MenuTranslationDTO>().ReverseMap();
 
             CreateMap<Page,CreatePageCommandRequest>().ReverseMap();

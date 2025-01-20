@@ -8,16 +8,15 @@ namespace CorporateAPI.WebUI.DTOs.Menu
 {
     public class UpdateMenuDTO
     {
+        public int Id { get; set; }
         public UpdateMenuDTO()
         {
-            Children = new List<CreateMenuDTO>();
             MenuTranslations = new List<MenuTranslationDTO>();
         }
         public bool Vitrin { get; set; }
         public bool Footer { get; set; }
         public int Order { get; set; }
         public int? ParentId { get; set; }
-        public List<CreateMenuDTO> Children { get; set; }
         public List<MenuTranslationDTO> MenuTranslations { get; set; }
     }
 }

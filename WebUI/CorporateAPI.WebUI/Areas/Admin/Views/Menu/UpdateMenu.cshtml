@@ -20,6 +20,7 @@
                 </select>
             </div>
         }
+        <input type="hidden" asp-for="UpdateMenuDTO.Id" />
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
             {

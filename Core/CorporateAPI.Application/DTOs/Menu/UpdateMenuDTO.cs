@@ -9,6 +9,7 @@ namespace CorporateAPI.Application.DTOs.Menu
 {
     public class UpdateMenuDTO
     {
+        public int Id { get; set; }
         public UpdateMenuDTO()
         {
             Children = new List<CreateMenuCommandRequest>();

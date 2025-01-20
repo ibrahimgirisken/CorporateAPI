@@ -26,6 +26,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
         public async Task<UpdateBannerCommandResponse> Handle(UpdateBannerCommandRequest request, CancellationToken cancellationToken)
         {
             var banner =await _bannerReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.BannerTranslations);
+
             foreach (var translsationDto in request.BannerTranslations)
             {
                 var existingTranslation=banner.BannerTranslations.FirstOrDefault(t=>t.Locale== translsationDto.Locale);
