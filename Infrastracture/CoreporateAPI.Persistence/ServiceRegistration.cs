@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using CorporateAPI.Application.Repositories.Menu;
 using CorporateAPI.Application.Repositories.Banner;
 using CorporateAPI.Application.Repositories.Home;
+using CorporateAPI.Application.Repositories.Brand;
+using CoreporateAPI.Persistence.Repositories.Brand;
+using CorporateAPI.Application.Repositories.Product;
+using CoreporateAPI.Persistence.Repositories.Product;
+using CorporateAPI.Application.Repositories.Category;
+using CoreporateAPI.Persistence.Repositories.Category;
 
 namespace CoreporateAPI.Persistence
 {
@@ -41,6 +47,12 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<ILangWriteRepository, LangWriteRepository>();
             services.AddScoped<IBannerReadRepository,BannerReadRepository>();
             services.AddScoped<IBannerWriteRepository, BannerWriteRepository>();
+            services.AddScoped<IBrandReadRepository,BrandReadRepository>();
+            services.AddScoped<IBrandWriteRepository, BrandWriteRepository>();
+            services.AddScoped<IProductReadRepository,ProductReadRepository>();
+            services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+            services.AddScoped<ICategoryReadRepository,CategoryReadRepository>();
+            services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 
         }
     }
