@@ -24,12 +24,4 @@
     <ProjectReference Include="..\CorporateAPI.Domain\CorporateAPI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Commands\Category\" />
-    <Folder Include="Features\Commands\Brand\" />
-    <Folder Include="Features\Commands\Product\" />
-    <Folder Include="Features\Queries\Product\GetAllProduct\" />
-    <Folder Include="Features\Queries\Product\GetByIdProduct\" />
-  </ItemGroup>
-
 </Project>
