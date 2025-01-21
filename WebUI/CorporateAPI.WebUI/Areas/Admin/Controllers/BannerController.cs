@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
 using CorporateAPI.WebUI.ViewModels.Banner;
 using CorporateAPI.WebUI.ViewModels.Page;
@@ -55,8 +56,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBanner(CreateBannerDTO bannerDTO)
+        public async Task<IActionResult> CreateBanner(CreateBannerViewModel createBannerViewModel)
         {
+            CreateBannerDTO bannerDto = createBannerViewModel.CreateBannerDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PostAsJsonAsync<CreateBannerDTO>("Banners", bannerDto);
             return RedirectToAction(nameof(Index));
         }
 

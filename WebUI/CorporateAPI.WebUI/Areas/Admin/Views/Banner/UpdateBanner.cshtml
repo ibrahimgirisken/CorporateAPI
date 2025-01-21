@@ -1,0 +1,51 @@
+﻿@model UpdateBannerViewModel
+@{
+    ViewData["Title"] = "Banner Güncelleme Sayfası";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid my-5">
+    <form method="post" asp-action="UpdateModule">
+            <input type="hidden" asp-for="UpdateBannerDTO.Id" />
+        <div class="form-group">
+            <label asp-for="UpdateBannerDTO.DesktopImage"></label>
+            <input asp-for="UpdateBannerDTO.DesktopImage" class="form-control" />
+            <label asp-for="UpdateBannerDTO.TableteImage"></label>
+            <input asp-for="UpdateBannerDTO.TableteImage" class="form-control" />
+            <label asp-for="UpdateBannerDTO.MobileImage"></label>
+            <input asp-for="UpdateBannerDTO.MobileImage" class="form-control" />
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
+            {
+                var lang = Model.GetLangDTOs[i];
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(lang.LangCode == "tr" ? "active" : "")" id="@lang.LangCode-tab" data-bs-toggle="tab" data-bs-target="#@lang.LangCode" type="button" role="tab" aria-controls="@lang.LangCode" aria-selected="@(lang.LangCode == "tr" ? "true" : "false")">
+                        <img width="15" height="15" src="~/icons/@(lang.LangCode).svg" />@lang.LangCode
+                    </button>
+                </li>
+            }
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            @for (int i = 0; i < Model.UpdateBannerDTO.BannerTranslations.Count; i++)
+            {
+                var translation = Model.UpdateBannerDTO.BannerTranslations[i];
+                <div class="tab-pane fade show @(translation.Locale == "tr" ? "active" : "")" id="@translation.Locale" role="tabpanel" aria-labelledby="@translation.Locale-tab">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="UpdateBannerDTO.BannerTranslations[i].Locale" />
+                        <label asp-for="UpdateBannerDTO.BannerTranslations[i].Url"></label>
+                        <input asp-for="UpdateBannerDTO.BannerTranslations[i].Url" class="form-control" />
+                        <label asp-for="UpdateBannerDTO.BannerTranslations[i].Title"></label>
+                        <input asp-for="UpdateBannerDTO.BannerTranslations[i].Title" class="form-control" />
+                        <label asp-for="UpdateBannerDTO.BannerTranslations[i].Content"></label>
+                        <input asp-for="UpdateBannerDTO.BannerTranslations[i].Content" class="form-control" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label asp-for="UpdateBannerDTO.Order"></label>
+            <input asp-for="UpdateBannerDTO.Order" class="form-control" />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Kaydet" />
+    </form>
+</div>
