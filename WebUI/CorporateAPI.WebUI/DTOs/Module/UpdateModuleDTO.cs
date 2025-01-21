@@ -9,10 +9,12 @@ namespace CorporateAPI.WebUI.DTOs.Module
     public class UpdateModuleDTO
     {
         public int Id { get; set; }
+        public string ContentType { get; set; }
         public UpdateModuleDTO()
         {
-            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
+            ModuleTranslations = new List<ModuleTranslationDTO>();
         }
-        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public int Order { get; set; }
     }
 }

@@ -1,6 +1,11 @@
 ﻿using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Module;
+using CorporateAPI.WebUI.DTOs.Page;
+using CorporateAPI.WebUI.ViewModels.Menu;
+using CorporateAPI.WebUI.ViewModels.Module;
+using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -39,30 +44,51 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
                     Locale=lang.LangCode,
                 }).ToList(),
             };
-            return View(createModuleDTO);
+            var model = new CreateModuleViewModel
+            {
+                CreateModuleDTO = createModuleDTO,
+                GetLangDTOs=langs
+            };
+            return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateModule(CreateModuleDTO moduleDTO)
+        public async Task<IActionResult> CreateModule(CreateModuleViewModel createModuleViewModel)
         {
-            return null;
+            CreateModuleDTO moduleDto = createModuleViewModel.CreateModuleDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PostAsJsonAsync<CreateModuleDTO>("Modules", moduleDto);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult UpdateModule()
+        public async Task<IActionResult> UpdateModule(int id)
         {
-            return null;
+            var client = _httpClientFactory.CreateClient("Admin");
+            var modules = await client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var resultModuleDTO = await client.GetFromJsonAsync<UpdateModuleDTO>($"Modules/{id}");
+            var model = new UpdateModuleViewModel
+            {
+                UpdateModuleDTO = resultModuleDTO,
+                GetLangDTOs = langs
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateModule(UpdateModuleDTO updateModuleDTO)
+        public async Task<IActionResult> UpdateModule(UpdateModuleViewModel updateModuleViewModel)
         {
-            return null;
+            UpdateModuleDTO moduleDto = updateModuleViewModel.UpdateModuleDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PutAsJsonAsync<UpdateModuleDTO>("Pages", moduleDto);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteModule()
         {
-            return null;
+            return RedirectToAction(nameof(Index));
         }
     }
 }

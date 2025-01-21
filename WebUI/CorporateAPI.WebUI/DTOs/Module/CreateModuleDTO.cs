@@ -13,9 +13,9 @@ namespace CorporateAPI.WebUI.DTOs.Module
         public bool Status { get; set; }
         public CreateModuleDTO()
         {
-            ModuleTranslations = new HashSet<ModuleTranslationDTO>();
+            ModuleTranslations = new List<ModuleTranslationDTO>();
         }
-        public ICollection<ModuleTranslationDTO> ModuleTranslations { get; set; }
+        public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
 
     }
 }

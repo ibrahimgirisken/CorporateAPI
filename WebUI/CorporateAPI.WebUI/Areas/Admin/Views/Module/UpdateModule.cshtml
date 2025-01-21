@@ -1,1 +1,44 @@
-﻿
+﻿@model UpdateModuleViewModel
+@{
+    ViewData["Title"] = "Module Güncelleme Sayfası";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid my-5">
+    <form method="post" asp-action="UpdateModule">
+        <div class="form-group">
+            <input type="hidden" asp-for="UpdateModuleDTO.Id" />
+            <label asp-for="UpdateModuleDTO.ContentType"></label>
+            <input asp-for="UpdateModuleDTO.ContentType" class="form-control" />
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
+            {
+                var lang = Model.GetLangDTOs[i];
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(lang.LangCode == "tr" ? "active" : "")" id="@lang.LangCode-tab" data-bs-toggle="tab" data-bs-target="#@lang.LangCode" type="button" role="tab" aria-controls="@lang.LangCode" aria-selected="@(lang.LangCode == "tr" ? "true" : "false")">
+                        <img width="15" height="15" src="~/icons/@(lang.LangCode).svg" />@lang.LangCode
+                    </button>
+                </li>
+            }
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            @for (int i = 0; i < Model.UpdateModuleDTO.ModuleTranslations.Count; i++)
+            {
+                var translation = Model.UpdateModuleDTO.ModuleTranslations[i];
+                <div class="tab-pane fade show @(translation.Locale == "tr" ? "active" : "")" id="@translation.Locale" role="tabpanel" aria-labelledby="@translation.Locale-tab">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="UpdateModuleDTO.ModuleTranslations[i].Locale" />
+                        <label asp-for="UpdateModuleDTO.ModuleTranslations[i].Name"></label>
+                        <input asp-for="UpdateModuleDTO.ModuleTranslations[i].Name" class="form-control" />
+                        <label asp-for="UpdateModuleDTO.ModuleTranslations[i].ModuleData"></label>
+                        <input asp-for="UpdateModuleDTO.ModuleTranslations[i].ModuleData" class="form-control" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label asp-for="UpdateModuleDTO.Order"></label>
+            <input asp-for="UpdateModuleDTO.Order" class="form-control" />
+            <input type="submit" class="btn btn-primary" value="Kaydet" />
+    </form>
+</div>
