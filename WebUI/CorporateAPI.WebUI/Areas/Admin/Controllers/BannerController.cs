@@ -1,7 +1,10 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.Helpers;
+using CorporateAPI.WebUI.ViewModels.Banner;
+using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -9,60 +12,69 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     [Route("[area]/[controller]/[action]/{id?}")]
     public class BannerController : Controller
     {
-        private readonly HttpClient _client;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public BannerController(HttpClient client)
+        public BannerController(IHttpClientFactory httpClientFactory)
         {
-            _client = client;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var values = await _client.GetFromJsonAsync<List<ResultBannerDTO>>("banners");
-            if (values == null)
+            var client = _httpClientFactory.CreateClient("Admin");
+            var response = await client.GetAsync("Banners?IncludeAllLanguages=true");
+            if (!response.IsSuccessStatusCode)
             {
-                return View(new List<ResultBannerDTO>());
+                throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
             }
-            return View(values);
+            var bannersData = await response.Content.ReadFromJsonAsync<List<ResultBannerDTO>>();
+            return View(bannersData);
         }
 
         [HttpGet]
         public async Task<IActionResult> CreateBanner()
         {
-            var langs = await _client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var model = new CreateBannerDTO
+            var client = _httpClientFactory.CreateClient("Admin");
+            var modules = await client.GetFromJsonAsync<List<ResultBannerDTO>>("Banners");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var CreateBannerDTO = new CreateBannerDTO
             {
-                BannerTranslations = langs.Select(lang => new BannerTranslationDTO { Locale = lang.LangCode }).ToList()
+                BannerTranslations = langs.Select(lang => new BannerTranslationDTO
+                {
+                    Locale = lang.LangCode
+                }).ToList()
             };
+            var model = new CreateBannerViewModel
+            {
+                CreateBannerDTO = CreateBannerDTO,
+                GetLangDTOs = langs
+            };
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBanner(CreateBannerDTO bannerDTO)
         {
-            await _client.PostAsJsonAsync("Banners", bannerDTO);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> UpdateBanner(int id)
         {
-            var value = await _client.GetFromJsonAsync<ResultBannerDTO>($"banners/{id}");
-            return View(value);
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateBanner(UpdateBannerDTO updateBannerDTO)
-        {
-            await _client.PutAsJsonAsync("banners", updateBannerDTO);
-            return RedirectToAction(nameof(Index));
+        {  
+        return RedirectToAction(nameof(Index));
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteBanner(int id)
         {
-            await _client.DeleteAsync($"banners/{id}");
             return RedirectToAction(nameof(Index));
         }
     }

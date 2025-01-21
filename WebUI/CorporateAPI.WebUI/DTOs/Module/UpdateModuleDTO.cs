@@ -16,5 +16,6 @@ namespace CorporateAPI.WebUI.DTOs.Module
         }
         public List<ModuleTranslationDTO> ModuleTranslations { get; set; }
         public int Order { get; set; }
+        public bool Status { get; set; }
     }
 }

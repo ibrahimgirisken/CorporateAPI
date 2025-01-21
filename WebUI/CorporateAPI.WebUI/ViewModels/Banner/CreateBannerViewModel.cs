@@ -6,7 +6,6 @@ namespace CorporateAPI.WebUI.ViewModels.Banner
     public class CreateBannerViewModel
     {
         public CreateBannerDTO CreateBannerDTO { get; set; }
-        public List<ResultLangDTO> Langs { get; set; }
-        public List<BannerTranslationDTO> BannerTranslations { get; set; }
+        public List<ResultLangDTO> GetLangDTOs { get; set; }
     }
 }

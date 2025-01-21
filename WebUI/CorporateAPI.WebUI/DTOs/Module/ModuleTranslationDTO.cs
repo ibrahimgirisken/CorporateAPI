@@ -8,9 +8,9 @@ namespace CorporateAPI.WebUI.DTOs.Module
 {
     public class ModuleTranslationDTO
     {
-        public string Name { get; set; }
-        public string ModuleData { get; set; }
         public string Locale { get; set; }
+        public string? Name { get; set; }
+        public string? ModuleData { get; set; }
         public int ModuleId { get; set; }
     }
 }
