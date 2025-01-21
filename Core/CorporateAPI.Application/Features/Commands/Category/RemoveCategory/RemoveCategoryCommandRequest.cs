@@ -9,5 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Category.RemoveCategory
 {
     public class RemoveCategoryCommandRequest:IRequest<RemoveCategoryCommandResponse>
     {
+        public int Id { get; set; }
     }
 }

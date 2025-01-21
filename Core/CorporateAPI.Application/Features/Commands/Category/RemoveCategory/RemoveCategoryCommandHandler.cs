@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories.Category;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,19 @@ namespace CorporateAPI.Application.Features.Commands.Category.RemoveCategory
 {
     public class RemoveCategoryCommandHandler : IRequestHandler<RemoveCategoryCommandRequest, RemoveCategoryCommandResponse>
     {
-        public Task<RemoveCategoryCommandResponse> Handle(RemoveCategoryCommandRequest request, CancellationToken cancellationToken)
+        readonly ICategoryWriteRepository _categoryWriteRepository;
+
+        public RemoveCategoryCommandHandler(ICategoryWriteRepository categoryWriteRepository)
         {
-            throw new NotImplementedException();
+            _categoryWriteRepository = categoryWriteRepository;
+        }
+
+        public async Task<RemoveCategoryCommandResponse> Handle(RemoveCategoryCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _categoryWriteRepository.RemoveAsync(request.Id);
+            await _categoryWriteRepository.SaveAsync();
+            return new();
+
         }
     }
 }

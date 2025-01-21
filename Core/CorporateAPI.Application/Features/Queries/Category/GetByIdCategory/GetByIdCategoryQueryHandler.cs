@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Category;
+using CorporateAPI.Application.Repositories.Category;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,23 @@ namespace CorporateAPI.Application.Features.Queries.Category.GetByIdCategory
 {
     public class GetByIdCategoryQueryHandler : IRequestHandler<GetByIdCategoryQueryRequest, GetByIdCategoryQueryResponse>
     {
-        public Task<GetByIdCategoryQueryResponse> Handle(GetByIdCategoryQueryRequest request, CancellationToken cancellationToken)
+        readonly ICategoryReadRepository _categoryReadRepository;
+        readonly IMapper _mapper;
+
+        public GetByIdCategoryQueryHandler(ICategoryReadRepository categoryReadRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _categoryReadRepository = categoryReadRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<GetByIdCategoryQueryResponse> Handle(GetByIdCategoryQueryRequest request, CancellationToken cancellationToken)
+        {
+            var category= await _categoryReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.CategoryTranslations);
+            var categoryDto=_mapper.Map<ResultCategoryDTO>(category);
+            return new()
+            {
+                CategoryDTO = categoryDto
+            };
         }
     }
 }
