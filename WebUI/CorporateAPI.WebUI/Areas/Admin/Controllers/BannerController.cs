@@ -71,7 +71,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateBanner(UpdateBannerDTO updateBannerDTO)
+        public async Task<IActionResult> UpdateBanner(UpdateBannerViewModel updateBannerViewModel)
         {  
         return RedirectToAction(nameof(Index));
         }

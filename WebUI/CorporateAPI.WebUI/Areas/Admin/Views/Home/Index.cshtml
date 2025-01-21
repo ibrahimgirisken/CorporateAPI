@@ -1,0 +1,32 @@
+﻿@model List<ResultHomeDTO>
+@{
+    ViewData["Title"] = "Anasayfa İçerikler Sayfası";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<table class="table table-hover">
+    <tr>
+        <th>#</th>
+        <th>Görsel</th>
+        <th>Başlık</th>
+        <th>Sıra</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.ContentType</td>
+            <td>@item.HomeTranslations.FirstOrDefault(t => t.Locale == "tr")?.Title</td>
+            <td>@item.Order</td>
+            <td>@item.Status</td>
+            <td>
+                <a asp-action="DeleteHome" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
+                <a asp-action="UpdateHome" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<a asp-action="CreateHome" asp-controller="Home" asp-area="Admin" class="btn btn-outline-primary">Yeni Anasayfa İçerik Ekle</a>
+

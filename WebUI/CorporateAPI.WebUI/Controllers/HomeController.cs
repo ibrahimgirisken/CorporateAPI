@@ -27,7 +27,7 @@ namespace CorporateAPI.WebUI.Controllers
 
             var menuData = await response.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
 
-            return View(menuData); // View'a veri gönderiyoruz
+            return View(menuData);
         }
     }
 }
