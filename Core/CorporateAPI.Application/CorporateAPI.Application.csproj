@@ -28,7 +28,6 @@
     <Folder Include="Features\Commands\Category\" />
     <Folder Include="Features\Commands\Brand\" />
     <Folder Include="Features\Commands\Product\" />
-    <Folder Include="Features\Queries\Category\GetByIdCategory\" />
     <Folder Include="Features\Queries\Product\GetAllProduct\" />
     <Folder Include="Features\Queries\Product\GetByIdProduct\" />
   </ItemGroup>
