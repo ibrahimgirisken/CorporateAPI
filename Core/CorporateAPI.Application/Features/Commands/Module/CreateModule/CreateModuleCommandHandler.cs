@@ -17,10 +17,10 @@ namespace CorporateAPI.Application.Features.Commands.Module.CreateModule
 
         public async Task<CreateModuleCommandResponse> Handle(CreateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            var module=_mapper.Map<Domain.Entities.Module.Module>(request.Module);
-            if (request.Module.ModuleTranslations != null)
+            var module=_mapper.Map<Domain.Entities.Module.Module>(request);
+            if (request.ModuleTranslations != null)
             {
-               module.ModuleTranslations=_mapper.Map<List<ModuleTranslation>>(request.Module.ModuleTranslations);
+               module.ModuleTranslations=_mapper.Map<List<ModuleTranslation>>(request.ModuleTranslations);
             }
             await _moduleWriteRepository.AddAsync(module);
             await _moduleWriteRepository.SaveAsync();

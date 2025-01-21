@@ -13,6 +13,7 @@ using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
 using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
 using CorporateAPI.Application.Features.Commands.Menu.CreateMenu;
 using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
+using CorporateAPI.Application.Features.Commands.Module.CreateModule;
 using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
 using CorporateAPI.Domain.Entities;
@@ -29,7 +30,7 @@ namespace CorporateAPI.Application.Mapping
         {
             CreateMap<Menu,CreateMenuCommandRequest>().ReverseMap();
             CreateMap<Menu,ResultMenuDTO>().ReverseMap();
-            CreateMap<UpdateMenuCommandRequest, Menu>()
+            CreateMap<UpdateMenuCommandRequest,Menu>()
             .ForMember(dest => dest.MenuTranslations, opt => opt.Ignore());
             CreateMap<MenuTranslation,MenuTranslationDTO>().ReverseMap();
 
@@ -49,7 +50,7 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<BannerTranslation, BannerTranslationDTO>().ReverseMap();
 
             CreateMap<Module,ResultModuleDTO>().ReverseMap();
-            CreateMap<Module,CreateModuleDTO>().ReverseMap(); 
+            CreateMap<Module,CreateModuleCommandRequest>().ReverseMap(); 
             CreateMap<Module,UpdateHomeCommandRequest>().ReverseMap(); 
             CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
 
