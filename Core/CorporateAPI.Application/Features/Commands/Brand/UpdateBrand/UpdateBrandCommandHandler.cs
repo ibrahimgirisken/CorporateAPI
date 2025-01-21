@@ -1,17 +1,29 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using CorporateAPI.Application.Repositories.Brand;
+using MediatR;
+
 
 namespace CorporateAPI.Application.Features.Commands.Brand.UpdateBrand
 {
     public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommandRequest, UpdateBrandCommandResponse>
     {
-        public Task<UpdateBrandCommandResponse> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
+        readonly IBrandReadRepository _brandReadRepository;
+        readonly IBrandWriteRepository _brandWriteRepository;
+        readonly IMapper _mapper;
+
+        public UpdateBrandCommandHandler(IBrandReadRepository brandReadRepository, IBrandWriteRepository brandWriteRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _brandReadRepository = brandReadRepository;
+            _brandWriteRepository = brandWriteRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<UpdateBrandCommandResponse> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
+        {
+            var brand=await _brandReadRepository.GetByIdAsync(request.Id,false);
+            _brandWriteRepository.Update(brand);
+            await _brandWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

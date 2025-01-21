@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Repositories.Brand;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,18 @@ namespace CorporateAPI.Application.Features.Commands.Brand.RemoveBrand
 {
     public class RemoveBrandCommandHandler : IRequestHandler<RemoveBrandCommandRequest, RemoveBrandCommandResponse>
     {
-        public Task<RemoveBrandCommandResponse> Handle(RemoveBrandCommandRequest request, CancellationToken cancellationToken)
+        readonly IBrandWriteRepository _brandWriteRepository;
+
+        public RemoveBrandCommandHandler(IBrandWriteRepository brandWriteRepository)
         {
-            throw new NotImplementedException();
+            _brandWriteRepository = brandWriteRepository;
+        }
+
+        public async Task<RemoveBrandCommandResponse> Handle(RemoveBrandCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _brandWriteRepository.RemoveAsync(request.Id);
+            await _brandWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

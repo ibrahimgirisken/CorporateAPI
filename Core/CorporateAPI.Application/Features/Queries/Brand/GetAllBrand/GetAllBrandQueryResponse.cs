@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Application.DTOs.Brand;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Brand.GetAllBrand
 {
     public class GetAllBrandQueryResponse
     {
+        public List<ResultBrandDTO> Brands{ get; set; }
     }
 }

@@ -9,5 +9,10 @@ namespace CorporateAPI.Application.Features.Commands.Brand.UpdateBrand
 {
     public class UpdateBrandCommandRequest:IRequest<UpdateBrandCommandResponse>
     {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string? Code { get; set; }
+        public int Order { get; set; }
+        public bool Status { get; set; }
     }
 }

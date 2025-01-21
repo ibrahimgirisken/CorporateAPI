@@ -53,7 +53,8 @@ namespace CoreporateAPI.Persistence.Repositories
         public async Task<bool> RemoveAsync(int id)
         {
           T data= await Table.FirstOrDefaultAsync(p => p.Id ==id);
-           return Remove(data);
+            data.IsDeleted=true;
+            return true;
         }
 
         public bool Update(T model)
