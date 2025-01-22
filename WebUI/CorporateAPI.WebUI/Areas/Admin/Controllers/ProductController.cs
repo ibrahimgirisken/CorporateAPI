@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Category;
+﻿using CorporateAPI.WebUI.DTOs.Brand;
+using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Product;
 using CorporateAPI.WebUI.ViewModels.Product;
@@ -34,6 +35,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var categories = await client.GetFromJsonAsync<List<ResultCategoryDTO>>("Categories?IncludeAllLanguges=true");
+            var brands = await client.GetFromJsonAsync<List<ResultBrandDTO>>("Brands?IncludeAllLanguges=true");
             var productDto = new CreateProductDTO
             {
                 ProductTranslations = langs.Select(lang => new ProductTranslationDTO
@@ -45,7 +47,8 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             {
                 CreateProductDTO = productDto,
                 GetLangDTOs = langs,
-                GetCategories = categories
+                GetCategories = categories,
+                GetBrands=brands
             };
             return View(model);
         }

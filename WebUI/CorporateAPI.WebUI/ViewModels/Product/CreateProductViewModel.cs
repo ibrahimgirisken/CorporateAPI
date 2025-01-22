@@ -1,5 +1,4 @@
-﻿using CorporateAPI.WebUI.DTOs.Banner;
-using CorporateAPI.WebUI.DTOs.Brand;
+﻿using CorporateAPI.WebUI.DTOs.Brand;
 using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Product;

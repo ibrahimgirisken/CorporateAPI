@@ -1,17 +1,16 @@
 ﻿@model CreateProductViewModel
 @{
-    ViewData["Title"] = "Yeni Menu Ekleme";
+    ViewData["Title"] = "Yeni Ürün Ekleme";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
     <form method="post" asp-action="CreateMenu">
-        <div class="form-group">
-            @if (Model.GetBrands.Count > 0)
+        @if (Model.GetBrands.Count > 0)
         {
             <div class="form-group">
-                <label asp-for="GetBrands.Select(x=>x.Id)"></label>
+                <label asp-for="CreateProductDTO.BrandId"></label>
                 <select class="form-select" asp-for="CreateProductDTO.BrandId">
-                    <option value="" selected>Seç</option>
+                    <option value=0 selected>Marka Seçin</option>
                     @foreach (var item in Model.GetBrands)
                     {
                         <option value="@item.Id">
@@ -20,25 +19,24 @@
                     }
                 </select>
             </div>
+
         }
-        </div>
-        <div class="form-group">
-            @if (Model.GetCategories.Count > 0)
-            {
-                <div class="form-group">
-                    <label asp-for="GetCategories.Select(x=>x.Id)"></label>
-                    <select class="form-select" asp-for="CreateProductDTO.CategoryId">
-                        <option value="" selected>Seç</option>
-                        @foreach (var item in Model.GetCategories)
-                        {
-                            <option value="@item.Id">
-                                @item.CategoryTranslations.FirstOrDefault(c=>c.Locale=="tr").Title
-                                </option>
-                        }
-                    </select>
-                </div>
-            }
-        </div>
+        @if (Model.GetCategories.Count > 0)
+        {
+            <div class="form-group">
+                <label asp-for="CreateProductDTO.CategoryId"></label>
+                <select class="form-select" asp-for="CreateProductDTO.CategoryId">
+                    <option value="0" selected>Bir kategori seçin</option>
+                    @foreach (var item in Model.GetCategories)
+                    {
+                        var translation = item.CategoryTranslations.FirstOrDefault(c => c.Locale == "tr");
+                        <option value="@item.Id">
+                            @(translation != null ? translation.Title : "Çeviri bulunamadı")
+                        </option>
+                    }
+                </select>
+            </div>
+        }
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
             {

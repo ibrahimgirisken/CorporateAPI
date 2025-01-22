@@ -12,14 +12,14 @@ namespace CorporateAPI.Application.Features.Commands.Category.CreateCategory
     {
         public CreateCategoryCommandRequest()
         {
-            Children = new List<ResultCategoryDTO>();
+            Children = new List<CreateCategoryCommandRequest>();
             CategoryTranslations = new List<CategoryTranslationDTO>();
         }
         public string? Image1 { get; set; }
         public int Order { get; set; }
         public int? ParentId { get; set; }
         public bool Status { get; set; } = false;
-        public List<ResultCategoryDTO> Children { get; set; }
+        public List<CreateCategoryCommandRequest> Children { get; set; }
         public List<CategoryTranslationDTO> CategoryTranslations { get; set; }
     }
 }
