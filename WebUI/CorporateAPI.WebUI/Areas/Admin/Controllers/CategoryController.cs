@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
@@ -32,13 +33,57 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var CreateCategoryDTO = new ResultCategoryDTO
+            var CreateCategoryDTO = new CreateCategoryDTO
             {
                 CategoryTranslations = langs.Select(lang => new CategoryTranslationDTO
                 {
                     Locale=lang.LangCode
                 }).ToList()
             };
+            var model = new CreateCategoryViewModel
+            {
+                CreateCategoryDTO = CreateCategoryDTO,
+                GetLangDTOs = langs
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CreateCategoryViewModel createCategoryViewModel)
+        {
+            CreateCategoryDTO categoryDTO=createCategoryViewModel.CreateCategoryDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PostAsJsonAsync<CreateCategoryDTO>("Categories", categoryDTO);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateCategory(int id)
+        {
+            var client = _httpClientFactory.CreateClient("Admin");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var resultCategoryDTO = await client.GetFromJsonAsync<UpdateCategoryDTO>($"Categories/{id}");
+            var model = new UpdateCategoryViewModel
+            {
+                GetLangDTOs = langs,
+                UpdateCategoryDTO = resultCategoryDTO
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCategory(UpdateCategoryViewModel updateCategoryViewModel)
+        {
+            UpdateCategoryDTO updateCategoryDTO=updateCategoryViewModel.UpdateCategoryDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PutAsJsonAsync<UpdateCategoryDTO>("Pages",updateCategoryDTO);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            return RedirectToAction(nameof(Index));
         }
     }
 }
