@@ -1,13 +1,13 @@
-﻿
-namespace CorporateAPI.Application.DTOs.Product
+﻿using CorporateAPI.Domain.Entities.Product;
+
+namespace CorporateAPI.WebUI.DTOs.Product
 {
-    public class UpdateProductDTO
+    public class CreateProductDTO
     {
-        public UpdateProductDTO()
+        public CreateProductDTO()
         {
             ProductTranslations = new List<ProductTranslationDTO>();
         }
-        public int Id { get; set; }
         public string? Code { get; set; }
         public string? Brand { get; set; }
         public string? Image1 { get; set; }

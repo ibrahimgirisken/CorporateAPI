@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CorporateAPI.Application.DTOs.Category
+﻿namespace CorporateAPI.WebUI.DTOs.Category
 {
     public class CategoryTranslationDTO
     {

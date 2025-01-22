@@ -47,7 +47,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(RemoveCategoryCommandRequest removeCategoryCommandRequest)
+        public async Task<IActionResult> Delete([FromQuery] RemoveCategoryCommandRequest removeCategoryCommandRequest)
         {
             RemoveCategoryCommandResponse remove=await _mediator.Send(removeCategoryCommandRequest);
             return Ok(remove);

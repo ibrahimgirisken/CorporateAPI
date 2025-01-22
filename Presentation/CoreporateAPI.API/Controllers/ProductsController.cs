@@ -19,7 +19,7 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<IActionResult> Get([FromBody] GetAllProductQueryRequest getAllProductQueryRequest)
+        public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
             GetAllProductQueryResponse response=await _mediator.Send(getAllProductQueryRequest);
             return Ok(response.ProductsDto);
@@ -47,7 +47,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(RemoveProductCommandRequest removeProductCommandRequest)
+        public async Task<IActionResult> Delete([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse response=await _mediator.Send(removeProductCommandRequest);
             return Ok(response);

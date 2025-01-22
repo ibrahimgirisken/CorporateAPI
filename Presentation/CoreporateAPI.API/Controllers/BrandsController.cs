@@ -4,7 +4,6 @@ using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
 using CorporateAPI.Application.Features.Queries.Brand.GetAllBrand;
 using CorporateAPI.Application.Features.Queries.Brand.GetByIdBrand;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -21,21 +20,21 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(GetAllBrandQueryRequest getAllBrandQueryRequest)
+        public async Task<IActionResult> Get([FromQuery]GetAllBrandQueryRequest getAllBrandQueryRequest)
         {
             GetAllBrandQueryResponse response=await _mediator.Send(getAllBrandQueryRequest);
-            return Ok(response);
+            return Ok(response.Brands);
         }
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get([FromRoute] GetByIdBrandQueryRequest getByIdBrandQueryRequest)
         {
             GetByIdBrandQueryResponse response=await _mediator.Send(getByIdBrandQueryRequest);
-            return Ok(response);
+            return Ok(response.Brand);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateBrandCommandRequest createBrandCommandRequest)
+        public async Task<IActionResult> Post(CreateBrandCommandRequest createBrandCommandRequest)
         {
             CreateBrandCommandResponse response=await _mediator.Send(createBrandCommandRequest);
             return Ok(response);
@@ -49,7 +48,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(RemoveBrandCommandRequest removeBrandCommandRequest)
+        public async Task<IActionResult> Delete([FromQuery] RemoveBrandCommandRequest removeBrandCommandRequest)
         {
             RemoveBrandCommandResponse response=await _mediator.Send(removeBrandCommandRequest);
             return Ok(response);
