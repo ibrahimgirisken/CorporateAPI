@@ -21,7 +21,13 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
+            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             GetAllProductQueryResponse response=await _mediator.Send(getAllProductQueryRequest);
+            string language = Request.Headers["Accept-Language".ToString()];
+            if (string.IsNullOrEmpty(language))
+            {
+                language = "en"; // Varsayılan dil
+            }
             return Ok(response.ProductsDto);
         }
 

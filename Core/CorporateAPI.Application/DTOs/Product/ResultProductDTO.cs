@@ -10,7 +10,8 @@ namespace CorporateAPI.Application.DTOs.Product
     {
         public int Id { get; set; }
         public string? Code { get; set; }
-        public string? Brand { get; set; }
+        public int CategoryId { get; set; }
+        public int BrandId { get; set; }
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }
         public string? Image3 { get; set; }

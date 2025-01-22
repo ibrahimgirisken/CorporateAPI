@@ -77,6 +77,52 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Brands",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Category",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Category_Category_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "dbo",
+                        principalTable: "Category",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Homes",
                 schema: "dbo",
                 columns: table => new
@@ -299,6 +345,46 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Product",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalSchema: "dbo",
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Product_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "dbo",
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BannerTranslations",
                 schema: "dbo",
                 columns: table => new
@@ -326,6 +412,43 @@ namespace CoreporateAPI.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BannerTranslations_Languages_Locale",
+                        column: x => x.Locale,
+                        principalSchema: "dbo",
+                        principalTable: "Languages",
+                        principalColumn: "LangCode",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CategoryTranslations_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "dbo",
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CategoryTranslations_Languages_Locale",
                         column: x => x.Locale,
                         principalSchema: "dbo",
                         principalTable: "Languages",
@@ -475,6 +598,45 @@ namespace CoreporateAPI.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProductTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductTranslations_Languages_Locale",
+                        column: x => x.Locale,
+                        principalSchema: "dbo",
+                        principalTable: "Languages",
+                        principalColumn: "LangCode",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProductTranslations_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalSchema: "dbo",
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 schema: "dbo",
@@ -532,6 +694,32 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "BannerTranslations",
                 column: "Locale");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Category_ParentId",
+                schema: "dbo",
+                table: "Category",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryTranslations_CategoryId",
+                schema: "dbo",
+                table: "CategoryTranslations",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryTranslations_Locale",
+                schema: "dbo",
+                table: "CategoryTranslations",
+                column: "Locale");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryTranslations_Url",
+                schema: "dbo",
+                table: "CategoryTranslations",
+                column: "Url",
+                unique: true,
+                filter: "[Url] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Homes_ContentType",
@@ -609,6 +797,38 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Url",
                 unique: true,
                 filter: "[Url] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_BrandId",
+                schema: "dbo",
+                table: "Product",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_CategoryId",
+                schema: "dbo",
+                table: "Product",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTranslations_Locale",
+                schema: "dbo",
+                table: "ProductTranslations",
+                column: "Locale");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTranslations_ProductId",
+                schema: "dbo",
+                table: "ProductTranslations",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTranslations_Url",
+                schema: "dbo",
+                table: "ProductTranslations",
+                column: "Url",
+                unique: true,
+                filter: "[Url] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -639,6 +859,10 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "CategoryTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "HomeTranslations",
                 schema: "dbo");
 
@@ -652,6 +876,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PageTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "ProductTranslations",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -679,11 +907,23 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "Pages",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "Languages",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Pages",
+                name: "Product",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Brands",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Category",
                 schema: "dbo");
         }
     }

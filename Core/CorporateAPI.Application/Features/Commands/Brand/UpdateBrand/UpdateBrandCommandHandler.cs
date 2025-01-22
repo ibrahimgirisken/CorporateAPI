@@ -20,7 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Brand.UpdateBrand
 
         public async Task<UpdateBrandCommandResponse> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
         {
-            var brand=await _brandReadRepository.GetByIdAsync(request.Id,false);
+            var brand=_mapper.Map<Domain.Entities.Brand.Brand>(request);
             _brandWriteRepository.Update(brand);
             await _brandWriteRepository.SaveAsync();
             return new();

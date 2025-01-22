@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Domain.Entities.Product;
+﻿using CorporateAPI.Application.DTOs.Product;
+using CorporateAPI.Domain.Entities.Product;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,11 @@ namespace CorporateAPI.Application.Features.Commands.Product.CreateProduct
     {
         public CreateProductCommandRequest()
         {
-            ProductTranslations = new List<ProductTranslation>();
+            ProductTranslations = new List<ProductTranslationDTO>();
         }
         public string? Code { get; set; }
-        public string? Brand { get; set; }
+        public int? BrandId { get; set; }
+        public int? CategoryId { get; set; }
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }
         public string? Image3 { get; set; }
@@ -23,6 +25,6 @@ namespace CorporateAPI.Application.Features.Commands.Product.CreateProduct
         public string? Image5 { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; } = false;
-        public List<ProductTranslation> ProductTranslations { get; set; }
+        public List<ProductTranslationDTO> ProductTranslations { get; set; }
     }
 }

@@ -141,9 +141,6 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -156,6 +153,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -164,7 +164,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Category", "dbo");
                 });
@@ -218,7 +218,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
 
-                    b.ToTable("CategoryTranslsations", "dbo");
+                    b.ToTable("CategoryTranslations", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
@@ -682,8 +682,11 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -719,6 +722,10 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Product", "dbo");
                 });
@@ -778,7 +785,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
 
-                    b.ToTable("ProductTranslsations", "dbo");
+                    b.ToTable("ProductTranslations", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -909,9 +916,11 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.Category", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Category.Category", null)
+                    b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.CategoryTranslation", b =>
@@ -1023,6 +1032,25 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Page");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Product.Product", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Brand.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Product.ProductTranslation", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
@@ -1099,11 +1127,18 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("BannerTranslations");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Brand.Brand", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.Category", b =>
                 {
                     b.Navigation("CategoryTranslations");
 
                     b.Navigation("Children");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>

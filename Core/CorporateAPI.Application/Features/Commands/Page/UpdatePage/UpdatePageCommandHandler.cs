@@ -11,7 +11,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
         readonly IPageReadRepository _pageReadRepository;
         readonly IMapper _mapper;
 
-        public UpdatePageCommandHandler(IPageWriteRepository pageWriteRepository, IPageReadRepository pageReadRepository, IMapper mapper = null)
+        public UpdatePageCommandHandler(IPageWriteRepository pageWriteRepository, IPageReadRepository pageReadRepository, IMapper mapper)
         {
             _pageWriteRepository = pageWriteRepository;
             _pageReadRepository = pageReadRepository;

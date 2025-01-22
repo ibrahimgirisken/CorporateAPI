@@ -39,9 +39,9 @@ namespace CoreporateAPI.Persistence.Repositories
 
         }
         public async Task<T> GetByIdAsync(
-         int id,
-         bool tracking = true,
-         params Expression<Func<T, object>>[] includes)
+                 int id,
+                 bool tracking = true,
+                 params Expression<Func<T, object>>[] includes)
         {
             var query = Table.AsQueryable();
 

@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Domain.Entities.Common;
+using CorporateAPI.Domain.Entities.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace CorporateAPI.Domain.Entities.Brand
         public string? Code { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }=false;
+        public List<Domain.Entities.Product.Product> Products { get; set; }
     }
 }

@@ -19,13 +19,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client=_httpClientFactory.CreateClient("Admin");
-            var response = await client.GetAsync("Brands?IncludeAllLanguages=true");
+            var response = await client.GetAsync("Brands");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
             }
-            var brandData = await response.Content.ReadFromJsonAsync<List<ResultBrandDTO>>();
-            return View(brandData);
+            var brandDatas = await response.Content.ReadFromJsonAsync<List<ResultBrandDTO>>();
+            return View(brandDatas);
         }
         [HttpGet]
         public async Task<IActionResult> CreateBrand()

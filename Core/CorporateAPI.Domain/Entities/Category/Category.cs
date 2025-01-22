@@ -16,7 +16,10 @@ namespace CorporateAPI.Domain.Entities.Category
         public string? Image1 { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }=false;
+        public int? ParentId { get; set; }
+        public Category? Parent { get; set; }
         public List<Category?> Children { get; set; }
+        public List<Domain.Entities.Product.Product> Products { get; set; }
         public List<CategoryTranslation> CategoryTranslations { get; set; }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model List<ResultProductDTO>
+@{
+    ViewData["Title"] = "Ürünler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<table class="table table-hover">
+    <tr>
+        <th>#</th>
+        <th>Başlık</th>
+        <th>Ürün Kodu</th>
+        <th>Marka</th>
+        <th>Sıra</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.ProductTranslations.FirstOrDefault(t => t.Locale == "tr").Title</td>
+            <td>@item.Code</td>
+            <td>@item.BrandId</td>
+            <td>@item.Order</td>
+            <td>
+                <a asp-action="DeleteProduct" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>                       
+                <a asp-action="UpdateProduct" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<a asp-action="CreateProduct" asp-controller="Product" asp-area="Admin" class="btn btn-outline-primary">Yeni Ürün Ekle</a>

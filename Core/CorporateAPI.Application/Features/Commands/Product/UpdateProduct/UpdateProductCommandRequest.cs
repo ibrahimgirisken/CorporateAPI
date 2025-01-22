@@ -11,7 +11,8 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
         }
         public int Id { get; set; }
         public string? Code { get; set; }
-        public string? Brand { get; set; }
+        public int? BrandId { get; set; }
+        public int? CategoryId { get; set; }
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }
         public string? Image3 { get; set; }

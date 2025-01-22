@@ -23,7 +23,7 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetByIdProduct
 
         public async Task<GetByIdProductQueryResponse> Handle(GetByIdProductQueryRequest request, CancellationToken cancellationToken)
         {
-            var product = await _productReadRepository.GetByIdAsync(request.Id, false, includes: e => e.ProductTranslations);
+            var product = await _productReadRepository.GetByIdAsync(request.Id, false, e => e.ProductTranslations,c=>c.Category,b=>b.Brand);
             var productDto=_mapper.Map<ResultProductDTO>(product);
             return new()
             {

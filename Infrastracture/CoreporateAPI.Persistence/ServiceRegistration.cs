@@ -37,20 +37,28 @@ namespace CoreporateAPI.Persistence
             ).AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IMenuReadRepository, MenuReadRepository>();
             services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
+
             services.AddScoped<IPageReadRepository, PageReadRepository>();
             services.AddScoped<IPageWriteRepository, PageWriteRepository>();
+
             services.AddScoped<IHomeReadRepository, HomeReadRepository>();
             services.AddScoped<IHomeWriteRepository, HomeWriteRepository>();
+
             services.AddScoped<IModuleReadRepository, ModuleReadRepository>();
             services.AddScoped<IModuleWriteRepository, ModuleWriteRepository>();
+
             services.AddScoped<ILangReadRepository, LangReadRepository>();
             services.AddScoped<ILangWriteRepository, LangWriteRepository>();
+
             services.AddScoped<IBannerReadRepository,BannerReadRepository>();
             services.AddScoped<IBannerWriteRepository, BannerWriteRepository>();
+
             services.AddScoped<IBrandReadRepository,BrandReadRepository>();
             services.AddScoped<IBrandWriteRepository, BrandWriteRepository>();
+
             services.AddScoped<IProductReadRepository,ProductReadRepository>();
             services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+
             services.AddScoped<ICategoryReadRepository,CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 

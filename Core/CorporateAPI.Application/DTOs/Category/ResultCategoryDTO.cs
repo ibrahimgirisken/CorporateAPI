@@ -10,6 +10,7 @@ namespace CorporateAPI.Application.DTOs.Category
     public class ResultCategoryDTO
     {
         public string? Image1 { get; set; }
+        public int? ParentId { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; } = false;
         public List<ResultCategoryDTO> Children { get; set; }

@@ -9,7 +9,8 @@ namespace CorporateAPI.WebUI.DTOs.Product
             ProductTranslations = new List<ProductTranslationDTO>();
         }
         public string? Code { get; set; }
-        public string? Brand { get; set; }
+        public int? BrandId { get; set; }
+        public int? CategoryId { get; set; }
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }
         public string? Image3 { get; set; }

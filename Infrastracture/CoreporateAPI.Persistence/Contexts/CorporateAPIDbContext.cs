@@ -31,7 +31,7 @@ namespace CoreporateAPI.Persistence.Contexts
 
             modelBuilder.Entity<ProductTranslation>(entity =>
             {
-                entity.ToTable("ProductTranslsations");
+                entity.ToTable("ProductTranslations");
                 entity.HasIndex(pt => pt.Url).IsUnique();
 
                 entity.HasOne(pt=>pt.Product)
@@ -48,7 +48,7 @@ namespace CoreporateAPI.Persistence.Contexts
 
             modelBuilder.Entity<CategoryTranslation>(entity =>
             {
-                entity.ToTable("CategoryTranslsations");
+                entity.ToTable("CategoryTranslations");
                 entity.HasIndex(ct => ct.Url).IsUnique();
 
                 entity.HasOne(ct => ct.Category)
