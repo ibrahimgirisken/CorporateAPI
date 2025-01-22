@@ -1,0 +1,26 @@
+﻿@model List<ResultBrandDTO>
+
+@{
+    ViewData["Title"] = "Markalar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<table class="table table-hover">
+    <tr>
+        <th>#</th>
+        <th>Başlık</th>
+        <th>Sıra</th>
+        <th></th>
+    </tr>
+        <tr>
+            <th>Id</th>
+            <td>Code</td>
+            <td>Name</td>
+            <td>Order</td>
+            <td>
+                <a asp-action="DeleteBrand" asp-controller="Brand" asp-route-id="Id" class="btn btn-outline-danger">Sil</a>
+            <a asp-action="UpdateBrand" asp-controller="Brand" asp-route-id="Id" class="btn btn-outline-info">Güncelle</a>
+            </td>
+        </tr>
+</table>
+<br />
+<a asp-action="CreateBrand" asp-controller="Brand" asp-area="Admin" class="btn btn-outline-primary">Yeni Marka Ekle</a>

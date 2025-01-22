@@ -47,7 +47,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             CreateBrandDTO brandDto=createBrandViewModel.CreateBrandDTO;
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync<CreateBrandDTO>("Brands",brandDto);
-            return RedirectToAction(nameof(Index);
+            return RedirectToAction(nameof(Index));
 
         }
 

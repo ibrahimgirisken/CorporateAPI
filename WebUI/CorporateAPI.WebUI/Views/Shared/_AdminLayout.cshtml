@@ -487,13 +487,18 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="form-basic.html" class="sidebar-link">
+                                    <a asp-controller="Product" asp-area="Admin" asp-action="Index" aria-expanded="false" class="sidebar-link">
                                         <i class="mdi mdi-note-outline"></i><span class="hide-menu"> Ürün Listesi </span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a asp-controller="Product" asp-area="Admin" asp-action="Index" aria-expanded="false" class="sidebar-link">
+                                    <a asp-controller="Category" asp-area="Admin" asp-action="Index" aria-expanded="false" class="sidebar-link">
                                         <i class="mdi mdi-note-plus"></i><span class="hide-menu"> Kategori Listesi </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-controller="Brand" asp-area="Admin" asp-action="Index" aria-expanded="false" class="sidebar-link">
+                                        <i class="mdi mdi-note-plus"></i><span class="hide-menu"> Marka Listesi </span>
                                     </a>
                                 </li>
                             </ul>
