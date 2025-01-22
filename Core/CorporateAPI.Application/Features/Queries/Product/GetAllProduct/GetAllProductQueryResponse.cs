@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Application.DTOs.Product;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetAllProductQueryResponse
     {
+        public List<ResultProductDTO> ProductsDto{ get; set; }
     }
 }
