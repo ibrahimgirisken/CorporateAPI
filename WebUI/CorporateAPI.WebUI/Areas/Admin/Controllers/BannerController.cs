@@ -37,7 +37,6 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateBanner()
         {
             var client = _httpClientFactory.CreateClient("Admin");
-            var modules = await client.GetFromJsonAsync<List<ResultBannerDTO>>("Banners");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var CreateBannerDTO = new CreateBannerDTO
             {
