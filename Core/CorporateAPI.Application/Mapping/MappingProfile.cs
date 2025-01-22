@@ -74,7 +74,7 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<ProductTranslation, ProductTranslationDTO>().ReverseMap();
 
             CreateMap<Category,ResultCategoryDTO>().ReverseMap();
-            CreateMap<Category,CreatecategoryCommandResponse>().ReverseMap();
+            CreateMap<Category,CreateCategoryCommandResponse>().ReverseMap();
             CreateMap<Category,UpdateProductCommandResponse>().ReverseMap();
             CreateMap<CategoryTranslation, CategoryTranslationDTO>().ReverseMap();
 

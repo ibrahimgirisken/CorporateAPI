@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CorporateAPI.Application.Features.Commands.Category.CreateCategory
 {
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, CreatecategoryCommandResponse>
+    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, CreateCategoryCommandResponse>
     {
         readonly ICategoryWriteRepository _categoryWriteRepository;
         readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.CreateCategory
             _mapper = mapper;
         }
 
-        public async Task<CreatecategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
             var category = _mapper.Map<Domain.Entities.Category.Category>(request);
             if (request.CategoryTranslations!=null)

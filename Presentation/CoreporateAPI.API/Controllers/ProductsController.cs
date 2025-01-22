@@ -1,0 +1,56 @@
+﻿using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
+using CorporateAPI.Application.Features.Commands.Product.RemoveProduct;
+using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
+using CorporateAPI.Application.Features.Queries.Product.GetAllProduct;
+using CorporateAPI.Application.Features.Queries.Product.GetByIdProduct;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CoreporateAPI.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductsController : ControllerBase
+    {
+        readonly IMediator _mediator;
+
+        public ProductsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get([FromBody] GetAllProductQueryRequest getAllProductQueryRequest)
+        {
+            GetAllProductQueryResponse response=await _mediator.Send(getAllProductQueryRequest);
+            return Ok(response.ProductsDto);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
+        {
+            GetByIdProductQueryResponse response=await _mediator.Send(getByIdProductQueryRequest);
+            return Ok(response.ProductDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
+        {
+            CreateProductCommandResponse response=await _mediator.Send(createProductCommandRequest);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateProductCommandRequest updateProductCommandRequest)
+        {
+            UpdateProductCommandResponse response=await _mediator.Send(updateProductCommandRequest);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(RemoveProductCommandRequest removeProductCommandRequest)
+        {
+            RemoveProductCommandResponse response=await _mediator.Send(removeProductCommandRequest);
+            return Ok(response);
+        }
+    }
+}

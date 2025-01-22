@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Category.CreateCategory
 {
-    public class CreateCategoryCommandRequest:IRequest<CreatecategoryCommandResponse>
+    public class CreateCategoryCommandRequest:IRequest<CreateCategoryCommandResponse>
     {
         public CreateCategoryCommandRequest()
         {

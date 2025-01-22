@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Category.CreateCategory
 {
-    public class CreatecategoryCommandResponse
+    public class CreateCategoryCommandResponse
     {
     }
 }

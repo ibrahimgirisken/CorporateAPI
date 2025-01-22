@@ -28,7 +28,7 @@ namespace CorporateAPI.Application.Features.Queries.Category.GetAllCategory
             var categoriesDto=_mapper.Map<List<ResultCategoryDTO>>(categories);
             return new()
             {
-                ResultCategories = categoriesDto,
+                CategoriesDto = categoriesDto,
             };
         }
     }
