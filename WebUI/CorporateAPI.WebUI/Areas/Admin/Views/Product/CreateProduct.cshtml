@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
-    <form method="post" asp-action="CreateMenu">
+    <form method="post" asp-action="CreateProduct">
         @if (Model.GetBrands.Count > 0)
         {
             <div class="form-group">
                 <label asp-for="CreateProductDTO.BrandId"></label>
                 <select class="form-select" asp-for="CreateProductDTO.BrandId">
-                    <option value=0 selected>Marka Seçin</option>
+                    <option value=null selected>Marka Seçin</option>
                     @foreach (var item in Model.GetBrands)
                     {
                         <option value="@item.Id">
@@ -26,7 +26,7 @@
             <div class="form-group">
                 <label asp-for="CreateProductDTO.CategoryId"></label>
                 <select class="form-select" asp-for="CreateProductDTO.CategoryId">
-                    <option value="0" selected>Bir kategori seçin</option>
+                    <option value=null selected>Bir kategori seçin</option>
                     @foreach (var item in Model.GetCategories)
                     {
                         var translation = item.CategoryTranslations.FirstOrDefault(c => c.Locale == "tr");
@@ -48,6 +48,10 @@
                 </li>
             }
         </ul>
+        <div class="form-group">
+            <label asp-for="CreateProductDTO.Code"></label>
+            <input asp-for="CreateProductDTO.Code" class="form-control" />
+        </div>
         <div class="tab-content mt-3" id="myTabContent">
             @for (int i = 0; i < Model.CreateProductDTO.ProductTranslations.Count; i++)
             {

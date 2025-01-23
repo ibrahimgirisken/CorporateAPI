@@ -25,10 +25,22 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
-           var product= await _productReadRepository.GetByIdAsync(request.Id);
-            if (product.ProductTranslations != null)
+           var product= await _productReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ProductTranslations);
+            if (product == null)
+                throw new Exception("Ürün Bulunamadı");
+            _mapper.Map(request,product);
+            foreach (var translationDto in request.ProductTranslations)
             {
-                product.ProductTranslations = _mapper.Map<List<ProductTranslation>>(request.ProductTranslations);
+                var existingTranslation=product.ProductTranslations.FirstOrDefault(t=>t.Locale==translationDto.Locale);
+                if (existingTranslation != null)
+                {
+                    _mapper.Map(translationDto, existingTranslation);
+                }
+                else
+                {
+                    var newTranslation=_mapper.Map<ProductTranslation>(translationDto);
+                    product.ProductTranslations.Add(newTranslation);
+                }
             }
             _productWriteRepository.Update(product);
             await _productWriteRepository.SaveAsync();

@@ -21,21 +21,14 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
         {
             var menu = await _menuReadRepository.GetByIdAsync(request.Id, false, includes: e => e.MenuTranslations);
-
             if (menu == null)
-                throw new Exception("Menu not found");
-
-            // AutoMapper ile temel alanları eşle
+                throw new Exception("Menu bulunamadı");
             _mapper.Map(request, menu);
-
-            // Çevirileri kontrol et ve eşleştir
             foreach (var translationDto in request.MenuTranslations)
             {
                 var existingTranslation = menu.MenuTranslations.FirstOrDefault(t => t.Locale == translationDto.Locale);
-
                 if (existingTranslation != null)
                 {
-                    // Mevcut çeviriyi güncelle
                     _mapper.Map(translationDto, existingTranslation);
                 }
                 else
@@ -45,11 +38,8 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
                     menu.MenuTranslations.Add(newTranslation);
                 }
             }
-
-            // Menü güncelleme ve kaydetme işlemi
             _menuWriteRepository.Update(menu);
             await _menuWriteRepository.SaveAsync();
-
             return new();
         }
     }

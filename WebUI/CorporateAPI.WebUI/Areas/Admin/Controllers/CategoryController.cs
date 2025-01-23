@@ -66,10 +66,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var resultCategoryDTO = await client.GetFromJsonAsync<UpdateCategoryDTO>($"Categories/{id}");
+            var categories = await client.GetFromJsonAsync<List<ResultCategoryDTO>>("Categories?IncludeAllLanguges=true");
             var model = new UpdateCategoryViewModel
             {
                 GetLangDTOs = langs,
-                UpdateCategoryDTO = resultCategoryDTO
+                UpdateCategoryDTO = resultCategoryDTO,
+                ResultCategories= categories
             };
             return View(model);
         }

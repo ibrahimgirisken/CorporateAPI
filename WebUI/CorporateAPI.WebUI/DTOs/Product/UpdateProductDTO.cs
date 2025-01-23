@@ -2,11 +2,11 @@
 {
     public class UpdateProductDTO
     {
-        public int Id { get; set; }
         public UpdateProductDTO()
         {
             ProductTranslations = new List<ProductTranslationDTO>();
         }
+        public int Id { get; set; }
         public string? Code { get; set; }
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }

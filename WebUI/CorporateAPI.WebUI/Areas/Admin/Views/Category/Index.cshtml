@@ -8,7 +8,8 @@
     <tr>
         <th>#</th>
         <th>Başlık</th>
-        <th>Çocuk Sayfalar</th>
+        <th>Url</th>
+        <th>Sıra</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -16,6 +17,7 @@
         <tr>
             <th>@item.Id</th>
             <td>@item.CategoryTranslations.FirstOrDefault(t => t.Locale == "tr")?.Title</td>
+            <td>@item.CategoryTranslations.FirstOrDefault(t => t.Locale == "tr")?.Url</td>
             <td>@item.Order</td>
             <td>
                 <a asp-action="DeleteCategory" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>

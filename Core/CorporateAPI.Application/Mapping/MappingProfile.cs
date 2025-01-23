@@ -13,6 +13,7 @@ using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
 using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
 using CorporateAPI.Application.Features.Commands.Category.CreateCategory;
+using CorporateAPI.Application.Features.Commands.Category.UpdateCategory;
 using CorporateAPI.Application.Features.Commands.Home.CreateHome;
 using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
 using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
@@ -42,7 +43,7 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Menu,CreateMenuCommandRequest>().ReverseMap();
             CreateMap<Menu,ResultMenuDTO>().ReverseMap();
             CreateMap<UpdateMenuCommandRequest,Menu>()
-            .ForMember(dest => dest.MenuTranslations, opt => opt.Ignore());
+            .ForMember(dest => dest.MenuTranslations, opt => opt.Ignore()).ReverseMap();
             CreateMap<MenuTranslation,MenuTranslationDTO>().ReverseMap();
 
             CreateMap<Page,CreatePageCommandRequest>().ReverseMap();
@@ -73,13 +74,14 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Product,CreateProductCommandRequest>()
           .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
           .ForMember(dest => dest.BrandId, opt => opt.MapFrom(src => src.BrandId))
-          .ForMember(dest => dest.ProductTranslations, opt => opt.MapFrom(src => src.ProductTranslations));
-            CreateMap<Product,UpdateProductCommandRequest>().ReverseMap();
+          .ForMember(dest => dest.ProductTranslations, opt => opt.MapFrom(src => src.ProductTranslations)).ReverseMap();
+            CreateMap<Product,UpdateProductCommandRequest>()
+            .ForMember(dest=>dest.ProductTranslations,opt=>opt.Ignore()).ReverseMap();
             CreateMap<ProductTranslation, ProductTranslationDTO>().ReverseMap();
 
             CreateMap<Category,ResultCategoryDTO>().ReverseMap();
             CreateMap<Category,CreateCategoryCommandRequest>().ReverseMap();
-            CreateMap<Category,UpdateProductCommandRequest>().ReverseMap();
+            CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
             CreateMap<CategoryTranslation, CategoryTranslationDTO>().ReverseMap();
 
             CreateMap<Brand,ResultBrandDTO>().ReverseMap();

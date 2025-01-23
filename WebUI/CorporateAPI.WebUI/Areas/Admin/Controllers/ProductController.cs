@@ -66,23 +66,25 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var resultProductDTO = await client.GetFromJsonAsync<CreateProductDTO>($"Products/{id}");
+            var categories = await client.GetFromJsonAsync<List<ResultCategoryDTO>>("Categories?IncludeAllLanguges=true");
+            var brands = await client.GetFromJsonAsync<List<ResultBrandDTO>>("Brands?IncludeAllLanguges=true");
+            var resultProductDTO = await client.GetFromJsonAsync<UpdateProductDTO>($"Products/{id}");
             var model = new UpdateProductViewModel
             {
-                CreateProductDTO=resultProductDTO,
-                GetLangDTOs=langs
+                UpdateProductDTO=resultProductDTO,
+                GetLangDTOs=langs,
+                GetBrands= brands,
+                GetCategories= categories
             };
             return View(model);
-            return RedirectToAction(nameof(Index));
-
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateProduct(UpdateProductViewModel updateProductViewModel)
         {
-            CreateProductDTO productDto=updateProductViewModel.CreateProductDTO;
+            UpdateProductDTO updateProductDto=updateProductViewModel.UpdateProductDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PutAsJsonAsync<CreateProductDTO>("Products",productDto);
+            await client.PutAsJsonAsync<UpdateProductDTO>("Products", updateProductDto);
             return RedirectToAction(nameof(Index));
         }
 

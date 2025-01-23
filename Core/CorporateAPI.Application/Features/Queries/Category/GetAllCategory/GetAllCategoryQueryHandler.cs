@@ -24,7 +24,7 @@ namespace CorporateAPI.Application.Features.Queries.Category.GetAllCategory
 
         public async Task<GetAllCategoryQueryResponse> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
         {
-              var categories= _categoryReadRepository.GetAll(false).Include(c=>c.CategoryTranslations).ToList();
+              var categories= await _categoryReadRepository.GetAll(false).Include(c=>c.CategoryTranslations).ToListAsync();
             var categoriesDto=_mapper.Map<List<ResultCategoryDTO>>(categories);
             return new()
             {

@@ -19,12 +19,12 @@ namespace CorporateAPI.Domain.Entities.Product
         public string? Image3 { get; set; }
         public string? Image4 { get; set; }
         public string? Image5 { get; set; }
-        public int Order { get; set; }
+        public int? Order { get; set; }
         public bool Status { get; set; }=false;
-        public int CategoryId { get; set; }
-        public int BrandId { get; set; }
-        public Domain.Entities.Category.Category Category { get; set; }
-        public Domain.Entities.Brand.Brand Brand { get; set; }
+        public int? CategoryId { get; set; }
+        public int? BrandId { get; set; }
+        public Domain.Entities.Category.Category? Category { get; set; }
+        public Domain.Entities.Brand.Brand? Brand { get; set; }
         public List<ProductTranslation> ProductTranslations { get; set; }
     }
 }
