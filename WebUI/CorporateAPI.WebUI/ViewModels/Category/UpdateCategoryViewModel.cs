@@ -7,5 +7,6 @@ namespace CorporateAPI.WebUI.ViewModels.Category
     {
         public UpdateCategoryDTO UpdateCategoryDTO { get; set; }
         public List<ResultLangDTO> GetLangDTOs { get; set; }
+        public List<ResultCategoryDTO> ResultCategories { get; set; }
     }
 }

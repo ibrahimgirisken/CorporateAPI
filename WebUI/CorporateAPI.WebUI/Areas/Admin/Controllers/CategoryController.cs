@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var categories = await client.GetFromJsonAsync<List<ResultCategoryDTO>>("Categories?IncludeAllLanguages=true");
             var CreateCategoryDTO = new CreateCategoryDTO
             {
                 CategoryTranslations = langs.Select(lang => new CategoryTranslationDTO
@@ -43,7 +45,8 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var model = new CreateCategoryViewModel
             {
                 CreateCategoryDTO = CreateCategoryDTO,
-                GetLangDTOs = langs
+                GetLangDTOs = langs,
+                ResultCategories= categories
             };
             return View(model);
         }

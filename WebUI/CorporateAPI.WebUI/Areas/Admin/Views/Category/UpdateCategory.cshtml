@@ -1,0 +1,70 @@
+﻿@model UpdateCategoryViewModel
+@{
+    ViewData["Title"] = "Ürün Kategori Güncelleme";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid my-5">
+    <form method="post" asp-action="UpdateCategory">
+        @if (Model.ResultCategories.Count > 0)
+        {
+            <div class="form-group">
+                <label asp-for="UpdateCategoryDTO.ParentId"></label>
+                <select class="form-select" asp-for="UpdateCategoryDTO.ParentId">
+                    <option value=0 selected=@(Model.UpdateCategoryDTO.ParentId == 0 ? "selected" : null)>Kategori Seçiniz</option>
+                    @foreach (var item in Model.ResultCategories)
+                    {
+                        <option value="@item.Id" selected="@(Model.UpdateCategoryDTO.ParentId == item.Id ? "selected" : null)">
+                            @item.CategoryTranslations.FirstOrDefault(l => l.Locale == "tr")?.Title ?? "Çeviri Yok"
+                        </option>
+                    }
+                </select>
+            </div>
+        }
+        <input type="hidden" asp-for="UpdateCategoryDTO.Id" />
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
+            {
+                var lang = Model.GetLangDTOs[i];
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(lang.LangCode == "tr" ? "active" : "")" id="@lang.LangCode-tab" data-bs-toggle="tab" data-bs-target="#@lang.LangCode" type="button" role="tab" aria-controls="@lang.LangCode" aria-selected="@(lang.LangCode == "tr" ? "true" : "false")">
+                        <img width="15" height="15" src="~/icons/@(lang.LangCode).svg" />@lang.LangCode
+                    </button>
+                </li>
+            }
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            @for (int i = 0; i < Model.UpdateCategoryDTO.CategoryTranslations.Count; i++)
+            {
+                var translation = Model.UpdateCategoryDTO.CategoryTranslations[i];
+                <div class="tab-pane fade show @(translation.Locale == "tr" ? "active" : "")" id="@translation.Locale" role="tabpanel" aria-labelledby="@translation.Locale-tab">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="UpdateCategoryDTO.CategoryTranslations[i].Locale" />
+                        <label asp-for="UpdateCategoryDTO.CategoryTranslations[i].Title"></label>
+                        <input asp-for="UpdateCategoryDTO.CategoryTranslations[i].Title" class="form-control" />
+                        <label asp-for="UpdateCategoryDTO.CategoryTranslations[i].Name"></label>
+                        <input asp-for="UpdateCategoryDTO.CategoryTranslations[i].Name" class="form-control" />
+                        <label asp-for="UpdateCategoryDTO.CategoryTranslations[i].Url"></label>
+                        <input asp-for="UpdateCategoryDTO.CategoryTranslations[i].Url" class="form-control" />
+                        <label asp-for="UpdateCategoryDTO.CategoryTranslations[i].Brief"></label>
+                        <input asp-for="UpdateCategoryDTO.CategoryTranslations[i].Brief" class="form-control" />
+                        <label asp-for="UpdateCategoryDTO.CategoryTranslations[i].MetaDescription"></label>
+                        <input asp-for="UpdateCategoryDTO.CategoryTranslations[i].MetaDescription" class="form-control" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="form-check">
+            <label asp-for="UpdateCategoryDTO.Image1" class="form-check-label"></label>
+            <input asp-for="UpdateCategoryDTO.Image1" class="form-check-input" type="checkbox" />
+        </div>
+        <div class="form-check">
+            <label asp-for="UpdateCategoryDTO.Status" class="form-check-label"></label>
+            <input asp-for="UpdateCategoryDTO.Status" class="form-check-input" type="checkbox" />
+        </div>
+        <div class="form-group">
+            <label asp-for="UpdateCategoryDTO.Order"></label>
+            <input asp-for="UpdateCategoryDTO.Order" class="form-control" />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Kaydet" />
+    </form>
+</div>

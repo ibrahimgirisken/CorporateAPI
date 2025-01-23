@@ -1,1 +1,100 @@
-﻿
+﻿@model UpdateProductViewModel
+@{
+    ViewData["Title"] = "Ürün Güncelleme Sayfası";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid my-5">
+    <form method="post" asp-action="UpdateMenu">
+        @if (Model.GetBrands.Count > 0)
+        {
+            <div class="form-group">
+                <label asp-for="CreateProductDTO.BrandId"></label>
+                <select class="form-select" asp-for="CreateProductDTO.BrandId">
+                    <option value=0 selected>Marka Seçin</option>
+                    @foreach (var item in Model.GetBrands)
+                    {
+                        <option value="@item.Id">
+                            @item.Name
+                        </option>
+                    }
+                </select>
+            </div>
+
+        }
+        @if (Model.GetCategories.Count > 0)
+        {
+            <div class="form-group">
+                <label asp-for="CreateProductDTO.CategoryId"></label>
+                <select class="form-select" asp-for="CreateProductDTO.CategoryId">
+                    <option value="0" selected>Bir kategori seçin</option>
+                    @foreach (var item in Model.GetCategories)
+                    {
+                        var translation = item.CategoryTranslations.FirstOrDefault(c => c.Locale == "tr");
+                        <option value="@item.Id">
+                            @(translation != null ? translation.Title : "Çeviri bulunamadı")
+                        </option>
+                    }
+                </select>
+            </div>
+        }
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
+            {
+                var lang = Model.GetLangDTOs[i];
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(lang.LangCode == "tr" ? "active" : "")" id="@lang.LangCode-tab" data-bs-toggle="tab" data-bs-target="#@lang.LangCode" type="button" role="tab" aria-controls="@lang.LangCode" aria-selected="@(lang.LangCode == "tr" ? "true" : "false")">
+                        <img width="15" height="15" src="~/icons/@(lang.LangCode).svg" />@lang.LangCode
+                    </button>
+                </li>
+            }
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            @for (int i = 0; i < Model.CreateProductDTO.ProductTranslations.Count; i++)
+            {
+                var translation = Model.CreateProductDTO.ProductTranslations[i];
+                <div class="tab-pane fade show @(translation.Locale == "tr" ? "active" : "")" id="@translation.Locale" role="tabpanel" aria-labelledby="@translation.Locale-tab">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="CreateProductDTO.ProductTranslations[i].Locale" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Name"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Name" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Url"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Url" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Title"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Title" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Brief"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Brief" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Title"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Title" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].PageTitle"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].PageTitle" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].MetaDescription"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].MetaDescription" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Content"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Content" class="form-control" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label asp-for="CreateProductDTO.Image1"></label>
+            <input asp-for="CreateProductDTO.Image1" class="form-control" />
+            <label asp-for="CreateProductDTO.Image2"></label>
+            <input asp-for="CreateProductDTO.Image2" class="form-control" />
+            <label asp-for="CreateProductDTO.Image3"></label>
+            <input asp-for="CreateProductDTO.Image3" class="form-control" />
+            <label asp-for="CreateProductDTO.Image4"></label>
+            <input asp-for="CreateProductDTO.Image4" class="form-control" />
+            <label asp-for="CreateProductDTO.Image5"></label>
+            <input asp-for="CreateProductDTO.Image5" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="CreateProductDTO.Order"></label>
+            <input asp-for="CreateProductDTO.Order" class="form-control" />
+        </div>
+        <div class="form-check">
+            <label asp-for="CreateProductDTO.Status" class="form-check-label"></label>
+            <input asp-for="CreateProductDTO.Status" class="form-check-input" type="checkbox" />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Kaydet" />
+    </form>
+</div>

@@ -55,21 +55,45 @@
                 <div class="tab-pane fade show @(translation.Locale == "tr" ? "active" : "")" id="@translation.Locale" role="tabpanel" aria-labelledby="@translation.Locale-tab">
                     <div class="form-group">
                         <input type="hidden" asp-for="CreateProductDTO.ProductTranslations[i].Locale" />
-                        <label asp-for="CreateProductDTO.ProductTranslations[i].Title"></label>
-                        <input asp-for="CreateProductDTO.ProductTranslations[i].Title" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Name"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Name" class="form-control" />
                         <label asp-for="CreateProductDTO.ProductTranslations[i].Url"></label>
                         <input asp-for="CreateProductDTO.ProductTranslations[i].Url" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Title"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Title" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Brief"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Brief" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Title"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Title" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].PageTitle"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].PageTitle" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].MetaDescription"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].MetaDescription" class="form-control" />
+                        <label asp-for="CreateProductDTO.ProductTranslations[i].Content"></label>
+                        <input asp-for="CreateProductDTO.ProductTranslations[i].Content" class="form-control" />
                     </div>
                 </div>
             }
         </div>
-        <div class="form-check">
-            <label asp-for="CreateProductDTO.Status" class="form-check-label"></label>
-            <input asp-for="CreateProductDTO.Status" class="form-check-input" type="checkbox" />
+        <div class="form-group">
+            <label asp-for="CreateProductDTO.Image1"></label>
+            <input asp-for="CreateProductDTO.Image1" class="form-control" />
+            <label asp-for="CreateProductDTO.Image2"></label>
+            <input asp-for="CreateProductDTO.Image2" class="form-control" />
+            <label asp-for="CreateProductDTO.Image3"></label>
+            <input asp-for="CreateProductDTO.Image3" class="form-control" />
+            <label asp-for="CreateProductDTO.Image4"></label>
+            <input asp-for="CreateProductDTO.Image4" class="form-control" />
+            <label asp-for="CreateProductDTO.Image5"></label>
+            <input asp-for="CreateProductDTO.Image5" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="CreateProductDTO.Order"></label>
             <input asp-for="CreateProductDTO.Order" class="form-control" />
+        </div>
+        <div class="form-check">
+            <label asp-for="CreateProductDTO.Status" class="form-check-label"></label>
+            <input asp-for="CreateProductDTO.Status" class="form-check-input" type="checkbox" />
         </div>
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>

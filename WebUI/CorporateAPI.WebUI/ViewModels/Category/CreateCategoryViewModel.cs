@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
+using CorporateAPI.WebUI.DTOs.Menu;
 
 namespace CorporateAPI.WebUI.ViewModels.Category
 {
@@ -8,5 +9,6 @@ namespace CorporateAPI.WebUI.ViewModels.Category
     {
         public CreateCategoryDTO CreateCategoryDTO { get; set; }
         public List<ResultLangDTO> GetLangDTOs { get; set; }
+        public List<ResultCategoryDTO> ResultCategories{ get; set; }
     }
 }

@@ -66,10 +66,10 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
-            var resultProductDTO = await client.GetFromJsonAsync<UpdateProductDTO>($"Products/{id}");
+            var resultProductDTO = await client.GetFromJsonAsync<CreateProductDTO>($"Products/{id}");
             var model = new UpdateProductViewModel
             {
-                UpdateProductDTO=resultProductDTO,
+                CreateProductDTO=resultProductDTO,
                 GetLangDTOs=langs
             };
             return View(model);
@@ -80,9 +80,9 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProduct(UpdateProductViewModel updateProductViewModel)
         {
-            UpdateProductDTO productDto=updateProductViewModel.UpdateProductDTO;
+            CreateProductDTO productDto=updateProductViewModel.CreateProductDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PutAsJsonAsync<UpdateProductDTO>("Products",productDto);
+            await client.PutAsJsonAsync<CreateProductDTO>("Products",productDto);
             return RedirectToAction(nameof(Index));
         }
 
