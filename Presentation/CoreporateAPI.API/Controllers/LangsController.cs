@@ -30,7 +30,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdLangRequest getByIdLangRequest)
         {
             GetByIdLangResponse response = await _mediator.Send(getByIdLangRequest);
-            return Ok(response);
+            return Ok(response.Lang);
         }
 
         [HttpPost]

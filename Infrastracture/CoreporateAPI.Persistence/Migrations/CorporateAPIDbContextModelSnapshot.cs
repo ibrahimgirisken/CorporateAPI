@@ -92,9 +92,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BannerId");
-
                     b.HasIndex("Locale");
+
+                    b.HasIndex("BannerId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("BannerTranslations", "dbo");
                 });
@@ -210,13 +211,14 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("Locale");
 
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("CategoryId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("CategoryTranslations", "dbo");
                 });
@@ -294,9 +296,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HomeId");
-
                     b.HasIndex("Locale");
+
+                    b.HasIndex("HomeId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("HomeTranslations", "dbo");
                 });
@@ -500,11 +503,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("MenuId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("MenuId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("MenuTranslations", "dbo");
                 });
@@ -577,7 +581,8 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("ModuleTranslations", "dbo");
                 });
@@ -665,11 +670,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("PageId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("PageId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
                 });
@@ -779,11 +785,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("ProductId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("ProductTranslations", "dbo");
                 });

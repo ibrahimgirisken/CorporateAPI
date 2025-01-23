@@ -1,11 +1,14 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
+using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.Helpers;
 using CorporateAPI.WebUI.ViewModels.Banner;
+using CorporateAPI.WebUI.ViewModels.Category;
 using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -66,13 +69,24 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateBanner(int id)
         {
-            return View();
+            var client = _httpClientFactory.CreateClient("Admin");
+            var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
+            var resultBannerDTO = await client.GetFromJsonAsync<UpdateBannerDTO>($"Banners/{id}");
+            var model = new UpdateBannerViewModel
+            {
+                GetLangDTOs = langs,
+                UpdateBannerDTO = resultBannerDTO
+            };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateBanner(UpdateBannerViewModel updateBannerViewModel)
-        {  
-        return RedirectToAction(nameof(Index));
+        {
+            UpdateBannerDTO updateBannerDTO = updateBannerViewModel.UpdateBannerDTO;
+            var client = _httpClientFactory.CreateClient("Admin");
+            await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", updateBannerDTO);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpDelete]

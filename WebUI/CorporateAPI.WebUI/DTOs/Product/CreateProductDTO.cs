@@ -1,6 +1,4 @@
-﻿using CorporateAPI.Domain.Entities.Product;
-
-namespace CorporateAPI.WebUI.DTOs.Product
+﻿namespace CorporateAPI.WebUI.DTOs.Product
 {
     public class CreateProductDTO
     {

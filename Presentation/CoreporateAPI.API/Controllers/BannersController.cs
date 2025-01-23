@@ -31,7 +31,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdBannerQueryRequest getByIdBannerQueryRequest)
         {
             GetByIdBannerQueryResponse response = await _mediator.Send(getByIdBannerQueryRequest);
-            return Ok(response);
+            return Ok(response.Banner);
         }
 
         [HttpPost]

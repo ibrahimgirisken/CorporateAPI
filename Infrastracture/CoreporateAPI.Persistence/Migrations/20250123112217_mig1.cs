@@ -352,15 +352,15 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     Image1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Order = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -373,15 +373,13 @@ namespace CoreporateAPI.Persistence.Migrations
                         column: x => x.BrandId,
                         principalSchema: "dbo",
                         principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Product_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalSchema: "dbo",
                         principalTable: "Category",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -684,10 +682,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BannerTranslations_BannerId",
+                name: "IX_BannerTranslations_BannerId_Locale",
                 schema: "dbo",
                 table: "BannerTranslations",
-                column: "BannerId");
+                columns: new[] { "BannerId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BannerTranslations_Locale",
@@ -702,10 +701,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryTranslations_CategoryId",
+                name: "IX_CategoryTranslations_CategoryId_Locale",
                 schema: "dbo",
                 table: "CategoryTranslations",
-                column: "CategoryId");
+                columns: new[] { "CategoryId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryTranslations_Locale",
@@ -729,10 +729,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_HomeTranslations_HomeId",
+                name: "IX_HomeTranslations_HomeId_Locale",
                 schema: "dbo",
                 table: "HomeTranslations",
-                column: "HomeId");
+                columns: new[] { "HomeId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_HomeTranslations_Locale",
@@ -753,10 +754,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Locale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuTranslations_MenuId",
+                name: "IX_MenuTranslations_MenuId_Locale",
                 schema: "dbo",
                 table: "MenuTranslations",
-                column: "MenuId");
+                columns: new[] { "MenuId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuTranslations_Url",
@@ -773,10 +775,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Locale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModuleTranslations_ModuleId",
+                name: "IX_ModuleTranslations_ModuleId_Locale",
                 schema: "dbo",
                 table: "ModuleTranslations",
-                column: "ModuleId");
+                columns: new[] { "ModuleId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PageTranslations_Locale",
@@ -785,10 +788,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Locale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageTranslations_PageId",
+                name: "IX_PageTranslations_PageId_Locale",
                 schema: "dbo",
                 table: "PageTranslations",
-                column: "PageId");
+                columns: new[] { "PageId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PageTranslations_Url",
@@ -817,10 +821,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Locale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTranslations_ProductId",
+                name: "IX_ProductTranslations_ProductId_Locale",
                 schema: "dbo",
                 table: "ProductTranslations",
-                column: "ProductId");
+                columns: new[] { "ProductId", "Locale" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductTranslations_Url",

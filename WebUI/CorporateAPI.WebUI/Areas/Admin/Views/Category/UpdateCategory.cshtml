@@ -14,7 +14,7 @@
                     @foreach (var item in Model.ResultCategories)
                     {
                         <option value="@item.Id" selected="@(Model.UpdateCategoryDTO.ParentId == item.Id ? "selected" : null)">
-                            @item.CategoryTranslations.FirstOrDefault(l => l.Locale == "tr")?.Title ?? "Çeviri Yok"
+                            @item.CategoryTranslations.FirstOrDefault(l => l.Locale == "tr")?.Title
                         </option>
                     }
                 </select>
@@ -53,9 +53,9 @@
                 </div>
             }
         </div>
-        <div class="form-check">
-            <label asp-for="UpdateCategoryDTO.Image1" class="form-check-label"></label>
-            <input asp-for="UpdateCategoryDTO.Image1" class="form-check-input" type="checkbox" />
+        <div class="form-group">
+            <label asp-for="UpdateCategoryDTO.Image1"></label>
+            <input asp-for="UpdateCategoryDTO.Image1" class="form-control" />
         </div>
         <div class="form-check">
             <label asp-for="UpdateCategoryDTO.Status" class="form-check-label"></label>

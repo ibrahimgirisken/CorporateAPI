@@ -33,7 +33,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
                 }
                 else
                 {
-                    // Yeni çeviriyi ekle
                     var newTranslation = _mapper.Map<MenuTranslation>(translationDto);
                     menu.MenuTranslations.Add(newTranslation);
                 }

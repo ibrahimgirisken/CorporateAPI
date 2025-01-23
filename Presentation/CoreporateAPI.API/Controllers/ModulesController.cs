@@ -40,7 +40,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdModuleQueryRequest getByIdModuleQueryRequest)
         {
             GetByIdModuleQueryResponse response=await _mediator.Send(getByIdModuleQueryRequest);
-            return Ok(response);
+            return Ok(response.Module);
         }
 
         [HttpPost]

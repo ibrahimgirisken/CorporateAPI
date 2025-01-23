@@ -9,7 +9,6 @@ namespace CorporateAPI.Domain.Entities.Category
 {
     public class CategoryTranslation:BaseTranslation
     {
-        public string Locale { get; set; }
         public string? Name { get; set; }
         public string? Title { get; set; }
         public string? Url { get; set; }

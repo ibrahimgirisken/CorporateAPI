@@ -13,8 +13,8 @@
                     <option value="" selected>Seç</option>
                     @foreach (var item in Model.ResultMenus)
                     {
-                        <option value="@item.Id">
-                            @item.MenuTranslations.FirstOrDefault(l => l.Locale == "tr").Title
+                        <option value="@item.Id" selected="@(Model.UpdateMenuDTO.ParentId == item.Id ? "selected" : null)">
+                            @item.MenuTranslations.FirstOrDefault(l => l.Locale == "tr")?.Title
                         </option>
                     }
                 </select>

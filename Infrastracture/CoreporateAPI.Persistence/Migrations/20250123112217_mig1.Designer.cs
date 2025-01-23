@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250122140823_mig1")]
+    [Migration("20250123112217_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -95,9 +95,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BannerId");
-
                     b.HasIndex("Locale");
+
+                    b.HasIndex("BannerId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("BannerTranslations", "dbo");
                 });
@@ -213,13 +214,14 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("Locale");
 
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("CategoryId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("CategoryTranslations", "dbo");
                 });
@@ -297,9 +299,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HomeId");
-
                     b.HasIndex("Locale");
+
+                    b.HasIndex("HomeId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("HomeTranslations", "dbo");
                 });
@@ -503,11 +506,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("MenuId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("MenuId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("MenuTranslations", "dbo");
                 });
@@ -580,7 +584,8 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("ModuleTranslations", "dbo");
                 });
@@ -668,11 +673,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("PageId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("PageId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
                 });
@@ -685,10 +691,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BrandId")
+                    b.Property<int?>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Code")
@@ -715,7 +721,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Order")
+                    b.Property<int?>("Order")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
@@ -782,11 +788,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("ProductId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("ProductTranslations", "dbo");
                 });
@@ -1039,15 +1046,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Brand.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Brand");
 
