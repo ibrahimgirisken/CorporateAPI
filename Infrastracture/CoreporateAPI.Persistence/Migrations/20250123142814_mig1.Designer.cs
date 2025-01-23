@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250123112217_mig1")]
+    [Migration("20250123142814_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -567,14 +567,12 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModuleData")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModuleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")

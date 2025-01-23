@@ -81,7 +81,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             UpdateCategoryDTO updateCategoryDTO=updateCategoryViewModel.UpdateCategoryDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PutAsJsonAsync<UpdateCategoryDTO>("Pages",updateCategoryDTO);
+            await client.PutAsJsonAsync<UpdateCategoryDTO>("Categories",updateCategoryDTO);
             return RedirectToAction(nameof(Index));
         }
 

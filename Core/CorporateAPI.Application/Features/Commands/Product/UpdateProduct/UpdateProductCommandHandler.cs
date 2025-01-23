@@ -20,7 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
-           var product= await _productReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ProductTranslations);
+           Domain.Entities.Product.Product product= await _productReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ProductTranslations);
             if (product == null)
                 throw new Exception("Ürün Bulunamadı");
             _mapper.Map(request,product);

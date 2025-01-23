@@ -564,14 +564,12 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModuleData")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModuleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")

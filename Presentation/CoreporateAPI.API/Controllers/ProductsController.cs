@@ -22,12 +22,16 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            GetAllProductQueryResponse response=await _mediator.Send(getAllProductQueryRequest);
+            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
+
             string language = Request.Headers["Accept-Language".ToString()];
             if (string.IsNullOrEmpty(language))
             {
                 language = "en"; // Varsayılan dil
             }
+            getAllProductQueryRequest.Language = language;
+            getAllProductQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
+            GetAllProductQueryResponse response = await _mediator.Send(getAllProductQueryRequest);
             return Ok(response.ProductsDto);
         }
 

@@ -13,7 +13,7 @@
                     <option value=0 selected=@(Model.UpdateCategoryDTO.ParentId == 0 ? "selected" : null)>Kategori Seçiniz</option>
                     @foreach (var item in Model.ResultCategories)
                     {
-                        <option value="@item.Id" selected="@(Model.UpdateCategoryDTO.ParentId == item.Id ? "selected" : null)">
+                        <option value=@item.Id selected="@(Model.UpdateCategoryDTO.ParentId == item.Id ? "selected" : null)">
                             @item.CategoryTranslations.FirstOrDefault(l => l.Locale == "tr")?.Title
                         </option>
                     }

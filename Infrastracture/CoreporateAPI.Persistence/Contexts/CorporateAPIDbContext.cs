@@ -45,7 +45,7 @@ namespace CoreporateAPI.Persistence.Contexts
                  .HasPrincipalKey(l=>l.LangCode)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(pt => new {pt.ProductId,pt.Locale}).IsUnique();
+                entity.HasIndex(pt => new { pt.ProductId, pt.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<CategoryTranslation>(entity =>
@@ -64,7 +64,7 @@ namespace CoreporateAPI.Persistence.Contexts
                  .HasPrincipalKey(l => l.LangCode)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(ct => new {ct.CategoryId,ct.Locale}).IsUnique();
+                entity.HasIndex(ct => new { ct.CategoryId, ct.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<MenuTranslation>(entity =>
@@ -83,7 +83,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(mt => new {mt.MenuId,mt.Locale}).IsUnique();
+                entity.HasIndex(mt => new { mt.MenuId, mt.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<PageTranslation>(entity =>
@@ -102,7 +102,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(pt => new {pt.PageId,pt.Locale}).IsUnique();
+                entity.HasIndex(pt => new { pt.PageId, pt.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<ModuleTranslation>(entity =>
@@ -119,7 +119,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(mt => new {mt.ModuleId,mt.Locale}).IsUnique();
+                entity.HasIndex(mt => new { mt.ModuleId, mt.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<Home>(entity =>
@@ -141,7 +141,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(ht => new {ht.HomeId,ht.Locale}).IsUnique();
+                entity.HasIndex(ht => new { ht.HomeId, ht.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<BannerTranslation>(entity =>
@@ -158,8 +158,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasPrincipalKey(l => l.LangCode)   
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(bt => new {bt.BannerId,bt.Locale}).IsUnique();
-             });
+                entity.HasIndex(bt => new { bt.BannerId, bt.Locale }).IsUnique();
+            });
 
             base.OnModelCreating(modelBuilder);
         }

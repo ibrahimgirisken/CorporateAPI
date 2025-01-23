@@ -21,25 +21,41 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
         {
             var menu = await _menuReadRepository.GetByIdAsync(request.Id, false, includes: e => e.MenuTranslations);
-            if (menu == null)
-                throw new Exception("Menu bulunamadı");
             _mapper.Map(request, menu);
+
+            // Mevcut translation'ları güncelle veya ekle
             foreach (var translationDto in request.MenuTranslations)
             {
-                var existingTranslation = menu.MenuTranslations.FirstOrDefault(t => t.Locale == translationDto.Locale);
+                var existingTranslation = menu.MenuTranslations
+                                              .FirstOrDefault(t => t.Locale == translationDto.Locale);
+
                 if (existingTranslation != null)
                 {
+                    // Var olanı güncelle
                     _mapper.Map(translationDto, existingTranslation);
                 }
                 else
                 {
-                    var newTranslation = _mapper.Map<MenuTranslation>(translationDto);
-                    menu.MenuTranslations.Add(newTranslation);
+                    // Yeni bir translation ekle
+                    menu.MenuTranslations.Add(_mapper.Map<MenuTranslation>(translationDto));
                 }
             }
+
+            // Veritabanından silinmesi gereken eski translation'ları çıkar
+            var toRemoveTranslations = menu.MenuTranslations
+                                           .Where(mt => !request.MenuTranslations
+                                                          .Any(rt => rt.Locale == mt.Locale))
+                                           .ToList();
+
+            foreach (var translation in toRemoveTranslations)
+            {
+                menu.MenuTranslations.Remove(translation);
+            }
+
             _menuWriteRepository.Update(menu);
             await _menuWriteRepository.SaveAsync();
             return new();
+
         }
     }
 }

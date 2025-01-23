@@ -25,14 +25,15 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            var category= await _categoryReadRepository.GetByIdAsync(request.Id);
-            if (category.CategoryTranslations != null) 
+            var category = await _categoryReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.CategoryTranslations);
+            if (category.CategoryTranslations != null)
             {
-            category.CategoryTranslations=_mapper.Map<List<CategoryTranslation>>(request.CategoryTranslations);
+                category.CategoryTranslations = _mapper.Map<List<CategoryTranslation>>(request.CategoryTranslations);
             }
             _categoryWriteRepository.Update(category);
             await _categoryWriteRepository.SaveAsync();
             return new();
         }
+
     }
 }

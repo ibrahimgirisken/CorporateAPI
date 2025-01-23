@@ -13,7 +13,7 @@
                     <option value=0 selected>Kategori Seçiniz</option>
                     @foreach (var item in Model.ResultCategories)
                     {
-                        <option value="@item.Id">
+                        <option value=@item.Id>
                             @item.CategoryTranslations.FirstOrDefault(l => l.Locale == "tr")?.Title
                         </option>
                     }
