@@ -1,0 +1,14 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CorporateAPI.Application.Features.Commands.Datasheet.RemoveDatasheet
+{
+    public class RemoveDatasheetCommandRequest:IRequest<RemoveDatasheetCommandResponse>
+    {
+        public int Id { get; set; }
+    }
+}

@@ -3,6 +3,7 @@ using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Brand;
 using CorporateAPI.Domain.Entities.Category;
 using CorporateAPI.Domain.Entities.Common;
+using CorporateAPI.Domain.Entities.Datasheet;
 using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Menu;
@@ -28,6 +29,25 @@ namespace CoreporateAPI.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
+
+            modelBuilder.Entity<DatasheetTranslation>(entity =>
+            {
+                entity.ToTable(nameof(DatasheetTranslation));
+                entity.HasIndex(dt => dt.Url).IsUnique();
+
+                entity.HasOne(dt=>dt.Datasheet)
+                .WithMany(dtt=>dtt.DatasheetTranslations)
+                .HasForeignKey(dt=>dt.DatasheetId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(dl=>dl.Language)
+                .WithMany(dt=>dt.DatasheetTranslations)
+                .HasForeignKey(dl=>dl.Locale)
+                .HasPrincipalKey(dt=>dt.LangCode)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(dt => new {dt.DatasheetId,dt.Locale}).IsUnique();
+            });
 
             modelBuilder.Entity<ProductTranslation>(entity =>
             {
@@ -63,6 +83,9 @@ namespace CoreporateAPI.Persistence.Contexts
                  .HasForeignKey(cl => cl.Locale)
                  .HasPrincipalKey(l => l.LangCode)
                  .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new { l.CategoryId, l.Locale }).IsUnique();
+
             });
 
             modelBuilder.Entity<MenuTranslation>(entity =>
@@ -80,6 +103,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(ml=>ml.Locale)
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new {l.MenuId, l.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<PageTranslation>(entity =>
@@ -97,6 +122,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(pt=>pt.Locale)
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new { l.PageId, l.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<ModuleTranslation>(entity =>
@@ -112,6 +139,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(ml=>ml.Locale)
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new { l.ModuleId, l.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<Home>(entity =>
@@ -132,6 +161,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(bt => bt.Locale)
                 .HasPrincipalKey(l=>l.LangCode)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new { l.HomeId, l.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<BannerTranslation>(entity =>
@@ -147,6 +178,8 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(bt => bt.Locale)     
                 .HasPrincipalKey(l => l.LangCode)   
                 .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new { l.BannerId, l.Language });
             });
 
             base.OnModelCreating(modelBuilder);

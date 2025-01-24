@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Category;
 using CorporateAPI.Domain.Entities.Common;
+using CorporateAPI.Domain.Entities.Datasheet;
 using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
@@ -25,5 +26,6 @@ namespace CorporateAPI.Domain.Entities
         public List<HomeTranslation> HomeTranslations{ get; set; }
         public List<ProductTranslation> ProductTranslations { get; set; }
         public List<CategoryTranslation> CategoryTranslations { get; set; }
+        public List<DatasheetTranslation> DatasheetTranslations{ get; set; }
     }
 }

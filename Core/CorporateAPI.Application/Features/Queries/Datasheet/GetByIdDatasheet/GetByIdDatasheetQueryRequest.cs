@@ -1,0 +1,14 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CorporateAPI.Application.Features.Queries.Datasheet.GetByIdDatasheet
+{
+    public class GetByIdDatasheetQueryRequest:IRequest<GetByIdDatasheetQueryResponse>
+    {
+        public int Id { get; set; }
+    }
+}
