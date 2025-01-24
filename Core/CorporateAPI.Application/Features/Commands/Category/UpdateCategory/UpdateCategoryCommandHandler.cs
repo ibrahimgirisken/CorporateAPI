@@ -2,11 +2,6 @@
 using CorporateAPI.Application.Repositories.Category;
 using CorporateAPI.Domain.Entities.Category;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 {
@@ -26,12 +21,12 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
             Domain.Entities.Category.Category category=await _categoryReadRepository.GetByIdAsync(request.Id,false,e=>e.CategoryTranslations);
+            category.CategoryTranslations.Clear();
             var existingTranslations= category.CategoryTranslations.ToList();
             category.Image1=request.Image1;
             category.Status=request.Status;
             category.Order=request.Order;
             category.ParentId=request.ParentId;
-            category.CategoryTranslations.Clear();
 
             foreach (var translationDTO in request.CategoryTranslations)
             {

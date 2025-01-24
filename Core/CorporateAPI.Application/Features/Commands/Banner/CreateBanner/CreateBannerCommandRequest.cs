@@ -18,6 +18,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
         public int Order { get; set; } = 1;
+        public bool Status { get; set; }
         public bool IsDeleted { get; set; } = false;
         public List<BannerTranslationDTO> BannerTranslations { get; set; }
     }

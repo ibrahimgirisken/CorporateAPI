@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using CorporateAPI.Application.Repositories.Menu;
 using CorporateAPI.Application.Repositories.Product;
-using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Product;
 using MediatR;
 

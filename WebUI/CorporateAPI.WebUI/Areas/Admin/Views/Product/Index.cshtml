@@ -18,7 +18,7 @@
     {
         <tr>
             <td>@item.Id</td>
-            <td>@item.ProductTranslations.FirstOrDefault(t => t.Locale == "tr").Title</td>
+            <td>@item.ProductTranslations.FirstOrDefault(t => t.Locale == "tr")?.Name</td>
             <td>@item.Code</td>
             <td>@item.BrandId</td>
             <td>@item.Order</td>

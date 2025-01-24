@@ -17,6 +17,7 @@ namespace CorporateAPI.Domain.Entities.Banner
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
         public int Order { get; set; }
+        public bool Status { get; set; }
         public List<BannerTranslation> BannerTranslations { get; set; }
     }
 }

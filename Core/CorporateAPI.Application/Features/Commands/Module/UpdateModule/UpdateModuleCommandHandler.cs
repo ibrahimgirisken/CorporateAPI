@@ -21,17 +21,14 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
             var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ModuleTranslations);
-            foreach (var translationDto in request.ModuleTranslations)
+            module.ModuleTranslations.Clear();
+            var existingTranslations = module.ModuleTranslations.ToList();
+
+            foreach (var translationDTO in request.ModuleTranslations)
             {
-               var existingTranslation=module.ModuleTranslations.FirstOrDefault(t=>t.Locale==translationDto.Locale);
-                if (existingTranslation!=null)
-                {
-                    _mapper.Map(translationDto, existingTranslation);
-                }else
-                {
-                    var newTranslation=_mapper.Map<ModuleTranslation>(translationDto);
-                    module.ModuleTranslations.Add(newTranslation);
-                }
+                var translation=existingTranslations.FirstOrDefault(t=>t.Locale== translationDTO.Locale) ?? new ModuleTranslation();
+                _mapper.Map(translationDTO, translation);
+                module.ModuleTranslations.Add(translation);
             }
             _moduleWriteRepository.Update(module);
             await _moduleWriteRepository.SaveAsync();

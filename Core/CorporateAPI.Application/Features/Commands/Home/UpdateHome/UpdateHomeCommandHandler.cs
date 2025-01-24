@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories.Home;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 {
@@ -26,18 +21,17 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
         public async Task<UpdateHomeCommandResponse> Handle(UpdateHomeCommandRequest request, CancellationToken cancellationToken)
         {
             var home=await _homeReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.HomeTranslations);
-            foreach (var translsationDto in request.HomeTranslations)
+            home.HomeTranslations.Clear();
+            var existingTranslsation = home.HomeTranslations.ToList();
+            home.Order=request.Order;
+            home.Status=request.Status;
+            home.ContentType=request.ContentType;
+
+            foreach (var translationDTO in request.HomeTranslations)
             {
-                var existingTranslation = home.HomeTranslations.FirstOrDefault(t => t.Locale == translsationDto.Locale);
-                if (existingTranslation!=null)
-                {
-                    _mapper.Map(translsationDto, existingTranslation);
-                }
-                else
-                {
-                    var newTranslation = _mapper.Map<Domain.Entities.Home.HomeTranslation>(translsationDto);
-                    home.HomeTranslations.Add(newTranslation);
-                }
+                var translation=existingTranslsation.FirstOrDefault(t=>t.Locale==translationDTO.Locale)?? new Domain.Entities.Home.HomeTranslation();
+                 _mapper.Map(translationDTO, translation);
+                home.HomeTranslations.Add(translation);
             }
             _homeWriteRepository.Update(home);
             await _homeWriteRepository.SaveAsync();
