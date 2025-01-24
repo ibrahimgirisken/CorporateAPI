@@ -21,9 +21,11 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
             var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ModuleTranslations);
-            module.ModuleTranslations.Clear();
             var existingTranslations = module.ModuleTranslations.ToList();
-
+            module.ModuleTranslations.Clear();
+            module.Order=request.Order;
+            module.ContentType=request.ContentType;
+            module.Status=request.Status;
             foreach (var translationDTO in request.ModuleTranslations)
             {
                 var translation=existingTranslations.FirstOrDefault(t=>t.Locale== translationDTO.Locale) ?? new ModuleTranslation();

@@ -64,13 +64,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateModule(int id)
         {
             var client = _httpClientFactory.CreateClient("Admin");
-            var modules = await client.GetFromJsonAsync<List<ResultModuleDTO>>("Modules");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var resultModuleDTO = await client.GetFromJsonAsync<UpdateModuleDTO>($"Modules/{id}");
             var model = new UpdateModuleViewModel
             {
                 UpdateModuleDTO = resultModuleDTO,
-                GetLangDTOs = langs
+                GetLangDTOs = langs,
             };
 
             return View(model);
@@ -81,7 +80,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             UpdateModuleDTO moduleDto = updateModuleViewModel.UpdateModuleDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PutAsJsonAsync<UpdateModuleDTO>("Pages", moduleDto);
+            await client.PutAsJsonAsync<UpdateModuleDTO>("Modules", moduleDto);
             return RedirectToAction(nameof(Index));
         }
 
