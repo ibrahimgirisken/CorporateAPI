@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label asp-for="UpdateProductDTO.BrandId"></label>
                 <select class="form-select" asp-for="UpdateProductDTO.BrandId">
-                    <option value=0 selected>Marka Seçin</option>
+                    <option value=null selected>Marka Seçin</option>
                     @foreach (var item in Model.GetBrands)
                     {
                         <option value="@item.Id">
@@ -26,7 +26,7 @@
             <div class="form-group">
                 <label asp-for="UpdateProductDTO.CategoryId"></label>
                 <select class="form-select" asp-for="UpdateProductDTO.CategoryId">
-                    <option value="0" selected>Bir kategori seçin</option>
+                    <option value=null selected>Bir kategori seçin</option>
                     @foreach (var item in Model.GetCategories)
                     {
                         var translation = item.CategoryTranslations.FirstOrDefault(c => c.Locale == "tr");
@@ -48,6 +48,7 @@
                 </li>
             }
         </ul>
+            <input type="hidden" asp-for="UpdateProductDTO.Id"/>
         <div class="form-group">
             <label asp-for="UpdateProductDTO.Code"></label>
             <input asp-for="UpdateProductDTO.Code" class="form-control" />

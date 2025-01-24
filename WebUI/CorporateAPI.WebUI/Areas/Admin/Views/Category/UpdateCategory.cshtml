@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label asp-for="UpdateCategoryDTO.ParentId"></label>
                 <select class="form-select" asp-for="UpdateCategoryDTO.ParentId">
-                    <option value=0 selected=@(Model.UpdateCategoryDTO.ParentId == 0 ? "selected" : null)>Kategori Seçiniz</option>
+                    <option value= selected=@(Model.UpdateCategoryDTO.ParentId == null ? "selected" : null)>Kategori Seçiniz</option>
                     @foreach (var item in Model.ResultCategories)
                     {
                         <option value=@item.Id selected="@(Model.UpdateCategoryDTO.ParentId == item.Id ? "selected" : null)">

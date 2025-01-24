@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label asp-for="CreateCategoryDTO.ParentId"></label>
                 <select class="form-select" asp-for="CreateCategoryDTO.ParentId">
-                    <option value=0 selected>Kategori Seçiniz</option>
+                    <option value=null selected>Kategori Seçiniz</option>
                     @foreach (var item in Model.ResultCategories)
                     {
                         <option value=@item.Id>

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.Repositories.Menu;
 using CorporateAPI.Application.Repositories.Product;
+using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Product;
 using MediatR;
 
@@ -21,21 +23,23 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
            Domain.Entities.Product.Product product= await _productReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ProductTranslations);
-            if (product == null)
-                throw new Exception("Ürün Bulunamadı");
-            _mapper.Map(request,product);
-            foreach (var translationDto in request.ProductTranslations)
+            var existingTranslations = product.ProductTranslations.ToList();
+            product.ProductTranslations.Clear();
+            product.Code = request.Code;
+            product.BrandId = request.BrandId;
+            product.CategoryId = request.CategoryId;
+            product.Image1 = request.Image1;
+            product.Image2 = request.Image2;
+            product.Image3 = request.Image3;
+            product.Image4 = request.Image4;
+            product.Image5 = request.Image5;
+            product.Order = request.Order;
+            product.Status = request.Status;
+            foreach (var translationDTO in request.ProductTranslations)
             {
-                var existingTranslation=product.ProductTranslations.FirstOrDefault(t=>t.Locale==translationDto.Locale);
-                if (existingTranslation != null)
-                {
-                    _mapper.Map(translationDto, existingTranslation);
-                }
-                else
-                {
-                    var newTranslation=_mapper.Map<ProductTranslation>(translationDto);
-                    product.ProductTranslations.Add(newTranslation);
-                }
+                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale) ?? new ProductTranslation();
+                _mapper.Map(translationDTO, translation);
+                product.ProductTranslations.Add(translation);
             }
             _productWriteRepository.Update(product);
             await _productWriteRepository.SaveAsync();

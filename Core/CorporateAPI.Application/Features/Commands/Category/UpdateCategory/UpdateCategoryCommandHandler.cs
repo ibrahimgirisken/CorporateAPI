@@ -25,15 +25,23 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            var category = await _categoryReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.CategoryTranslations);
-            if (category.CategoryTranslations != null)
+            Domain.Entities.Category.Category category=await _categoryReadRepository.GetByIdAsync(request.Id,false,e=>e.CategoryTranslations);
+            var existingTranslations= category.CategoryTranslations.ToList();
+            category.Image1=request.Image1;
+            category.Status=request.Status;
+            category.Order=request.Order;
+            category.ParentId=request.ParentId;
+            category.CategoryTranslations.Clear();
+
+            foreach (var translationDTO in request.CategoryTranslations)
             {
-                category.CategoryTranslations = _mapper.Map<List<CategoryTranslation>>(request.CategoryTranslations);
+                var translation=existingTranslations.FirstOrDefault(t=>t.Locale==translationDTO.Locale) ?? new CategoryTranslation();
+                _mapper.Map(translationDTO, translation);
+                category.CategoryTranslations.Add(translation);
             }
             _categoryWriteRepository.Update(category);
             await _categoryWriteRepository.SaveAsync();
             return new();
         }
-
     }
 }
