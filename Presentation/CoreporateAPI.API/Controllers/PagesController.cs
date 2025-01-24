@@ -1,12 +1,9 @@
 ﻿using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.RemovePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
-using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using CorporateAPI.Application.Features.Queries.Page.GetAllPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByIdPage;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

@@ -32,7 +32,7 @@ namespace CoreporateAPI.Persistence.Contexts
 
             modelBuilder.Entity<DatasheetTranslation>(entity =>
             {
-                entity.ToTable(nameof(DatasheetTranslation));
+                entity.ToTable("DatasheetTranslations");
                 entity.HasIndex(dt => dt.Url).IsUnique();
 
                 entity.HasOne(dt=>dt.Datasheet)
@@ -179,7 +179,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasPrincipalKey(l => l.LangCode)   
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(l => new { l.BannerId, l.Language });
+                entity.HasIndex(bl => new { bl.BannerId, bl.Locale }).IsUnique();
             });
 
             base.OnModelCreating(modelBuilder);

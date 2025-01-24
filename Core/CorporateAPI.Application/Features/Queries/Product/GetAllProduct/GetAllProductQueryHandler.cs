@@ -24,9 +24,14 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-           var products=await _productReadRepository.GetAll(false).Include(e=>e.ProductTranslations).ToListAsync();
-            var productsDto=_mapper.Map<List<ResultProductDTO>>(products);
-            return new()
+            var products = await _productReadRepository
+                .GetAll(false)
+                .Include(e => e.ProductTranslations)
+                .ToListAsync(cancellationToken);
+
+            var productsDto = _mapper.Map<List<ResultProductDTO>>(products);
+
+            return new GetAllProductQueryResponse
             {
                 ProductsDto = productsDto,
             };

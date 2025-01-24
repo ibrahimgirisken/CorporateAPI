@@ -9,6 +9,10 @@ namespace CorporateAPI.Domain.Entities.Datasheet
 {
     public class Datasheet:BaseEntity
     {
+        public Datasheet()
+        {
+            DatasheetTranslations = new List<DatasheetTranslation>();
+        }
         public string? Code { get; set; }
         public string? Image1 { get; set; }
         public int Order { get; set; }
