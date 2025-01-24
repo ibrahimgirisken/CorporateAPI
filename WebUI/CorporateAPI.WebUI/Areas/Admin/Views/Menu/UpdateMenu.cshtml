@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label asp-for="UpdateMenuDTO.ParentId"></label>
                 <select class="form-select" asp-for="UpdateMenuDTO.ParentId">
-                    <option value="" selected>Seç</option>
+                    <option value=null selected>Menu Seç</option>
                     @foreach (var item in Model.ResultMenus)
                     {
                         <option value="@item.Id" selected="@(Model.UpdateMenuDTO.ParentId == item.Id ? "selected" : null)">
@@ -58,6 +58,10 @@
         <div class="form-group">
             <label asp-for="UpdateMenuDTO.Order"></label>
             <input asp-for="UpdateMenuDTO.Order" class="form-control" />
+        </div>
+        <div class="form-check">
+            <label asp-for="UpdateMenuDTO.Status" class="form-check-label"></label>
+            <input asp-for="UpdateMenuDTO.Status" class="form-check-input" type="checkbox" />
         </div>
             <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>

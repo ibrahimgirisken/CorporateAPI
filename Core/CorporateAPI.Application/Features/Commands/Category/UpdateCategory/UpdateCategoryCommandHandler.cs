@@ -24,8 +24,8 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
             category.CategoryTranslations.Clear();
             var existingTranslations= category.CategoryTranslations.ToList();
             category.Image1=request.Image1;
-            category.Status=request.Status;
             category.Order=request.Order;
+            category.Status=request.Status;
             category.ParentId=request.ParentId;
 
             foreach (var translationDTO in request.CategoryTranslations)

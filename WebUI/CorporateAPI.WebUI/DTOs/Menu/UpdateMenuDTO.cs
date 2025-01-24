@@ -16,6 +16,7 @@ namespace CorporateAPI.WebUI.DTOs.Menu
         public bool Vitrin { get; set; }
         public bool Footer { get; set; }
         public int Order { get; set; }
+        public bool Status { get; set; }
         public int? ParentId { get; set; }
         public List<MenuTranslationDTO> MenuTranslations { get; set; }
     }

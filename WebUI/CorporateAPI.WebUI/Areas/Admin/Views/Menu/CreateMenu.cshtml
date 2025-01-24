@@ -10,11 +10,11 @@
             <div class="form-group">
                 <label asp-for="CreateMenuDTO.ParentId"></label>
                 <select class="form-select" asp-for="CreateMenuDTO.ParentId">
-                    <option value="" selected>Seç</option>
+                    <option value=null selected>Menu Seç</option>
                     @foreach (var item in Model.ResultMenus)
                     {
                         <option value="@item.Id">
-                            @item.MenuTranslations.FirstOrDefault(l=>l.Locale=="tr").Title
+                            @item.MenuTranslations.FirstOrDefault(l=>l.Locale=="tr")?.Title
                         </option>
                     }
                 </select>
@@ -57,6 +57,10 @@
         <div class="form-group">
             <label asp-for="CreateMenuDTO.Order"></label>
             <input asp-for="CreateMenuDTO.Order" class="form-control" />
+        </div>
+        <div class="form-check">
+            <label asp-for="CreateMenuDTO.Status" class="form-check-label"></label>
+            <input asp-for="CreateMenuDTO.Status" class="form-check-input" type="checkbox" />
         </div>
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>

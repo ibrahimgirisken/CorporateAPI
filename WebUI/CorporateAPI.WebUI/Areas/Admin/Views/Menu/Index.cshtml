@@ -18,7 +18,7 @@
     {
         <tr>
             <td>@item.Id</td>
-            <td>@item.MenuTranslations.FirstOrDefault(t => t.Locale == "tr").Title</td>
+            <td>@item.MenuTranslations.FirstOrDefault(t => t.Locale == "tr")?.Title</td>
             <td>@item.Vitrin</td>
             <td>@item.Footer</td>
             <td>@item.Order</td>

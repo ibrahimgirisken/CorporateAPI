@@ -27,7 +27,6 @@ namespace CorporateAPI.Application.Features.Commands.Lang.UpdateLang
         {
             Domain.Entities.Lang lang = await _langReadRepository.GetByIdAsync(request.Id);
             _mapper.Map(request,lang);
-
             _langWriteRepository.Update(lang);
             await _langWriteRepository.SaveAsync();
             return new();
