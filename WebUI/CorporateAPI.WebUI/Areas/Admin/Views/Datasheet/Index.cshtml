@@ -1,0 +1,30 @@
+﻿@model List<ResultDatasheetDTO>
+
+@{
+    ViewData["Title"] = "Datasheetler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<table class="table table-hover">
+    <tr>
+        <th>#</th>
+        <th>Başlık</th>
+        <th>Url</th>
+        <th>Sıra</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+            <tr>
+                <th>@item.Id</th>
+                <td>@item.DatasheetTranslations.FirstOrDefault(t => t.Locale == "tr")?.Name</td>
+                <td>@item.DatasheetTranslations.FirstOrDefault(t => t.Locale == "tr")?.Url</td>
+                <td>@item.Order</td>
+                <td>
+                    <a asp-action="DeleteCategory" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
+                    <a asp-action="UpdateCategory" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
+                </td>
+            </tr>
+    }
+</table>
+<br />
+<a asp-action="CreateDatasheet" asp-controller="Datasheet" asp-area="Admin" class="btn btn-outline-primary">Yeni Datasheet Ekle</a>
