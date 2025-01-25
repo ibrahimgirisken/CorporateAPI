@@ -67,6 +67,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     TableteImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MobileImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -123,6 +124,26 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Datasheet",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Datasheet", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Homes",
                 schema: "dbo",
                 columns: table => new
@@ -171,6 +192,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Vitrin = table.Column<bool>(type: "bit", nullable: false),
                     Footer = table.Column<bool>(type: "bit", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -217,6 +239,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Image2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     ModuleIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -447,6 +470,42 @@ namespace CoreporateAPI.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CategoryTranslations_Languages_Locale",
+                        column: x => x.Locale,
+                        principalSchema: "dbo",
+                        principalTable: "Languages",
+                        principalColumn: "LangCode",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DatasheetTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DatasheetId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DatasheetTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DatasheetTranslations_Datasheet_DatasheetId",
+                        column: x => x.DatasheetId,
+                        principalSchema: "dbo",
+                        principalTable: "Datasheet",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DatasheetTranslations_Languages_Locale",
                         column: x => x.Locale,
                         principalSchema: "dbo",
                         principalTable: "Languages",
@@ -722,6 +781,27 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[Url] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DatasheetTranslations_DatasheetId_Locale",
+                schema: "dbo",
+                table: "DatasheetTranslations",
+                columns: new[] { "DatasheetId", "Locale" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DatasheetTranslations_Locale",
+                schema: "dbo",
+                table: "DatasheetTranslations",
+                column: "Locale");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DatasheetTranslations_Url",
+                schema: "dbo",
+                table: "DatasheetTranslations",
+                column: "Url",
+                unique: true,
+                filter: "[Url] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Homes_ContentType",
                 schema: "dbo",
                 table: "Homes",
@@ -868,6 +948,10 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "DatasheetTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "HomeTranslations",
                 schema: "dbo");
 
@@ -897,6 +981,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Banners",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Datasheet",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

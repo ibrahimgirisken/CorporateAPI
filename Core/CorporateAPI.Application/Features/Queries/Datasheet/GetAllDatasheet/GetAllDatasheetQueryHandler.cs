@@ -24,7 +24,7 @@ namespace CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet
 
         public async Task<GetAllDatasheetQueryResponse> Handle(GetAllDatasheetQueryRequest request, CancellationToken cancellationToken)
         {
-            var datasheets=_datasheetReadRepository.GetAll(false).Include(e => e.DatasheetTranslations).ToListAsync();
+            var datasheets=await _datasheetReadRepository.GetAll(false).Include(e => e.DatasheetTranslations).ToListAsync(cancellationToken);
             var datasheetsDto=_mapper.Map<List<ResultDatasheetDTO>>(datasheets);
             return new()
             {

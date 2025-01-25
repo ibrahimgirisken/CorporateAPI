@@ -24,14 +24,14 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllDatasheetQueryRequest getAllDatasheetQueryRequest)
         {
             GetAllDatasheetQueryResponse response=await _mediator.Send(getAllDatasheetQueryRequest);
-            return Ok(response);
+            return Ok(response.resultDatasheetsDto);
         }
 
-        [HttpGet("{id}")]   
+        [HttpGet("{Id}")]   
         public async Task<IActionResult> Get([FromRoute] GetByIdDatasheetQueryRequest getByIdDatasheetQueryRequest)
         {
             GetByIdDatasheetQueryResponse response=await _mediator.Send(getByIdDatasheetQueryRequest);
-            return Ok(response);
+            return Ok(response.ResultDatasheetDTO);
         }
 
         [HttpPost]

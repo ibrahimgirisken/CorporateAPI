@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250124091230_mig6")]
-    partial class mig6
+    [Migration("20250125091818_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,9 +98,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BannerId");
-
                     b.HasIndex("Locale");
+
+                    b.HasIndex("BannerId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("BannerTranslations", "dbo");
                 });
@@ -216,7 +217,89 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("Locale");
+
+                    b.HasIndex("Url")
+                        .IsUnique()
+                        .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("CategoryId", "Locale")
+                        .IsUnique();
+
+                    b.ToTable("CategoryTranslations", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.Datasheet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Datasheet", "dbo");
+                });
+
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.DatasheetTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DatasheetId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("Locale");
 
@@ -224,7 +307,10 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
 
-                    b.ToTable("CategoryTranslations", "dbo");
+                    b.HasIndex("DatasheetId", "Locale")
+                        .IsUnique();
+
+                    b.ToTable("DatasheetTranslations", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
@@ -300,9 +386,10 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HomeId");
-
                     b.HasIndex("Locale");
+
+                    b.HasIndex("HomeId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("HomeTranslations", "dbo");
                 });
@@ -509,11 +596,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("MenuId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("MenuId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("MenuTranslations", "dbo");
                 });
@@ -584,7 +672,8 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("ModuleId");
+                    b.HasIndex("ModuleId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("ModuleTranslations", "dbo");
                 });
@@ -675,11 +764,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("Locale");
 
-                    b.HasIndex("PageId");
-
                     b.HasIndex("Url")
                         .IsUnique()
                         .HasFilter("[Url] IS NOT NULL");
+
+                    b.HasIndex("PageId", "Locale")
+                        .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
                 });
@@ -954,6 +1044,26 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Language");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.DatasheetTranslation", b =>
+                {
+                    b.HasOne("CorporateAPI.Domain.Entities.Datasheet.Datasheet", "Datasheet")
+                        .WithMany("DatasheetTranslations")
+                        .HasForeignKey("DatasheetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                        .WithMany("DatasheetTranslations")
+                        .HasForeignKey("Locale")
+                        .HasPrincipalKey("LangCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Datasheet");
+
+                    b.Navigation("Language");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.HomeTranslation", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Home.Home", "Home")
@@ -1148,6 +1258,11 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.Datasheet", b =>
+                {
+                    b.Navigation("DatasheetTranslations");
+                });
+
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
                 {
                     b.Navigation("HomeTranslations");
@@ -1158,6 +1273,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("BannerTranslations");
 
                     b.Navigation("CategoryTranslations");
+
+                    b.Navigation("DatasheetTranslations");
 
                     b.Navigation("HomeTranslations");
 

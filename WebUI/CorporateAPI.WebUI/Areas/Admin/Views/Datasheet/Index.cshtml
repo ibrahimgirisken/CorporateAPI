@@ -20,8 +20,8 @@
                 <td>@item.DatasheetTranslations.FirstOrDefault(t => t.Locale == "tr")?.Url</td>
                 <td>@item.Order</td>
                 <td>
-                    <a asp-action="DeleteCategory" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
-                    <a asp-action="UpdateCategory" asp-controller="Category" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
+                    <a asp-action="DeleteDatasheet" asp-controller="Datasheet" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
+                    <a asp-action="UpdateDatasheet" asp-controller="Datasheet" asp-route-id="@item.Id" class="btn btn-outline-info">Güncelle</a>
                 </td>
             </tr>
     }

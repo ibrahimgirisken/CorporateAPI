@@ -31,7 +31,7 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
 
             var productsDto = _mapper.Map<List<ResultProductDTO>>(products);
 
-            return new GetAllProductQueryResponse
+            return new()
             {
                 ProductsDto = productsDto,
             };

@@ -83,15 +83,15 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Product,UpdateProductCommandRequest>().ReverseMap();
             CreateMap<ProductTranslation, ProductTranslationDTO>().ReverseMap();
 
+
+            CreateMap<Datasheet,ResultDatasheetDTO>().ReverseMap();
+            CreateMap<Datasheet,CreateDatasheetCommandRequest>().ReverseMap();
+            CreateMap<Datasheet,UpdateDatasheetCommandRequest>().ReverseMap();
+            CreateMap<DatasheetTranslation,DatasheetTranslationDTO>().ReverseMap();
+
             CreateMap<Brand,ResultBrandDTO>().ReverseMap();
             CreateMap<Brand,CreateBrandCommandRequest>().ReverseMap();
             CreateMap<Brand,UpdateBrandCommandRequest>().ReverseMap();
-
-            CreateMap<Datasheet,CreateDatasheetCommandRequest>().ReverseMap();
-            CreateMap<Datasheet,ResultDatasheetDTO>().ReverseMap();
-            CreateMap<Datasheet, UpdateDatasheetCommandRequest>().ReverseMap();
-            CreateMap<DatasheetTranslation,DatasheetTranslationDTO>().ReverseMap();
-
         }
     }
 }
