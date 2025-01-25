@@ -21,21 +21,39 @@ namespace CorporateAPI.Application.Features.Commands.Menu.UpdateMenu
         public async Task<UpdateMenuCommandResponse> Handle(UpdateMenuCommandRequest request, CancellationToken cancellationToken)
         {
             Domain.Entities.Menu.Menu menu = await _menuReadRepository.GetByIdAsync(request.Id, false, includes: e => e.MenuTranslations);
+            
+            if (menu == null)
+                throw new Exception("Menu not found!");
+
+            menu.Order = request.Order;
+            menu.Status = request.Status;
+            menu.ParentId = request.ParentId;
+            
             var existingTranslations = menu.MenuTranslations.ToList();
-            menu.Footer=request.Footer;
-            menu.Vitrin=request.Vitrin;
-            menu.Order=request.Order;
-            menu.ParentId=request.ParentId;
-            menu.MenuTranslations.Clear();
+
+            foreach (var existingTranslation in existingTranslations)
+            {
+                if (!request.MenuTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                {
+                    menu.MenuTranslations.Remove(existingTranslation);
+                }
+            }
+
             foreach (var translationDTO in request.MenuTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale) ?? new MenuTranslation();
+                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                if (translation == null)
+                {
+                    translation = new MenuTranslation();
+                    menu.MenuTranslations.Add(translation);
+                }
                 _mapper.Map(translationDTO, translation);
-                menu.MenuTranslations.Add(translation);
             }
+
             _menuWriteRepository.Update(menu);
             await _menuWriteRepository.SaveAsync();
-            return new();
+
+            return new UpdateMenuCommandResponse();
 
         }
     }

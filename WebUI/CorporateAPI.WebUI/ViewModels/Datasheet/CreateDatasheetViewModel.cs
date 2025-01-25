@@ -7,6 +7,5 @@ namespace CorporateAPI.WebUI.ViewModels.Datasheet
     {
         public CreateDatasheetDTO CreateDatasheetDTO { get; set; }
         public List<ResultLangDTO> GetLangDTOs { get; set; }
-        public List<ResultDatasheetDTO> ResultDatasheets { get; set; }
     }
 }

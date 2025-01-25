@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories.Datasheet;
+using CorporateAPI.Domain.Entities.Datasheet;
 using MediatR;
 
 namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
@@ -13,25 +14,40 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
         public UpdateDatasheetCommandHandler(IDatasheetWriteRepository datasheetWriteRepository, IMapper mapper, IDatasheetReadRepository datasheetReadRepository)
         {
             _datasheetWriteRepository = datasheetWriteRepository;
-            _mapper = mapper;
             _datasheetReadRepository = datasheetReadRepository;
+            _mapper = mapper;
         }
 
         public async Task<UpdateDatasheetCommandResponse> Handle(UpdateDatasheetCommandRequest request, CancellationToken cancellationToken)
         {
-            var datasheet=await _datasheetReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.DatasheetTranslations);
-            datasheet.DatasheetTranslations.Clear();
-            var existingTranslation=datasheet.DatasheetTranslations.ToList();
+            Domain.Entities.Datasheet.Datasheet datasheet=await _datasheetReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.DatasheetTranslations);
+            if (datasheet == null)
+                throw new Exception("Datasheet not found!");
+
             datasheet.Order=request.Order;
             datasheet.Code=request.Code;
             datasheet.Status = request.Status;
             datasheet.Image1 = request.Image1;
 
-            foreach (var translationDTO in existingTranslation)
+            var existingTranslations = datasheet.DatasheetTranslations.ToList();
+
+            foreach (var existingTranslation in existingTranslations)
             {
-                var translation = existingTranslation.FirstOrDefault(t => t.Locale == translationDTO.Locale) ?? new Domain.Entities.Datasheet.DatasheetTranslation();
+                if (!request.DatasheetTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                {
+                    datasheet.DatasheetTranslations.Remove(existingTranslation);
+                }
+            }
+
+            foreach (var translationDTO in request.DatasheetTranslations)
+            {
+                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                if (translation == null)
+                {
+                    translation = new DatasheetTranslation();
+                    datasheet.DatasheetTranslations.Add(translation);
+                }
                 _mapper.Map(translationDTO, translation);
-                datasheet.DatasheetTranslations.Add(translation);
             }
 
             _datasheetWriteRepository.Update(datasheet);

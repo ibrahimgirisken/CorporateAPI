@@ -21,25 +21,42 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
             var page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
-            page.PageTranslations.Clear();
-            var existinTranslations=page.PageTranslations.ToList();
-            page.Order=request.Order;
-            page.Image1=request.Image1;
-            page.Image2=request.Image2;
-            page.Image3=request.Image3;
+           
+            if (page == null)
+                throw new Exception("Page not found!");
+            
+            page.Order = request.Order;
             page.Status = request.Status;
-            page.ModuleIds=request.ModuleIds;
+            page.ModuleIds = request.ModuleIds;
+            page.Image1 = request.Image1;
+            page.Image2 = request.Image2;
+            page.Image3 = request.Image3;
 
-            foreach (var translationDTO in existinTranslations)
+            var existingTranslations = page.PageTranslations.ToList();
+
+            foreach (var existingTranslation in existingTranslations)
             {
-                var translation = existinTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale) ?? new PageTranslation();
+                if (!request.PageTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                {
+                    page.PageTranslations.Remove(existingTranslation);
+                }
+            }
+
+            foreach (var translationDTO in request.PageTranslations)
+            {
+                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                if (translation == null)
+                {
+                    translation = new PageTranslation();
+                    page.PageTranslations.Add(translation);
+                }
                 _mapper.Map(translationDTO, translation);
-                page.PageTranslations.Add(translation);
             }
 
             _pageWriteRepository.Update(page);
             await _pageWriteRepository.SaveAsync();
-            return new();
+
+            return new UpdatePageCommandResponse();
         }
     }
 }

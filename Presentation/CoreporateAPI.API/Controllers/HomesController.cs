@@ -33,7 +33,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdHomeQueryRequest getByIdHomeQueryRequest)
         {
             GetByIdHomeQueryResponse response=await _mediator.Send(getByIdHomeQueryRequest);
-            return Ok(response);
+            return Ok(response.home);
         }
         [HttpGet("Home/{ContentType}")]
         public async Task<IActionResult> Get([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)

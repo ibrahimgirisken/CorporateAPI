@@ -98,7 +98,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -114,17 +114,17 @@ namespace CoreporateAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Category_Category_ParentId",
+                        name: "FK_Categories_Categories_ParentId",
                         column: x => x.ParentId,
                         principalSchema: "dbo",
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Datasheet",
+                name: "Datasheets",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -140,7 +140,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Datasheet", x => x.Id);
+                    table.PrimaryKey("PK_Datasheets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -368,7 +368,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -390,18 +390,18 @@ namespace CoreporateAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Brands_BrandId",
+                        name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalSchema: "dbo",
                         principalTable: "Brands",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoryId",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalSchema: "dbo",
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id");
                 });
 
@@ -449,7 +449,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brief = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
@@ -462,10 +462,10 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_CategoryTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CategoryTranslations_Category_CategoryId",
+                        name: "FK_CategoryTranslations_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalSchema: "dbo",
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -485,7 +485,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DatasheetId = table.Column<int>(type: "int", nullable: false),
@@ -498,10 +498,10 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_DatasheetTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DatasheetTranslations_Datasheet_DatasheetId",
+                        name: "FK_DatasheetTranslations_Datasheets_DatasheetId",
                         column: x => x.DatasheetId,
                         principalSchema: "dbo",
-                        principalTable: "Datasheet",
+                        principalTable: "Datasheets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -557,7 +557,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MenuId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -625,7 +625,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brief = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -664,7 +664,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brief = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -686,10 +686,10 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalColumn: "LangCode",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ProductTranslations_Product_ProductId",
+                        name: "FK_ProductTranslations_Products_ProductId",
                         column: x => x.ProductId,
                         principalSchema: "dbo",
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -754,9 +754,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Locale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_ParentId",
+                name: "IX_Categories_ParentId",
                 schema: "dbo",
-                table: "Category",
+                table: "Categories",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
@@ -773,14 +773,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "Locale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryTranslations_Url",
-                schema: "dbo",
-                table: "CategoryTranslations",
-                column: "Url",
-                unique: true,
-                filter: "[Url] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DatasheetTranslations_DatasheetId_Locale",
                 schema: "dbo",
                 table: "DatasheetTranslations",
@@ -792,14 +784,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "DatasheetTranslations",
                 column: "Locale");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DatasheetTranslations_Url",
-                schema: "dbo",
-                table: "DatasheetTranslations",
-                column: "Url",
-                unique: true,
-                filter: "[Url] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Homes_ContentType",
@@ -841,14 +825,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuTranslations_Url",
-                schema: "dbo",
-                table: "MenuTranslations",
-                column: "Url",
-                unique: true,
-                filter: "[Url] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ModuleTranslations_Locale",
                 schema: "dbo",
                 table: "ModuleTranslations",
@@ -875,23 +851,15 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageTranslations_Url",
+                name: "IX_Products_BrandId",
                 schema: "dbo",
-                table: "PageTranslations",
-                column: "Url",
-                unique: true,
-                filter: "[Url] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_BrandId",
-                schema: "dbo",
-                table: "Product",
+                table: "Products",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoryId",
+                name: "IX_Products_CategoryId",
                 schema: "dbo",
-                table: "Product",
+                table: "Products",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -906,14 +874,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 table: "ProductTranslations",
                 columns: new[] { "ProductId", "Locale" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductTranslations_Url",
-                schema: "dbo",
-                table: "ProductTranslations",
-                column: "Url",
-                unique: true,
-                filter: "[Url] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -984,7 +944,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Datasheet",
+                name: "Datasheets",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -1008,7 +968,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Product",
+                name: "Products",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -1016,7 +976,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Category",
+                name: "Categories",
                 schema: "dbo");
         }
     }

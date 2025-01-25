@@ -6,7 +6,7 @@
 
 <div class="container-fluid my-5">
     <form method="post" asp-action="UpdateDatasheet">
-        <input asp-for="UpdateDatasheetDTO.Id" type="hidden" class="form-control" />
+        <input type="hidden" asp-for="UpdateDatasheetDTO.Id" />
         <div class="form-group">
             <label asp-for="UpdateDatasheetDTO.Code"></label>
             <input asp-for="UpdateDatasheetDTO.Code" class="form-control" />

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250125091818_mig1")]
+    [Migration("20250125121508_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -173,7 +173,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Category", "dbo");
+                    b.ToTable("Categories", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.CategoryTranslation", b =>
@@ -213,15 +213,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Locale");
-
-                    b.HasIndex("Url")
-                        .IsUnique()
-                        .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("CategoryId", "Locale")
                         .IsUnique();
@@ -260,7 +256,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Datasheet", "dbo");
+                    b.ToTable("Datasheets", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.DatasheetTranslation", b =>
@@ -297,15 +293,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Locale");
-
-                    b.HasIndex("Url")
-                        .IsUnique()
-                        .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("DatasheetId", "Locale")
                         .IsUnique();
@@ -590,15 +582,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Locale");
-
-                    b.HasIndex("Url")
-                        .IsUnique()
-                        .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("MenuId", "Locale")
                         .IsUnique();
@@ -758,15 +746,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Locale");
-
-                    b.HasIndex("Url")
-                        .IsUnique()
-                        .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("PageId", "Locale")
                         .IsUnique();
@@ -827,7 +811,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product", "dbo");
+                    b.ToTable("Products", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Product.ProductTranslation", b =>
@@ -873,15 +857,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Locale");
-
-                    b.HasIndex("Url")
-                        .IsUnique()
-                        .HasFilter("[Url] IS NOT NULL");
 
                     b.HasIndex("ProductId", "Locale")
                         .IsUnique();

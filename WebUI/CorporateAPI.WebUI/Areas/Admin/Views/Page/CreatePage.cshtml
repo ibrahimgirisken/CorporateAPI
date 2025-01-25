@@ -8,7 +8,7 @@
         <div class="form-group">
             <label asp-for="CreatePageDTO.ModuleIds"></label>
             <select class="form-select" asp-for="CreatePageDTO.ModuleIds">
-                <option value="0" selected>Seç</option>
+                <option value=null selected>Seç</option>
                 @foreach (var item in Model.GetModuleDTOs)
                 {
                     <option value="@item.Id">

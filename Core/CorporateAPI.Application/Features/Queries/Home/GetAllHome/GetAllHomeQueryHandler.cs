@@ -3,11 +3,6 @@ using CorporateAPI.Application.DTOs.Home;
 using CorporateAPI.Application.Repositories.Home;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Queries.Home.GetAllHome
 {
@@ -23,7 +18,7 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetAllHome
 
         public async Task<GetAllHomeQueryResponse> Handle(GetAllHomeQueryRequest request, CancellationToken cancellationToken)
         {
-            var homes= _homeReadRepository.GetAll().Include(e=>e.HomeTranslations).ToList();
+            var homes=await _homeReadRepository.GetAll(false).Include(e=>e.HomeTranslations).ToListAsync();
             var responseDatas= _mapper.Map<List<ResultHomeDTO>>(homes);
             return new()
             {

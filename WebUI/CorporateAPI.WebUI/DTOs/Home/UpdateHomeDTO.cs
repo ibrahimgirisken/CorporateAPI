@@ -12,11 +12,11 @@ namespace CorporateAPI.WebUI.DTOs.Home
         public int Id { get; set; }
         public UpdateHomeDTO()
         {
-            HomeTranslations = new List<HomeTranslation>();
+            HomeTranslations = new List<HomeTranslationDTO>();
         }
         public string ContentType { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
-        public List<HomeTranslation> HomeTranslations { get; set; }
+        public List<HomeTranslationDTO> HomeTranslations { get; set; }
     }
 }

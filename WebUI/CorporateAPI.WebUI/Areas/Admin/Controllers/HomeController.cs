@@ -65,7 +65,6 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateHome(int id)
         {
             var client = _httpClientFactory.CreateClient("Admin");
-            var homes = await client.GetFromJsonAsync<List<ResultHomeDTO>>("Homes");
             var langs = await client.GetFromJsonAsync<List<ResultLangDTO>>("Langs");
             var resultHomeDTO = await client.GetFromJsonAsync<UpdateHomeDTO>($"Homes/{id}");
             var model = new UpdateHomeViewModel

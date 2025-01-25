@@ -29,10 +29,9 @@
                     <option value=null selected>Bir kategori seçin</option>
                     @foreach (var item in Model.GetCategories)
                     {
-                        var translation = item.CategoryTranslations.FirstOrDefault(c => c.Locale == "tr");
                         <option value="@item.Id">
-                            @(translation != null ? translation.Title : "Çeviri bulunamadı")
-                        </option>
+                            @item.CategoryTranslations.FirstOrDefault(x => x.Locale == "tr")?.Title
+                            </option>
                     }
                 </select>
             </div>

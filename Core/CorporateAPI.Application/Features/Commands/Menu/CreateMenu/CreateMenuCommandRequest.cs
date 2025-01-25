@@ -7,7 +7,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
     {
         public CreateMenuCommandRequest()
         {
-            Children = new List<CreateMenuCommandRequest>();
             MenuTranslations = new List<MenuTranslationDTO>();
         }
         public bool Vitrin { get; set; }
@@ -15,7 +14,6 @@ namespace CorporateAPI.Application.Features.Commands.Menu.CreateMenu
         public int Order { get; set; }
         public bool Status { get; set; }
         public int? ParentId { get; set; }
-        public ICollection<CreateMenuCommandRequest> Children { get; set; }
-        public ICollection<MenuTranslationDTO> MenuTranslations { get; set; }
+        public List<MenuTranslationDTO> MenuTranslations { get; set; }
     }
 }
