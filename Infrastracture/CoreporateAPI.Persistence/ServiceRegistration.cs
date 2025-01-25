@@ -16,6 +16,8 @@ using CorporateAPI.Application.Repositories.Category;
 using CoreporateAPI.Persistence.Repositories.Category;
 using CorporateAPI.Application.Repositories.Datasheet;
 using CoreporateAPI.Persistence.Repositories.Datasheet;
+using CorporateAPI.Application.Repositories.Setting;
+using CoreporateAPI.Persistence.Repositories.Setting;
 
 namespace CoreporateAPI.Persistence
 {
@@ -66,6 +68,9 @@ namespace CoreporateAPI.Persistence
 
             services.AddScoped<IDatasheetReadRepository,DatasheetReadRepository>();
             services.AddScoped<IDatasheetWriteRepository,DatasheetWriteRepository>();
+
+            services.AddScoped<ISettingReadRepository,SettingReadRepository>();
+            services.AddScoped<ISettingWriteRepository,SettingWriteRepository>();
 
         }
     }
