@@ -6,6 +6,7 @@ using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Product;
+using CorporateAPI.Domain.Entities.Setting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,6 @@ namespace CorporateAPI.Domain.Entities
         public List<ProductTranslation> ProductTranslations { get; set; }
         public List<CategoryTranslation> CategoryTranslations { get; set; }
         public List<DatasheetTranslation> DatasheetTranslations{ get; set; }
+        public List<SettingTranslation>  SettingTranslations{ get; set; }
     }
 }

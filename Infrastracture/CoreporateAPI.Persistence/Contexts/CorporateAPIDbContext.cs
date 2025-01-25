@@ -9,6 +9,7 @@ using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Product;
+using CorporateAPI.Domain.Entities.Setting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,8 @@ namespace CoreporateAPI.Persistence.Contexts
         public DbSet<Home> Homes { get; set; }
         public DbSet<Brand> Brands{ get; set; }
         public DbSet<Lang> Languages { get; set; }
+
+        public DbSet<Setting> Settings{ get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,6 +53,24 @@ namespace CoreporateAPI.Persistence.Contexts
                 .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasIndex(dt => new { dt.DatasheetId, dt.Locale }).IsUnique();
+            });
+
+            modelBuilder.Entity<SettingTranslation>(entity =>
+            {
+                entity.ToTable("SettingTranslations");
+
+                entity.HasOne(st=>st.Setting)
+                .WithMany(st=>st.SettingTranslations)
+                .HasForeignKey(st=>st.SettingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(sl=>sl.Language)
+                .WithMany(st=>st.SettingTranslations)
+                .HasForeignKey(sl=>sl.Locale)
+                .HasPrincipalKey(st=>st.LangCode)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(st => new { st.SettingId, st.Locale }).IsUnique();
             });
 
             modelBuilder.Entity<BannerTranslation>(entity =>

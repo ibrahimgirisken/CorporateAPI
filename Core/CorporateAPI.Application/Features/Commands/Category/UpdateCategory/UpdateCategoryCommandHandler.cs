@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.Repositories.Category;
-using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Category;
 using MediatR;
-using System.Reflection;
 
 namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 {
@@ -24,21 +22,21 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
         {
             Domain.Entities.Category.Category category=await _categoryReadRepository.GetByIdAsync(request.Id,false,e=>e.CategoryTranslations);
 
-
-            if (category == null)
+            if (category==null)
+            {
                 throw new Exception("Category not found!");
+            }
 
-            category.CategoryTranslations.Clear();
-            category.Image1=request.Image1;
             category.Order=request.Order;
             category.Status=request.Status;
             category.ParentId=request.ParentId;
+            category.Image1=request.Image1;
 
-            var existingTranslations= category.CategoryTranslations.ToList();
+            var existingTranslations=category.CategoryTranslations.ToList();
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.CategoryTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                if (!request.CategoryTranslations.Any(t=>t.Locale==existingTranslation.Locale))
                 {
                     category.CategoryTranslations.Remove(existingTranslation);
                 }
@@ -46,18 +44,19 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 
             foreach (var translationDTO in request.CategoryTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
-                if (translation == null)
+                var translation=existingTranslations.FirstOrDefault(t=>t.Locale==translationDTO.Locale);
+                if (translation==null)
                 {
-                    translation = new CategoryTranslation();
+                    translation=new CategoryTranslation();
                     category.CategoryTranslations.Add(translation);
                 }
-                _mapper.Map(translationDTO, translation);
+                _mapper.Map(translationDTO,translation);
             }
 
             _categoryWriteRepository.Update(category);
             await _categoryWriteRepository.SaveAsync();
-            return new();
+
+            return new UpdateCategoryCommandResponse();          
         }
     }
 }

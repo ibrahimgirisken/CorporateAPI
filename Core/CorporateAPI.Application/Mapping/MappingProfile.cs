@@ -9,6 +9,7 @@ using CorporateAPI.Application.DTOs.Menu;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.Product;
+using CorporateAPI.Application.DTOs.Setting;
 using CorporateAPI.Application.Features.Commands.Banner.CreateBanner;
 using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
@@ -28,6 +29,8 @@ using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
 using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
+using CorporateAPI.Application.Features.Commands.Settting.CreateSetting;
+using CorporateAPI.Application.Features.Commands.Settting.UpdateSetting;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Brand;
@@ -37,6 +40,7 @@ using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Product;
+using CorporateAPI.Domain.Entities.Setting;
 
 namespace CorporateAPI.Application.Mapping
 {
@@ -44,6 +48,11 @@ namespace CorporateAPI.Application.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<Setting,ResultSettingDTO>().ReverseMap();
+            CreateMap<Setting,CreateSettingCommandRequest>().ReverseMap();
+            CreateMap<Setting,UpdateSettingCommandRequest>().ReverseMap();
+            CreateMap<SettingTranslation,SettingTranslationDTO>().ReverseMap();
+
             CreateMap<Menu,ResultMenuDTO>().ReverseMap();
             CreateMap<Menu,CreateMenuCommandRequest>().ReverseMap();
             CreateMap<Menu,UpdateMenuCommandRequest>().ReverseMap();

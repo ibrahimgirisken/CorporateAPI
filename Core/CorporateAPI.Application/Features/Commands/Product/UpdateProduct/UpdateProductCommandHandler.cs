@@ -21,8 +21,12 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
            Domain.Entities.Product.Product product= await _productReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ProductTranslations);
-            var existingTranslations = product.ProductTranslations.ToList();
-            product.ProductTranslations.Clear();
+
+            if (product == null)
+            {
+                throw new Exception("Product not found!");
+            }
+
             product.Code = request.Code;
             product.BrandId = request.BrandId;
             product.CategoryId = request.CategoryId;
@@ -33,15 +37,32 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
             product.Image5 = request.Image5;
             product.Order = request.Order;
             product.Status = request.Status;
+            
+            var existingTranslations = product.ProductTranslations.ToList();
+
+            foreach (var existingTranslation in existingTranslations)
+            {
+                if (!request.ProductTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                {
+                    product.ProductTranslations.Remove(existingTranslation);
+                }
+            }
+
             foreach (var translationDTO in request.ProductTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale) ?? new ProductTranslation();
+                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                if (translation == null)
+                {
+                    translation = new ProductTranslation();
+                    product.ProductTranslations.Add(translation);
+                }
                 _mapper.Map(translationDTO, translation);
-                product.ProductTranslations.Add(translation);
             }
+
             _productWriteRepository.Update(product);
             await _productWriteRepository.SaveAsync();
-            return new();
+
+            return new UpdateProductCommandResponse();
         }
     }
 }

@@ -35,7 +35,12 @@
                     }
                 </select>
             </div>
-        }
+        }       
+        <input type="hidden" asp-for="UpdateProductDTO.Id" />
+        <div class="form-group">
+            <label asp-for="UpdateProductDTO.Code"></label>
+            <input asp-for="UpdateProductDTO.Code" class="form-control" />
+        </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
             {
@@ -47,11 +52,6 @@
                 </li>
             }
         </ul>
-            <input type="hidden" asp-for="UpdateProductDTO.Id"/>
-        <div class="form-group">
-            <label asp-for="UpdateProductDTO.Code"></label>
-            <input asp-for="UpdateProductDTO.Code" class="form-control" />
-        </div>
         <div class="tab-content mt-3" id="myTabContent">
             @for (int i = 0; i < Model.UpdateProductDTO.ProductTranslations.Count; i++)
             {
