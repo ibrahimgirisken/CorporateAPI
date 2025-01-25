@@ -10,7 +10,7 @@ namespace CorporateAPI.Domain.Entities.Common
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }=DateTime.Now;
-        public DateTime UpdatedDate { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        virtual public DateTime UpdatedDate { get; set; }
+        virtual public bool IsDeleted { get; set; } = false;
     }
 }

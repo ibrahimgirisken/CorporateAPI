@@ -62,5 +62,22 @@ namespace CoreporateAPI.API.Controllers
             RemoveProductCommandResponse response=await _mediator.Send(removeProductCommandRequest);
             return Ok(response);
         }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Upload()
+        {           
+            var files = Request.Form.Files;
+            if (files.Count == 0)
+            {
+                return BadRequest("Dosya yüklenemedi");
+            }
+            var file = files[0];
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file.FileName);
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return Ok("Dosya yüklendi");
+        }
     }
 }

@@ -39,6 +39,7 @@ using CorporateAPI.Domain.Entities.Datasheet;
 using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
+using CorporateAPI.Domain.Entities.Page;
 using CorporateAPI.Domain.Entities.Product;
 using CorporateAPI.Domain.Entities.Setting;
 

@@ -1,7 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities.Common;
 
 
-namespace CorporateAPI.Domain.Entities
+namespace CorporateAPI.Domain.Entities.Page
 {
     public class Page:BaseEntity
     {
@@ -12,6 +12,7 @@ namespace CorporateAPI.Domain.Entities
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }
         public string? Image3 { get; set; }
+        public string? Video { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
         public string? ModuleIds { get; set; }

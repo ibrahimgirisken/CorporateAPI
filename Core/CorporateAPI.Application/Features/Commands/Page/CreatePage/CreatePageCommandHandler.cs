@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
 
         public async Task<CreatePageCommandResponse> Handle(CreatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            var page = _mapper.Map<Domain.Entities.Page>(request);
+            var page = _mapper.Map<Domain.Entities.Page.Page>(request);
            if (request.PageTranslations != null)
             {
                page.PageTranslations=_mapper.Map<List<PageTranslation>>(request.PageTranslations);

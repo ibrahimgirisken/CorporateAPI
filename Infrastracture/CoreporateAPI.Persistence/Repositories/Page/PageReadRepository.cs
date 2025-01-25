@@ -1,6 +1,7 @@
 ﻿using CoreporateAPI.Persistence.Contexts;
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
