@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250125140246_mig2")]
-    partial class mig2
+    [Migration("20250126092942_mig3")]
+    partial class mig3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,10 +40,16 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<string>("DesktopImage")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DesktopVideo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("MobileImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileVideo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
@@ -320,6 +326,15 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -331,6 +346,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -609,6 +627,15 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -620,6 +647,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -666,7 +696,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.ToTable("ModuleTranslations", "dbo");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page.Page", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -700,6 +730,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -804,6 +837,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1249,7 +1285,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CorporateAPI.Domain.Entities.Page", "Page")
+                    b.HasOne("CorporateAPI.Domain.Entities.Page.Page", "Page")
                         .WithMany("PageTranslations")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1428,7 +1464,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("ModuleTranslations");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page", b =>
+            modelBuilder.Entity("CorporateAPI.Domain.Entities.Page.Page", b =>
                 {
                     b.Navigation("PageTranslations");
                 });

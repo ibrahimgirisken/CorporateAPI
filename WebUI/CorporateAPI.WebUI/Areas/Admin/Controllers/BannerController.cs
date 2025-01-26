@@ -1,14 +1,8 @@
-﻿using CorporateAPI.WebUI.DTOs.Banner;
-using CorporateAPI.WebUI.DTOs.Category;
+﻿using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
-using CorporateAPI.WebUI.DTOs.Page;
-using CorporateAPI.WebUI.Helpers;
 using CorporateAPI.WebUI.ViewModels.Banner;
-using CorporateAPI.WebUI.ViewModels.Category;
-using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -17,10 +11,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class BannerController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public BannerController(IHttpClientFactory httpClientFactory)
+        private readonly IFileService _fileService;
+        public BannerController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
+            _fileService = fileService;
         }
 
         [HttpGet]

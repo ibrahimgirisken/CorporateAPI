@@ -3,10 +3,12 @@
 namespace CorporateAPI.Domain.Entities.Menu
 {
     public class Menu:BaseEntity
-    {
+    { 
         public Menu()
         {
             Children = new List<Menu?>();
+            MenuTranslations = new List<MenuTranslation>();
+
         }
         public bool Vitrin { get; set; } = true;
         public bool Footer { get; set; } = true;

@@ -1,3 +1,5 @@
+using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.Concrete;
 using CorporateAPI.WebUI.ViewComponents;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
@@ -14,6 +16,7 @@ builder.Services.AddHttpClient("Admin", (options) =>
 builder.Services.AddScoped(typeof(ApiDataComponent<>));
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IFileService, FileService>();
 
 // Desteklenen diller ve varsayýlan kültür
 var supportedCultures = new[] { "en", "tr", "de" };

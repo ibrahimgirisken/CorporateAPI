@@ -4,6 +4,10 @@ namespace CorporateAPI.Domain.Entities.Module
 {
     public class Module:BaseEntity
     {
+        public Module()
+        {
+            ModuleTranslations = new List<ModuleTranslation>();
+        }
         public string ContentType { get; set; }
         public string? Image1 { get; set; }
         public string? Image2 { get; set; }

@@ -9,6 +9,10 @@ namespace CorporateAPI.Domain.Entities.Banner
 {
     public class Banner: BaseEntity
     {
+        public Banner()
+        {
+            BannerTranslations = new List<BannerTranslation>();
+        }
         public string? DesktopImage { get; set; }
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
