@@ -55,11 +55,35 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBanner(CreateBannerViewModel createBannerViewModel)
         {
-            CreateBannerDTO bannerDto = createBannerViewModel.CreateBannerDTO;
+            var bannerDto = createBannerViewModel.CreateBannerDTO;
+            string subDirectory = "banners";
+
+            var desktopImage = Request.Form.Files.FirstOrDefault(f => f.Name == "DesktopImage");
+            if (desktopImage != null)
+            {
+                bannerDto.DesktopImage = await _fileService.SaveFileAsync(desktopImage, subDirectory);
+            }
+
+            var tabletImage = Request.Form.Files.FirstOrDefault(f => f.Name == "TableteImage");
+            if (tabletImage != null)
+            {
+                bannerDto.TableteImage = await _fileService.SaveFileAsync(tabletImage, subDirectory);
+            }
+
+            var mobileImage = Request.Form.Files.FirstOrDefault(f => f.Name == "MobileImage");
+            if (mobileImage != null)
+            {
+                bannerDto.MobileImage = await _fileService.SaveFileAsync(mobileImage, subDirectory);
+            }
+
+            // API'ye post işlemi
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PostAsJsonAsync<CreateBannerDTO>("Banners", bannerDto);
+            await client.PostAsJsonAsync("Banners", bannerDto);
+
             return RedirectToAction(nameof(Index));
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> UpdateBanner(int id)
@@ -78,9 +102,39 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateBanner(UpdateBannerViewModel updateBannerViewModel)
         {
-            UpdateBannerDTO updateBannerDTO = updateBannerViewModel.UpdateBannerDTO;
+            UpdateBannerDTO bannerDto = updateBannerViewModel.UpdateBannerDTO;
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", updateBannerDTO);
+
+            string subDirectory = "banners";
+            string oldDesktopImage = Request.Form["OldDesktopImage"];
+            string oldTabletImage = Request.Form["OldTableteImage"];
+            string oldMobileImage = Request.Form["OldMobileImage"];
+
+            // Desktop Image güncelleme
+            var desktopImage = Request.Form.Files.FirstOrDefault(f => f.Name == "DesktopImage");
+            if (desktopImage != null)
+            {
+                bannerDto.DesktopImage = await _fileService.UpdateFileAsync(oldDesktopImage, desktopImage, subDirectory);
+            }
+
+            // Tablet Image güncelleme
+            var tabletImage = Request.Form.Files.FirstOrDefault(f => f.Name == "TableteImage");
+            if (tabletImage != null)
+            {
+                bannerDto.TableteImage = await _fileService.UpdateFileAsync(oldTabletImage, tabletImage, subDirectory);
+            }
+
+            // Mobile Image güncelleme
+            var mobileImage = Request.Form.Files.FirstOrDefault(f => f.Name == "MobileImage");
+            if (mobileImage != null)
+            {
+                bannerDto.MobileImage = await _fileService.UpdateFileAsync(oldMobileImage, mobileImage, subDirectory);
+            }
+
+            // API'ye post işlemi
+
+
+            await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", bannerDto);
             return RedirectToAction(nameof(Index));
         }
 

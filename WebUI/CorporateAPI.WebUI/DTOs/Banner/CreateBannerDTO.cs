@@ -12,7 +12,6 @@ namespace CorporateAPI.WebUI.DTOs.Banner
         {
             BannerTranslations = new List<BannerTranslationDTO>();
         }
-
         public string? DesktopImage { get; set; }
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }

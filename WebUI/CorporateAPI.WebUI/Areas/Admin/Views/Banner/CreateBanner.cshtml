@@ -4,18 +4,16 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
-    <form method="post" class="form-group" enctype="multipart/form-data">
-        <div>
-            <label for="DesktopImage">Desktop Image</label>
-            <input type="file" name="DesktopImage" id="DesktopImage" />
-        </div>
-        <div>
-            <label for="TableteImage">Tablet Image</label>
-            <input type="file" name="TableteImage" id="TableteImage" />
-        </div>
-        <div>
-            <label for="MobileImage">Mobile Image</label>
-            <input type="file" name="MobileImage" id="MobileImage" />
+    <form method="post" asp-action="CreateBanner" class="form-group" enctype="multipart/form-data">
+        <div class="form-group row">
+            <label asp-for="CreateBannerDTO.DesktopImage">Desktop Image</label>
+            <input type="file" name="DesktopImage" class="form-control" />
+
+            <label asp-for="CreateBannerDTO.TableteImage">Tablet Image</label>
+            <input type="file" name="TableteImage" class="form-control" />
+
+            <label asp-for="CreateBannerDTO.MobileImage">Mobile Image</label>
+            <input type="file" name="MobileImage" class="form-control" />
         </div>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">

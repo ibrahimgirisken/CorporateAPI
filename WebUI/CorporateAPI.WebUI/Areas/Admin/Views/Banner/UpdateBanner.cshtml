@@ -4,15 +4,25 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
-    <form method="post" asp-action="UpdateBanner">
-            <input type="hidden" asp-for="UpdateBannerDTO.Id" />
-        <div class="form-group">
-            <label asp-for="UpdateBannerDTO.DesktopImage"></label>
-            <input asp-for="UpdateBannerDTO.DesktopImage" class="form-control" />
-            <label asp-for="UpdateBannerDTO.TableteImage"></label>
-            <input asp-for="UpdateBannerDTO.TableteImage" class="form-control" />
-            <label asp-for="UpdateBannerDTO.MobileImage"></label>
-            <input asp-for="UpdateBannerDTO.MobileImage" class="form-control" />
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="UpdateBannerDTO.Id" />
+        <div class="form-group row">
+            <!-- Desktop Image -->
+            <label asp-for="UpdateBannerDTO.DesktopImage">Desktop Image</label>
+            <img src="/uploads/banners/@Model.UpdateBannerDTO.DesktopImage" id="desktopPreview" style="height:75px; width:75px; margin-bottom:10px;" />
+            <input type="file" name="DesktopImage" class="form-control" onchange="previewImage(this, 'desktopPreview')" />
+            <input type="hidden" name="OldDesktopImage" asp-for="UpdateBannerDTO.DesktopImage" />
+            <input type="hidden" name="OldTableteImage" asp-for="UpdateBannerDTO.TableteImage" />
+            <input type="hidden" name="OldMobileImage" asp-for="UpdateBannerDTO.MobileImage" />
+            <!-- Tablet Image -->
+            <label asp-for="UpdateBannerDTO.TableteImage">Tablet Image</label>
+            <img src="/uploads/banners/@Model.UpdateBannerDTO.TableteImage" id="tabletPreview" style="height:75px; width:75px; margin-bottom:10px;" />
+            <input type="file" name="TableteImage" class="form-control" onchange="previewImage(this, 'tabletPreview')" />
+
+            <!-- Mobile Image -->
+            <label asp-for="UpdateBannerDTO.MobileImage">Mobile Image</label>
+            <img src="/uploads/banners/@Model.UpdateBannerDTO.MobileImage" id="mobilePreview" style="height:75px; width:75px; margin-bottom:10px;" />
+            <input type="file" name="MobileImage" class="form-control" onchange="previewImage(this, 'mobilePreview')" />
         </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
@@ -53,3 +63,14 @@
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>
 </div>
+<script>
+    function previewImage(input, previewId) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById(previewId).src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

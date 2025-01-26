@@ -4,54 +4,88 @@ namespace CorporateAPI.WebUI.Concrete
 {
     public class FileService : IFileService
     {
-        private readonly string _rootPath;
+        private readonly IWebHostEnvironment _env;
 
         public FileService(IWebHostEnvironment env)
         {
-            _rootPath = env.WebRootPath; // wwwroot yolunu al
+            _env = env;
         }
 
-        public async Task<string> UploadFileAsync(IFormFile file, string folderName)
+        // Dosya Kaydet
+        public async Task<string> SaveFileAsync(IFormFile file, string subDirectory)
         {
-            if (file == null || file.Length == 0)
-                throw new ArgumentException("Dosya yüklenemedi. Lütfen geçerli bir dosya seçin.");
+            // Web root içinde 'uploads' altındaki ilgili dizin yolunu belirle
+            string uploadDirectory = Path.Combine(_env.WebRootPath, "uploads", subDirectory);
 
-            // Dosyanın yükleneceği klasör yolunu oluştur
-            string uploadFolder = Path.Combine(_rootPath, folderName);
-            if (!Directory.Exists(uploadFolder))
+            // Klasör oluşturma kontrolü
+            if (!Directory.Exists(uploadDirectory))
             {
-                Directory.CreateDirectory(uploadFolder);
+                Directory.CreateDirectory(uploadDirectory); // Eğer yoksa klasör oluşturuluyor
             }
 
-            // Benzersiz dosya adı oluştur
-            string uniqueFileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
-            string filePath = Path.Combine(uploadFolder, uniqueFileName);
+            // Dosya adı ve yolu
+            var fileName = Path.GetFileName(file.FileName);
+            var filePath = Path.Combine(uploadDirectory, fileName);
 
-            // Dosyayı klasöre kaydet
+            // Dosyayı kaydet
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await file.CopyToAsync(stream);
+                await file.CopyToAsync(stream); // Dosyayı kaydediyoruz
             }
 
-            // Kaydedilen dosyanın yolunu döndür
-            return Path.Combine(folderName, uniqueFileName).Replace("\\", "/");
+            return fileName; // Dosyanın sadece adını döndürüyoruz
         }
 
-        public async Task DeleteFileAsync(string filePath)
+        // Dosya Sil
+        public async Task<bool> DeleteFileAsync(string fileName, string subDirectory)
         {
-            if (string.IsNullOrEmpty(filePath))
-                return;
+            string filePath = Path.Combine(_env.WebRootPath, "uploads", subDirectory, fileName);
 
-            string fullPath = Path.Combine(_rootPath, filePath);
-            if (File.Exists(fullPath))
+            // Dosya var mı kontrol et
+            if (File.Exists(filePath))
             {
-                await Task.Run(() => File.Delete(fullPath));
+                File.Delete(filePath); // Dosyayı sil
+                return true; // Başarıyla silindi
             }
+
+            return false; // Dosya bulunamadı
         }
 
-        public string GetFileUrl(string filePath)
+        // Dosya Güncelle
+        public async Task<string> UpdateFileAsync(string oldFileName, IFormFile newFile, string subDirectory)
         {
-            return $"/{filePath.Replace("\\", "/")}";
+            // Web root içindeki ilgili dizin yolunu belirle
+            string directoryPath = Path.Combine(_env.WebRootPath, "uploads", subDirectory);
+
+            // Eğer klasör yoksa oluşturuluyor
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath); // Klasör oluşturuluyor
+            }
+
+            // Eski dosyayı silme işlemi
+            if (!string.IsNullOrEmpty(oldFileName))
+            {
+                string oldFilePath = Path.Combine(directoryPath, oldFileName);
+                if (File.Exists(oldFilePath))
+                {
+                    File.Delete(oldFilePath); // Eski dosya siliniyor
+                }
+            }
+
+            // Yeni dosya ismini alıyoruz
+            string newFileName = Path.GetFileName(newFile.FileName);
+
+            // Yeni dosya yolunu oluşturuyoruz
+            string newFilePath = Path.Combine(directoryPath, newFileName);
+
+            // Yeni dosyayı kaydediyoruz
+            using (var stream = new FileStream(newFilePath, FileMode.Create))
+            {
+                await newFile.CopyToAsync(stream); // Dosyayı kaydet
+            }
+
+            return newFileName; // Yeni dosyanın adını döndürüyoruz
         }
     }
 }
