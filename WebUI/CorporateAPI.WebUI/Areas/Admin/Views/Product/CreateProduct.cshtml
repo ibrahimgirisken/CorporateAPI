@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
-    <form method="post" asp-action="CreateProduct">
+    <form method="post" asp-action="CreateProduct" enctype="multipart/form-data">
         @if (Model.GetBrands.Count > 0)
         {
             <div class="form-group">
@@ -81,15 +81,36 @@
         </div>
         <div class="form-group">
             <label asp-for="CreateProductDTO.Image1"></label>
-            <input asp-for="CreateProductDTO.Image1" class="form-control" />
+            <input asp-for="CreateProductDTO.Image1File" class="form-control" />
             <label asp-for="CreateProductDTO.Image2"></label>
-            <input asp-for="CreateProductDTO.Image2" class="form-control" />
+            <input asp-for="CreateProductDTO.Image2File" class="form-control" />
             <label asp-for="CreateProductDTO.Image3"></label>
-            <input asp-for="CreateProductDTO.Image3" class="form-control" />
+            <input asp-for="CreateProductDTO.Image3File" class="form-control" />
             <label asp-for="CreateProductDTO.Image4"></label>
-            <input asp-for="CreateProductDTO.Image4" class="form-control" />
+            <input asp-for="CreateProductDTO.Image4File" class="form-control" />
             <label asp-for="CreateProductDTO.Image5"></label>
-            <input asp-for="CreateProductDTO.Image5" class="form-control" />
+            <input asp-for="CreateProductDTO.Image5File" class="form-control" />
+            <label asp-for="CreateProductDTO.Video"></label>
+            <input asp-for="CreateProductDTO.VideoFile" class="form-control" />
+        </div>
+        <div class="form-group row">
+            <label asp-for="CreateProductDTO.Image1">Image1</label>
+            <input type="file" asp-for="CreateProductDTO.Image1File" class="form-control" />
+
+            <label asp-for="CreateProductDTO.Image2">Image2</label>
+            <input type="file" asp-for="CreateProductDTO.Image2File" class="form-control" />
+
+            <label asp-for="CreateProductDTO.Image3">Image3</label>
+            <input type="file" asp-for="CreateProductDTO.Image3File" class="form-control" />
+
+            <label asp-for="CreateProductDTO.Image4">Image4</label>
+            <input type="file" asp-for="CreateProductDTO.Image4File" class="form-control" />
+
+            <label asp-for="CreateProductDTO.Image5">Image5</label>
+            <input type="file" asp-for="CreateProductDTO.Image5File" class="form-control" />
+
+            <label asp-for="CreateProductDTO.Video">Video</label>
+            <input type="file" asp-for="CreateProductDTO.VideoFile" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="CreateProductDTO.Order"></label>

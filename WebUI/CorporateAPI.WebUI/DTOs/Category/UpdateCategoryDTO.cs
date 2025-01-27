@@ -1,4 +1,6 @@
-﻿namespace CorporateAPI.WebUI.DTOs.Category
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CorporateAPI.WebUI.DTOs.Category
 {
     public class UpdateCategoryDTO
     {
@@ -9,6 +11,8 @@
         }
         public int? ParentId { get; set; }
         public string? Image1 { get; set; }
+        [NotMapped]
+        public IFormFile? Image1File { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; } = false;
         public List<CategoryTranslationDTO> CategoryTranslations { get; set; }

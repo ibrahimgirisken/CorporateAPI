@@ -1,4 +1,6 @@
-﻿using CorporateAPI.WebUI.DTOs.Category;
+﻿using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.DTOs.Banner;
+using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.ViewModels.Category;
@@ -11,10 +13,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IFileService _fileService;
 
-        public CategoryController(IHttpClientFactory httpClientFactory)
+        public CategoryController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
+            _fileService = fileService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -55,6 +59,10 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateCategory(CreateCategoryViewModel createCategoryViewModel)
         {
             CreateCategoryDTO categoryDTO=createCategoryViewModel.CreateCategoryDTO;
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "categories");
+            categoryDTO.Image1 = await _fileService.SaveFileAsync(categoryDTO.Image1File, uploadPath);
+
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync<CreateCategoryDTO>("Categories", categoryDTO);
             return RedirectToAction(nameof(Index));
@@ -81,6 +89,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             UpdateCategoryDTO updateCategoryDTO=updateCategoryViewModel.UpdateCategoryDTO;
             var client = _httpClientFactory.CreateClient("Admin");
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "categories");
+            
+            updateCategoryDTO.Image1 = await _fileService.UpdateFileAsync(updateCategoryDTO.Image1File, updateCategoryDTO.Image1, uploadPath);
+
             await client.PutAsJsonAsync<UpdateCategoryDTO>("Categories",updateCategoryDTO);
             return RedirectToAction(nameof(Index));
         }

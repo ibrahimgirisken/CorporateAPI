@@ -5,7 +5,7 @@
 }
 
 <div class="container-fluid my-5">
-    <form method="post" asp-action="CreateModule">
+    <form method="post" asp-action="CreateModule" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="CreateModuleDTO.ContentType"></label>
             <input asp-for="CreateModuleDTO.ContentType" class="form-control" />
@@ -35,6 +35,19 @@
                     </div>
                 </div>
             }
+        </div>
+        <div class="form-group row">
+            <label asp-for="CreateModuleDTO.Image1">Image1</label>
+            <input type="file" asp-for="CreateModuleDTO.Image1File" class="form-control" />
+
+            <label asp-for="CreateModuleDTO.Image2">Tablet Image</label>
+            <input type="file" asp-for="CreateModuleDTO.Image2File" class="form-control" />
+
+            <label asp-for="CreateModuleDTO.Image3">Mobile Image</label>
+            <input type="file" asp-for="CreateModuleDTO.Image3File" class="form-control" />
+
+            <label asp-for="CreateModuleDTO.Video">Mobile Image</label>
+            <input type="file" asp-for="CreateModuleDTO.VideoFile" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="CreateModuleDTO.Order"></label>

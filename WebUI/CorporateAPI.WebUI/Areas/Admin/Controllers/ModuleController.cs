@@ -1,11 +1,8 @@
-﻿using CorporateAPI.WebUI.DTOs.Lang;
+﻿using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Module;
-using CorporateAPI.WebUI.DTOs.Page;
-using CorporateAPI.WebUI.ViewModels.Menu;
 using CorporateAPI.WebUI.ViewModels.Module;
-using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Json;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -14,10 +11,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class ModuleController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IFileService _fileService;
 
-        public ModuleController(IHttpClientFactory httpClientFactory)
+        public ModuleController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -55,6 +54,14 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateModule(CreateModuleViewModel createModuleViewModel)
         {
             CreateModuleDTO moduleDto = createModuleViewModel.CreateModuleDTO;
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "modules");
+
+            moduleDto.Image1 = await _fileService.SaveFileAsync(moduleDto.Image1File, uploadPath);
+            moduleDto.Image2 = await _fileService.SaveFileAsync(moduleDto.Image2File, uploadPath);
+            moduleDto.Image3 = await _fileService.SaveFileAsync(moduleDto.Image3File, uploadPath);
+            moduleDto.Video = await _fileService.SaveFileAsync(moduleDto.VideoFile, uploadPath);
+
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync<CreateModuleDTO>("Modules", moduleDto);
             return RedirectToAction(nameof(Index));
@@ -80,6 +87,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             UpdateModuleDTO moduleDto = updateModuleViewModel.UpdateModuleDTO;
             var client = _httpClientFactory.CreateClient("Admin");
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "modules");
+
+            moduleDto.Image1 = await _fileService.UpdateFileAsync(moduleDto.Image1File, moduleDto.Image1, uploadPath);
+            moduleDto.Image2 = await _fileService.UpdateFileAsync(moduleDto.Image2File, moduleDto.Image2, uploadPath);
+            moduleDto.Image3 = await _fileService.UpdateFileAsync(moduleDto.Image3File, moduleDto.Image3, uploadPath);
+            moduleDto.Video = await _fileService.UpdateFileAsync(moduleDto.VideoFile, moduleDto.Video, uploadPath);
+
             await client.PutAsJsonAsync<UpdateModuleDTO>("Modules", moduleDto);
             return RedirectToAction(nameof(Index));
         }

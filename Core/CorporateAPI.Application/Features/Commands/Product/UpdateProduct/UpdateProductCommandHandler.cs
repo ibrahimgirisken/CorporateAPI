@@ -35,6 +35,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
             product.Image3 = request.Image3;
             product.Image4 = request.Image4;
             product.Image5 = request.Image5;
+            product.Video = request.Video;
             product.Order = request.Order;
             product.Status = request.Status;
             

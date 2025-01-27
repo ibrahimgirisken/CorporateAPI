@@ -23,8 +23,12 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
             var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ModuleTranslations);
             var existingTranslations = module.ModuleTranslations.ToList();
             module.ModuleTranslations.Clear();
-            module.Order=request.Order;
             module.ContentType=request.ContentType;
+            module.Image1 = request.Image1;
+            module.Image2 = request.Image2;
+            module.Image3 = request.Image3;
+            module.Video = request.Video;
+            module.Order=request.Order;
             module.Status=request.Status;
             foreach (var translationDTO in request.ModuleTranslations)
             {

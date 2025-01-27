@@ -17,6 +17,9 @@
     <Folder Include="wwwroot\uploads\banners\" />
     <Folder Include="wwwroot\uploads\datasheets\" />
     <Folder Include="wwwroot\uploads\homes\" />
+    <Folder Include="wwwroot\uploads\categories\" />
+    <Folder Include="wwwroot\uploads\modules\" />
+    <Folder Include="wwwroot\uploads\products\" />
   </ItemGroup>
 
   <ItemGroup>
