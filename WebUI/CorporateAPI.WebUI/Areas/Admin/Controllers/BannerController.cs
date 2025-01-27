@@ -64,8 +64,8 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             createBannerDto.DesktopImage = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
             createBannerDto.TableteImage = await _fileService.SaveFileAsync(createBannerDto.TableteImageFile, uploadPath);
             createBannerDto.MobileImage = await _fileService.SaveFileAsync(createBannerDto.MobileImageFile, uploadPath);
-            createBannerDto.DesktopVideo = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
-            createBannerDto.MobileVideo = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
+            createBannerDto.DesktopVideo = await _fileService.SaveFileAsync(createBannerDto.DesktopVideoFile, uploadPath);
+            createBannerDto.MobileVideo = await _fileService.SaveFileAsync(createBannerDto.MobileVideoFile, uploadPath);
 
             // API'ye post işlemi
             var client = _httpClientFactory.CreateClient("Admin");
@@ -101,7 +101,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             updateBannerDto.TableteImage = await _fileService.UpdateFileAsync(updateBannerDto.TableteImageFile, updateBannerDto.TableteImage, uploadPath);
             updateBannerDto.MobileImage = await _fileService.UpdateFileAsync(updateBannerDto.MobileImageFile, updateBannerDto.MobileImage, uploadPath);
             updateBannerDto.DesktopVideo = await _fileService.UpdateFileAsync(updateBannerDto.DesktopVideoFile, updateBannerDto.DesktopVideo, uploadPath);
-            updateBannerDto.MobileImage = await _fileService.UpdateFileAsync(updateBannerDto.MobileVideoFile, updateBannerDto.MobileVideo, uploadPath);
+            updateBannerDto.MobileVideo = await _fileService.UpdateFileAsync(updateBannerDto.MobileVideoFile, updateBannerDto.MobileVideo, uploadPath);
 
             await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", updateBannerDto);
             return RedirectToAction(nameof(Index));

@@ -10,35 +10,35 @@
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateBannerDTO.DesktopImage" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateBannerDTO.DesktopImage) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.DesktopImage) ? "Path bulunamadı" : Model.UpdateBannerDTO.DesktopImageFile)
+                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.DesktopImage) ? "Path bulunamadı" : Model.UpdateBannerDTO.DesktopImage)
             </span>
             <input type="file" asp-for="UpdateBannerDTO.DesktopImageFile" class="form-control" />
 
             <!-- Tablete Image -->
             <input type="hidden" asp-for="UpdateBannerDTO.TableteImage" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateBannerDTO.TableteImage) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.TableteImage) ? "Path bulunamadı" : Model.UpdateBannerDTO.TableteImageFile)
+                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.TableteImage) ? "Path bulunamadı" : Model.UpdateBannerDTO.TableteImage)
             </span>
             <input type="file" asp-for="UpdateBannerDTO.TableteImageFile" class="form-control" />
 
             <!-- Mobile Image -->
             <input type="hidden" asp-for="UpdateBannerDTO.MobileImage" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateBannerDTO.MobileImage) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.MobileImage) ? "Path bulunamadı" : Model.UpdateBannerDTO.MobileImageFile)
+                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.MobileImage) ? "Path bulunamadı" : Model.UpdateBannerDTO.MobileImage)
             </span>
             <input type="file" asp-for="UpdateBannerDTO.MobileImageFile" class="form-control" />
 
             <!-- Desktop Video -->
             <input type="hidden" asp-for="UpdateBannerDTO.DesktopVideo" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateBannerDTO.DesktopVideo) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.DesktopVideo) ? "Path bulunamadı" : Model.UpdateBannerDTO.DesktopVideoFile)
+                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.DesktopVideo) ? "Path bulunamadı" : Model.UpdateBannerDTO.DesktopVideo)
             </span>
             <input type="file" asp-for="UpdateBannerDTO.DesktopVideoFile" class="form-control" />
 
             <!-- Mobile Video -->
             <input type="hidden" asp-for="UpdateBannerDTO.MobileVideo" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateBannerDTO.MobileVideo) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.MobileVideo) ? "Path bulunamadı" : Model.UpdateBannerDTO.MobileVideoFile)
+                @(string.IsNullOrEmpty(Model.UpdateBannerDTO.MobileVideo) ? "Path bulunamadı" : Model.UpdateBannerDTO.MobileVideo)
             </span>
             <input type="file" asp-for="UpdateBannerDTO.MobileVideoFile" class="form-control" />
         </div>
