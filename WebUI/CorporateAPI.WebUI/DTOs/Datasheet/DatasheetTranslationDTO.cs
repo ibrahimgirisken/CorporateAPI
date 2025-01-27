@@ -1,4 +1,6 @@
-﻿namespace CorporateAPI.WebUI.DTOs.Datasheet
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CorporateAPI.WebUI.DTOs.Datasheet
 {
     public class DatasheetTranslationDTO
     {
@@ -7,5 +9,7 @@
         public string? Url { get; set; }
         public string? Content { get; set; }
         public string? Path { get; set; }
+        [NotMapped]
+        public IFormFile? DatasheetFile { get; set; }
     }
 }

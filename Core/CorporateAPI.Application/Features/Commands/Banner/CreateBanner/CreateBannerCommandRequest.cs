@@ -17,6 +17,8 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
         public string? DesktopImage { get; set; }
         public string? TableteImage { get; set; }
         public string? MobileImage { get; set; }
+        public string? DesktopVideo { get; set; }
+        public string? MobileVideo { get; set; }
         public int Order { get; set; } = 1;
         public bool Status { get; set; }
         public bool IsDeleted { get; set; } = false;

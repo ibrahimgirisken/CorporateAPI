@@ -7,13 +7,19 @@
     <form method="post" asp-action="CreateBanner" class="form-group" enctype="multipart/form-data">
         <div class="form-group row">
             <label asp-for="CreateBannerDTO.DesktopImage">Desktop Image</label>
-            <input type="file" name="DesktopImage" class="form-control" />
+            <input type="file" asp-for="CreateBannerDTO.DesktopImageFile" class="form-control" />
 
             <label asp-for="CreateBannerDTO.TableteImage">Tablet Image</label>
-            <input type="file" name="TableteImage" class="form-control" />
+            <input type="file" asp-for="CreateBannerDTO.TableteImageFile" class="form-control" />
 
             <label asp-for="CreateBannerDTO.MobileImage">Mobile Image</label>
-            <input type="file" name="MobileImage" class="form-control" />
+            <input type="file" asp-for="CreateBannerDTO.MobileImageFile" class="form-control" />
+
+            <label asp-for="CreateBannerDTO.MobileVideo">Mobile Image</label>
+            <input type="file" asp-for="CreateBannerDTO.DesktopVideoFile" class="form-control" />
+
+            <label asp-for="CreateBannerDTO.MobileVideo">Mobile Image</label>
+            <input type="file" asp-for="CreateBannerDTO.MobileVideoFile" class="form-control" />
         </div>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">

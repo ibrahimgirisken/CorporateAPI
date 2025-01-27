@@ -29,6 +29,8 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
             banner.DesktopImage = request.DesktopImage;
             banner.TableteImage = request.TableteImage;
             banner.MobileImage = request.MobileImage;
+            banner.DesktopVideo = request.DesktopVideo;
+            banner.MobileVideo = request.MobileVideo;
             banner.Status = request.Status;
 
             var existingTranslations = banner.BannerTranslations.ToList();

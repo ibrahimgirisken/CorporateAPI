@@ -2,8 +2,7 @@
 {
     public interface IFileService
     {
-        Task<string> SaveFileAsync(IFormFile file, string subDirectory);
-        Task<bool> DeleteFileAsync(string fileName, string subDirectory);
-        Task<string> UpdateFileAsync(string oldFileName, IFormFile newFile, string subDirectory);
+        Task<string> SaveFileAsync(IFormFile file, string uploadPath);
+        Task<string> UpdateFileAsync(IFormFile file, string existingFilePath, string uploadPath);
     }
 }

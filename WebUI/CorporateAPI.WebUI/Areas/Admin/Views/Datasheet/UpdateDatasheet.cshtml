@@ -5,7 +5,7 @@
 }
 
 <div class="container-fluid my-5">
-    <form method="post" asp-action="UpdateDatasheet">
+    <form method="post" asp-action="UpdateDatasheet" enctype="multipart/form-data">
         <input type="hidden" asp-for="UpdateDatasheetDTO.Id" />
         <div class="form-group">
             <label asp-for="UpdateDatasheetDTO.Code"></label>
@@ -33,8 +33,11 @@
                         <input asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Name" class="form-control" />
                         <label asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Url"></label>
                         <input asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Url" class="form-control" />
-                        <label asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Path"></label>
-                        <input asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Path" class="form-control" />
+                        <input type="hidden" asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Path" class="form-control" />
+                        <span class="@(string.IsNullOrEmpty(Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path) ? "text-danger" : "text-success")">
+                            @(string.IsNullOrEmpty(Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path) ? "Path bulunamadı" : Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path)
+                        </span>
+                        <input type="file" asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].DatasheetFile" class="form-control" />
                         <label asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Content"></label>
                         <input asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Content" class="form-control" />
                     </div>

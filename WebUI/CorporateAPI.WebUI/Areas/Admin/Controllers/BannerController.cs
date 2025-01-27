@@ -3,6 +3,7 @@ using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.ViewModels.Banner;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -55,30 +56,20 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBanner(CreateBannerViewModel createBannerViewModel)
         {
-            var bannerDto = createBannerViewModel.CreateBannerDTO;
-            string subDirectory = "banners";
+            var createBannerDto = createBannerViewModel.CreateBannerDTO;
 
-            var desktopImage = Request.Form.Files.FirstOrDefault(f => f.Name == "DesktopImage");
-            if (desktopImage != null)
-            {
-                bannerDto.DesktopImage = await _fileService.SaveFileAsync(desktopImage, subDirectory);
-            }
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "banners");
 
-            var tabletImage = Request.Form.Files.FirstOrDefault(f => f.Name == "TableteImage");
-            if (tabletImage != null)
-            {
-                bannerDto.TableteImage = await _fileService.SaveFileAsync(tabletImage, subDirectory);
-            }
-
-            var mobileImage = Request.Form.Files.FirstOrDefault(f => f.Name == "MobileImage");
-            if (mobileImage != null)
-            {
-                bannerDto.MobileImage = await _fileService.SaveFileAsync(mobileImage, subDirectory);
-            }
+            // Dosyaları kaydet
+            createBannerDto.DesktopImage = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
+            createBannerDto.TableteImage = await _fileService.SaveFileAsync(createBannerDto.TableteImageFile, uploadPath);
+            createBannerDto.MobileImage = await _fileService.SaveFileAsync(createBannerDto.MobileImageFile, uploadPath);
+            createBannerDto.DesktopVideo = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
+            createBannerDto.MobileVideo = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
 
             // API'ye post işlemi
             var client = _httpClientFactory.CreateClient("Admin");
-            await client.PostAsJsonAsync("Banners", bannerDto);
+            await client.PostAsJsonAsync("Banners", createBannerDto);
 
             return RedirectToAction(nameof(Index));
         }
@@ -102,39 +93,17 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateBanner(UpdateBannerViewModel updateBannerViewModel)
         {
-            UpdateBannerDTO bannerDto = updateBannerViewModel.UpdateBannerDTO;
+            UpdateBannerDTO updateBannerDto = updateBannerViewModel.UpdateBannerDTO;
             var client = _httpClientFactory.CreateClient("Admin");
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "banners");
 
-            string subDirectory = "banners";
-            string oldDesktopImage = Request.Form["OldDesktopImage"];
-            string oldTabletImage = Request.Form["OldTableteImage"];
-            string oldMobileImage = Request.Form["OldMobileImage"];
+            updateBannerDto.DesktopImage = await _fileService.UpdateFileAsync(updateBannerDto.DesktopImageFile, updateBannerDto.DesktopImage, uploadPath);
+            updateBannerDto.TableteImage = await _fileService.UpdateFileAsync(updateBannerDto.TableteImageFile, updateBannerDto.TableteImage, uploadPath);
+            updateBannerDto.MobileImage = await _fileService.UpdateFileAsync(updateBannerDto.MobileImageFile, updateBannerDto.MobileImage, uploadPath);
+            updateBannerDto.DesktopVideo = await _fileService.UpdateFileAsync(updateBannerDto.DesktopVideoFile, updateBannerDto.DesktopVideo, uploadPath);
+            updateBannerDto.MobileImage = await _fileService.UpdateFileAsync(updateBannerDto.MobileVideoFile, updateBannerDto.MobileVideo, uploadPath);
 
-            // Desktop Image güncelleme
-            var desktopImage = Request.Form.Files.FirstOrDefault(f => f.Name == "DesktopImage");
-            if (desktopImage != null)
-            {
-                bannerDto.DesktopImage = await _fileService.UpdateFileAsync(oldDesktopImage, desktopImage, subDirectory);
-            }
-
-            // Tablet Image güncelleme
-            var tabletImage = Request.Form.Files.FirstOrDefault(f => f.Name == "TableteImage");
-            if (tabletImage != null)
-            {
-                bannerDto.TableteImage = await _fileService.UpdateFileAsync(oldTabletImage, tabletImage, subDirectory);
-            }
-
-            // Mobile Image güncelleme
-            var mobileImage = Request.Form.Files.FirstOrDefault(f => f.Name == "MobileImage");
-            if (mobileImage != null)
-            {
-                bannerDto.MobileImage = await _fileService.UpdateFileAsync(oldMobileImage, mobileImage, subDirectory);
-            }
-
-            // API'ye post işlemi
-
-
-            await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", bannerDto);
+            await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", updateBannerDto);
             return RedirectToAction(nameof(Index));
         }
 
