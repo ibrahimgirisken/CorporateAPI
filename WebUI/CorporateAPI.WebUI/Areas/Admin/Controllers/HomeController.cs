@@ -1,4 +1,6 @@
-﻿using CorporateAPI.WebUI.DTOs.Home;
+﻿using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.DTOs.Banner;
+using CorporateAPI.WebUI.DTOs.Home;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +12,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public HomeController(IHttpClientFactory httpClientFactory)
+        private readonly IFileService _fileService;
+        public HomeController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -56,6 +59,17 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateHome(CreateHomeViewModel createHomeViewModel)
         {
             CreateHomeDTO homeDto = createHomeViewModel.CreateHomeDTO;
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "homes");
+
+            // Dosyaları kaydet
+            homeDto.Image1 = await _fileService.SaveFileAsync(homeDto.Image1File, uploadPath);
+            homeDto.Image2 = await _fileService.SaveFileAsync(homeDto.Image2File, uploadPath);
+            homeDto.Image3 = await _fileService.SaveFileAsync(homeDto.Image3File, uploadPath);
+            homeDto.Image4 = await _fileService.SaveFileAsync(homeDto.Image4File, uploadPath);
+            homeDto.Image5 = await _fileService.SaveFileAsync(homeDto.Image5File, uploadPath);
+            homeDto.Video = await _fileService.SaveFileAsync(homeDto.VideoFile, uploadPath);
+
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync<CreateHomeDTO>("Homes", homeDto);
             return RedirectToAction(nameof(Index));
@@ -80,6 +94,16 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             UpdateHomeDTO homeDto = updateHomeViewModel.UpdateHomeDTO;
             var client = _httpClientFactory.CreateClient("Admin");
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "homes");
+
+            homeDto.Image1 = await _fileService.UpdateFileAsync(homeDto.Image1File, homeDto.Image1, uploadPath);
+            homeDto.Image2   = await _fileService.UpdateFileAsync(homeDto.Image2File, homeDto.Image2, uploadPath);
+            homeDto.Image3 = await _fileService.UpdateFileAsync(homeDto.Image3File, homeDto.Image3, uploadPath);
+            homeDto.Image4 = await _fileService.UpdateFileAsync(homeDto.Image4File, homeDto.Image4, uploadPath);
+            homeDto.Image5 = await _fileService.UpdateFileAsync(homeDto.Image5File, homeDto.Image5, uploadPath);
+            homeDto.Video = await _fileService.UpdateFileAsync(homeDto.VideoFile, homeDto.Video, uploadPath);
+
             await client.PutAsJsonAsync<UpdateHomeDTO>("Homes", homeDto);
             return RedirectToAction(nameof(Index));
         }

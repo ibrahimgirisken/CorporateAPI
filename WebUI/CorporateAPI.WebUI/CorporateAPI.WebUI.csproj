@@ -16,6 +16,7 @@
     <Folder Include="Views\UILayout\" />
     <Folder Include="wwwroot\uploads\banners\" />
     <Folder Include="wwwroot\uploads\datasheets\" />
+    <Folder Include="wwwroot\uploads\homes\" />
   </ItemGroup>
 
   <ItemGroup>

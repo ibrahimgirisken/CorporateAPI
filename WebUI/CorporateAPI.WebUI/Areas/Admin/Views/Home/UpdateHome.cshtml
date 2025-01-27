@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid my-5">
-    <form method="post" asp-action="UpdateHome">
+    <form method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input type="hidden" asp-for="UpdateHomeDTO.Id" />
             <label asp-for="UpdateHomeDTO.ContentType"></label>
@@ -40,7 +40,50 @@
                 </div>
             }
         </div>
-        <div class="form-group">
+        <div class="form-group row">
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="UpdateHomeDTO.Image1" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image1) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image1) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image1)
+            </span>
+            <input type="file" asp-for="UpdateHomeDTO.Image1File" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="UpdateHomeDTO.Image2" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image2) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image2) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image2)
+            </span>
+            <input type="file" asp-for="UpdateHomeDTO.Image2File" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="UpdateHomeDTO.Image3" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image3) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image3) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image3)
+            </span>
+            <input type="file" asp-for="UpdateHomeDTO.Image3File" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="UpdateHomeDTO.Image4" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image4) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image4) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image4)
+            </span>
+            <input type="file" asp-for="UpdateHomeDTO.Image4File" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="UpdateHomeDTO.Image5" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image5) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image5) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image5)
+            </span>
+            <input type="file" asp-for="UpdateHomeDTO.Image5File" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="UpdateHomeDTO.Video" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Video) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Video) ? "Path bulunamadı" : Model.UpdateHomeDTO.Video)
+            </span>
+            <input type="file" asp-for="UpdateHomeDTO.VideoFile" class="form-control" />
+
             <label asp-for="UpdateHomeDTO.Order"></label>
             <input asp-for="UpdateHomeDTO.Order" class="form-control" />
         </div>

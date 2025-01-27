@@ -29,6 +29,12 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
             home.Order = request.Order;
             home.Status = request.Status;
             home.ContentType = request.ContentType;
+            home.Image1 = request.Image1;
+            home.Image2 = request.Image2;
+            home.Image3 = request.Image3;
+            home.Image4 = request.Image4;
+            home.Image5 = request.Image5;
+            home.Video = request.Video;
 
             var existingTranslations = home.HomeTranslations.ToList();
 
