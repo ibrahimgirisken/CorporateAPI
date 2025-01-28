@@ -1,12 +1,12 @@
 ﻿using CoreporateAPI.Infrastructure.Operations;
 using CorporateAPI.WebUI.Abstract;
-using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Brand;
 using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Product;
 using CorporateAPI.WebUI.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 {
@@ -16,10 +16,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IFileService _fileService;
-        public ProductController(IHttpClientFactory httpClientFactory, IFileService fileService)
+        private readonly IWebHostEnvironment _env;
+        public ProductController(IHttpClientFactory httpClientFactory, IFileService fileService, IWebHostEnvironment env)
         {
             _httpClientFactory = httpClientFactory;
             _fileService = fileService;
+            _env = env;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -80,6 +82,46 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             await client.PostAsJsonAsync<CreateProductDTO>("Products", productDTO);
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpGet]
+        public IActionResult Images()
+        {
+            string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
+            var files = Directory.GetFiles(imagesPath)
+                                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".gif") || file.EndsWith(".webp"))
+                                 .Select(file => new
+                                 {
+                                     Url = "/uploads/products/" + Path.GetFileName(file),
+                                     Thumbnail = "/uploads/products/thumbnails/" + Path.GetFileName(file)
+                                 })
+                                 .ToList();
+
+            return Json(files);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
+        {
+            if (upload != null && upload.Length > 0)
+            {
+                try
+                {
+                    string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
+                    string filePath = await _fileService.SaveFileAsync(upload, uploadPath);
+                    string fileUrl = Url.Content($"~/uploads/products/{filePath}");
+                    string script = $"<script>window.parent.CKEDITOR.tools.callFunction({CKEditorFuncNum}, '{fileUrl}');</script>";
+                    return Content(script, "text/html");
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { uploaded = false, error = new { message = ex.Message } });
+                }
+            }
+            return Json(new { uploaded = false, error = new { message = "Dosya yüklenemedi." } });
+        }
+
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(int id)
         {

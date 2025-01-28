@@ -31,11 +31,11 @@
                     {
                         <option value="@item.Id">
                             @item.CategoryTranslations.FirstOrDefault(x => x.Locale == "tr")?.Title
-                            </option>
+                        </option>
                     }
                 </select>
             </div>
-        }       
+        }
         <input type="hidden" asp-for="UpdateProductDTO.Id" />
         <div class="form-group">
             <label asp-for="UpdateProductDTO.Code"></label>
@@ -136,11 +136,20 @@
 </div>
 @section Scripts {
     <script src="~/plugins/ckeditor/ckeditor.js"></script>
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
     @for (int i = 0; i < Model.UpdateProductDTO.ProductTranslations.Count; i++)
     {
         var translation = Model.UpdateProductDTO.ProductTranslations[i];
-        <script>
-            CKEDITOR.replace("editor-@translation.Locale");
-        </script>
+        <text>
+               CKEDITOR.replace("editor-@translation.Locale", {
+                            filebrowserImageBrowseUrl: '/Admin/Product/Images',
+                            filebrowserImageUploadUrl: '/Admin/Product/UploadProductImage',
+                        filebrowserUploadMethod: 'form'
+               });
+        </text>
     }
-}
+    });
+    </script>
+    }
+
