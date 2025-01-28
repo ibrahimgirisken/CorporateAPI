@@ -1,4 +1,6 @@
-﻿using CorporateAPI.WebUI.Abstract;
+﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Datasheet;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.ViewModels.Datasheet;
@@ -54,28 +56,16 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateDatasheet(CreateDatasheetViewModel createDatasheetViewModel)
         {
             CreateDatasheetDTO datasheetDto = createDatasheetViewModel.CreateDatasheetDTO;
-            //foreach (var dts in datasheetDto.DatasheetTranslations)
-            //{
-            //    if (dts.DatasheetFile!=null)
-            //    {
-            //        var extension=Path.GetExtension(dts.DatasheetFile.FileName);
-            //        string newFileName = Guid.NewGuid().ToString() + extension;
-            //        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads\\datasheets", newFileName);
-            //        using (var stream = new FileStream(path, FileMode.Create))
-            //        {
-            //            await dts.DatasheetFile.CopyToAsync(stream);
-            //        }
-            //        dts.Path=newFileName;
-            //    }
-            //}
+            NameOperation.ApplyCharacterRegulationToProperties(
+                datasheetDto.DatasheetTranslations,
+                item => item.Url ?? item.Name,
+                (item, value) => item.Url = value
+            );
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "datasheets");
-
-            // Dosyaları kaydet
             foreach (var dts in datasheetDto.DatasheetTranslations)
             {
                 if (dts.DatasheetFile != null)
                 {
-                    // Dosya servis metodu ile kaydedilir
                     dts.Path = await _fileService.SaveFileAsync(dts.DatasheetFile, uploadPath);
                 }
             }
@@ -103,43 +93,21 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateDatasheet(UpdateDatasheetViewModel updateDatasheetViewModel)
         {
             UpdateDatasheetDTO datasheetDto = updateDatasheetViewModel.UpdateDatasheetDTO;
-
+           
+            NameOperation.ApplyCharacterRegulationToProperties(
+                datasheetDto.DatasheetTranslations,
+                item => item.Url ?? item.Name,
+                (item, value) => item.Url = value
+            );
 
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "datasheets");
-
-            // DatasheetTranslation için dosya güncelleme işlemi
             foreach (var dts in datasheetDto.DatasheetTranslations)
             {
                 if (dts.DatasheetFile != null)
                 {
-                    // Eski dosya varsa güncelleme işlemi yap
                     dts.Path = await _fileService.UpdateFileAsync(dts.DatasheetFile, dts.Path, uploadPath);
                 }
             }
-
-            //foreach (var dts in datasheetDto.DatasheetTranslations)
-            //{
-            //    if (dts.DatasheetFile != null)
-            //    {
-            //        if (!string.IsNullOrEmpty(dts.Path))
-            //        {
-            //            string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads\\datasheets", dts.Path);
-            //            if (System.IO.File.Exists(oldFilePath))
-            //            {
-            //                System.IO.File.Delete(oldFilePath);
-            //            }
-            //        }
-
-            //        var extension = Path.GetExtension(dts.DatasheetFile.FileName);
-            //        string newFileName = Guid.NewGuid().ToString() + extension;
-            //        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads\\datasheets", newFileName);
-            //        using (var stream = new FileStream(path, FileMode.Create))
-            //        {
-            //            await dts.DatasheetFile.CopyToAsync(stream);
-            //        }
-            //        dts.Path = newFileName;
-            //    }
-            //}
 
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PutAsJsonAsync<UpdateDatasheetDTO>("Datasheets", datasheetDto);

@@ -9,7 +9,8 @@ namespace CoreporateAPI.Infrastructure.Operations
     public class NameOperation
     {
         public static string CharacterRegulatory(string name)
-                    => name.Replace("\"", "")
+                    => name?.ToLowerInvariant()
+                        .Replace("\"", "")
                         .Replace("!", "")
                         .Replace("'", "")
                         .Replace("^", "")
@@ -50,5 +51,17 @@ namespace CoreporateAPI.Infrastructure.Operations
                         .Replace("<", "")
                         .Replace(">", "")
                         .Replace("|", "");
+        public static void ApplyCharacterRegulationToProperties<T>(IEnumerable<T> items, Func<T, string> propertyGetter, Action<T, string> propertySetter)
+        {
+            foreach (var item in items)
+            {
+                var propertyValue = propertyGetter(item);
+                if (!string.IsNullOrEmpty(propertyValue))
+                {
+                    propertySetter(item, CharacterRegulatory(propertyValue));
+                }
+            }
+        }
     }
+
 }

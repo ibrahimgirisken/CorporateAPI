@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Lang;
+﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Module;
 using CorporateAPI.WebUI.DTOs.Page;
 using CorporateAPI.WebUI.ViewModels.Page;
@@ -55,6 +56,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreatePage(CreatePageViewModel createPageViewModel)
         {
             CreatePageDTO pageDto = createPageViewModel.CreatePageDTO;
+            NameOperation.ApplyCharacterRegulationToProperties(
+                pageDto.PageTranslations,
+                item => item.Url ?? item.Title,
+                (item, value) => item.Url = value
+            );
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync<CreatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));
@@ -80,6 +86,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdatePage(UpdatePageViewModel updatePageViewModel)
         {
             UpdatePageDTO pageDto = updatePageViewModel.UpdatePageDTO;
+            NameOperation.ApplyCharacterRegulationToProperties(
+                pageDto.PageTranslations,
+                item => item.Url ?? item.Title,
+                (item, value) => item.Url = value
+            );
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PutAsJsonAsync<UpdatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));

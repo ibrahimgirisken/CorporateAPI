@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.Abstract;
+﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.Abstract;
 using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Brand;
 using CorporateAPI.WebUI.DTOs.Category;
@@ -23,13 +24,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var client=_httpClientFactory.CreateClient("Admin");
+            var client = _httpClientFactory.CreateClient("Admin");
             var response = await client.GetAsync("Products?IncludeAllLanguages=true");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
             }
-            var productsData=await response.Content.ReadFromJsonAsync<List<ResultProductDTO>>();
+            var productsData = await response.Content.ReadFromJsonAsync<List<ResultProductDTO>>();
             return View(productsData);
         }
         [HttpGet]
@@ -51,7 +52,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
                 CreateProductDTO = productDto,
                 GetLangDTOs = langs,
                 GetCategories = categories,
-                GetBrands=brands
+                GetBrands = brands
             };
             return View(model);
         }
@@ -60,7 +61,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CreateProduct(CreateProductViewModel createProductViewModel)
         {
             CreateProductDTO productDTO = createProductViewModel.CreateProductDTO;
-
+            NameOperation.ApplyCharacterRegulationToProperties(
+                     productDTO.ProductTranslations,
+                     item => item.Url ?? item.Title,
+                     (item, value) => item.Url = value
+                 );
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
 
             // Dosyaları kaydet
@@ -85,10 +90,10 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var resultProductDTO = await client.GetFromJsonAsync<UpdateProductDTO>($"Products/{id}");
             var model = new UpdateProductViewModel
             {
-                UpdateProductDTO=resultProductDTO,
-                GetLangDTOs=langs,
-                GetBrands= brands,
-                GetCategories= categories
+                UpdateProductDTO = resultProductDTO,
+                GetLangDTOs = langs,
+                GetBrands = brands,
+                GetCategories = categories
             };
             return View(model);
         }
@@ -96,7 +101,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProduct(UpdateProductViewModel updateProductViewModel)
         {
-            UpdateProductDTO updateProductDto=updateProductViewModel.UpdateProductDTO;
+            UpdateProductDTO updateProductDto = updateProductViewModel.UpdateProductDTO;
+            NameOperation.ApplyCharacterRegulationToProperties(
+                 updateProductDto.ProductTranslations,
+                 item => item.Url ?? item.Title,
+                 (item, value) => item.Url = value
+             );
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
 
             updateProductDto.Image1 = await _fileService.UpdateFileAsync(updateProductDto.Image1File, updateProductDto.Image1, uploadPath);

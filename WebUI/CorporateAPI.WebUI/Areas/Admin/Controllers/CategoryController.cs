@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.Abstract;
+﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.Abstract;
 using CorporateAPI.WebUI.DTOs.Banner;
 using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
@@ -64,6 +65,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             categoryDTO.Image1 = await _fileService.SaveFileAsync(categoryDTO.Image1File, uploadPath);
 
             var client = _httpClientFactory.CreateClient("Admin");
+
+            NameOperation.ApplyCharacterRegulationToProperties(
+                 categoryDTO.CategoryTranslations,
+                 item => item.Url ?? item.Title,
+                 (item, value) => item.Url = value
+             );
+
             await client.PostAsJsonAsync<CreateCategoryDTO>("Categories", categoryDTO);
             return RedirectToAction(nameof(Index));
         }
@@ -93,6 +101,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "categories");
             
             updateCategoryDTO.Image1 = await _fileService.UpdateFileAsync(updateCategoryDTO.Image1File, updateCategoryDTO.Image1, uploadPath);
+
+            NameOperation.ApplyCharacterRegulationToProperties(
+                updateCategoryDTO.CategoryTranslations,
+                item => item.Url ?? item.Title,
+                (item, value) => item.Url = value
+            );
 
             await client.PutAsJsonAsync<UpdateCategoryDTO>("Categories",updateCategoryDTO);
             return RedirectToAction(nameof(Index));

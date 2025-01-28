@@ -50,8 +50,6 @@ namespace CorporateAPI.WebUI.Concrete
                     System.IO.File.Delete(oldFilePath);
                 }
             }
-
-            // Yeni dosyayı kaydet
             return await SaveFileAsync(file, uploadPath);
         }
     }

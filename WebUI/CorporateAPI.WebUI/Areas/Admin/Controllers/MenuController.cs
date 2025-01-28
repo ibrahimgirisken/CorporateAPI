@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Lang;
+﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.ViewModels.Menu;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient("Admin");
-            var response= await client.GetAsync("Menus?IncludeAllLanguages=true");
+            var response = await client.GetAsync("Menus?IncludeAllLanguages=true");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
@@ -46,7 +47,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             {
                 CreateMenuDTO = createMenuDTO,
                 GetLangDTOs = langs,
-                ResultMenus=menus
+                ResultMenus = menus
             };
 
             return View(model);
@@ -56,6 +57,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             CreateMenuDTO menuDto = createMenuViewModel.CreateMenuDTO;
             var client = _httpClientFactory.CreateClient("Admin");
+
+            NameOperation.ApplyCharacterRegulationToProperties(
+                 menuDto.MenuTranslations,
+                 item => item.Url ?? item.Title,
+                 (item, value) => item.Url = value
+             );
+
             await client.PostAsJsonAsync<CreateMenuDTO>("Menus", menuDto);
             return RedirectToAction(nameof(Index));
         }
@@ -70,7 +78,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             {
                 UpdateMenuDTO = resultMenuDTO,
                 GetLangDTOs = langs,
-                ResultMenus=menus
+                ResultMenus = menus
             };
 
             return View(model);
@@ -80,6 +88,13 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateMenu(UpdateMenuViewModel updateMenuViewModel)
         {
             UpdateMenuDTO menuDto = updateMenuViewModel.UpdateMenuDTO;
+
+            NameOperation.ApplyCharacterRegulationToProperties(
+                menuDto.MenuTranslations,
+                item => item.Url ?? item.Title,
+                (item, value) => item.Url = value
+            );
+
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PutAsJsonAsync<UpdateMenuDTO>("Menus", menuDto);
             return RedirectToAction(nameof(Index));
