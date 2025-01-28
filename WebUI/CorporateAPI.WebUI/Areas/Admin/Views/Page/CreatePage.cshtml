@@ -54,7 +54,7 @@
                         <label asp-for="CreatePageDTO.PageTranslations[i].MetaDescription"></label>
                         <input asp-for="CreatePageDTO.PageTranslations[i].MetaDescription" class="form-control" />
                         <label asp-for="CreatePageDTO.PageTranslations[i].Content"></label>
-                         <textarea asp-for="CreatePageDTO.PageTranslations[i].Content" class="form-control"></textarea>
+                        <textarea asp-for="CreatePageDTO.PageTranslations[i].Content" id="editor-@translation.Locale" class="form-control"></textarea>
                     </div>
                 </div>
             }
@@ -69,3 +69,13 @@
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>
 </div>
+@section Scripts {
+    <script src="~/plugins/ckeditor/ckeditor.js"></script>
+    @for (int i = 0; i < Model.CreatePageDTO.PageTranslations.Count; i++)
+    {
+        var translation = Model.CreatePageDTO.PageTranslations[i];
+        <script>
+            CKEDITOR.replace("editor-@translation.Locale");
+        </script>
+    }
+}

@@ -12,14 +12,14 @@
             <!-- Desktop Image -->
             <input type="hidden" asp-for="ResultSettingDTO.WhiteLogo" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.ResultSettingDTO.WhiteLogo) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.ResultSettingDTO.WhiteLogo) ? "Path bulunamadı" : Model.ResultSettingDTO.WhiteLogo)
+                @(string.IsNullOrEmpty(Model.ResultSettingDTO.WhiteLogo) ? "Görsel Yok" : Model.ResultSettingDTO.WhiteLogo)
             </span>
             <input type="file" asp-for="ResultSettingDTO.WhiteLogoFile" class="form-control" />
 
             <!-- Desktop Image -->
             <input type="hidden" asp-for="ResultSettingDTO.BlackLogo" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.ResultSettingDTO.BlackLogo) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.ResultSettingDTO.BlackLogo) ? "Path bulunamadı" : Model.ResultSettingDTO.BlackLogo)
+                @(string.IsNullOrEmpty(Model.ResultSettingDTO.BlackLogo) ? "Görsel Yok" : Model.ResultSettingDTO.BlackLogo)
             </span>
             <input type="file" asp-for="ResultSettingDTO.BlackLogoFile" class="form-control" />
 

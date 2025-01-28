@@ -33,7 +33,7 @@
                         <label asp-for="UpdateHomeDTO.HomeTranslations[i].Title"></label>
                         <input asp-for="UpdateHomeDTO.HomeTranslations[i].Title" class="form-control" />
                         <label asp-for="UpdateHomeDTO.HomeTranslations[i].Content"></label>
-                        <textarea asp-for="UpdateHomeDTO.HomeTranslations[i].Content" class="form-control"></textarea>
+                        <textarea asp-for="UpdateHomeDTO.HomeTranslations[i].Content" id="editor-@translation.Locale" class="form-control"></textarea>
                         <label asp-for="UpdateHomeDTO.HomeTranslations[i].AdditionalData"></label>
                         <input asp-for="UpdateHomeDTO.HomeTranslations[i].AdditionalData" class="form-control" />
                     </div>
@@ -45,42 +45,42 @@
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateHomeDTO.Image1" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image1) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image1) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image1)
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image1) ? "Görsel Yok" : Model.UpdateHomeDTO.Image1)
             </span>
             <input type="file" asp-for="UpdateHomeDTO.Image1File" class="form-control" />
 
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateHomeDTO.Image2" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image2) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image2) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image2)
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image2) ? "Görsel Yok" : Model.UpdateHomeDTO.Image2)
             </span>
             <input type="file" asp-for="UpdateHomeDTO.Image2File" class="form-control" />
 
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateHomeDTO.Image3" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image3) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image3) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image3)
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image3) ? "Görsel Yok" : Model.UpdateHomeDTO.Image3)
             </span>
             <input type="file" asp-for="UpdateHomeDTO.Image3File" class="form-control" />
 
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateHomeDTO.Image4" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image4) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image4) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image4)
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image4) ? "Görsel Yok" : Model.UpdateHomeDTO.Image4)
             </span>
             <input type="file" asp-for="UpdateHomeDTO.Image4File" class="form-control" />
 
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateHomeDTO.Image5" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image5) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image5) ? "Path bulunamadı" : Model.UpdateHomeDTO.Image5)
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Image5) ? "Görsel Yok" : Model.UpdateHomeDTO.Image5)
             </span>
             <input type="file" asp-for="UpdateHomeDTO.Image5File" class="form-control" />
 
             <!-- Desktop Image -->
             <input type="hidden" asp-for="UpdateHomeDTO.Video" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateHomeDTO.Video) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Video) ? "Path bulunamadı" : Model.UpdateHomeDTO.Video)
+                @(string.IsNullOrEmpty(Model.UpdateHomeDTO.Video) ? "Görsel Yok" : Model.UpdateHomeDTO.Video)
             </span>
             <input type="file" asp-for="UpdateHomeDTO.VideoFile" class="form-control" />
 
@@ -94,3 +94,13 @@
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>
 </div>
+@section Scripts {
+    <script src="~/plugins/ckeditor/ckeditor.js"></script>
+    @for (int i = 0; i < Model.UpdateHomeDTO.HomeTranslations.Count; i++)
+    {
+        var translation = Model.UpdateHomeDTO.HomeTranslations[i];
+        <script>
+            CKEDITOR.replace("editor-@translation.Locale");
+        </script>
+    }
+}

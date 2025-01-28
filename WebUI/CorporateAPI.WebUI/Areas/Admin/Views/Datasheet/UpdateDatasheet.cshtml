@@ -36,7 +36,7 @@
 
                         <input type="hidden" asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].Path" class="form-control" />
                         <span class="@(string.IsNullOrEmpty(Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path) ? "text-danger" : "text-success")">
-                            @(string.IsNullOrEmpty(Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path) ? "Path bulunamadı" : Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path)
+                            @(string.IsNullOrEmpty(Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path) ? "Görsel Yok" : Model.UpdateDatasheetDTO.DatasheetTranslations[i].Path)
                         </span>
                         <input type="file" asp-for="UpdateDatasheetDTO.DatasheetTranslations[i].DatasheetFile" class="form-control" />
                         

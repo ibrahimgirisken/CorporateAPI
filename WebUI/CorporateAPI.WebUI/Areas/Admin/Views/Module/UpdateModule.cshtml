@@ -39,25 +39,25 @@
         <!-- Images -->
         <input type="hidden" asp-for="UpdateModuleDTO.Image1" class="form-control" />
         <span class="@(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image1) ? "text-danger" : "text-success")">
-            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image1) ? "Path bulunamadı" : Model.UpdateModuleDTO.Image1)
+            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image1) ? "Görsel Yok" : Model.UpdateModuleDTO.Image1)
         </span>
         <input type="file" asp-for="UpdateModuleDTO.Image1File" class="form-control" />
 
         <input type="hidden" asp-for="UpdateModuleDTO.Image2" class="form-control" />
         <span class="@(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image2) ? "text-danger" : "text-success")">
-            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image2) ? "Path bulunamadı" : Model.UpdateModuleDTO.Image2)
+            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image2) ? "Görsel Yok" : Model.UpdateModuleDTO.Image2)
         </span>
         <input type="file" asp-for="UpdateModuleDTO.Image2File" class="form-control" />
 
         <input type="hidden" asp-for="UpdateModuleDTO.Image3" class="form-control" />
         <span class="@(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image3) ? "text-danger" : "text-success")">
-            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image3) ? "Path bulunamadı" : Model.UpdateModuleDTO.Image3)
+            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Image3) ? "Görsel Yok" : Model.UpdateModuleDTO.Image3)
         </span>
         <input type="file" asp-for="UpdateModuleDTO.Image3File" class="form-control" />
 
         <input type="hidden" asp-for="UpdateModuleDTO.Video" class="form-control" />
         <span class="@(string.IsNullOrEmpty(Model.UpdateModuleDTO.Video) ? "text-danger" : "text-success")">
-            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Video) ? "Path bulunamadı" : Model.UpdateModuleDTO.Video)
+            @(string.IsNullOrEmpty(Model.UpdateModuleDTO.Video) ? "Görsel Yok" : Model.UpdateModuleDTO.Video)
         </span>
         <input type="file" asp-for="UpdateModuleDTO.VideoFile" class="form-control" />
         <div class="form-group">

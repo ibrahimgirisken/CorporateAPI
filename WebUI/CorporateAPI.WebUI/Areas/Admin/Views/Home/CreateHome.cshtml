@@ -34,7 +34,7 @@
                         <label asp-for="CreateHomeDTO.HomeTranslations[i].Title"></label>
                         <input asp-for="CreateHomeDTO.HomeTranslations[i].Title" class="form-control" />
                         <label asp-for="CreateHomeDTO.HomeTranslations[i].Content"></label>
-                        <input asp-for="CreateHomeDTO.HomeTranslations[i].Content" class="form-control" />
+                        <textarea asp-for="CreateHomeDTO.HomeTranslations[i].Content" id="editor-@translation.Locale" class="form-control"></textarea>
                         <label asp-for="CreateHomeDTO.HomeTranslations[i].AdditionalData"></label>
                         <input asp-for="CreateHomeDTO.HomeTranslations[i].AdditionalData" class="form-control" />
                     </div>
@@ -63,11 +63,20 @@
 
             <label asp-for="CreateHomeDTO.Order"></label>
             <input asp-for="CreateHomeDTO.Order" class="form-control" />
-        </div>
-        <div class="form-check row">
+
             <label asp-for="CreateHomeDTO.Status" class="form-check-label"></label>
             <input asp-for="CreateHomeDTO.Status" class="form-check-input" type="checkbox" />
         </div>
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>
 </div>
+@section Scripts {
+    <script src="~/plugins/ckeditor/ckeditor.js"></script>
+    @for (int i = 0; i < Model.CreateHomeDTO.HomeTranslations.Count; i++)
+    {
+        var translation = Model.CreateHomeDTO.HomeTranslations[i];
+        <script>
+            CKEDITOR.replace("editor-@translation.Locale");
+        </script>
+    }
+}

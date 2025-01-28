@@ -57,7 +57,7 @@
               <!-- Image -->
             <input type="hidden" asp-for="UpdateCategoryDTO.Image1" class="form-control" />
             <span class="@(string.IsNullOrEmpty(Model.UpdateCategoryDTO.Image1) ? "text-danger" : "text-success")">
-                @(string.IsNullOrEmpty(Model.UpdateCategoryDTO.Image1) ? "Path bulunamadı" : Model.UpdateCategoryDTO.Image1)
+                @(string.IsNullOrEmpty(Model.UpdateCategoryDTO.Image1) ? "Görsel Yok" : Model.UpdateCategoryDTO.Image1)
             </span>
             <input type="file" asp-for="UpdateCategoryDTO.Image1File" class="form-control" />
         </div>
