@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\CorporateAPI.Domain\CorporateAPI.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastracture\CoreporateAPI.Infrastracture\CoreporateAPI.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

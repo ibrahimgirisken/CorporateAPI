@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.Abstract;
+﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.Abstract;
 
 namespace CorporateAPI.WebUI.Concrete
 {
@@ -8,9 +9,21 @@ namespace CorporateAPI.WebUI.Concrete
         {
             if (file != null && file.Length > 0)
             {
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.FileName);
                 var extension = Path.GetExtension(file.FileName);
-                string newFileName = Guid.NewGuid().ToString() + extension;
-                string filePath = Path.Combine(uploadPath, newFileName);
+
+                string sanitizedFileName = NameOperation.CharacterRegulatory(fileNameWithoutExtension);
+                string newFileName = $"{sanitizedFileName}{extension}";
+
+                 string filePath = Path.Combine(uploadPath, newFileName);
+
+                int counter = 1;
+                while (File.Exists(filePath))
+                {
+                    newFileName = $"{sanitizedFileName}-{counter}{extension}";
+                    filePath = Path.Combine(uploadPath, newFileName);
+                    counter++;
+                }
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -22,6 +35,7 @@ namespace CorporateAPI.WebUI.Concrete
 
             return null;
         }
+
         public async Task<string> UpdateFileAsync(IFormFile file, string existingFilePath, string uploadPath)
         {
             if (file == null)
