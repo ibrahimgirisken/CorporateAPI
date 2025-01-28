@@ -1,44 +1,150 @@
-﻿<section class="srex-hero-one">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-12">
-                <div class="srex-hero-one__box wow ud-fade-in-left" data-wow-delay="200ms">
-                    <h1 class="srex-hero-one__box__text">
-                        <span class="srex-hero-one__box__text__top d-flex align-items-center gap-3 justify-content-between">
-                            Power For
-                            <span class="srex-hero-one__box__text__top__line"></span>
-                        </span>
-                        A Sustainable Future <br>
-                        with <span>Güneş Enerjisi</span>
-                    </h1>
-                    <p class="srex-hero-one__box__desc">
-                        Nullam vel nibh facilisis lectus fermentum
-                        ultrices quis non risus. Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit. In hac
-                        habitasse platea dictumst.
-                    </p>
+﻿<style>
+    #slider,
+    .wrap,
+    .slide_content {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        width: 100%;
+        height: 100vh;
+        overflow-x: hidden;
+    }
 
-                    <a href="#" class="srex-btn srex-btn--outline">
-                        Discover More <i class="fa-solid fa-plus"></i>
-                    </a>
-                </div>
-                <div class="d-flex gap-2 align-items-center justify-content-between wow ud-fade-in-up" data-wow-delay="200ms">
-                    <div class="srex-hero-one__left__enery__efficient">
-                        <h2>70%</h2>
-                        <p>Energy Efficient</p>
-                    </div>
-                    <div class="srex-hero-one__left__img">
-                        <img src="~/solarex/assets/images/home-one/hero-img-1.png"
-                             alt="Solar Panel">
-                    </div>
+    .wrap {
+        position: relative;
+    }
+
+    .slide {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .slide1 {
+        background-image: url("https://s-sasmal.github.io/full_screen_banner/img/img2.jpg");
+    }
+
+    .slide2 {
+        background-image: url("https://s-sasmal.github.io/full_screen_banner/img/img3.jpg");
+    }
+
+    .slide3 {
+        background-image: url("https://s-sasmal.github.io/full_screen_banner/img/img1.jpg");
+    }
+
+    .slide_content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+    }
+
+        .slide_content span {
+            font-size: 5rem;
+            color: white;
+            align-items: left;
+            text-align: left;
+            opacity: 0.6;
+        }
+
+    .arrow {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        margin-top: -35px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+
+    #arrow_left {
+        border-width: 30px 40px 30px 0;
+        border-color: transparent white transparent transparent;
+        left: 0;
+        margin-left: 30px;
+    }
+
+    #arrow_right {
+        border-width: 30px 0 30px 40px;
+        border-color: transparent transparent transparent white;
+        right: 0;
+        margin-right: 30px;
+    }
+</style>
+<section>
+    <div class="wrap">
+        <div id="arrow_left" class="arrow"></div>
+
+        <div id="slider">
+            <div class="slide1 slide">
+                <div class="slide_content">
+                    <span>Simple</span>
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
-                <div class="srex-hero-one__right wow ud-fade-in-right" data-wow-delay="200ms">
-                    <img src="~/solarex/assets/images/home-one/hero-img-2.png"
-                         alt="Women with Solar Panel">
+            <div class="slide2 slide">
+                <div class="slide_content">
+                    <span>Beautiful</span>
                 </div>
             </div>
+            <div class="slide3 slide">
+                <div class="slide_content">
+                    <span>Robust</span>
+                </div>
+            </div>
+
         </div>
+        <div id="arrow_right" class="arrow"></div>
     </div>
 </section>
+
+   <script>
+    let sliderImages = document.querySelectorAll(".slide"),
+      arrowLeft = document.querySelector("#arrow_left"),
+      arrowRight = document.querySelector("#arrow_right"),
+      current = 0;
+    // clear all imge
+    function reset() {
+      for (let i = 0; i < sliderImages.length; i++) {
+        sliderImages[i].style.display = "none";
+      }
+    }
+
+    // Init slider
+    function startSlide() {
+      reset();
+      sliderImages[0].style.display = "block";
+    }
+
+    // Show prev
+    function slideLeft() {
+      reset();
+      sliderImages[current - 1].style.display = "block";
+      current--;
+    }
+
+    // Show next
+    function slideRight() {
+      reset();
+      sliderImages[current + 1].style.display = "block";
+      current++;
+    }
+
+    // left arrow click
+    arrowLeft.addEventListener("click", function () {
+      if (current == 0) {
+        current = sliderImages.length;
+      }
+      slideLeft();
+    });
+
+    // right arrow click
+    arrowRight.addEventListener("click", function () {
+      if (current == sliderImages.length - 1) {
+        current = -1;
+      }
+      slideRight();
+    });
+
+    startSlide();
+   </script>
