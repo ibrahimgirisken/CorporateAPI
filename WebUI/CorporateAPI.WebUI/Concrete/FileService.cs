@@ -24,6 +24,10 @@ namespace CorporateAPI.WebUI.Concrete
         }
         public async Task<string> UpdateFileAsync(IFormFile file, string existingFilePath, string uploadPath)
         {
+            if (file == null)
+            {
+                return existingFilePath;
+            }
             if (!string.IsNullOrEmpty(existingFilePath))
             {
                 string oldFilePath = Path.Combine(uploadPath, existingFilePath);

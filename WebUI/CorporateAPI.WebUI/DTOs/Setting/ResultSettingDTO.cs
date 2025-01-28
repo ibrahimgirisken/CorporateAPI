@@ -5,7 +5,10 @@ namespace CorporateAPI.WebUI.DTOs.Setting
     public class ResultSettingDTO
     {
         public int Id { get; set; }
-        public string? Logo { get; set; }
+        public string? WhiteLogo { get; set; }
+        public string? BlackLogo { get; set; }
+        public IFormFile? WhiteLogoFile { get; set; }
+        public IFormFile? BlackLogoFile { get; set; }
         public string? Telephone { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }

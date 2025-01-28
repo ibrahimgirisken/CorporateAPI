@@ -15,7 +15,8 @@ namespace CorporateAPI.Application.Features.Commands.Settting.CreateSetting
         {
             SettingTranslations = new List<SettingTranslationDTO>();
         }
-        public string? Logo { get; set; }
+        public string? WhiteLogo { get; set; }
+        public string? BlackLogo { get; set; }
         public string? Telephone { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }

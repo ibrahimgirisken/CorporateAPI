@@ -59,15 +59,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var createBannerDto = createBannerViewModel.CreateBannerDTO;
 
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "banners");
-
-            // Dosyaları kaydet
             createBannerDto.DesktopImage = await _fileService.SaveFileAsync(createBannerDto.DesktopImageFile, uploadPath);
             createBannerDto.TableteImage = await _fileService.SaveFileAsync(createBannerDto.TableteImageFile, uploadPath);
             createBannerDto.MobileImage = await _fileService.SaveFileAsync(createBannerDto.MobileImageFile, uploadPath);
             createBannerDto.DesktopVideo = await _fileService.SaveFileAsync(createBannerDto.DesktopVideoFile, uploadPath);
             createBannerDto.MobileVideo = await _fileService.SaveFileAsync(createBannerDto.MobileVideoFile, uploadPath);
 
-            // API'ye post işlemi
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync("Banners", createBannerDto);
 

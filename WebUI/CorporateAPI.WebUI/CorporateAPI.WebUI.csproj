@@ -19,6 +19,7 @@
     <Folder Include="wwwroot\uploads\homes\" />
     <Folder Include="wwwroot\uploads\categories\" />
     <Folder Include="wwwroot\uploads\modules\" />
+    <Folder Include="wwwroot\uploads\settings\" />
     <Folder Include="wwwroot\uploads\products\" />
   </ItemGroup>
 

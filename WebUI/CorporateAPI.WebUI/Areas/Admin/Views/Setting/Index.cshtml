@@ -5,11 +5,24 @@
 }
 
 <div class="container-fluid my-5">
-    <form method="post" asp-action="UpdateSetting">
+    <form method="post" asp-action="UpdateSetting" enctype="multipart/form-data">
         <div class="form-group">
             <input asp-for="ResultSettingDTO.Id" type="hidden"/>
-            <label asp-for="ResultSettingDTO.Logo"></label>
-            <input asp-for="ResultSettingDTO.Logo" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="ResultSettingDTO.WhiteLogo" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.ResultSettingDTO.WhiteLogo) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.ResultSettingDTO.WhiteLogo) ? "Path bulunamadı" : Model.ResultSettingDTO.WhiteLogo)
+            </span>
+            <input type="file" asp-for="ResultSettingDTO.WhiteLogoFile" class="form-control" />
+
+            <!-- Desktop Image -->
+            <input type="hidden" asp-for="ResultSettingDTO.BlackLogo" class="form-control" />
+            <span class="@(string.IsNullOrEmpty(Model.ResultSettingDTO.BlackLogo) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.ResultSettingDTO.BlackLogo) ? "Path bulunamadı" : Model.ResultSettingDTO.BlackLogo)
+            </span>
+            <input type="file" asp-for="ResultSettingDTO.BlackLogoFile" class="form-control" />
+
             <label asp-for="ResultSettingDTO.Telephone"></label>
             <input asp-for="ResultSettingDTO.Telephone" class="form-control" />
             <label asp-for="ResultSettingDTO.Email"></label>

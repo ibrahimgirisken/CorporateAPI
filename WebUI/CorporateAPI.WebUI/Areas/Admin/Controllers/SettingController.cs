@@ -1,4 +1,5 @@
-﻿using CorporateAPI.WebUI.DTOs.Lang;
+﻿using CorporateAPI.WebUI.Abstract;
+using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Setting;
 using CorporateAPI.WebUI.ViewModels.Setting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class SettingController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IFileService _fileService;
 
-        public SettingController(IHttpClientFactory httpClientFactory)
+        public SettingController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
+            _fileService = fileService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,6 +37,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("Admin");
             var resultSettingDTO = resultSettingViewModel.ResultSettingDTO;
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "settings");
+
+            resultSettingDTO.WhiteLogo = await _fileService.UpdateFileAsync(resultSettingDTO.WhiteLogoFile, resultSettingDTO.WhiteLogo, uploadPath);
+            resultSettingDTO.BlackLogo = await _fileService.UpdateFileAsync(resultSettingDTO.BlackLogoFile, resultSettingDTO.BlackLogo, uploadPath);
+
             var response = await client.PutAsJsonAsync("Settings", resultSettingDTO);
             if (!response.IsSuccessStatusCode)
             {

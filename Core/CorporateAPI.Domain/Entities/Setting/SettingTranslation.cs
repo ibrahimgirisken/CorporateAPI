@@ -9,8 +9,8 @@ namespace CorporateAPI.Domain.Entities.Setting
 {
     public class SettingTranslation:BaseTranslation
     {
-        public string Title { get; set; }
-        public string MetaDescription { get; set; }
+        public string? Title { get; set; }
+        public string? MetaDescription { get; set; }
         public int SettingId { get; set; }
         public Setting Setting { get; set; }
     }

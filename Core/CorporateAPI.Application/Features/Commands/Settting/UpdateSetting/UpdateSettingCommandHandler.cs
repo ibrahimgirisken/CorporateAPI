@@ -33,7 +33,8 @@ namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
                 throw new Exception("Setting not found");
             }
 
-            setting.Logo = request.Logo;
+            setting.WhiteLogo = request.WhiteLogo;
+            setting.BlackLogo = request.BlackLogo;
             setting.Telephone = request.Telephone;
             setting.Email = request.Email;
             setting.Address = request.Address;
