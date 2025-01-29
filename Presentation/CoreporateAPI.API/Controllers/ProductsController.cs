@@ -56,28 +56,12 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse response=await _mediator.Send(removeProductCommandRequest);
             return Ok(response);
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Upload()
-        {           
-            var files = Request.Form.Files;
-            if (files.Count == 0)
-            {
-                return BadRequest("Dosya yüklenemedi");
-            }
-            var file = files[0];
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file.FileName);
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-            return Ok("Dosya yüklendi");
-        }
     }
 }

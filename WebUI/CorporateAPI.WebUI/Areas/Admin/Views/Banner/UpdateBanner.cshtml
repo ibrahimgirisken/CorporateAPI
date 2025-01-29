@@ -94,11 +94,19 @@
 </script>
 @section Scripts {
     <script src="~/plugins/ckeditor/ckeditor.js"></script>
-    @for (int i = 0; i < Model.UpdateBannerDTO.BannerTranslations.Count; i++)
-    {
-        var translation = Model.UpdateBannerDTO.BannerTranslations[i];
-        <script>
-            CKEDITOR.replace("editor-@translation.Locale");
-        </script>
-    }
+    <script>
+                document.addEventListener("DOMContentLoaded", function () {
+        @for (int i = 0; i < Model.UpdateBannerDTO.BannerTranslations.Count; i++)
+        {
+            var translation = Model.UpdateBannerDTO.BannerTranslations[i];
+            <text>
+                       CKEDITOR.replace("editor-@translation.Locale", {
+                                    filebrowserImageBrowseUrl: '/Admin/Banners/Images',
+                                        filebrowserImageUploadUrl: '/Admin/Banners/UploadProductImage',
+                                filebrowserUploadMethod: 'form'
+                       });
+            </text>
+        }
+        });
+    </script>
 }

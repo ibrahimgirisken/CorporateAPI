@@ -3,7 +3,6 @@ using CorporateAPI.Application.Features.Commands.Banner.RemoveBanner;
 using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner;
-using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

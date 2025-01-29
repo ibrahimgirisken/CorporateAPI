@@ -91,7 +91,6 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateBanner(UpdateBannerViewModel updateBannerViewModel)
         {
             UpdateBannerDTO updateBannerDto = updateBannerViewModel.UpdateBannerDTO;
-            var client = _httpClientFactory.CreateClient("Admin");
             string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "banners");
 
             updateBannerDto.DesktopImage = await _fileService.UpdateFileAsync(updateBannerDto.DesktopImageFile, updateBannerDto.DesktopImage, uploadPath);
@@ -100,6 +99,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             updateBannerDto.DesktopVideo = await _fileService.UpdateFileAsync(updateBannerDto.DesktopVideoFile, updateBannerDto.DesktopVideo, uploadPath);
             updateBannerDto.MobileVideo = await _fileService.UpdateFileAsync(updateBannerDto.MobileVideoFile, updateBannerDto.MobileVideo, uploadPath);
 
+            var client = _httpClientFactory.CreateClient("Admin");
             await client.PutAsJsonAsync<UpdateBannerDTO>("Banners", updateBannerDto);
             return RedirectToAction(nameof(Index));
         }
@@ -108,6 +108,44 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteBanner(int id)
         {
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Images()
+        {
+            string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "banners");
+            var files = Directory.GetFiles(imagesPath)
+                                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".gif") || file.EndsWith(".webp"))
+                                 .Select(file => new
+                                 {
+                                     Url = "/uploads/banners/" + Path.GetFileName(file),
+                                     Thumbnail = "/uploads/banners/thumbnails/" + Path.GetFileName(file)
+                                 })
+                                 .ToList();
+
+            return Json(files);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
+        {
+            if (upload != null && upload.Length > 0)
+            {
+                try
+                {
+                    string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "banners");
+                    string filePath = await _fileService.SaveFileAsync(upload, uploadPath);
+                    string fileUrl = Url.Content($"~/uploads/banners/{filePath}");
+                    string script = $"<script>window.parent.CKEDITOR.tools.callFunction({CKEditorFuncNum}, '{fileUrl}');</script>";
+                    return Content(script, "text/html");
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { uploaded = false, error = new { message = ex.Message } });
+                }
+            }
+            return Json(new { uploaded = false, error = new { message = "Dosya yüklenemedi." } });
         }
     }
 }
