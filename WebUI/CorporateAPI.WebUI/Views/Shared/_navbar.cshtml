@@ -1,5 +1,6 @@
 ﻿@{
     var menuData = ViewBag.MenuData as List<ResultMenuDTO>;
+    var settingData = ViewBag.SettingData as ResultSettingDTO;
 }
 <div class="container">
     <nav class="ud-main-menu ud-main-menu--home-one d-flex align-items-center justify-content-between"
@@ -49,7 +50,7 @@
             <div>
                 <span>Need help?</span>
                 <h4>
-                    <a href="tel:+3075550133">(307) 555-0133</a>
+                    <a href="tel:@settingData.Telephone">@settingData.Telephone</a>
                 </h4>
             </div>
         </div>

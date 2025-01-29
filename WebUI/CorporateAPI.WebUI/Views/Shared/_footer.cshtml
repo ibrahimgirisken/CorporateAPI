@@ -1,5 +1,6 @@
 ﻿@{
     var menuData = ViewBag.MenuData as List<ResultMenuDTO>;
+    var settingData = ViewBag.SettingData as ResultSettingDTO;
 }
 <footer class="srex-footer-two">
     <div class="container">
@@ -14,7 +15,7 @@
                             Requesting A Call:
                         </p>
                         <p>
-                            <a href="tel:+10987654321">+(1) 098 765 4321</a>
+                            <a href="tel:@settingData.Telephone">@settingData.Telephone</a>
                         </p>
                     </div>
                 </li>
@@ -39,7 +40,7 @@
                         <p>
                             Location:
                         </p>
-                        <h3>6391 Elgin St. Celina, Delaware</h3>
+                        <h3>@settingData.Address</h3>
                     </div>
                 </li>
 
@@ -138,7 +139,7 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <p>
-                        &copy; 2024 Solarex | All Rights Reserved
+                        &copy; 2024 Cw Energy | All Rights Reserved
                     </p>
                 </div>
                 <div class="col-12 col-md-6">

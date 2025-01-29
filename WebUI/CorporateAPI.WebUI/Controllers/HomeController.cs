@@ -1,5 +1,5 @@
 using CorporateAPI.WebUI.DTOs.Menu;
-using CorporateAPI.WebUI.ViewModels.Page;
+using CorporateAPI.WebUI.DTOs.Setting;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -19,14 +19,17 @@ namespace CorporateAPI.WebUI.Controllers
             var language = RouteData.Values["language"]?.ToString() ?? CultureInfo.CurrentUICulture.Name;
             var client = _httpClientFactory.CreateClient("Admin");
             client.DefaultRequestHeaders.Add("Accept-Language", language);
-            var response = await client.GetAsync("Menus");
+            var responseMenu = await client.GetAsync("Menus");
+            var responseSetting = await client.GetAsync("Settings/1");
 
-            if (!response.IsSuccessStatusCode)
+            if (!responseMenu.IsSuccessStatusCode)
             {
-                throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+                throw new Exception($"API error: {responseMenu.StatusCode}, Reason: {responseMenu.ReasonPhrase}");
             }
 
-            var menuData = await response.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
+            var menuData = await responseMenu.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
+            var settingData = await responseSetting.Content.ReadFromJsonAsync<ResultSettingDTO>();
+            ViewBag.SettingData = settingData;
             ViewBag.MenuData = menuData;
             return View();
         }
