@@ -1,5 +1,4 @@
 ﻿using CorporateAPI.WebUI.DTOs.Banner;
-using CorporateAPI.WebUI.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateAPI.WebUI.Controllers

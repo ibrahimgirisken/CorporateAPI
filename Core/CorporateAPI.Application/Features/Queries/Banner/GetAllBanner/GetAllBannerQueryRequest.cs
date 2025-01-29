@@ -9,5 +9,7 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
 {
     public class GetAllBannerQueryRequest:IRequest<GetAllBannerQueryResponse>
     {
+        public string? Language { get; set; }
+        public bool IncludeAllLanguages { get; set; } = false;
     }
 }

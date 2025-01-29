@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.DTOs.Banner;
+using CorporateAPI.Application.DTOs.Menu;
 using CorporateAPI.Application.Repositories.Banner;
+using CorporateAPI.Application.Repositories.Menu;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,12 +26,24 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
 
         public async Task<GetAllBannerQueryResponse> Handle(GetAllBannerQueryRequest request, CancellationToken cancellationToken)
         {
-            var banners=_bannerReadRepository.GetAll(false).Include(m=>m.BannerTranslations).ToList();
-            var bannerDtos=_mapper.Map<List<ResultBannerDTO>>(banners);
+
+            if (request.IncludeAllLanguages)
+            {
+                var bannerTranslations = _bannerReadRepository.GetAll(false).Include(e => e.BannerTranslations).ToList();
+                var bannerDatas = _mapper.Map<List<ResultBannerDTO>>(bannerTranslations);
+                return new()
+                {
+                    Banners = bannerDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var menus = _bannerReadRepository.GetAll(false).Include(e => e.BannerTranslations.Where(l => l.Locale == language)).ToList();
+            var bannerData = _mapper.Map<List<ResultBannerDTO>>(menus);
             return new()
             {
-                Banners = bannerDtos
+                Banners = bannerData
             };
+
         }
     }
 }

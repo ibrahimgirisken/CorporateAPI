@@ -1,6 +1,5 @@
 ﻿using CorporateAPI.WebUI.DTOs.Home;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace CorporateAPI.WebUI.ViewComponents.Home
 {

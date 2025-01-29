@@ -3,6 +3,7 @@ using CorporateAPI.Application.Features.Commands.Banner.RemoveBanner;
 using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner;
+using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -23,6 +24,17 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllBannerQueryRequest getAllBannerQueryRequest)
         {
+
+            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
+            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
+            string language = Request.Headers["Accept-Language".ToString()];
+            if (string.IsNullOrEmpty(language))
+            {
+                language = "en"; // Varsayılan dil
+            }
+            getAllBannerQueryRequest.Language = language;
+            getAllBannerQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
+
             GetAllBannerQueryResponse response =await _mediator.Send(getAllBannerQueryRequest);
             return Ok(response.Banners);
         }

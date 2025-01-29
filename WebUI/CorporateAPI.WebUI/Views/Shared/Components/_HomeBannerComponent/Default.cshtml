@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model List<ResultBannerDTO>
+<style>
     #slider,
     .wrap,
     .slide_content {
@@ -19,19 +20,20 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+       @if (Model != null && Model.Any())
+{
+    int sliderIndex = 1;
 
-    .slide1 {
-        background-image: url("https://s-sasmal.github.io/full_screen_banner/img/img2.jpg");
-    }
+        @foreach (var item in Model)
+        {
+            string imageUrl = Url.Content("~/uploads/banners/" + item.DesktopImage);
+            @: .slide@(sliderIndex) {
+            @:     background-image: url('@imageUrl');
+            @: }
+            sliderIndex++;
+        }
 
-    .slide2 {
-        background-image: url("https://s-sasmal.github.io/full_screen_banner/img/img3.jpg");
-    }
-
-    .slide3 {
-        background-image: url("https://s-sasmal.github.io/full_screen_banner/img/img1.jpg");
-    }
-
+}
     .slide_content {
         display: flex;
         flex-direction: column;
@@ -75,24 +77,20 @@
 <section>
     <div class="wrap">
         <div id="arrow_left" class="arrow"></div>
-
         <div id="slider">
-            <div class="slide1 slide">
-                <div class="slide_content">
-                    <span>Simple</span>
-                </div>
-            </div>
-            <div class="slide2 slide">
-                <div class="slide_content">
-                    <span>Beautiful</span>
-                </div>
-            </div>
-            <div class="slide3 slide">
-                <div class="slide_content">
-                    <span>Robust</span>
-                </div>
-            </div>
-
+             @if (Model != null&& Model.Any())
+                  {
+                      int sliderIndex = 1;
+                             @foreach (var item in Model)
+                      {
+                          <div class="slide@(sliderIndex) slide">
+                              <div class="slide_content">
+                                  <span>Simple</span>
+                              </div>
+                          </div>
+                              sliderIndex++;
+                      }
+                  }
         </div>
         <div id="arrow_right" class="arrow"></div>
     </div>
