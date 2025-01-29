@@ -1,4 +1,6 @@
-﻿@model List<ResultMenuDTO>
+﻿@{
+    var menuData = ViewBag.MenuData as List<ResultMenuDTO>;
+}
 <footer class="srex-footer-two">
     <div class="container">
         <div class="srex-footer-two__top__content">
@@ -64,14 +66,18 @@
                         <h4>Useful Links</h4>
                         <div class="srex-footer__links__content">
                             <ul class="srex-footer__links__list">
-                                @foreach (var item in Model)
+
+                                @if (menuData != null)
                                 {
-                                    foreach (var menu in item.MenuTranslations)
+                                    @foreach (var item in menuData)
                                     {
-                                        <li>
-                                            <a href="@menu.Locale/@menu.Url">@menu.Title</a>
-                                        </li>
-                                    }                      
+                                        foreach (var menu in item.MenuTranslations)
+                                        {
+                                            <li>
+                                                <a href="@menu.Locale/@menu.Url">@menu.Title</a>
+                                            </li>
+                                        }
+                                    }
                                 }
                             </ul>
                         </div>

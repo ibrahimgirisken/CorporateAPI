@@ -1,7 +1,9 @@
 ﻿@model ResultPageDTO
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var menuData = ViewBag.MenuData as List<ResultMenuDTO>;
+}
+@{
+    Layout = "~/Views/UILayout/Layout.cshtml";
 }
 
 <h1>GetByLanguageAndUrl</h1>
-

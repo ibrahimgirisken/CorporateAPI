@@ -1,4 +1,4 @@
-﻿using CorporateAPI.WebUI.DTOs.Page;
+﻿using CorporateAPI.WebUI.DTOs.Menu;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -23,16 +23,18 @@ namespace CorporateAPI.WebUI.Controllers
 
 
             var apiUrl = $"Pages/Page/{urlAddress}?language={language}";
-            var response=await client.GetAsync(apiUrl);
-
-            if (!response.IsSuccessStatusCode)
+            var responsePage=await client.GetAsync(apiUrl);
+            if (!responsePage.IsSuccessStatusCode)
             {
-                throw new Exception($"API error: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+                throw new Exception($"API error: {responsePage.StatusCode}, Reason: {responsePage.ReasonPhrase}");
             }
 
-            var values = await response.Content.ReadFromJsonAsync<ResultPageDTO>();
-            var data = values;
-            return View(values);
+            var responseMenu = await client.GetAsync("Menus");
+            var menuData = await responseMenu.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
+            ViewBag.MenuData = menuData;
+            var dataPage = await responsePage.Content.ReadFromJsonAsync<DTOs.Page.ResultPageDTO>();
+
+            return View(dataPage);
         }
 
     }

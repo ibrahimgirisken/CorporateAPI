@@ -1,25 +1,29 @@
-﻿@model List<ResultMenuDTO>
+﻿@{
+    var menuData = ViewBag.MenuData as List<ResultMenuDTO>;
+}
 <div class="container">
     <nav class="ud-main-menu ud-main-menu--home-one d-flex align-items-center justify-content-between"
          aria-label="Main Navigation">
         <div class="ud-main-menu__logo">
-            <a href="">
+            <a href="/">
                 <img src="~/solarex/assets/images/cw-energy-usa-logo.svg"
                      alt="Solarex" style="max-width:300px;height:auto">
             </a>
         </div>
         <ul class="ud-main-menu__links d-none d-lg-flex">
 
-
-            @foreach (var item in Model)
+            @if (menuData != null)
             {
-                @foreach (var menu in item.MenuTranslations)
+                @foreach (var item in menuData)
                 {
-                         <li>
-                        <a asp-controller="Page" asp-action="GetByLanguageAndUrl" asp-route-language="@menu.Locale" asp-route-urlAddress="@menu.Url">
-                            @menu.Title
-                        </a>
-                    </li>
+                    @foreach (var menu in item.MenuTranslations)
+                    {
+                        <li>
+                            <a asp-controller="Page" asp-action="GetByLanguageAndUrl" asp-route-language="@menu.Locale" asp-route-urlAddress="@menu.Url">
+                                @menu.Title
+                            </a>
+                        </li>
+                    }
                 }
             }
             <li>
@@ -65,84 +69,88 @@
     </div>
     <div class="ud-side-popup__body">
         <ul class="metismenu" id="side-menu">
-            @foreach (var item in Model)
+
+            @if (menuData != null)
             {
-                @foreach (var menu in item.MenuTranslations)
+                @foreach (var item in menuData)
                 {
-                    <li>
-                        <a href="@menu.Url">
-                            @menu.Title
-                        </a>
-                    </li>
+                    @foreach (var menu in item.MenuTranslations)
+                    {
+                        <li>
+                            <a href="@menu.Url">
+                                @menu.Title
+                            </a>
+                        </li>
+                    }
                 }
             }
-            <li>
-                <a href="#">
-                    Anasayfa <i class="fa-solid fa-plus"></i>
-                </a>
-                <ul class="sub-menu collapse" aria-expanded="false">
-                    <li>
-                        <a href="index.html">Home 1</a>
-                    </li>
-                    <li>
-                        <a href="index-2.html">Home 2</a>
-                    </li>
-                    <li>
-                        <a href="index-3.html">Home 3</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div class="ud-side-popup__bottom">
-        <div class="ud-side-popup__bottom-info">
-            <div class="ud-side-popup__bottom-info-box d-flex align-items-center gap-3 py-0 m-0">
-                <i class="fa-solid fa-phone"></i>
-                <div class="ud-header-info-box__details">
-                    <span>Need Help?</span>
-                    <h4>
-                        <a href="tel:+3075550133">(307) 555-0133</a>
-                    </h4>
-                </div>
-            </div>
-            <div class="ud-side-popup__bottom-info-box d-flex align-items-center gap-3 py-0 m-0">
-                <i class="fa-solid fa-paper-plane"></i>
-                <div class="ud-header-info-box__details">
-                    <span>Shreekol, Dublia Bazar</span>
-                    <h4>Pabna, Bangladesh</h4>
-                </div>
-            </div>
-            <div class="ud-side-popup__bottom-info-box d-flex align-items-center gap-3 py-0 m-0">
-                <i class="fa-solid fa-envelope"></i>
-                <div class="ud-header-info-box__details">
-                    <span>Send email</span>
-                    <h4>
-                        <a href="mailto:hello@example.com">hello@example.com</a>
-                    </h4>
-                </div>
-            </div>
+                <li>
+                    <a href="#">
+                        Anasayfa <i class="fa-solid fa-plus"></i>
+                    </a>
+                    <ul class="sub-menu collapse" aria-expanded="false">
+                        <li>
+                            <a href="index.html">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="index-2.html">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="index-3.html">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <ul class="ud-side-popup__bottom-socials">
-            <li>
-                <a href="#">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-brands fa-youtube"></i>
-                </a>
-            </li>
-        </ul>
+        <div class="ud-side-popup__bottom">
+            <div class="ud-side-popup__bottom-info">
+                <div class="ud-side-popup__bottom-info-box d-flex align-items-center gap-3 py-0 m-0">
+                    <i class="fa-solid fa-phone"></i>
+                    <div class="ud-header-info-box__details">
+                        <span>Need Help?</span>
+                        <h4>
+                            <a href="tel:+3075550133">(307) 555-0133</a>
+                        </h4>
+                    </div>
+                </div>
+                <div class="ud-side-popup__bottom-info-box d-flex align-items-center gap-3 py-0 m-0">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <div class="ud-header-info-box__details">
+                        <span>Shreekol, Dublia Bazar</span>
+                        <h4>Pabna, Bangladesh</h4>
+                    </div>
+                </div>
+                <div class="ud-side-popup__bottom-info-box d-flex align-items-center gap-3 py-0 m-0">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div class="ud-header-info-box__details">
+                        <span>Send email</span>
+                        <h4>
+                            <a href="mailto:hello@example.com">hello@example.com</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <ul class="ud-side-popup__bottom-socials">
+                <li>
+                    <a href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>

@@ -6,9 +6,10 @@
 <div class="container-fluid my-5">
     <form method="post" asp-action="UpdatePage">
         <div class="form-group">
+            <input type="hidden" asp-for="UpdatePageDTO.Id" />
             <label asp-for="UpdatePageDTO.ModuleIds"></label>
             <select class="form-select" asp-for="UpdatePageDTO.ModuleIds">
-                <option value=null selected=GetModuleDTOs>Seç</option>
+                <option value="">Seç</option>
                 @foreach (var item in Model.GetModuleDTOs)
                 {
                     <option value="@item.Id">

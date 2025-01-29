@@ -1,4 +1,5 @@
 using CorporateAPI.WebUI.DTOs.Menu;
+using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -26,8 +27,8 @@ namespace CorporateAPI.WebUI.Controllers
             }
 
             var menuData = await response.Content.ReadFromJsonAsync<List<ResultMenuDTO>>();
-
-            return View(menuData);
+            ViewBag.MenuData = menuData;
+            return View();
         }
     }
 }

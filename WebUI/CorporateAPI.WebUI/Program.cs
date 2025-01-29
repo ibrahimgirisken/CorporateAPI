@@ -69,12 +69,12 @@ app.Use(async (context, next) =>
 
 app.UseAuthorization();
 
-// Route tanýmlarý
-//app.MapControllerRoute(
-//    name: "page",
-//    pattern: "{language=en}/{urlAddress}",
-//    defaults: new { controller = "Page", action = "GetByLanguageAndUrl" }
-//);
+//Route tanýmlarý
+app.MapControllerRoute(
+    name: "page",
+    pattern: "{language=en}/{urlAddress}",
+    defaults: new { controller = "Page", action = "GetByLanguageAndUrl" }
+);
 
 app.MapControllerRoute(
     name: "default",
@@ -84,11 +84,6 @@ app.MapControllerRoute(
     name: "withoutAction",
     pattern: "{language=en}/{controller}",
     defaults: new { action = "Index" });
-
-app.MapControllerRoute(
-    name: "withoutLang",
-    pattern: "{controller}",
-    defaults:new { action = "Index" });
 
 app.MapControllerRoute(
     name: "areas",

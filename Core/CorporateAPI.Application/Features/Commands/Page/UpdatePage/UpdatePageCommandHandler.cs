@@ -20,7 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
         public async Task<UpdatePageCommandResponse> Handle(UpdatePageCommandRequest request, CancellationToken cancellationToken)
         {
-            var page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
+            Domain.Entities.Page.Page page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: e => e.PageTranslations);
            
             if (page == null)
                 throw new Exception("Page not found!");
@@ -31,6 +31,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
             page.Image1 = request.Image1;
             page.Image2 = request.Image2;
             page.Image3 = request.Image3;
+
 
             var existingTranslations = page.PageTranslations.ToList();
 
