@@ -2,7 +2,6 @@
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
 using MediatR;
-using System.Security.Policy;
 
 
 namespace CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage
@@ -25,13 +24,11 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage
 
             if (page != null)
             {
-                page.PageTranslations = new List<Domain.Entities.PageTranslation>
-                {
-                    page.PageTranslations.FirstOrDefault(t => t.Locale == language)
-                };
-              
+                page.PageTranslations = page.PageTranslations
+            .Where(t => t.Locale == language)
+            .ToList();
             }
-            var response = _mapper.Map<ResultPageDTO>(page);
+            var response = page != null ? _mapper.Map<ResultPageDTO>(page) : null;
             return new()
             {
                 pageDTO = response

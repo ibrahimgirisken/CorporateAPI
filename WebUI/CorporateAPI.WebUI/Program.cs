@@ -70,6 +70,12 @@ app.Use(async (context, next) =>
 app.UseAuthorization();
 
 // Route tanýmlarý
+//app.MapControllerRoute(
+//    name: "page",
+//    pattern: "{language=en}/{urlAddress}",
+//    defaults: new { controller = "Page", action = "GetByLanguageAndUrl" }
+//);
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{language=en}/{controller=Home}/{action=Index}/{id?}");
