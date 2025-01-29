@@ -74,7 +74,9 @@
                                         foreach (var menu in item.MenuTranslations)
                                         {
                                             <li>
-                                                <a href="@menu.Locale/@menu.Url">@menu.Title</a>
+                                                <a asp-controller="Page" asp-action="GetByLanguageAndUrl" asp-route-language="@menu.Locale" asp-route-urlAddress="@menu.Url">
+                                                    @menu.Title
+                                                </a>
                                             </li>
                                         }
                                     }
