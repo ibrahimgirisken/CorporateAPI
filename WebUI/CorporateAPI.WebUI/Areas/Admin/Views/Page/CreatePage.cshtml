@@ -17,14 +17,6 @@
                 }
             </select>
         </div>
-        <div class="form-group">
-            <label asp-for="CreatePageDTO.Image1"></label>
-            <input asp-for="CreatePageDTO.Image1" class="form-control" />
-            <label asp-for="CreatePageDTO.Image2"></label>
-            <input asp-for="CreatePageDTO.Image2" class="form-control" />
-            <label asp-for="CreatePageDTO.Image3"></label>
-            <input asp-for="CreatePageDTO.Image3" class="form-control" />
-            </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
             {
@@ -59,6 +51,19 @@
                 </div>
             }
         </div>
+        <div class="form-group row">
+            <label asp-for="CreatePageDTO.Image1">Image1</label>
+            <input type="file" asp-for="CreatePageDTO.Image1File" class="form-control" />
+
+            <label asp-for="CreatePageDTO.Image2">Image2</label>
+            <input type="file" asp-for="CreatePageDTO.Image2File" class="form-control" />
+
+            <label asp-for="CreatePageDTO.Image3">Image3</label>
+            <input type="file" asp-for="CreatePageDTO.Image3File" class="form-control" />
+
+            <label asp-for="CreatePageDTO.Video">Video</label>
+            <input type="file" asp-for="CreatePageDTO.VideoFile" class="form-control" />
+        </div>
         <div class="form-check">
             <label asp-for="CreatePageDTO.Status" class="form-check-label"></label>
             <input asp-for="CreatePageDTO.Status" class="form-check-input" type="checkbox" />
@@ -69,13 +74,18 @@
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>
 </div>
-@section Scripts {
-    <script src="~/plugins/ckeditor/ckeditor.js"></script>
+<script>
+            document.addEventListener("DOMContentLoaded", function () {
     @for (int i = 0; i < Model.CreatePageDTO.PageTranslations.Count; i++)
     {
         var translation = Model.CreatePageDTO.PageTranslations[i];
-        <script>
-            CKEDITOR.replace("editor-@translation.Locale");
-        </script>
+        <text>
+                       CKEDITOR.replace("editor-@translation.Locale", {
+                                    filebrowserImageBrowseUrl: '/Admin/Pages/Images',
+                                    filebrowserImageUploadUrl: '/Admin/Pages/UploadProductImage',
+                                filebrowserUploadMethod: 'form'
+                       });
+        </text>
     }
-}
+    });
+</script>

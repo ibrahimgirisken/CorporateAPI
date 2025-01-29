@@ -17,15 +17,6 @@
                 }
             </select>
         </div>
-        <div class="form-group">
-            <input type="hidden" asp-for="UpdatePageDTO.Id"/>
-            <label asp-for="UpdatePageDTO.Image1"></label>
-            <input asp-for="UpdatePageDTO.Image1" class="form-control" />
-            <label asp-for="UpdatePageDTO.Image2"></label>
-            <input asp-for="UpdatePageDTO.Image2" class="form-control" />
-            <label asp-for="UpdatePageDTO.Image3"></label>
-            <input asp-for="UpdatePageDTO.Image3" class="form-control" />
-        </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @for (int i = 0; i < Model.GetLangDTOs.Count; i++)
             {
@@ -60,6 +51,36 @@
                 </div>
             }
         </div>
+        <div class="form-group">
+            <!-- Image -->
+            <input type="hidden" asp-for="UpdatePageDTO.Image1" class="form-control" />
+            <label asp-for="UpdatePageDTO.Image1"></label>
+            <span class="@(string.IsNullOrEmpty(Model.UpdatePageDTO.Image1) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdatePageDTO.Image1) ? "Görsel Yok" : Model.UpdatePageDTO.Image1)
+            </span>
+            <input type="file" asp-for="UpdatePageDTO.Image1File" class="form-control" />
+
+            <input type="hidden" asp-for="UpdatePageDTO.Image2" class="form-control" />
+            <label asp-for="UpdatePageDTO.Image2"></label>
+            <span class="@(string.IsNullOrEmpty(Model.UpdatePageDTO.Image2) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdatePageDTO.Image2) ? "Görsel Yok" : Model.UpdatePageDTO.Image2)
+            </span>
+            <input type="file" asp-for="UpdatePageDTO.Image2File" class="form-control" />
+
+            <input type="hidden" asp-for="UpdatePageDTO.Image3" class="form-control" />
+            <label asp-for="UpdatePageDTO.Image3"></label>
+            <span class="@(string.IsNullOrEmpty(Model.UpdatePageDTO.Image3) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdatePageDTO.Image3) ? "Görsel Yok" : Model.UpdatePageDTO.Image3)
+            </span>
+            <input type="file" asp-for="UpdatePageDTO.Image3File" class="form-control" />
+
+            <input type="hidden" asp-for="UpdatePageDTO.Video" class="form-control" />
+            <label asp-for="UpdatePageDTO.Video"></label>
+            <span class="@(string.IsNullOrEmpty(Model.UpdatePageDTO.Video) ? "text-danger" : "text-success")">
+                @(string.IsNullOrEmpty(Model.UpdatePageDTO.Video) ? "Video Yok" : Model.UpdatePageDTO.Video)
+            </span>
+            <input type="file" asp-for="UpdatePageDTO.VideoFile" class="form-control" />
+        </div>
         <div class="form-check">
             <label asp-for="UpdatePageDTO.Status" class="form-check-label"></label>
             <input asp-for="UpdatePageDTO.Status" class="form-check-input" type="checkbox" />
@@ -72,11 +93,19 @@
 </div>
 @section Scripts {
     <script src="~/plugins/ckeditor/ckeditor.js"></script>
-    @for (int i = 0; i < Model.UpdatePageDTO.PageTranslations.Count; i++)
-    {
-        var translation = Model.UpdatePageDTO.PageTranslations[i];
-        <script>
-            CKEDITOR.replace("editor-@translation.Locale");
-        </script>
-    }
+    <script>
+                document.addEventListener("DOMContentLoaded", function () {
+        @for (int i = 0; i < Model.UpdatePageDTO.PageTranslations.Count; i++)
+        {
+            var translation = Model.UpdatePageDTO.PageTranslations[i];
+            <text>
+                       CKEDITOR.replace("editor-@translation.Locale", {
+                                    filebrowserImageBrowseUrl: '/Admin/Pages/Images',
+                                    filebrowserImageUploadUrl: '/Admin/Pages/UploadProductImage',
+                                filebrowserUploadMethod: 'form'
+                       });
+            </text>
+        }
+        });
+    </script>
 }

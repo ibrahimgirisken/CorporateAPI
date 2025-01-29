@@ -85,44 +85,6 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public IActionResult Images()
-        {
-            string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
-            var files = Directory.GetFiles(imagesPath)
-                                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".gif") || file.EndsWith(".webp"))
-                                 .Select(file => new
-                                 {
-                                     Url = "/uploads/products/" + Path.GetFileName(file),
-                                     Thumbnail = "/uploads/products/thumbnails/" + Path.GetFileName(file)
-                                 })
-                                 .ToList();
-
-            return Json(files);
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
-        {
-            if (upload != null && upload.Length > 0)
-            {
-                try
-                {
-                    string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
-                    string filePath = await _fileService.SaveFileAsync(upload, uploadPath);
-                    string fileUrl = Url.Content($"~/uploads/products/{filePath}");
-                    string script = $"<script>window.parent.CKEDITOR.tools.callFunction({CKEditorFuncNum}, '{fileUrl}');</script>";
-                    return Content(script, "text/html");
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { uploaded = false, error = new { message = ex.Message } });
-                }
-            }
-            return Json(new { uploaded = false, error = new { message = "Dosya yüklenemedi." } });
-        }
-
-        [HttpGet]
         public async Task<IActionResult> UpdateProduct(int id)
         {
             var client = _httpClientFactory.CreateClient("Admin");
@@ -166,6 +128,44 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Images()
+        {
+            string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
+            var files = Directory.GetFiles(imagesPath)
+                                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".gif") || file.EndsWith(".webp"))
+                                 .Select(file => new
+                                 {
+                                     Url = "/uploads/products/" + Path.GetFileName(file),
+                                     Thumbnail = "/uploads/products/thumbnails/" + Path.GetFileName(file)
+                                 })
+                                 .ToList();
+
+            return Json(files);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
+        {
+            if (upload != null && upload.Length > 0)
+            {
+                try
+                {
+                    string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
+                    string filePath = await _fileService.SaveFileAsync(upload, uploadPath);
+                    string fileUrl = Url.Content($"~/uploads/products/{filePath}");
+                    string script = $"<script>window.parent.CKEDITOR.tools.callFunction({CKEditorFuncNum}, '{fileUrl}');</script>";
+                    return Content(script, "text/html");
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { uploaded = false, error = new { message = ex.Message } });
+                }
+            }
+            return Json(new { uploaded = false, error = new { message = "Dosya yüklenemedi." } });
         }
     }
 }

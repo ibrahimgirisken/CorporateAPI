@@ -1,4 +1,5 @@
 ﻿using CoreporateAPI.Infrastructure.Operations;
+using CorporateAPI.WebUI.Abstract;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Module;
 using CorporateAPI.WebUI.DTOs.Page;
@@ -12,10 +13,11 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
     public class PageController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public PageController(IHttpClientFactory httpClientFactory)
+        private readonly IFileService _fileService;
+        public PageController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -61,6 +63,17 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
                 item => item.Url ?? item.Title,
                 (item, value) => item.Url = value
             );
+
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "pages");
+
+            // Dosyaları kaydet
+            pageDto.Image1 = await _fileService.SaveFileAsync(pageDto.Image1File, uploadPath);
+            pageDto.Image2 = await _fileService.SaveFileAsync(pageDto.Image2File, uploadPath);
+            pageDto.Image3 = await _fileService.SaveFileAsync(pageDto.Image3File, uploadPath);
+            pageDto.Video = await _fileService.SaveFileAsync(pageDto.VideoFile, uploadPath);
+
+
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PostAsJsonAsync<CreatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));
@@ -91,6 +104,15 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
                 item => item.Url ?? item.Title,
                 (item, value) => item.Url = value
             );
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "pages");
+
+            // Dosyaları kaydet
+            pageDto.Image1 = await _fileService.SaveFileAsync(pageDto.Image1File, uploadPath);
+            pageDto.Image2 = await _fileService.SaveFileAsync(pageDto.Image2File, uploadPath);
+            pageDto.Image3 = await _fileService.SaveFileAsync(pageDto.Image3File, uploadPath);
+            pageDto.Video = await _fileService.SaveFileAsync(pageDto.VideoFile, uploadPath);
+
             var client = _httpClientFactory.CreateClient("Admin");
             await client.PutAsJsonAsync<UpdatePageDTO>("Pages", pageDto);
             return RedirectToAction(nameof(Index));
@@ -100,6 +122,44 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
         {
             //await _client.DeleteAsync("Pages/{id}");
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Images()
+        {
+            string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "pages");
+            var files = Directory.GetFiles(imagesPath)
+                                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".gif") || file.EndsWith(".webp"))
+                                 .Select(file => new
+                                 {
+                                     Url = "/uploads/pages/" + Path.GetFileName(file),
+                                     Thumbnail = "/uploads/pages/thumbnails/" + Path.GetFileName(file)
+                                 })
+                                 .ToList();
+
+            return Json(files);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
+        {
+            if (upload != null && upload.Length > 0)
+            {
+                try
+                {
+                    string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "pages");
+                    string filePath = await _fileService.SaveFileAsync(upload, uploadPath);
+                    string fileUrl = Url.Content($"~/uploads/pages/{filePath}");
+                    string script = $"<script>window.parent.CKEDITOR.tools.callFunction({CKEditorFuncNum}, '{fileUrl}');</script>";
+                    return Content(script, "text/html");
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { uploaded = false, error = new { message = ex.Message } });
+                }
+            }
+            return Json(new { uploaded = false, error = new { message = "Dosya yüklenemedi." } });
         }
 
     }

@@ -113,5 +113,43 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             //await _client.DeleteAsync("Pages/{id}");
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Images()
+        {
+            string imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "homes");
+            var files = Directory.GetFiles(imagesPath)
+                                 .Where(file => file.EndsWith(".jpg") || file.EndsWith(".png") || file.EndsWith(".gif") || file.EndsWith(".webp"))
+                                 .Select(file => new
+                                 {
+                                     Url = "/uploads/homes/" + Path.GetFileName(file),
+                                     Thumbnail = "/uploads/homes/thumbnails/" + Path.GetFileName(file)
+                                 })
+                                 .ToList();
+
+            return Json(files);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
+        {
+            if (upload != null && upload.Length > 0)
+            {
+                try
+                {
+                    string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "homes");
+                    string filePath = await _fileService.SaveFileAsync(upload, uploadPath);
+                    string fileUrl = Url.Content($"~/uploads/homes/{filePath}");
+                    string script = $"<script>window.parent.CKEDITOR.tools.callFunction({CKEditorFuncNum}, '{fileUrl}');</script>";
+                    return Content(script, "text/html");
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { uploaded = false, error = new { message = ex.Message } });
+                }
+            }
+            return Json(new { uploaded = false, error = new { message = "Dosya yüklenemedi." } });
+        }
     }
 }

@@ -75,6 +75,16 @@ app.MapControllerRoute(
     pattern: "{language=en}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
+    name: "withoutAction",
+    pattern: "{language=en}/{controller}",
+    defaults: new { action = "Index" });
+
+app.MapControllerRoute(
+    name: "withoutLang",
+    pattern: "{controller}",
+    defaults:new { action = "Index" });
+
+app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
