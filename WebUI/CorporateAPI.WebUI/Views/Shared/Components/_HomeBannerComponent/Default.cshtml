@@ -78,19 +78,21 @@
     <div class="wrap">
         <div id="arrow_left" class="arrow"></div>
         <div id="slider">
-             @if (Model != null&& Model.Any())
-                  {
-                      int sliderIndex = 1;
-                             @foreach (var item in Model)
-                      {
-                          <div class="slide@(sliderIndex) slide">
-                              <div class="slide_content">
-                                  <span>@item.BannerTranslations.FirstOrDefault().Title</span>
-                              </div>
-                          </div>
-                              sliderIndex++;
-                      }
-                  }
+            @if (Model != null && Model.Any())
+{
+    int sliderIndex = 1;
+    @foreach (var item in Model)
+    {
+        var bannerTranslation = item.BannerTranslations?.FirstOrDefault();
+        <div class="slide@(sliderIndex) slide">
+            <div class="slide_content">
+                <h1 class="text-center text-white">@(bannerTranslation != null ? bannerTranslation.Title : "")</h1>
+                <div class="text-white">@Html.Raw(bannerTranslation != null ? bannerTranslation.Content: "")</div>
+            </div>
+        </div>
+        sliderIndex++;
+    }
+}
         </div>
         <div id="arrow_right" class="arrow"></div>
     </div>
@@ -143,6 +145,8 @@
       }
       slideRight();
     });
-
-    startSlide();
+           @if (Model != null && Model.Any())
+           {
+                @: startSlide();
+           }
    </script>

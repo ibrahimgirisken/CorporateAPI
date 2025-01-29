@@ -74,6 +74,8 @@
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </form>
 </div>
+@section Scripts {
+<script src="~/plugins/ckeditor/ckeditor.js"></script>
 <script>
             document.addEventListener("DOMContentLoaded", function () {
     @for (int i = 0; i < Model.CreatePageDTO.PageTranslations.Count; i++)
@@ -82,10 +84,11 @@
         <text>
                        CKEDITOR.replace("editor-@translation.Locale", {
                                     filebrowserImageBrowseUrl: '/Admin/Pages/Images',
-                                    filebrowserImageUploadUrl: '/Admin/Pages/UploadProductImage',
+                                        filebrowserImageUploadUrl: '/Admin/Pages/UploadImage',
                                 filebrowserUploadMethod: 'form'
                        });
         </text>
     }
     });
 </script>
+}

@@ -142,7 +142,7 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UploadProductImage(IFormFile upload, string CKEditorFuncNum)
+        public async Task<IActionResult> UploadImage(IFormFile upload, string CKEditorFuncNum)
         {
             if (upload != null && upload.Length > 0)
             {

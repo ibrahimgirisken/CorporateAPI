@@ -3,6 +3,7 @@ using CorporateAPI.Application.Features.Commands.Page.RemovePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
 using CorporateAPI.Application.Features.Queries.Page.GetAllPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByIdPage;
+using CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -42,6 +43,20 @@ namespace CoreporateAPI.API.Controllers
             GetByIdPageQueryResponse response = await _mediator.Send(getByIdPageQueryRequest);
             return Ok(response.PageDto);
         }
+
+        [HttpGet("Page/{UrlAddress}")]
+        public async Task<IActionResult> Get([FromRoute] GetByUrlAddressPageQueryRequest getByUrlAddressPageQueryRequest)
+        {
+            string language = Request.Headers["Accept-Language".ToString()];
+            if (string.IsNullOrEmpty(language))
+            {
+                language = "en"; // Varsayılan dil
+            }
+            getByUrlAddressPageQueryRequest.Language = language;
+            GetByUrlAddressPageQueryResponse response = await _mediator.Send(getByUrlAddressPageQueryRequest);
+            return Ok(response.pageDTO);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(CreatePageCommandRequest createPageCommandRequest)
         {
