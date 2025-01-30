@@ -13,7 +13,7 @@
         </div>
         <ul class="ud-main-menu__links d-none d-lg-flex">
 
-            @if (menuData != null)
+            @if (menuData != null &&menuData.Any())
             {
                 @foreach (var item in menuData)
                 {
@@ -27,7 +27,7 @@
                     }
                 }
             }
-            <li>
+@*             <li>
                 <a href="#">
                     Anasayfa <i class="fa-solid fa-angle-down"></i>
                 </a>
@@ -36,7 +36,7 @@
                     <li><a href="index-2.html">Home 2</a></li>
                     <li><a href="index-3.html">Home 3</a></li>
                 </ul>
-            </li>
+            </li> *@
         </ul>
 
         <div class="ud-hamburger-menu d-block d-lg-none">
@@ -71,7 +71,7 @@
     <div class="ud-side-popup__body">
         <ul class="metismenu" id="side-menu">
 
-            @if (menuData != null)
+            @if (menuData != null && menuData.Any())
             {
                 @foreach (var item in menuData)
                 {

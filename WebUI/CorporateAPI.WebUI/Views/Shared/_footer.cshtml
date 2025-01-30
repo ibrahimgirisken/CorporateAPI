@@ -28,7 +28,7 @@
                             Sunday - Friday:
                         </p>
                         <h3>
-                            9 am - 8 pm
+                            8 am - 6 pm (CST)
                         </h3>
                     </div>
                 </li>
@@ -68,7 +68,7 @@
                         <div class="srex-footer__links__content">
                             <ul class="srex-footer__links__list">
 
-                                @if (menuData != null)
+                                @if (menuData != null && menuData.Any())
                                 {
                                     @foreach (var item in menuData)
                                     {
