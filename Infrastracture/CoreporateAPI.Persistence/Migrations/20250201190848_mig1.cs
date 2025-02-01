@@ -177,9 +177,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LangCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LangCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -270,22 +270,22 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WhiteLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BlackLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Telephone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Instagram = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinkedIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Youtube = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GooglePlus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WhiteLogo = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    BlackLogo = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Telephone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Facebook = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Twitter = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Instagram = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    LinkedIn = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Youtube = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    GooglePlus = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     GoogleAnalytics = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleRecaptcha = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleTagManager = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleSiteVerification = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleMaps = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GoogleRecaptcha = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    GoogleTagManager = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    GoogleSiteVerification = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    GoogleMaps = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -466,7 +466,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -503,7 +503,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -539,7 +539,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -575,7 +575,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -609,7 +609,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -643,7 +643,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -681,7 +681,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -709,13 +709,13 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     SettingId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -743,7 +743,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),

@@ -1,4 +1,6 @@
-﻿using CorporateAPI.Domain.Entities;
+﻿using CoreporateAPI.Persistence.EntityConfigurations;
+using CoreporateAPI.Persistence.Seeds;
+using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Brand;
 using CorporateAPI.Domain.Entities.Category;
@@ -42,6 +44,13 @@ namespace CoreporateAPI.Persistence.Contexts
             // new Lang { Id = 2, LangCode = "tr", Title = "English", Image = "en" },
             // new Lang { Id = 3, LangCode = "de", Title = "Deutche", Image = "de" }
             //);
+
+            modelBuilder.ApplyConfiguration(new SettingConfiguration());
+            modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new LangConfiguration());
+            //modelBuilder.ApplyConfiguration(new LangSeed());
+            //modelBuilder.ApplyConfiguration(new SettingSeed());
+            //modelBuilder.ApplyConfiguration(new SettingTranslationSeed());
 
             modelBuilder.Entity<DatasheetTranslation>(entity =>
             {

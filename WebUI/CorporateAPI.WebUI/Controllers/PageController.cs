@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.DTOs.Setting;
+using CorporateAPI.WebUI.ViewModels.Page;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -37,7 +38,10 @@ namespace CorporateAPI.WebUI.Controllers
             ViewBag.SettingData = settingData;
             ViewBag.MenuData = menuData;
             var dataPage = await responsePage.Content.ReadFromJsonAsync<DTOs.Page.ResultPageDTO>();
-
+            var dataView = new ResultPageViewModel
+            {
+                ResultPageDTO = dataPage
+            };
             return View(dataPage);
         }
 
