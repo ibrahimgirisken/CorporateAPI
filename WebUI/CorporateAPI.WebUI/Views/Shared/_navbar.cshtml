@@ -78,7 +78,7 @@
                     @foreach (var menu in item.MenuTranslations)
                     {
                         <li>
-                            <a href="@menu.Url">
+                            <a asp-controller="Page" asp-action="GetByLanguageAndUrl" asp-route-language="@menu.Locale" asp-route-urlAddress="@menu.Url">
                                 @menu.Title
                             </a>
                         </li>
