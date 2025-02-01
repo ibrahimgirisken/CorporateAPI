@@ -270,7 +270,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WhiteLogo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WhiteLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BlackLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telephone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),

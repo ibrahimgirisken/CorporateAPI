@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250130083510_mig1")]
+    [Migration("20250201124545_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -974,7 +974,6 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WhiteLogo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Youtube")

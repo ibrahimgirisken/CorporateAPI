@@ -13,7 +13,7 @@ namespace CorporateAPI.Domain.Entities.Setting
         {
             SettingTranslations=new List<SettingTranslation>();
         }
-        public string WhiteLogo { get; set; }
+        public string? WhiteLogo { get; set; }
         public string? BlackLogo { get; set; }
         public string? Telephone { get; set; }
         public string? Email { get; set; }

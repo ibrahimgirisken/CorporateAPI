@@ -37,6 +37,12 @@ namespace CoreporateAPI.Persistence.Contexts
         {
             modelBuilder.HasDefaultSchema("dbo");
 
+            //modelBuilder.Entity<Lang>().HasData(
+            // new Lang { Id = 1, LangCode = "en", Title = "Turkish", Image = "tr" },
+            // new Lang { Id = 2, LangCode = "tr", Title = "English", Image = "en" },
+            // new Lang { Id = 3, LangCode = "de", Title = "Deutche", Image = "de" }
+            //);
+
             modelBuilder.Entity<DatasheetTranslation>(entity =>
             {
                 entity.ToTable("DatasheetTranslations");
@@ -72,6 +78,17 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasIndex(st => new { st.SettingId, st.Locale }).IsUnique();
             });
+
+
+            //modelBuilder.Entity<Setting>().HasData(
+            //   new Setting { Id = 1, Status = false }
+            //);
+
+            //modelBuilder.Entity<SettingTranslation>().HasData(
+            //    new SettingTranslation { Id = 1, Locale = "tr", SettingId = 1 },
+            //    new SettingTranslation { Id = 2, Locale = "en", SettingId = 1 },
+            //    new SettingTranslation { Id = 3, Locale = "de", SettingId = 1 }
+            //);
 
             modelBuilder.Entity<BannerTranslation>(entity =>
             {
@@ -203,6 +220,7 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasIndex(l => new { l.HomeId, l.Locale }).IsUnique();
             });
+
 
             base.OnModelCreating(modelBuilder);
         }

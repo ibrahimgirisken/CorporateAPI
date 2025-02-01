@@ -971,7 +971,6 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WhiteLogo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Youtube")
