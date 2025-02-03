@@ -18,11 +18,11 @@ namespace CorporateAPI.Domain.Entities
     public class Lang:BaseEntity
     {
         public string LangCode { get; set; }
-        public string Title { get; set; }
-        public string Image { get; set; }
+        public string? Title { get; set; }
+        public string? Image { get; set; }
         public List<BannerTranslation> BannerTranslations{ get; set; }
         public List<MenuTranslation>  MenuTranslations{ get; set; }
-        public List<PageTranslation>PageTranslations{ get; set; }
+        public List<PageTranslation> PageTranslations{ get; set; }
         public List<ModuleTranslation> ModuleTranslations{ get; set; }
         public List<HomeTranslation> HomeTranslations{ get; set; }
         public List<ProductTranslation> ProductTranslations { get; set; }
