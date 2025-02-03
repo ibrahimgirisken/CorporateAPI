@@ -38,7 +38,6 @@ namespace CoreporateAPI.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
-
             //modelBuilder.Entity<Lang>().HasData(
             // new Lang { Id = 1, LangCode = "en", Title = "Turkish", Image = "tr" },
             // new Lang { Id = 2, LangCode = "tr", Title = "English", Image = "en" },
@@ -48,9 +47,6 @@ namespace CoreporateAPI.Persistence.Contexts
             modelBuilder.ApplyConfiguration(new SettingConfiguration());
             modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new LangConfiguration());
-            //modelBuilder.ApplyConfiguration(new LangSeed());
-            //modelBuilder.ApplyConfiguration(new SettingSeed());
-            //modelBuilder.ApplyConfiguration(new SettingTranslationSeed());
 
             modelBuilder.Entity<DatasheetTranslation>(entity =>
             {
@@ -229,6 +225,10 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasIndex(l => new { l.HomeId, l.Locale }).IsUnique();
             });
+
+            //modelBuilder.ApplyConfiguration(new LangSeed());
+            //modelBuilder.ApplyConfiguration(new SettingSeed());
+            //modelBuilder.ApplyConfiguration(new SettingTranslationSeed());
 
 
             base.OnModelCreating(modelBuilder);

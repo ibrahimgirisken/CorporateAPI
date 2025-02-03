@@ -20,7 +20,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     SettingId = 1,
                     Locale = "tr",
                     Title = "Title",
-                    MetaDescription = "MetaDescription"
+                    MetaDescription = "MetaDescription",
+                    CreatedDate=DateTime.Now,
+                    UpdatedDate = DateTime.Now
                 },
                 new SettingTranslation
                 {
@@ -28,7 +30,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     SettingId = 1,
                     Locale = "en",
                     Title = "Title",
-                    MetaDescription = "MetaDescription"
+                    MetaDescription = "MetaDescription",
+                    CreatedDate= DateTime.Now,
+                    UpdatedDate = DateTime.Now
                 },
                 new SettingTranslation
                 {
@@ -36,7 +40,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     SettingId = 1,
                     Locale = "de",
                     Title = "Title",
-                    MetaDescription = "MetaDescription"
+                    MetaDescription = "MetaDescription",
+                    CreatedDate= DateTime.Now,
+                    UpdatedDate = DateTime.Now
                 });
         }
     }

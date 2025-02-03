@@ -18,7 +18,9 @@ namespace CoreporateAPI.Persistence.Seeds
                 {
                     Id = 1,
                     Telephone = "123456789",
-                    Address = "Address"
+                    Address = "Address",
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now
                 });
         }
     }
