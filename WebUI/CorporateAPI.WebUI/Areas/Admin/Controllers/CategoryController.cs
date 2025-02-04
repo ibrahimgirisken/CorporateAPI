@@ -1,9 +1,8 @@
 ﻿using CoreporateAPI.Infrastructure.Operations;
 using CorporateAPI.WebUI.Abstract;
-using CorporateAPI.WebUI.DTOs.Banner;
+
 using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
-using CorporateAPI.WebUI.DTOs.Menu;
 using CorporateAPI.WebUI.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 

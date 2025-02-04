@@ -2,6 +2,7 @@
 using CorporateAPI.WebUI.DTOs.Category;
 using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Product;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CorporateAPI.WebUI.ViewModels.Product
 {
@@ -9,7 +10,7 @@ namespace CorporateAPI.WebUI.ViewModels.Product
     {
         public UpdateProductDTO UpdateProductDTO { get; set; }
         public List<ResultLangDTO> GetLangDTOs { get; set; }
-        public List<ResultCategoryDTO> GetCategories { get; set; }
-        public List<ResultBrandDTO> GetBrands { get; set; }
+        public SelectList GetCategories { get; set; }
+        public SelectList GetBrands { get; set; }
     }
 }
