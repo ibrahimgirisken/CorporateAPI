@@ -8,11 +8,11 @@ namespace CoreporateAPI.Persistence.Seeds
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-           modelBuilder.Entity<Lang>().HasData(
-                new Lang() { Id = 1, LangCode = "tr", Title = "Türkçe", Image = "tr.png" },
-                new Lang() { Id = 2, LangCode = "en", Title = "English", Image = "en.png" },
-                new Lang() { Id = 3, LangCode = "de", Title = "Deutsch", Image = "de.png" }
-                );
+            modelBuilder.Entity<Lang>().HasData(
+                 new Lang() { Id = 1, LangCode = "tr", Title = "Türkçe", Image = "tr.png", IsDeleted = false, CreatedDate = DateTime.UtcNow, UpdatedDate = DateTime.UtcNow },
+                 new Lang() { Id = 2, LangCode = "en", Title = "English", Image = "en.png", IsDeleted = false, CreatedDate = DateTime.UtcNow, UpdatedDate = DateTime.UtcNow },
+                 new Lang() { Id = 3, LangCode = "de", Title = "Deutsch", Image = "de.png", IsDeleted = false, CreatedDate = DateTime.UtcNow, UpdatedDate = DateTime.UtcNow }
+                 );
 
             modelBuilder.Entity<Setting>().HasData(
                 new Setting()
@@ -20,7 +20,10 @@ namespace CoreporateAPI.Persistence.Seeds
                     Id = 1,
                     Telephone = "123456789",
                     Address = "Address",
-                    Status = true
+                    Status = true,
+                    IsDeleted = false,
+                    CreatedDate = System.DateTime.Now,
+                    UpdatedDate = System.DateTime.Now
                 });
 
             modelBuilder.Entity<SettingTranslation>().HasData(
@@ -31,7 +34,10 @@ namespace CoreporateAPI.Persistence.Seeds
                     SettingId = 1,
                     Locale = "tr",
                     Title = "Türkçe Title",
-                    MetaDescription = "Türkçe Description"
+                    MetaDescription = "Türkçe Description",
+                    IsDeleted = false,
+                    CreatedDate = System.DateTime.Now,
+                    UpdatedDate = System.DateTime.Now
                 },
                 new SettingTranslation()
                 {
@@ -39,7 +45,10 @@ namespace CoreporateAPI.Persistence.Seeds
                     SettingId = 1,
                     Locale = "en",
                     Title = "English Title",
-                    MetaDescription = "English Description"
+                    MetaDescription = "English Description",
+                    IsDeleted = false,
+                    CreatedDate = System.DateTime.Now,
+                    UpdatedDate = System.DateTime.Now
                 },
                 new SettingTranslation()
                 {
@@ -47,9 +56,11 @@ namespace CoreporateAPI.Persistence.Seeds
                     SettingId = 1,
                     Locale = "de",
                     Title = "Deutsch Title",
-                    MetaDescription = "Deutsch Description"
-                }
-                );
+                    MetaDescription = "Deutsch Description",
+                    IsDeleted = false,
+                    CreatedDate = System.DateTime.Now,
+                    UpdatedDate = System.DateTime.Now
+                });
         }
     }
 }
