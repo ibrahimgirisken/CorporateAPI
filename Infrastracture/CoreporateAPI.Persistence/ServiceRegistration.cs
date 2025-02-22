@@ -25,10 +25,19 @@ namespace CoreporateAPI.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddDbContext<CorporateAPIDbContext>(options => {
+            services.AddDbContext<CorporateAPIDbContext>(options =>
+            {
                 options.UseSqlServer(Configurations.ConnectionString);
                 options.EnableSensitiveDataLogging();
-                });
+            });
+            using (var serviceProvider = services.BuildServiceProvider())
+            {
+                using (var scope = serviceProvider.CreateScope())
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<CorporateAPIDbContext>();
+                    dbContext.Database.Migrate();  // Otomatik migration işlemi
+                }
+            }
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.Password.RequiredLength = 3;
@@ -36,7 +45,7 @@ namespace CoreporateAPI.Persistence
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-                }
+            }
 
             ).AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IMenuReadRepository, MenuReadRepository>();
@@ -54,23 +63,23 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<ILangReadRepository, LangReadRepository>();
             services.AddScoped<ILangWriteRepository, LangWriteRepository>();
 
-            services.AddScoped<IBannerReadRepository,BannerReadRepository>();
+            services.AddScoped<IBannerReadRepository, BannerReadRepository>();
             services.AddScoped<IBannerWriteRepository, BannerWriteRepository>();
 
-            services.AddScoped<IBrandReadRepository,BrandReadRepository>();
+            services.AddScoped<IBrandReadRepository, BrandReadRepository>();
             services.AddScoped<IBrandWriteRepository, BrandWriteRepository>();
 
-            services.AddScoped<IProductReadRepository,ProductReadRepository>();
+            services.AddScoped<IProductReadRepository, ProductReadRepository>();
             services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
 
-            services.AddScoped<ICategoryReadRepository,CategoryReadRepository>();
+            services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
 
-            services.AddScoped<IDatasheetReadRepository,DatasheetReadRepository>();
-            services.AddScoped<IDatasheetWriteRepository,DatasheetWriteRepository>();
+            services.AddScoped<IDatasheetReadRepository, DatasheetReadRepository>();
+            services.AddScoped<IDatasheetWriteRepository, DatasheetWriteRepository>();
 
-            services.AddScoped<ISettingReadRepository,SettingReadRepository>();
-            services.AddScoped<ISettingWriteRepository,SettingWriteRepository>();
+            services.AddScoped<ISettingReadRepository, SettingReadRepository>();
+            services.AddScoped<ISettingWriteRepository, SettingWriteRepository>();
 
         }
     }
