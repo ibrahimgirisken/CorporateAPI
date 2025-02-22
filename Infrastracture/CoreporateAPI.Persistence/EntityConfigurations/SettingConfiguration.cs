@@ -1,11 +1,12 @@
 ﻿using CorporateAPI.Domain.Entities.Setting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CoreporateAPI.Persistence.EntityConfigurations
 {
     public class SettingConfiguration:IEntityTypeConfiguration<Setting>
     {
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Setting> builder)
+        public void Configure(EntityTypeBuilder<Setting> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x=>x.Id).UseIdentityColumn();

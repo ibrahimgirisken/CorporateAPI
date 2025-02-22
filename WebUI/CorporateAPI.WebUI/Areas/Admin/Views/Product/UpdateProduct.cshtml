@@ -5,37 +5,18 @@
 }
 <div class="container-fluid my-5">
     <form method="post" asp-action="UpdateProduct" enctype="multipart/form-data">
-        @if (Model.GetBrands.Count > 0)
-        {
             <div class="form-group">
                 <label asp-for="UpdateProductDTO.BrandId"></label>
-                <select class="form-select" asp-for="UpdateProductDTO.BrandId">
+                <select class="form-select" asp-for="UpdateProductDTO.BrandId" asp-items="Model.GetBrands">
                     <option value=null selected>Marka Seçin</option>
-                    @foreach (var item in Model.GetBrands)
-                    {
-                        <option value="@item.Id">
-                            @item.Name
-                        </option>
-                    }
                 </select>
             </div>
-
-        }
-        @if (Model.GetCategories.Count > 0)
-        {
-            <div class="form-group">
+           <div class="form-group">
                 <label asp-for="UpdateProductDTO.CategoryId"></label>
-                <select class="form-select" asp-for="UpdateProductDTO.CategoryId">
+                <select class="form-select" asp-for="UpdateProductDTO.CategoryId" asp-items="@Model.GetCategories">
                     <option value=null selected>Bir kategori seçin</option>
-                    @foreach (var item in Model.GetCategories)
-                    {
-                        <option value="@item.Id">
-                            @item.CategoryTranslations.FirstOrDefault(x => x.Locale == "tr")?.Title
-                        </option>
-                    }
                 </select>
             </div>
-        }
         <input type="hidden" asp-for="UpdateProductDTO.Id" />
         <div class="form-group">
             <label asp-for="UpdateProductDTO.Code"></label>

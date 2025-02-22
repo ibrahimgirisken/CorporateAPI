@@ -6,6 +6,7 @@ using CorporateAPI.WebUI.DTOs.Lang;
 using CorporateAPI.WebUI.DTOs.Product;
 using CorporateAPI.WebUI.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SixLabors.ImageSharp;
 
 namespace CorporateAPI.WebUI.Areas.Admin.Controllers
@@ -49,12 +50,14 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
                     Locale = lang.LangCode
                 }).ToList(),
             };
+            var selectedBrand = new SelectList(brands.Select(b => new {b.Id,b.Name}),"Id", "Name");
+            var selectedCategory=new SelectList(categories.Select(c => new {c.Id,Name=c.CategoryTranslations.FirstOrDefault(t=>t.Locale=="en")?.Name}),"Id", "Name");
             var model = new CreateProductViewModel
             {
                 CreateProductDTO = productDto,
                 GetLangDTOs = langs,
-                GetCategories = categories,
-                GetBrands = brands
+                GetCategories = selectedCategory,
+                GetBrands = selectedBrand
             };
             return View(model);
         }
@@ -92,12 +95,14 @@ namespace CorporateAPI.WebUI.Areas.Admin.Controllers
             var categories = await client.GetFromJsonAsync<List<ResultCategoryDTO>>("Categories?IncludeAllLanguges=true");
             var brands = await client.GetFromJsonAsync<List<ResultBrandDTO>>("Brands?IncludeAllLanguges=true");
             var resultProductDTO = await client.GetFromJsonAsync<UpdateProductDTO>($"Products/{id}");
+            var selectedCategory = new SelectList(categories.Select(c => new { c.Id, Name = c.CategoryTranslations.FirstOrDefault(t => t.Locale == "en")?.Name }), "Id", "Name");
+            var selectedBrand = new SelectList(brands.Select(b => new { b.Id, b.Name }), "Id", "Name");
             var model = new UpdateProductViewModel
             {
                 UpdateProductDTO = resultProductDTO,
                 GetLangDTOs = langs,
-                GetBrands = brands,
-                GetCategories = categories
+                GetBrands = selectedBrand,
+                GetCategories = selectedCategory
             };
             return View(model);
         }
