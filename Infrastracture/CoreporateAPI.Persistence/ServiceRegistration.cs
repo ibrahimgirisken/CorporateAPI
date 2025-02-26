@@ -30,14 +30,14 @@ namespace CoreporateAPI.Persistence
                 options.UseSqlServer(Configurations.ConnectionString);
                 options.EnableSensitiveDataLogging();
             });
-            using (var serviceProvider = services.BuildServiceProvider())
-            {
-                using (var scope = serviceProvider.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<CorporateAPIDbContext>();
-                    dbContext.Database.Migrate();  // Otomatik migration işlemi
-                }
-            }
+            //using (var serviceProvider = services.BuildServiceProvider())
+            //{
+            //    using (var scope = serviceProvider.CreateScope())
+            //    {
+            //        var dbContext = scope.ServiceProvider.GetRequiredService<CorporateAPIDbContext>();
+            //        dbContext.Database.Migrate();  // Otomatik migration işlemi
+            //    }
+            //}
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.Password.RequiredLength = 3;

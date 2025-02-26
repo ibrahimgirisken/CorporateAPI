@@ -208,11 +208,11 @@ namespace CoreporateAPI.Persistence.Contexts
             });
 
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new LangConfiguration());
-            modelBuilder.ApplyConfiguration(new SettingConfiguration());
-            modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
+            //modelBuilder.ApplyConfiguration(new LangConfiguration());
+            //modelBuilder.ApplyConfiguration(new SettingConfiguration());
+            //modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
 
-            modelBuilder.Seed();
+            //modelBuilder.Seed();
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
