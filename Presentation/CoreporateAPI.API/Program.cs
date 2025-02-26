@@ -1,15 +1,20 @@
 using CoreporateAPI.Infrastracture;
 using CoreporateAPI.Infrastructure.Filters;
 using CoreporateAPI.Persistence;
+using CoreporateAPI.Persistence.Contexts;
 using CorporateAPI.Application;
 using CorporateAPI.Application.Validators.Pages;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 
+
+//AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
+//System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceServices();
@@ -61,6 +66,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<CorporateAPIDbContext>();
+    dbContext.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {

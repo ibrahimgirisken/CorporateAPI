@@ -11,12 +11,17 @@ namespace CoreporateAPI.Persistence
     {
         public static string ConnectionString
         {
-            get{
+            get
+            {
+                string basePath = Directory.GetCurrentDirectory();
                 ConfigurationManager configurationManager = new();
-                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/CoreporateAPI.API"));
+                configurationManager.SetBasePath(basePath);
                 configurationManager.AddJsonFile("appsettings.json");
+
                 return configurationManager.GetConnectionString("MsSql");
             }
         }
+
+
     }
 }
