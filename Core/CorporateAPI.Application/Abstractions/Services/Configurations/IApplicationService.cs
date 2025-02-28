@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorporateAPI.Application.Services.Configurations
+namespace CorporateAPI.Application.Abstractions.Services.Configurations
 {
     public interface IApplicationService
     {

@@ -1,7 +1,7 @@
 ﻿using CoreporateAPI.Infrastracture.Services.Token;
 using CoreporateAPI.Infrastructure.Services.Configurations;
+using CorporateAPI.Application.Abstractions.Services.Configurations;
 using CorporateAPI.Application.Abstractions.Token;
-using CorporateAPI.Application.Services.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

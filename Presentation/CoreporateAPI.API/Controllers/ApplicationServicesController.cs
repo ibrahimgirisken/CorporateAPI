@@ -1,4 +1,4 @@
-﻿using CorporateAPI.Application.Services.Configurations;
+﻿using CorporateAPI.Application.Abstractions.Services.Configurations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
