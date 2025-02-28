@@ -18,6 +18,8 @@ using CorporateAPI.Application.Repositories.Datasheet;
 using CoreporateAPI.Persistence.Repositories.Datasheet;
 using CorporateAPI.Application.Repositories.Setting;
 using CoreporateAPI.Persistence.Repositories.Setting;
+using CorporateAPI.Application.Abstractions.Services;
+using CoreporateAPI.Persistence.Services;
 
 namespace CoreporateAPI.Persistence
 {
@@ -80,6 +82,8 @@ namespace CoreporateAPI.Persistence
 
             services.AddScoped<ISettingReadRepository, SettingReadRepository>();
             services.AddScoped<ISettingWriteRepository, SettingWriteRepository>();
+
+            services.AddScoped<IRoleService,RoleService>();
 
         }
     }

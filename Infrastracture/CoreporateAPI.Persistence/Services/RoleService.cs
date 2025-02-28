@@ -11,21 +11,40 @@ namespace CoreporateAPI.Persistence.Services
 {
     public class RoleService : IRoleService
     {
-        readonly RoleManager<AppRole> roleManager;
+        readonly RoleManager<AppRole> _roleManager;
 
         public RoleService(RoleManager<AppRole> roleManager)
         {
-            this.roleManager = roleManager;
+            this._roleManager = roleManager;
         }
 
-        public Task CreateRole(string name)
+        public async Task<bool> CreateRole(string name)
         {
-            throw new NotImplementedException();
+         IdentityResult result= await _roleManager.CreateAsync(new() { Name = name });
+            return result.Succeeded;
         }
 
-        public Task DeleteRole(string name)
+        public async Task<bool> DeleteRole(string name)
         {
-            throw new NotImplementedException();
+            IdentityResult result=await _roleManager.DeleteAsync(new() { Name= name });
+            return result.Succeeded;
+        }
+
+        public IDictionary<string, string> GetAllRoles()
+        {
+            return _roleManager.Roles.ToDictionary(role=>role.Id, role => role.Name);
+        }
+
+        public async Task<(string id, string name)> GetRoleById(string id)
+        {
+           string role=await _roleManager.GetRoleIdAsync(new() { Id = id });
+            return (id, role);
+        }
+
+        public async Task<bool> UpdateRole(string id,string name)
+        {
+           IdentityResult result=await _roleManager.UpdateAsync(new() { Id = id, Name = name });
+            return result.Succeeded;
         }
     }
 }
