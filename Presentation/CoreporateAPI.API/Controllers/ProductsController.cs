@@ -1,4 +1,7 @@
-﻿using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.RemoveProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetAllProduct;
@@ -19,7 +22,8 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
+        [AuthorizeDefinition(Menu=AuthorizeDefinitionConstants.Products,ActionType =ActionType.Reading,Definition ="Get All Product")]
+        public async Task<IActionResult> GetAllProduct([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
@@ -36,28 +40,32 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Reading, Definition = "Get By Id Product")]
+        public async Task<IActionResult> GetByIdBanner([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
             GetByIdProductQueryResponse response=await _mediator.Send(getByIdProductQueryRequest);
             return Ok(response.ProductDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Writing, Definition = "Create Product")]
+        public async Task<IActionResult> CreateProduct(CreateProductCommandRequest createProductCommandRequest)
         {
             CreateProductCommandResponse response=await _mediator.Send(createProductCommandRequest);
             return Ok(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateProductCommandRequest updateProductCommandRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Updating, Definition = "Update Product")]
+        public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest updateProductCommandRequest)
         {
             UpdateProductCommandResponse response=await _mediator.Send(updateProductCommandRequest);
             return Ok(response);
         }
 
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Deleting, Definition = "Remove Product Item")]
+        public async Task<IActionResult> RemoveProductItem([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse response=await _mediator.Send(removeProductCommandRequest);
             return Ok(response);
