@@ -17,6 +17,7 @@ namespace CoreporateAPI.Infrastructure.Services.Configurations
         {
             Assembly assembly = Assembly.GetAssembly(type);
             var controllers = assembly.GetTypes().Where(t => t.IsAssignableTo(typeof(ControllerBase)));
+            List<Menu> menus = new();
             foreach (var controller in controllers)
             {
                 var actions = controller.GetMethods().Where(m => m.IsDefined(typeof(AuthorizeDefinitionAttribute)));
@@ -25,9 +26,20 @@ namespace CoreporateAPI.Infrastructure.Services.Configurations
                     foreach (var action in actions)
                     {
                         var attributes = action.GetCustomAttributes(true);
-                        if (attributes!=null)
+                        if (attributes != null)
                         {
-                           var authorizeDefinitionAttribute=attributes.FirstOrDefault(a => a.GetType() == typeof(AuthorizeDefinitionAttribute)) as AuthorizeDefinitionAttribute;
+                            Menu menu;
+                            var authorizeDefinitionAttribute = attributes.FirstOrDefault(a => a.GetType() == typeof(AuthorizeDefinitionAttribute)) as AuthorizeDefinitionAttribute;
+                            if (!menus.Any(m => m.MenuName == authorizeDefinitionAttribute.Menu))
+                                menu = new() { MenuName = authorizeDefinitionAttribute.Menu };
+                            else
+                                menu = menus.FirstOrDefault(m => m.MenuName == authorizeDefinitionAttribute.Menu);
+
+                            CorporateAPI.Application.DTOs.Configuration.Action _action = new()
+                            {
+                                ActionType = authorizeDefinitionAttribute.ActionType,
+                                Definition = authorizeDefinitionAttribute.Definition
+                            };
                         }
                     }
                 }
