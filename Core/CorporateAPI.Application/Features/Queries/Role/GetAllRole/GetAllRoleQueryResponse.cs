@@ -8,5 +8,6 @@ namespace CorporateAPI.Application.Features.Queries.Role.GetAllRole
 {
     public class GetAllRoleQueryResponse
     {
+        public IDictionary<string,string> Roles { get; set; }
     }
 }

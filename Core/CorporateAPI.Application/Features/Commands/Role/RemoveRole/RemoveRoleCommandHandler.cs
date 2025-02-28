@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Abstractions.Services;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,20 @@ namespace CorporateAPI.Application.Features.Commands.Role.RemoveRole
 {
     public class RemoveRoleCommandHandler : IRequestHandler<RemoveRoleCommandRequest, RemoveRoleCommandResponse>
     {
-        public Task<RemoveRoleCommandResponse> Handle(RemoveRoleCommandRequest request, CancellationToken cancellationToken)
+        readonly IRoleService _roleService;
+
+        public RemoveRoleCommandHandler(IRoleService roleService)
         {
-            throw new NotImplementedException();
+            _roleService = roleService;
+        }
+
+        public async Task<RemoveRoleCommandResponse> Handle(RemoveRoleCommandRequest request, CancellationToken cancellationToken)
+        {
+            var result=await _roleService.DeleteRole(request.Name);
+            return new()
+            {
+                Succeeded = result
+            };
         }
     }
 }
