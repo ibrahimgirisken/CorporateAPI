@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Services.Configurations
 {
     public interface IApplicationService
     {
-        List<Menu> GetAuthorizeDefinitionEndpoints();
+        List<Menu> GetAuthorizeDefinitionEndpoints(Type type);
     }
 }

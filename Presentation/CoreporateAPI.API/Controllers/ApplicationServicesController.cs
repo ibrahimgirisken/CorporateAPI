@@ -1,5 +1,4 @@
 ﻿using CorporateAPI.Application.Services.Configurations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -14,10 +13,10 @@ namespace CoreporateAPI.API.Controllers
         {
             _applicationService = applicationService;
         }
-
+        [HttpGet]
         public IActionResult GetAuthorizeDefinitionEndpoints()
         {
-           var datas= _applicationService.GetAuthorizeDefinitionEndpoints();
+           var datas= _applicationService.GetAuthorizeDefinitionEndpoints(typeof(Program));
             return Ok(datas);
         }
     }
