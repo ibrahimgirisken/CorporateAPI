@@ -19,10 +19,11 @@ namespace CorporateAPI.Application.Features.Queries.Role.GetAllRole
 
         public Task<GetAllRoleQueryResponse> Handle(GetAllRoleQueryRequest request, CancellationToken cancellationToken)
         {
-            var result = _roleService.GetAllRoles();
+            var (datas,count) = _roleService.GetAllRoles(request.Page,request.Size);
             return Task.FromResult(new GetAllRoleQueryResponse
             {
-                Roles = result
+                Datas = datas,
+                TotalCount = count
             });
         }
     }

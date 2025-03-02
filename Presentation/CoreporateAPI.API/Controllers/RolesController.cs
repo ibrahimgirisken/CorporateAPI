@@ -15,7 +15,7 @@ namespace CoreporateAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Admin")]
+    //[Authorize(AuthenticationSchemes = "Admin")]
     public class RolesController : ControllerBase
     {
         readonly IMediator _mediator;
@@ -54,7 +54,7 @@ namespace CoreporateAPI.API.Controllers
             UpdateRoleCommandResponse response=await _mediator.Send(updateRoleCommandRequest);
             return Ok(response);
         }
-        [HttpDelete("{name}")]
+        [HttpDelete("{Id}")]
         [AuthorizeDefinition(ActionType = ActionType.Deleting, Definition = "Remove Role", Menu = AuthorizeDefinitionConstants.Roles)]
         public async Task<IActionResult> RemoveRole([FromRoute]RemoveRoleCommandRequest removeRoleCommandRequest)
         {

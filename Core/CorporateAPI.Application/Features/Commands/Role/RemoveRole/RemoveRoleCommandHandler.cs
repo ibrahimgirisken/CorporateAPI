@@ -19,7 +19,7 @@ namespace CorporateAPI.Application.Features.Commands.Role.RemoveRole
 
         public async Task<RemoveRoleCommandResponse> Handle(RemoveRoleCommandRequest request, CancellationToken cancellationToken)
         {
-            var result=await _roleService.DeleteRole(request.Name);
+            var result=await _roleService.DeleteRole(request.Id);
             return new()
             {
                 Succeeded = result

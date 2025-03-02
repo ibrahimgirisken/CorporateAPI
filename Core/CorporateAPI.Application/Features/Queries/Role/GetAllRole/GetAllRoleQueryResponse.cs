@@ -8,6 +8,7 @@ namespace CorporateAPI.Application.Features.Queries.Role.GetAllRole
 {
     public class GetAllRoleQueryResponse
     {
-        public IDictionary<string,string> Roles { get; set; }
+        public object Datas{ get; set; }
+        public int  TotalCount { get; set; }
     }
 }
