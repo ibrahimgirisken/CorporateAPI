@@ -86,9 +86,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -199,9 +202,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -282,9 +288,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -384,9 +393,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -514,17 +526,20 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LangCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -532,6 +547,38 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "tr.png",
+                            IsDeleted = false,
+                            LangCode = "tr",
+                            Title = "Türkçe",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "en.png",
+                            IsDeleted = false,
+                            LangCode = "en",
+                            Title = "English",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "de.png",
+                            IsDeleted = false,
+                            LangCode = "de",
+                            Title = "Deutsch",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
@@ -587,9 +634,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
@@ -671,9 +721,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("ModuleData")
                         .HasColumnType("nvarchar(max)");
@@ -760,9 +813,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -871,9 +927,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -915,68 +974,95 @@ namespace CoreporateAPI.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("BlackLogo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Facebook")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("GoogleAnalytics")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoogleMaps")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("GooglePlus")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("GoogleRecaptcha")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("GoogleSiteVerification")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("GoogleTagManager")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("Instagram")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LinkedIn")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.Property<string>("Telephone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Twitter")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WhiteLogo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Youtube")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Settings", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Address",
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Status = true,
+                            Telephone = "123456789",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Setting.SettingTranslation", b =>
@@ -993,18 +1079,24 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("MetaDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("SettingId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -1017,6 +1109,44 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("SettingTranslations", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            LangId = 0,
+                            Locale = "tr",
+                            MetaDescription = "Türkçe Description",
+                            SettingId = 1,
+                            Title = "Türkçe Title",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            LangId = 0,
+                            Locale = "en",
+                            MetaDescription = "English Description",
+                            SettingId = 1,
+                            Title = "English Title",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            LangId = 0,
+                            Locale = "de",
+                            MetaDescription = "Deutsch Description",
+                            SettingId = 1,
+                            Title = "Deutsch Title",
+                            UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1133,7 +1263,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("BannerTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1142,7 +1272,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Navigation("Banner");
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.Category", b =>
@@ -1162,7 +1292,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("CategoryTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1171,7 +1301,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.DatasheetTranslation", b =>
@@ -1182,7 +1312,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("DatasheetTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1191,7 +1321,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Navigation("Datasheet");
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.HomeTranslation", b =>
@@ -1202,7 +1332,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("HomeTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1211,7 +1341,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Navigation("Home");
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
@@ -1225,7 +1355,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.MenuTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("MenuTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1238,14 +1368,14 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
 
                     b.Navigation("Menu");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("ModuleTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1258,14 +1388,14 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
 
                     b.Navigation("Module");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("PageTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1278,7 +1408,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
 
                     b.Navigation("Page");
                 });
@@ -1300,7 +1430,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Product.ProductTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("ProductTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1313,14 +1443,14 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
 
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Setting.SettingTranslation", b =>
                 {
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Language")
+                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("SettingTranslations")
                         .HasForeignKey("Locale")
                         .HasPrincipalKey("LangCode")
@@ -1333,7 +1463,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Language");
+                    b.Navigation("Lang");
 
                     b.Navigation("Setting");
                 });

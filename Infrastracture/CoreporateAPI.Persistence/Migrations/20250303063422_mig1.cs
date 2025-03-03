@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CoreporateAPI.Persistence.Migrations
 {
     /// <inheritdoc />
@@ -177,9 +179,9 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LangCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LangCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -270,22 +272,22 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WhiteLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BlackLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Telephone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Instagram = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinkedIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Youtube = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GooglePlus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WhiteLogo = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    BlackLogo = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Telephone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Facebook = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Twitter = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Instagram = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    LinkedIn = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Youtube = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    GooglePlus = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     GoogleAnalytics = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleRecaptcha = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleTagManager = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleSiteVerification = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoogleMaps = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GoogleRecaptcha = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    GoogleTagManager = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    GoogleSiteVerification = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
+                    GoogleMaps = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -466,7 +468,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -503,7 +506,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -539,7 +543,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -575,7 +580,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -609,7 +615,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -643,7 +650,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -681,7 +689,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -709,13 +718,14 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     SettingId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Locale = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -743,7 +753,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(3)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -754,7 +764,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    LangId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -773,6 +784,34 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "Languages",
+                columns: new[] { "Id", "CreatedDate", "Image", "IsDeleted", "LangCode", "Title", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "tr.png", false, "tr", "Türkçe", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "en.png", false, "en", "English", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "de.png", false, "de", "Deutsch", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "Settings",
+                columns: new[] { "Id", "Address", "BlackLogo", "CreatedDate", "Email", "Facebook", "GoogleAnalytics", "GoogleMaps", "GooglePlus", "GoogleRecaptcha", "GoogleSiteVerification", "GoogleTagManager", "Instagram", "IsDeleted", "LinkedIn", "Status", "Telephone", "Twitter", "UpdatedDate", "WhiteLogo", "Youtube" },
+                values: new object[] { 1, "Address", null, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, null, null, false, null, true, "123456789", null, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "SettingTranslations",
+                columns: new[] { "Id", "CreatedDate", "IsDeleted", "LangId", "Locale", "MetaDescription", "SettingId", "Title", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 0, "tr", "Türkçe Description", 1, "Türkçe Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 0, "en", "English Description", 1, "English Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 0, "de", "Deutsch Description", 1, "Deutsch Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(

@@ -9,9 +9,9 @@ namespace CoreporateAPI.Persistence.Seeds
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Lang>().HasData(
-                 new Lang() { Id = 1, LangCode = "tr", Title = "Türkçe", Image = "tr.png", IsDeleted = false, CreatedDate = DateTime.UtcNow, UpdatedDate = DateTime.UtcNow },
-                 new Lang() { Id = 2, LangCode = "en", Title = "English", Image = "en.png", IsDeleted = false, CreatedDate = DateTime.UtcNow, UpdatedDate = DateTime.UtcNow },
-                 new Lang() { Id = 3, LangCode = "de", Title = "Deutsch", Image = "de.png", IsDeleted = false, CreatedDate = DateTime.UtcNow, UpdatedDate = DateTime.UtcNow }
+                 new Lang() { Id = 1, LangCode = "tr", Title = "Türkçe", Image = "tr.png", IsDeleted = false, CreatedDate = new DateTime(2025,1,1), UpdatedDate = new DateTime(2025,1,1) },
+                 new Lang() { Id = 2, LangCode = "en", Title = "English", Image = "en.png", IsDeleted = false, CreatedDate = new DateTime(2025,1,1), UpdatedDate = new DateTime(2025,1,1) },
+                 new Lang() { Id = 3, LangCode = "de", Title = "Deutsch", Image = "de.png", IsDeleted = false, CreatedDate = new DateTime(2025,1,1), UpdatedDate = new DateTime(2025,1,1) }
                  );
 
             modelBuilder.Entity<Setting>().HasData(
@@ -22,8 +22,8 @@ namespace CoreporateAPI.Persistence.Seeds
                     Address = "Address",
                     Status = true,
                     IsDeleted = false,
-                    CreatedDate = System.DateTime.Now,
-                    UpdatedDate = System.DateTime.Now
+                    CreatedDate = new DateTime(2025,1,1),
+                    UpdatedDate = new DateTime(2025,1,1)
                 });
 
             modelBuilder.Entity<SettingTranslation>().HasData(
@@ -36,8 +36,8 @@ namespace CoreporateAPI.Persistence.Seeds
                     Title = "Türkçe Title",
                     MetaDescription = "Türkçe Description",
                     IsDeleted = false,
-                    CreatedDate = System.DateTime.Now,
-                    UpdatedDate = System.DateTime.Now
+                    CreatedDate = new DateTime(2025,1,1),
+                    UpdatedDate = new DateTime(2025,1,1)
                 },
                 new SettingTranslation()
                 {
@@ -47,8 +47,8 @@ namespace CoreporateAPI.Persistence.Seeds
                     Title = "English Title",
                     MetaDescription = "English Description",
                     IsDeleted = false,
-                    CreatedDate = System.DateTime.Now,
-                    UpdatedDate = System.DateTime.Now
+                    CreatedDate = new DateTime(2025,1,1),
+                    UpdatedDate = new DateTime(2025,1,1)
                 },
                 new SettingTranslation()
                 {
@@ -58,8 +58,8 @@ namespace CoreporateAPI.Persistence.Seeds
                     Title = "Deutsch Title",
                     MetaDescription = "Deutsch Description",
                     IsDeleted = false,
-                    CreatedDate = System.DateTime.Now,
-                    UpdatedDate = System.DateTime.Now
+                    CreatedDate = new DateTime(2025,1,1),
+                    UpdatedDate = new DateTime(2025,1,1)
                 });
         }
     }

@@ -48,7 +48,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(dt => dt.DatasheetId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(dl => dl.Language)
+                entity.HasOne(dl => dl.Lang)
                 .WithMany(dt => dt.DatasheetTranslations)
                 .HasForeignKey(dl => dl.Locale)
                 .HasPrincipalKey(dt => dt.LangCode)
@@ -66,7 +66,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(st => st.SettingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(sl => sl.Language)
+                entity.HasOne(sl => sl.Lang)
                 .WithMany(st => st.SettingTranslations)
                 .HasForeignKey(sl => sl.Locale)
                 .HasPrincipalKey(st => st.LangCode)
@@ -85,7 +85,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(bt => bt.BannerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(bt => bt.Language)
+                entity.HasOne(bt => bt.Lang)
                 .WithMany(l => l.BannerTranslations)
                 .HasForeignKey(bt => bt.Locale)
                 .HasPrincipalKey(l => l.LangCode)
@@ -103,7 +103,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(pt => pt.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(pl => pl.Language)
+                entity.HasOne(pl => pl.Lang)
                  .WithMany(l => l.ProductTranslations)
                  .HasForeignKey(pl => pl.Locale)
                  .HasPrincipalKey(l => l.LangCode)
@@ -121,7 +121,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(pt => pt.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(l => l.Language)
+                entity.HasOne(l => l.Lang)
                  .WithMany(cl => cl.CategoryTranslations)
                  .HasForeignKey(cl => cl.Locale)
                  .HasPrincipalKey(l => l.LangCode)
@@ -140,7 +140,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(mt => mt.MenuId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(ml => ml.Language)
+                entity.HasOne(ml => ml.Lang)
                 .WithMany(l => l.MenuTranslations)
                 .HasForeignKey(ml => ml.Locale)
                 .HasPrincipalKey(l => l.LangCode)
@@ -158,7 +158,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(pt => pt.PageId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(pt => pt.Language)
+                entity.HasOne(pt => pt.Lang)
                 .WithMany(l => l.PageTranslations)
                 .HasForeignKey(pt => pt.Locale)
                 .HasPrincipalKey(l => l.LangCode)
@@ -175,7 +175,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(mt => mt.ModuleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(ml => ml.Language)
+                entity.HasOne(ml => ml.Lang)
                 .WithMany(l => l.ModuleTranslations)
                 .HasForeignKey(ml => ml.Locale)
                 .HasPrincipalKey(l => l.LangCode)
@@ -198,7 +198,7 @@ namespace CoreporateAPI.Persistence.Contexts
                 .HasForeignKey(ht => ht.HomeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(ht => ht.Language)
+                entity.HasOne(ht => ht.Lang)
                 .WithMany(l => l.HomeTranslations)
                 .HasForeignKey(bt => bt.Locale)
                 .HasPrincipalKey(l => l.LangCode)
@@ -207,12 +207,13 @@ namespace CoreporateAPI.Persistence.Contexts
                 entity.HasIndex(l => new { l.HomeId, l.Locale }).IsUnique();
             });
 
-            base.OnModelCreating(modelBuilder);
-            //modelBuilder.ApplyConfiguration(new LangConfiguration());
-            //modelBuilder.ApplyConfiguration(new SettingConfiguration());
-            //modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new LangConfiguration());
+            modelBuilder.ApplyConfiguration(new SettingConfiguration());
+            modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
 
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
+            base.OnModelCreating(modelBuilder);
+
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
