@@ -6,6 +6,8 @@ using CorporateAPI.Domain.Entities.Brand;
 using CorporateAPI.Domain.Entities.Category;
 using CorporateAPI.Domain.Entities.Common;
 using CorporateAPI.Domain.Entities.Datasheet;
+using CorporateAPI.Domain.Entities.Endpoint;
+using CorporateAPI.Domain.Entities.EndpointMenu;
 using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Menu;
@@ -33,6 +35,8 @@ namespace CoreporateAPI.Persistence.Contexts
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Lang> Languages { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Endpoint> Endpoints{ get; set; }
+        public DbSet<EndpointMenu> EndpointMenus{ get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
