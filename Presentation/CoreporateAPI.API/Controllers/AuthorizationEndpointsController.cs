@@ -7,6 +7,7 @@ namespace CoreporateAPI.API.Controllers
     [ApiController]
     public class AuthorizationEndpointsController : ControllerBase
     {
+        [HttpGet]
         public async Task<IActionResult> AssignRoleEndpoint()
         {
             return null;
