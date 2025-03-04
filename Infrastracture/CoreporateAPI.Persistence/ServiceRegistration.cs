@@ -23,6 +23,7 @@ using CoreporateAPI.Persistence.Services;
 using CoreporateAPI.Persistence.Repositories.Endpoint;
 using CorporateAPI.Application.Repositories.Endpoint;
 using CorporateAPI.Application.Repositories.EndpointMenu;
+using CoreporateAPI.Persistence.Repositories.EndpointMenu;
 
 namespace CoreporateAPI.Persistence
 {
@@ -81,8 +82,8 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IEndpointReadRepository, EndpointReadRepository>();
             services.AddScoped<IEndpointWriteRepository, EndpointWriteRepository>();
 
-            services.AddScoped<IEndpointMenuReadRepository, IEndpointMenuReadRepository>();
-            services.AddScoped<IEndpointMenuWriteRepository,IEndpointMenuWriteRepository>();
+            services.AddScoped<IEndpointMenuReadRepository, EndpointMenuReadRepository>();
+            services.AddScoped<IEndpointMenuWriteRepository,EndpointMenuWriteRepository>();
 
             services.AddScoped<IAuthorizationEndpointService, AuthorizationEndpointService>();
 
