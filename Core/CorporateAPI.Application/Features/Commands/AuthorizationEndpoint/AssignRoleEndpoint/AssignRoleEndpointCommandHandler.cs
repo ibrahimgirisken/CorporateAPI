@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Abstractions.Services;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,17 @@ namespace CorporateAPI.Application.Features.Commands.AuthorizationEndpoint.Assig
 {
     public class AssignRoleEndpointCommandHandler : IRequestHandler<AssignRoleEndpointCommandRequest, AssignRoleEndpointCommandResponse>
     {
-        public Task<AssignRoleEndpointCommandResponse> Handle(AssignRoleEndpointCommandRequest request, CancellationToken cancellationToken)
+        readonly IAuthorizationEndpointService _authorizationEndpointService;
+
+        public AssignRoleEndpointCommandHandler(IAuthorizationEndpointService authorizationEndpointService)
         {
-            throw new NotImplementedException();
+            _authorizationEndpointService = authorizationEndpointService;
+        }
+
+        public async Task<AssignRoleEndpointCommandResponse> Handle(AssignRoleEndpointCommandRequest request, CancellationToken cancellationToken)
+        {
+            await _authorizationEndpointService.AssignRoleEndpointAsync(request.Roles,request.EndpointMenu,request.EndpointCode,request.Type);
+            return new();
         }
     }
 }

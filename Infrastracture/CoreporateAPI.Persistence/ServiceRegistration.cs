@@ -84,6 +84,8 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IEndpointMenuReadRepository, IEndpointMenuReadRepository>();
             services.AddScoped<IEndpointMenuWriteRepository,IEndpointMenuWriteRepository>();
 
+            services.AddScoped<IAuthorizationEndpointService, AuthorizationEndpointService>();
+
             services.AddScoped<IRoleService,RoleService>();
 
         }

@@ -10,6 +10,10 @@ namespace CorporateAPI.Domain.Entities.Endpoint
 {
     public class Endpoint: BaseEntity
     {
+        public Endpoint()
+        {
+            Roles = new List<AppRole>();
+        }
         public string ActionType { get; set; }
         public string HttpType { get; set; }
         public string Definition { get; set; }
