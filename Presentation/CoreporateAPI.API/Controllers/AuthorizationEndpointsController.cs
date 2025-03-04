@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Application.Features.Commands.AuthorizationEndpoint.AssignRoleEndpoint;
+using CorporateAPI.Application.Features.Queries.AuthorizationEndpoint.GetRolesToEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,11 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public IActionResult GetRolesToEndpoint()
+        [HttpPost("get-roles-to-endpoint")]
+        public async Task<IActionResult> GetRolesToEndpoint(GetRolesToEndpointQueryRequest getRolesToEndpoint)
         {
-            return Ok("AuthorizationEndpointsController");
+            GetRolesToEndpointQueryResponse response= await _mediator.Send(getRolesToEndpoint);
+            return Ok(response);
         }
 
         [HttpPost]

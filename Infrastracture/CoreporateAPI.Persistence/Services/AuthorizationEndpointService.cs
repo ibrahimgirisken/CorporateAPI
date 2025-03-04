@@ -70,5 +70,14 @@ namespace CoreporateAPI.Persistence.Services
                 endpoint.Roles.Add(role);
            await _endpointWriteRepository.SaveAsync();
         }
+
+        public async Task<List<string>> GetRolesToEndpointAsync(string code, string endpointMenu)
+        {
+            Endpoint? endpoints= await _endpointReadRepository.Table.
+                Include(e=>e.Roles).
+                Include(e=>e.EndpointMenu).
+                FirstOrDefaultAsync(e => e.Code == code && e.EndpointMenu.Name==endpointMenu);
+            return endpoints.Roles.Select(r=>r.Name).ToList();
+        }
     }
 }
