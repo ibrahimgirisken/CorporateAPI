@@ -17,6 +17,12 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetRolesToEndpoint()
+        {
+            return Ok("AuthorizationEndpointsController");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AssignRoleEndpoint(AssignRoleEndpointCommandRequest assignRoleEndpointCommand)
         {
             assignRoleEndpointCommand.Type = typeof(Program);

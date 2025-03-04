@@ -45,7 +45,7 @@ namespace CoreporateAPI.Persistence.Services
                await _endpointMenuWriteRepository.AddAsync(_endpointMenu);
                await _endpointMenuWriteRepository.SaveAsync();
             }
-            Endpoint? endpoint= await _endpointReadRepository.Table.Include(e=>e.EndpointMenu).FirstOrDefaultAsync(e=>e.Code==code&&e.EndpointMenu.Name==endpointMenu);
+            Endpoint? endpoint= await _endpointReadRepository.Table.Include(e=>e.EndpointMenu).Include(e=>e.Roles).FirstOrDefaultAsync(e=>e.Code==code&&e.EndpointMenu.Name==endpointMenu);
             if (endpoint == null)
             {
                 var action= _applicationService.GetAuthorizeDefinitionEndpoints(type).FirstOrDefault(m=>m.Name==endpointMenu)?.Actions.FirstOrDefault(e=>e.Code==code);
@@ -61,7 +61,11 @@ namespace CoreporateAPI.Persistence.Services
                 await _endpointWriteRepository.AddAsync(endpoint);
                 await _endpointWriteRepository.SaveAsync();
             }
-             var appRoles =_roleManager.Roles.Where(r => roles.Contains(r.Name)).ToList();
+            foreach (var role in endpoint.Roles)
+            {
+                endpoint.Roles.Remove(role);
+            }
+            var appRoles =_roleManager.Roles.Where(r => roles.Contains(r.Name)).ToList();
             foreach (var role in appRoles)
                 endpoint.Roles.Add(role);
            await _endpointWriteRepository.SaveAsync();
