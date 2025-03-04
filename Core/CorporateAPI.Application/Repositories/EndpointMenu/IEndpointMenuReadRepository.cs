@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Repositories.EndpointMenu
 {
-    internal interface IEndpointMenuReadRepository : IReadRepository<CorporateAPI.Domain.Entities.EndpointMenu.EndpointMenu>
+    public interface IEndpointMenuReadRepository : IReadRepository<CorporateAPI.Domain.Entities.EndpointMenu.EndpointMenu>
     {
     }
 }

@@ -11,6 +11,7 @@ namespace CorporateAPI.Application.Features.Commands.AuthorizationEndpoint.Assig
     {
         public string[] Roles { get; set; }
         public string EndpointCode { get; set; }
+        public string EndpointMenu { get; set; }
 
     }
 }

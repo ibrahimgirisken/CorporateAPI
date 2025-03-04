@@ -8,6 +8,6 @@ namespace CorporateAPI.Application.Abstractions.Services
 {
     public interface IAuthorizationEndpointService
     {
-        public Task AssignRoleEndpointAsync(string[] roles, string code);
+        public Task AssignRoleEndpointAsync(string[] roles,string endpointMenu,string code,Type type);
     }
 }
