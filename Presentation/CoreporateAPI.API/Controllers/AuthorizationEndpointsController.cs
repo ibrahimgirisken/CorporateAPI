@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CorporateAPI.Application.Features.Commands.AuthorizationEndpoint.AssignRoleEndpoint;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -7,10 +9,19 @@ namespace CoreporateAPI.API.Controllers
     [ApiController]
     public class AuthorizationEndpointsController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> AssignRoleEndpoint()
+        readonly IMediator _mediator;
+
+        public AuthorizationEndpointsController(IMediator mediator)
         {
-            return null;
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignRoleEndpoint(AssignRoleEndpointCommandRequest assignRoleEndpointCommand)
+        {
+            assignRoleEndpointCommand.Type = typeof(Program);
+            AssignRoleEndpointCommandResponse response=await _mediator.Send(assignRoleEndpointCommand);
+            return Ok(response);
         }
     }
 }
