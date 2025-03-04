@@ -17,7 +17,7 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("get-roles-to-endpoint")]
+        [HttpPost("[actions]")]
         public async Task<IActionResult> GetRolesToEndpoint(GetRolesToEndpointQueryRequest getRolesToEndpoint)
         {
             GetRolesToEndpointQueryResponse response= await _mediator.Send(getRolesToEndpoint);
