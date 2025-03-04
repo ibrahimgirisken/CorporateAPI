@@ -38,11 +38,12 @@ namespace CoreporateAPI.Persistence.Services
             EndpointMenu? _endpointMenu=await _endpointMenuReadRepository.GetSingleAsync(e=>e.Name == endpointMenu); 
             if(_endpointMenu == null)
             {
-               await _endpointMenuWriteRepository.AddAsync(new()
+                _endpointMenu = new()
                 {
                     Name = endpointMenu
-                });
-                await _endpointMenuWriteRepository.SaveAsync();
+                };
+               await _endpointMenuWriteRepository.AddAsync(_endpointMenu);
+               await _endpointMenuWriteRepository.SaveAsync();
             }
             Endpoint? endpoint= await _endpointReadRepository.Table.Include(e=>e.EndpointMenu).FirstOrDefaultAsync(e=>e.Code==code&&e.EndpointMenu.Name==endpointMenu);
             if (endpoint == null)
@@ -53,7 +54,8 @@ namespace CoreporateAPI.Persistence.Services
                     Code = code,
                     ActionType = action?.ActionType,
                     HttpType = action?.HttpType,
-                    Definition = action?.Definition
+                    Definition = action?.Definition,
+                    EndpointMenu = _endpointMenu
                 };
 
                 await _endpointWriteRepository.AddAsync(endpoint);
