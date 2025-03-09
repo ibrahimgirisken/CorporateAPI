@@ -1,4 +1,5 @@
-﻿using CorporateAPI.Application.Abstractions.Token;
+﻿using CorporateAPI.Application.Abstractions.Services;
+using CorporateAPI.Application.Abstractions.Token;
 using CorporateAPI.Application.DTOs;
 using CorporateAPI.Application.Exceptions;
 using CorporateAPI.Domain.Entities.Identity;
@@ -14,34 +15,22 @@ namespace CorporateAPI.Application.Features.Commands.AppUser.LoginUser
 {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommandRequest, LoginUserCommandResponse>
     {
-        readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
-        readonly SignInManager<Domain.Entities.Identity.AppUser> _signInManager;
-        readonly ITokenHandler _tokenHandler;
+        readonly IAuthService _authService;
 
-        public LoginUserCommandHandler(SignInManager<Domain.Entities.Identity.AppUser> signInManager, UserManager<Domain.Entities.Identity.AppUser> userManager, ITokenHandler tokenHandler)
+        public LoginUserCommandHandler(IAuthService authService)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _tokenHandler = tokenHandler;
+            _authService = authService;
         }
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Identity.AppUser user=await _userManager.FindByNameAsync(request.UsernameOrEmail);
-            if (user == null)
-                user = await _userManager.FindByEmailAsync(request.UsernameOrEmail);
-            if (user == null)
-                throw new DirectoryNotFoundException();
-            SignInResult signInResult= await _signInManager.CheckPasswordSignInAsync(user,request.Password,false);
-            if (signInResult.Succeeded)
+            var token = await _authService.LoginAsync(request.UsernameOrEmail, request.Password, 900);
+            return new LoginUserSuccessCommandResponse()
             {
-               Token token= _tokenHandler.CreateAccessToken(5);
-                return new LoginUserSuccessCommandResponse
-                {
-                    Token = token
-                };
-            }
-            throw new AuthenticationErrorException();
+
+                Token = token
+            };
+
         }
     }
 }

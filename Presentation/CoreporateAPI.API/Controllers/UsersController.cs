@@ -1,6 +1,12 @@
-﻿using CorporateAPI.Application.Features.Commands.AppUser.CreateUser;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.AppUser.CreateUser;
 using CorporateAPI.Application.Features.Commands.AppUser.LoginUser;
+using CorporateAPI.Application.Features.Queries.AppUser.GetAllUsers;
+using CorporateAPI.Application.Features.Queries.AppUser.GetRolesToUser;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -14,6 +20,24 @@ namespace CoreporateAPI.API.Controllers
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get All Users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            GetAllUsersQueryRequest request = new GetAllUsersQueryRequest();
+            GetAllUsersQueryResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpGet]
+        [Authorize(AuthenticationSchemes="Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To Users")]
+        public async Task<IActionResult> GetRolesToUser()
+        {
+            GetRolesToUserRequest request = new GetRolesToUserRequest();
+            GetRolesToUserResponse response = await _mediator.Send(request);
+            return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)

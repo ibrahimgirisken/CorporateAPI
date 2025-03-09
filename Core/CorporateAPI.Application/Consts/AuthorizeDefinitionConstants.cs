@@ -20,5 +20,6 @@ namespace CorporateAPI.Application.Consts
         public const string Products = "Products";
         public const string Settings = "Settings";
         public const string Roles = "Roles";
+        public const string Users = "Users";
     }
 }
