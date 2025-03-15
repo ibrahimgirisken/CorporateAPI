@@ -81,9 +81,15 @@ namespace CoreporateAPI.Persistence.Services
             }).ToList();
         }
 
-        public Task<string[]> GetRolesToUserAsync(string userIdOrName)
+        public async Task<string[]> GetRolesToUserAsync(string userIdOrName)
         {
-            throw new NotImplementedException();
+            AppUser user=await _userManager.FindByIdAsync(userIdOrName);
+            if (user!=null)
+            {
+               var roles= await _userManager.GetRolesAsync(user);
+                return roles.ToArray();
+            }
+            return new string[] {};
         }
 
 

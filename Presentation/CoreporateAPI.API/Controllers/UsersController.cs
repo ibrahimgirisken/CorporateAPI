@@ -30,21 +30,23 @@ namespace CoreporateAPI.API.Controllers
             GetAllUsersQueryResponse response = await _mediator.Send(getAllUsersQueryRequest);
             return Ok(response);
         }
-        [HttpGet("Roles")]
+
+        [HttpGet("get-roles-to-user/{UserId}")]
         [Authorize(AuthenticationSchemes="Admin")]
-        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To Users")]
-        public async Task<IActionResult> GetRolesToUser()
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To User")]
+        public async Task<IActionResult> GetRolesToUser(GetRolesToUserRequest getRolesToUserRequest)
         {
-            GetRolesToUserRequest request = new GetRolesToUserRequest();
-            GetRolesToUserResponse response = await _mediator.Send(request);
+            GetRolesToUserResponse response = await _mediator.Send(getRolesToUserRequest);
             return Ok(response);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)
         {
            CreateUserCommandResponse response=await _mediator.Send(createUserCommandRequest);
             return Ok(response);
         }
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
         {
@@ -55,7 +57,7 @@ namespace CoreporateAPI.API.Controllers
         [HttpPost("assign-role-to-user")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Writing, Definition = "Assign Role To User")]
-        public async Task<IActionResult> AssignRoleToUser(AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
+        public async Task<IActionResult> AssignRoleToUser([FromRoute]AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
         {
             AssignRoleEndpointCommandResponse response=await _mediator.Send(roleEndpointCommandRequest);
             return Ok(response);
