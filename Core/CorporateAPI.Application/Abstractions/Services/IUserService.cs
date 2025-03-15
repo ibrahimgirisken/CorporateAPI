@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Abstractions.Services
 {
     public interface IUserService
     {
-        Task<CreateUserCommandResponse> CreateAsync(CreateUser model);
+        Task<CreateUserResponse> CreateAsync(CreateUser model);
         Task<List<ListUser>> GetAllUsersAsync(int page,int size);
         Task UpdatePasswordAsync(string userId,string resetToken, string newPassword);
         Task AssignRoleToUserAsync(string userId, string[] roles);

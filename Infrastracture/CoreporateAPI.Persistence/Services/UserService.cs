@@ -28,15 +28,16 @@ namespace CoreporateAPI.Persistence.Services
             throw new NotImplementedException();
         }
 
-        public async Task<CreateUserCommandResponse> CreateAsync(CreateUser model)
+        public async Task<CreateUserResponse> CreateAsync(CreateUser model)
         {
           IdentityResult result=await _userManager.CreateAsync(new AppUser
             {
+              Id=Guid.NewGuid().ToString(),
                 Email = model.Email,
                 NameSurname = model.NameSurname,
                 UserName = model.Username
             }, model.Password);
-            CreateUserCommandResponse response= new()
+            CreateUserResponse response = new()
             {
                 Succeeded = result.Succeeded,
                 Message = result.Succeeded ? "User created successfully" : "User could not be created"

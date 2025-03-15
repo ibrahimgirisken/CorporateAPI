@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Application.Abstractions.Services;
+using CorporateAPI.Application.DTOs.User;
 using CorporateAPI.Application.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ namespace CorporateAPI.Application.Features.Commands.AppUser.CreateUser
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            CreateUserCommandResponse response = await _userService.CreateAsync(new()
+            CreateUserResponse response = await _userService.CreateAsync(new()
             {
                 Email = request.Email,
                 NameSurname = request.NameSurname,
