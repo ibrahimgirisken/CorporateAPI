@@ -21,7 +21,7 @@ namespace CoreporateAPI.API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet]
+        [HttpGet()]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get All Users")]
         public async Task<IActionResult> GetAllUsers()
@@ -30,7 +30,7 @@ namespace CoreporateAPI.API.Controllers
             GetAllUsersQueryResponse response = await _mediator.Send(request);
             return Ok(response);
         }
-        [HttpGet]
+        [HttpGet("Roles")]
         [Authorize(AuthenticationSchemes="Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To Users")]
         public async Task<IActionResult> GetRolesToUser()

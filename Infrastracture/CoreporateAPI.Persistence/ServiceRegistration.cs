@@ -88,6 +88,8 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IAuthorizationEndpointService, AuthorizationEndpointService>();
 
             services.AddScoped<IRoleService,RoleService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
     }
