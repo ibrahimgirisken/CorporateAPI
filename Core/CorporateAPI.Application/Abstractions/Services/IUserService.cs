@@ -15,5 +15,6 @@ namespace CorporateAPI.Application.Abstractions.Services
         Task UpdatePasswordAsync(string userId,string resetToken, string newPassword);
         Task AssignRoleToUserAsync(string userId, string[] roles);
         Task<string[]> GetRolesToUserAsync(string userIdOrName);
+        int TotalUsersCount { get; }
     }
 }

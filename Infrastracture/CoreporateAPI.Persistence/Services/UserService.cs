@@ -4,6 +4,7 @@ using CorporateAPI.Application.Features.Commands.AppUser.CreateUser;
 using CorporateAPI.Application.Repositories.Endpoint;
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace CoreporateAPI.Persistence.Services
             _endpointReadRepository = endpointReadRepository;
         }
 
+        public int TotalUsersCount => _userManager.Users.Count();
         public Task AssignRoleToUserAsync(string userId, string[] roles)
         {
             throw new NotImplementedException();
@@ -56,15 +58,28 @@ namespace CoreporateAPI.Persistence.Services
             return response;
         }
 
-        public Task<List<ListUser>> GetAllUsersAsync(int page, int size)
+        public async Task<List<ListUser>> GetAllUsersAsync(int page, int size)
         {
-            throw new NotImplementedException();
+            var users= await _userManager.Users
+                .Skip(page * size)
+                .Take(size)
+                .ToListAsync();
+
+            return users.Select(user=>new ListUser
+            {
+                Id=user.Id,
+                Email=user.Email,
+                NameSurname=user.NameSurname,
+                TwoFactorEnabled=user.TwoFactorEnabled,
+                UserName=user.UserName
+            }).ToList();
         }
 
         public Task<string[]> GetRolesToUserAsync(string userIdOrName)
         {
             throw new NotImplementedException();
         }
+
 
         public Task UpdatePasswordAsync(string userId, string resetToken, string newPassword)
         {

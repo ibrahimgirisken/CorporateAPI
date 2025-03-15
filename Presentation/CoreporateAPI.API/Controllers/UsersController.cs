@@ -24,10 +24,9 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet()]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get All Users")]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery]GetAllUsersQueryRequest getAllUsersQueryRequest)
         {
-            GetAllUsersQueryRequest request = new GetAllUsersQueryRequest();
-            GetAllUsersQueryResponse response = await _mediator.Send(request);
+            GetAllUsersQueryResponse response = await _mediator.Send(getAllUsersQueryRequest);
             return Ok(response);
         }
         [HttpGet("Roles")]

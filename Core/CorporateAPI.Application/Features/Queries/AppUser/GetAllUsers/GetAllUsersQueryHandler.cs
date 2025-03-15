@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.Abstractions.Services;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,21 @@ namespace CorporateAPI.Application.Features.Queries.AppUser.GetAllUsers
 {
     public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQueryRequest, GetAllUsersQueryResponse>
     {
-        public Task<GetAllUsersQueryResponse> Handle(GetAllUsersQueryRequest request, CancellationToken cancellationToken)
+        readonly IUserService _userService;
+
+        public GetAllUsersQueryHandler(IUserService userService)
         {
-            throw new NotImplementedException();
+            _userService = userService;
+        }
+
+        public async Task<GetAllUsersQueryResponse> Handle(GetAllUsersQueryRequest request, CancellationToken cancellationToken)
+        {
+            var users= await _userService.GetAllUsersAsync(request.Page, request.Size);
+            return new()
+            {
+                Users = users,
+                TotatlUserCount = _userService.TotalUsersCount
+            };
         }
     }
 }
