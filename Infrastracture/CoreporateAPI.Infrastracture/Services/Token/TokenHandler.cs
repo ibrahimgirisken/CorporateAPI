@@ -1,4 +1,5 @@
 ﻿using CorporateAPI.Application.Abstractions.Token;
+using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -19,7 +20,7 @@ namespace CoreporateAPI.Infrastracture.Services.Token
             _configuration = configuration;
         }
 
-        public CorporateAPI.Application.DTOs.Token CreateAccessToken(int minute)
+        public CorporateAPI.Application.DTOs.Token CreateAccessToken(int minute,AppUser user)
         {
             CorporateAPI.Application.DTOs.Token token = new();
             SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_configuration["Token:SecurityKey"]));

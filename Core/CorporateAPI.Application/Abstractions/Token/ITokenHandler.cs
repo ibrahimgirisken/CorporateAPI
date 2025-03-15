@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorporateAPI.Domain.Entities.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CorporateAPI.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
-       public DTOs.Token CreateAccessToken(int minute);
+       public DTOs.Token CreateAccessToken(int minute,AppUser appUser);
     }
 }

@@ -48,7 +48,8 @@ namespace CoreporateAPI.Persistence.Services
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
             if (result.Succeeded)
             {
-                Token token = _tokenHandler.CreateAccessToken(5);
+                Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime,user);
+                return token;
             }
             throw new AuthenticationErrorException();
         }
