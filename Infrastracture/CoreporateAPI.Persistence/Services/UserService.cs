@@ -25,9 +25,15 @@ namespace CoreporateAPI.Persistence.Services
         }
 
         public int TotalUsersCount => _userManager.Users.Count();
-        public Task AssignRoleToUserAsync(string userId, string[] roles)
+        public async Task AssignRoleToUserAsync(string userId, string[] roles)
         {
-            throw new NotImplementedException();
+            var user= await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var userRoles= await _userManager.GetRolesAsync(user);
+                await _userManager.RemoveFromRolesAsync(user, userRoles);
+                await _userManager.AddToRolesAsync(user,roles);
+            }
         }
 
         public async Task<CreateUserResponse> CreateAsync(CreateUser model)
