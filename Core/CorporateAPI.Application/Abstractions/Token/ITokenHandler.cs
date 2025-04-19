@@ -9,6 +9,7 @@ namespace CorporateAPI.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
-       public DTOs.Token CreateAccessToken(int minute,AppUser appUser);
+        DTOs.Token CreateAccessToken(int second,AppUser appUser);
+        string CreateRefreshToken();
     }
 }

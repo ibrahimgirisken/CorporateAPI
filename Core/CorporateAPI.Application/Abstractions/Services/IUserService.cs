@@ -16,5 +16,6 @@ namespace CorporateAPI.Application.Abstractions.Services
         Task AssignRoleToUserAsync(string userId, string[] roles);
         Task<string[]> GetRolesToUserAsync(string userIdOrName);
         int TotalUsersCount { get; }
+        Task<bool> HasRolePermissionToEndpointAsync(string name,string code);
     }
 }

@@ -58,7 +58,7 @@ namespace CoreporateAPI.API.Controllers
         [HttpPost("assign-role-to-user")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Writing, Definition = "Assign Role To User")]
-        public async Task<IActionResult> AssignRoleToUser([FromRoute]AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
+        public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
         {
             AssignRoleEndpointCommandResponse response=await _mediator.Send(roleEndpointCommandRequest);
             return Ok(response);
