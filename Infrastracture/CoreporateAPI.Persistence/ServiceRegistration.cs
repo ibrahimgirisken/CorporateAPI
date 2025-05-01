@@ -5,7 +5,6 @@ using CorporateAPI.Application.Repositories;
 using CoreporateAPI.Persistence.Repositories;
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
-using CorporateAPI.Application.Repositories.Menu;
 using CorporateAPI.Application.Repositories.Banner;
 using CorporateAPI.Application.Repositories.Home;
 using CorporateAPI.Application.Repositories.Brand;
@@ -46,8 +45,6 @@ namespace CoreporateAPI.Persistence
             }
 
             ).AddEntityFrameworkStores<CorporateAPIDbContext>().AddDefaultTokenProviders();
-            services.AddScoped<IMenuReadRepository, MenuReadRepository>();
-            services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
 
             services.AddScoped<IPageReadRepository, PageReadRepository>();
             services.AddScoped<IPageWriteRepository, PageWriteRepository>();

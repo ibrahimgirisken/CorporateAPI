@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
 {
     public class UpdateBannerCommandRequest:IRequest<UpdateBannerCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public UpdateBannerCommandRequest()
         {
             BannerTranslations = new List<BannerTranslationDTO>();

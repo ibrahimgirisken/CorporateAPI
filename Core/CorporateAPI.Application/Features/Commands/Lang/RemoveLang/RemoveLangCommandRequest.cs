@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Lang.RemoveLang
 {
     public class RemoveLangCommandRequest:IRequest<RemoveLangCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

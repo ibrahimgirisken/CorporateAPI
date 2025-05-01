@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Product
 {
     public class ResultProductDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? Code { get; set; }
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }

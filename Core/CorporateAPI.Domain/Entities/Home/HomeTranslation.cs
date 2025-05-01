@@ -13,7 +13,7 @@ namespace CorporateAPI.Domain.Entities.Home
         public string? Title { get; set; }
         public string? Content { get; set; }
         public string? AdditionalData { get; set; }
-        public int HomeId { get; set; }
+        public Guid HomeId { get; set; }
         public Home Home { get; set; }
     }
 }

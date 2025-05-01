@@ -1,7 +1,6 @@
 ﻿using CorporateAPI.Application.Features.Commands.Module.CreateModule;
 using CorporateAPI.Application.Features.Commands.Module.RemoveModule;
 using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
-using CorporateAPI.Application.Features.Queries.Menu.GetAllMenu;
 using CorporateAPI.Application.Features.Queries.Module.GetAllModule;
 using CorporateAPI.Application.Features.Queries.Module.GetByIdModule;
 using MediatR;

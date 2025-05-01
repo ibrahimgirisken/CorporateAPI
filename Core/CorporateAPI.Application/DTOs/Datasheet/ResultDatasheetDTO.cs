@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.DTOs.Datasheet
 {
     public class ResultDatasheetDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? Code { get; set; }
         public string? Image1 { get; set; }
         public int Order { get; set; }

@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Category.GetByIdCategory
 {
     public class GetByIdCategoryQueryRequest:IRequest<GetByIdCategoryQueryResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

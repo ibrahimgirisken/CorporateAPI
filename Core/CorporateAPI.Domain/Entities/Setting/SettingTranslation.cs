@@ -11,7 +11,7 @@ namespace CorporateAPI.Domain.Entities.Setting
     {
         public string? Title { get; set; }
         public string? MetaDescription { get; set; }
-        public int SettingId { get; set; }
+        public Guid SettingId { get; set; }
         public Setting Setting { get; set; }
     }
 }

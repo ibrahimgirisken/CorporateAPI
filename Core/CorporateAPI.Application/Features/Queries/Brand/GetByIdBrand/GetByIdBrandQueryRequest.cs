@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Brand.GetByIdBrand
 {
     public class GetByIdBrandQueryRequest:IRequest<GetByIdBrandQueryResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetByIdModule
 {
     public class GetByIdModuleQueryRequest:IRequest<GetByIdModuleQueryResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

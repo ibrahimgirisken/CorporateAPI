@@ -39,7 +39,7 @@ namespace CoreporateAPI.Persistence.Repositories
 
         }
         public async Task<T> GetByIdAsync(
-                 int id,
+                 string id,
                  bool tracking = true,
                  params Expression<Func<T, object>>[] includes)
         {
@@ -54,7 +54,7 @@ namespace CoreporateAPI.Persistence.Repositories
                 query = query.Include(include);
             }
 
-            return await query.FirstOrDefaultAsync(e => e.Id == id);
+            return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id));
         }
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)

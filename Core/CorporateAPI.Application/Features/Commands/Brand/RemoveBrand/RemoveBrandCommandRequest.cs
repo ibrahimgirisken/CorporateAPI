@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Brand.RemoveBrand
 {
     public class RemoveBrandCommandRequest:IRequest<RemoveBrandCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

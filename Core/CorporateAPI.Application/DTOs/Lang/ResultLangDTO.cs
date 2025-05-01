@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Lang
 {
     public class ResultLangDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string LangCode { get; set; }
         public string Title { get; set; }
         public string  Image { get; set; }

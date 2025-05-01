@@ -14,7 +14,7 @@ namespace CorporateAPI.Domain.Entities.Category
         public string? Url { get; set; }
         public string? Brief { get; set; }
         public string? MetaDescription { get; set; }
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public Category Category { get; set; }
     }
 }

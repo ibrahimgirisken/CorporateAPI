@@ -50,9 +50,9 @@ namespace CoreporateAPI.Persistence.Repositories
             return true;
         }
 
-        public async Task<bool> RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(string id)
         {
-          T data= await Table.FirstOrDefaultAsync(p => p.Id ==id);
+          T data= await Table.FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
             data.IsDeleted=true;
             return true;
         }

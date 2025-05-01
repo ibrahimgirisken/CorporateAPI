@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.RemoveDatasheet
 {
     public class RemoveDatasheetCommandRequest:IRequest<RemoveDatasheetCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

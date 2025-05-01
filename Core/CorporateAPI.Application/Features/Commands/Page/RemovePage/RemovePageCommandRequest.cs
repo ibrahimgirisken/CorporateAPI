@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Page.RemovePage
 {
     public class RemovePageCommandRequest:IRequest<RemovePageCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

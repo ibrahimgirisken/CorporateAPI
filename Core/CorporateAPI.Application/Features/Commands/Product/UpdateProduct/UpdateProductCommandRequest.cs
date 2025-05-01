@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
         {
             ProductTranslations = new List<ProductTranslationDTO>();
         }
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? Code { get; set; }
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }

@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 {
     public class UpdateCategoryCommandRequest:IRequest<UpdateCategoryCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public UpdateCategoryCommandRequest()
         {
             Children = new List<ResultCategoryDTO>();

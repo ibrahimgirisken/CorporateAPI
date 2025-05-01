@@ -5,7 +5,6 @@ using CorporateAPI.Application.DTOs.Category;
 using CorporateAPI.Application.DTOs.Datasheet;
 using CorporateAPI.Application.DTOs.Home;
 using CorporateAPI.Application.DTOs.Lang;
-using CorporateAPI.Application.DTOs.Menu;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.Product;
@@ -22,8 +21,6 @@ using CorporateAPI.Application.Features.Commands.Home.CreateHome;
 using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
 using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
 using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
-using CorporateAPI.Application.Features.Commands.Menu.CreateMenu;
-using CorporateAPI.Application.Features.Commands.Menu.UpdateMenu;
 using CorporateAPI.Application.Features.Commands.Module.CreateModule;
 using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
@@ -37,7 +34,6 @@ using CorporateAPI.Domain.Entities.Brand;
 using CorporateAPI.Domain.Entities.Category;
 using CorporateAPI.Domain.Entities.Datasheet;
 using CorporateAPI.Domain.Entities.Home;
-using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Page;
 using CorporateAPI.Domain.Entities.Product;
@@ -54,10 +50,6 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Setting,UpdateSettingCommandRequest>().ReverseMap();
             CreateMap<SettingTranslation,SettingTranslationDTO>().ReverseMap();
 
-            CreateMap<Menu,ResultMenuDTO>().ReverseMap();
-            CreateMap<Menu,CreateMenuCommandRequest>().ReverseMap();
-            CreateMap<Menu,UpdateMenuCommandRequest>().ReverseMap();
-            CreateMap<MenuTranslation,MenuTranslationDTO>().ReverseMap();
 
             CreateMap<Category, ResultCategoryDTO>().ReverseMap();
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();

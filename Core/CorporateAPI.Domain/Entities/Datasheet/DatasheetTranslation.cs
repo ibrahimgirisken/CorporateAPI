@@ -13,7 +13,7 @@ namespace CorporateAPI.Domain.Entities.Datasheet
         public string? Url { get; set; }
         public string? Content { get; set; }
         public string? Path { get; set; }
-        public int DatasheetId { get; set; }
+        public Guid DatasheetId { get; set; }
         public Datasheet Datasheet { get; set; }
     }
 }

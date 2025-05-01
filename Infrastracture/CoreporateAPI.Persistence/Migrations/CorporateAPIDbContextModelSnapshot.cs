@@ -25,8 +25,8 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("AppRoleEndpoint", b =>
                 {
-                    b.Property<int>("EndpointsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EndpointsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RolesId")
                         .HasColumnType("nvarchar(450)");
@@ -40,11 +40,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.Banner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -83,14 +81,12 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Banner.BannerTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BannerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BannerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -101,12 +97,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -129,11 +125,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Brand.Brand", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -163,11 +157,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -184,6 +176,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("ParentId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -192,24 +187,22 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentId1");
 
                     b.ToTable("Categories", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Category.CategoryTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brief")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -217,12 +210,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -251,11 +244,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.Datasheet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -285,11 +276,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Datasheet.DatasheetTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -297,18 +286,18 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DatasheetId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("DatasheetId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -334,11 +323,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Endpoint.Endpoint", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ActionType")
                         .IsRequired()
@@ -355,8 +342,8 @@ namespace CoreporateAPI.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EndpointMenuId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("EndpointMenuId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("HttpType")
                         .IsRequired()
@@ -377,11 +364,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.EndpointMenu.EndpointMenu", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -403,11 +388,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.Home", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
@@ -456,11 +439,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Home.HomeTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AdditionalData")
                         .HasColumnType("nvarchar(max)");
@@ -471,18 +452,18 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HomeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("HomeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -600,42 +581,40 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Lang", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LangCode")
                         .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LangCode")
+                        .IsUnique();
+
                     b.ToTable("Languages", "dbo");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "tr.png",
                             IsDeleted = false,
@@ -645,7 +624,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "en.png",
                             IsDeleted = false,
@@ -655,7 +634,7 @@ namespace CoreporateAPI.Persistence.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "de.png",
                             IsDeleted = false,
@@ -665,95 +644,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Footer")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Vitrin")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Menus", "dbo");
-                });
-
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.MenuTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<int>("MenuId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Locale");
-
-                    b.HasIndex("MenuId", "Locale")
-                        .IsUnique();
-
-                    b.ToTable("MenuTranslations", "dbo");
-                });
-
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
@@ -793,11 +688,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -805,18 +698,18 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ModuleData")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -836,11 +729,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Page.Page", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -879,11 +770,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.PageTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brief")
                         .HasColumnType("nvarchar(max)");
@@ -897,18 +786,18 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PageId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PageTitle")
                         .HasColumnType("nvarchar(max)");
@@ -934,17 +823,21 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Product.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("BrandId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("CategoryId1")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -984,20 +877,18 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("BrandId1");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId1");
 
                     b.ToTable("Products", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Product.ProductTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Brief")
                         .HasColumnType("nvarchar(max)");
@@ -1011,12 +902,12 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -1027,8 +918,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<string>("PageTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -1051,86 +942,69 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Setting.Setting", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlackLogo")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Facebook")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoogleAnalytics")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoogleMaps")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GooglePlus")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoogleRecaptcha")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoogleSiteVerification")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoogleTagManager")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Instagram")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LinkedIn")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.Property<string>("Telephone")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Twitter")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WhiteLogo")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Youtube")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1139,7 +1013,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Address = "Address",
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
@@ -1151,11 +1025,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Setting.SettingTranslation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -1163,24 +1035,21 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MetaDescription")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SettingId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SettingId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -1197,37 +1066,37 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            LangId = 0,
+                            LangId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Locale = "tr",
                             MetaDescription = "Türkçe Description",
-                            SettingId = 1,
+                            SettingId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Title = "Türkçe Title",
                             UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            LangId = 0,
+                            LangId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Locale = "en",
                             MetaDescription = "English Description",
-                            SettingId = 1,
+                            SettingId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Title = "English Title",
                             UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            LangId = 0,
+                            LangId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Locale = "de",
                             MetaDescription = "Deutsch Description",
-                            SettingId = 1,
+                            SettingId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Title = "Deutsch Title",
                             UpdatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -1378,7 +1247,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId1");
 
                     b.Navigation("Parent");
                 });
@@ -1454,35 +1323,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("Lang");
                 });
 
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
-                {
-                    b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.MenuTranslation", b =>
-                {
-                    b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
-                        .WithMany("MenuTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CorporateAPI.Domain.Entities.Menu.Menu", "Menu")
-                        .WithMany("MenuTranslations")
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Lang");
-
-                    b.Navigation("Menu");
-                });
-
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.ModuleTranslation", b =>
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
@@ -1527,11 +1367,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Brand.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandId1");
 
                     b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId1");
 
                     b.Navigation("Brand");
 
@@ -1673,8 +1513,6 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Navigation("HomeTranslations");
 
-                    b.Navigation("MenuTranslations");
-
                     b.Navigation("ModuleTranslations");
 
                     b.Navigation("PageTranslations");
@@ -1682,13 +1520,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Navigation("ProductTranslations");
 
                     b.Navigation("SettingTranslations");
-                });
-
-            modelBuilder.Entity("CorporateAPI.Domain.Entities.Menu.Menu", b =>
-                {
-                    b.Navigation("Children");
-
-                    b.Navigation("MenuTranslations");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Module.Module", b =>

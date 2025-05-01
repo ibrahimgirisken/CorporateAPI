@@ -12,7 +12,7 @@ namespace CorporateAPI.Domain.Entities.Banner
         public string? Url { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
-        public int BannerId { get; set; }
+        public Guid BannerId { get; set; }
         public Banner Banner { get; set; }
     }
 }

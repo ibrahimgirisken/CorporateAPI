@@ -11,7 +11,7 @@ namespace CorporateAPI.Domain.Entities.Module
     {
         public string? Name { get; set; }
         public string? ModuleData { get; set; }
-        public int ModuleId { get; set; }
+        public Guid ModuleId { get; set; }
         public Module Module { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
 {
     public class UpdateDatasheetCommandRequest:IRequest<UpdateDatasheetCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public UpdateDatasheetCommandRequest()
         {
             DatasheetTranslations = new List<DatasheetTranslationDTO>();

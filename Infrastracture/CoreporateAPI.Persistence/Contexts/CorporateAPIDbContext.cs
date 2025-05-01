@@ -10,7 +10,6 @@ using CorporateAPI.Domain.Entities.Endpoint;
 using CorporateAPI.Domain.Entities.EndpointMenu;
 using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Identity;
-using CorporateAPI.Domain.Entities.Menu;
 using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Page;
 using CorporateAPI.Domain.Entities.Product;
@@ -28,15 +27,14 @@ namespace CoreporateAPI.Persistence.Contexts
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Menu> Menus { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Home> Homes { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Lang> Languages { get; set; }
         public DbSet<Setting> Settings { get; set; }
-        public DbSet<Endpoint> Endpoints{ get; set; }
-        public DbSet<EndpointMenu> EndpointMenus{ get; set; }
+        public DbSet<Endpoint> Endpoints { get; set; }
+        public DbSet<EndpointMenu> EndpointMenus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -135,24 +133,6 @@ namespace CoreporateAPI.Persistence.Contexts
 
             });
 
-            modelBuilder.Entity<MenuTranslation>(entity =>
-            {
-                entity.ToTable("MenuTranslations");
-
-                entity.HasOne(mt => mt.Menu)
-                .WithMany(mt => mt.MenuTranslations)
-                .HasForeignKey(mt => mt.MenuId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(ml => ml.Lang)
-                .WithMany(l => l.MenuTranslations)
-                .HasForeignKey(ml => ml.Locale)
-                .HasPrincipalKey(l => l.LangCode)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasIndex(l => new { l.MenuId, l.Locale }).IsUnique();
-            });
-
             modelBuilder.Entity<PageTranslation>(entity =>
             {
                 entity.ToTable("PageTranslations");
@@ -210,20 +190,14 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasIndex(l => new { l.HomeId, l.Locale }).IsUnique();
             });
-
-            modelBuilder.ApplyConfiguration(new LangConfiguration());
-            modelBuilder.ApplyConfiguration(new SettingConfiguration());
-            modelBuilder.ApplyConfiguration(new SettingTranslationConfiguration());
+            modelBuilder.Entity<Lang>()
+                .HasIndex(l => l.LangCode)
+                .IsUnique();
 
             modelBuilder.Seed();
             base.OnModelCreating(modelBuilder);
 
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
-        //}
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

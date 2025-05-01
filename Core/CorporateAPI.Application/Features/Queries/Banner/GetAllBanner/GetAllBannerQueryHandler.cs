@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using CorporateAPI.Application.DTOs.Banner;
-using CorporateAPI.Application.DTOs.Menu;
 using CorporateAPI.Application.Repositories.Banner;
-using CorporateAPI.Application.Repositories.Menu;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

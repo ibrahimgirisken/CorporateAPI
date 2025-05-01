@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 {
     public class UpdatePageCommandRequest:IRequest<UpdatePageCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public UpdatePageCommandRequest()
         {
             PageTranslations = new List<PageTranslationDTO>();

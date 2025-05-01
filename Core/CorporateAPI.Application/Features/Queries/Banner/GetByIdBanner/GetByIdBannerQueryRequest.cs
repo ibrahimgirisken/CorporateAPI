@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 {
     public class GetByIdBannerQueryRequest:IRequest<GetByIdBannerQueryResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Home.RemoveHome
 {
     public class RemoveHomeCommandRequest:IRequest<RemoveHomeCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

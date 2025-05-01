@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Datasheet.GetByIdDatasheet
 {
     public class GetByIdDatasheetQueryRequest:IRequest<GetByIdDatasheetQueryResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

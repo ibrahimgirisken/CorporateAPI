@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
 {
     public class UpdateSettingCommandRequest:IRequest<UpdateSettingCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? WhiteLogo { get; set; }
         public string? BlackLogo { get; set; }
         public string? Telephone { get; set; }

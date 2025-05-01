@@ -10,7 +10,7 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 {
     public class UpdateHomeCommandRequest:IRequest<UpdateHomeCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public UpdateHomeCommandRequest()
         {
             HomeTranslations = new List<HomeTranslationDTO>();

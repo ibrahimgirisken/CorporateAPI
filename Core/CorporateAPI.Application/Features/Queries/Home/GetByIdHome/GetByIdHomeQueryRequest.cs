@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetByIdHome
 {
     public class GetByIdHomeQueryRequest:IRequest<GetByIdHomeQueryResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.Banner.RemoveBanner
 {
     public class RemoveBannerCommandRequest:IRequest<RemoveBannerCommandResponse>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

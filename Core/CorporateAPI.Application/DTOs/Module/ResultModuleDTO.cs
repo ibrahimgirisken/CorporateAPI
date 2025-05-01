@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Module
 {
     public class ResultModuleDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ContentType { get; set; }
         public string Image1 { get; set; }
         public string Image2 { get; set; }

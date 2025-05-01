@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.DTOs.Setting
 {
     public class ResultSettingDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? WhiteLogo { get; set; }
         public string? BlackLogo { get; set; }
         public string? Telephone { get; set; }

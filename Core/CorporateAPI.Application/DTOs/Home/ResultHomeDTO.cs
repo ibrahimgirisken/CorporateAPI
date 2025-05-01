@@ -9,7 +9,7 @@ namespace CorporateAPI.Application.DTOs.Home
 {
     public class ResultHomeDTO
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ContentType { get; set; }
         public string Image1 { get; set; }
         public string Image2 { get; set; }
