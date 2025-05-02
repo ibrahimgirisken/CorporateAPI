@@ -200,7 +200,6 @@ namespace CoreporateAPI.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Languages", x => x.Id);
-                    table.UniqueConstraint("AK_Languages_LangCode", x => x.LangCode);
                 });
 
             migrationBuilder.CreateTable(
@@ -476,7 +475,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -490,11 +488,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BannerTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_BannerTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -513,7 +511,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -527,11 +524,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CategoryTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_CategoryTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -549,7 +546,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -563,11 +559,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DatasheetTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_DatasheetTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -585,7 +581,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -599,11 +594,11 @@ namespace CoreporateAPI.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_HomeTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_HomeTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -619,18 +614,17 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ModuleTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ModuleTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_ModuleTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ModuleTranslations_Modules_ModuleId",
@@ -657,18 +651,17 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PageTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PageTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_PageTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PageTranslations_Pages_PageId",
@@ -691,18 +684,17 @@ namespace CoreporateAPI.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SettingTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SettingTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_SettingTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SettingTranslations_Settings_SettingId",
@@ -719,7 +711,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Locale = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -737,11 +729,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_ProductTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductTranslations_Languages_Locale",
-                        column: x => x.Locale,
+                        name: "FK_ProductTranslations_Languages_LangId",
+                        column: x => x.LangId,
                         principalSchema: "dbo",
                         principalTable: "Languages",
-                        principalColumn: "LangCode",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductTranslations_Products_ProductId",
@@ -799,12 +791,12 @@ namespace CoreporateAPI.Persistence.Migrations
             migrationBuilder.InsertData(
                 schema: "dbo",
                 table: "SettingTranslations",
-                columns: new[] { "Id", "CreatedDate", "IsDeleted", "LangId", "Locale", "MetaDescription", "SettingId", "Title", "UpdatedDate" },
+                columns: new[] { "Id", "CreatedDate", "IsDeleted", "LangId", "MetaDescription", "SettingId", "Title", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("00000000-0000-0000-0000-000000000000"), "tr", "Türkçe Description", new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Türkçe Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("00000000-0000-0000-0000-000000000000"), "en", "English Description", new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "English Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("00000000-0000-0000-0000-000000000000"), "de", "Deutsch Description", new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Deutsch Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("11111111-1111-1111-1111-111111111111"), "Türkçe Description", new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Türkçe Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("22222222-2222-2222-2222-222222222222"), "English Description", new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "English Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("33333333-3333-3333-3333-333333333333"), "Deutsch Description", new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Deutsch Title", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -860,17 +852,17 @@ namespace CoreporateAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BannerTranslations_BannerId_Locale",
+                name: "IX_BannerTranslations_BannerId_LangId",
                 schema: "dbo",
                 table: "BannerTranslations",
-                columns: new[] { "BannerId", "Locale" },
+                columns: new[] { "BannerId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BannerTranslations_Locale",
+                name: "IX_BannerTranslations_LangId",
                 schema: "dbo",
                 table: "BannerTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentId1",
@@ -879,30 +871,30 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "ParentId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryTranslations_CategoryId_Locale",
+                name: "IX_CategoryTranslations_CategoryId_LangId",
                 schema: "dbo",
                 table: "CategoryTranslations",
-                columns: new[] { "CategoryId", "Locale" },
+                columns: new[] { "CategoryId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryTranslations_Locale",
+                name: "IX_CategoryTranslations_LangId",
                 schema: "dbo",
                 table: "CategoryTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DatasheetTranslations_DatasheetId_Locale",
+                name: "IX_DatasheetTranslations_DatasheetId_LangId",
                 schema: "dbo",
                 table: "DatasheetTranslations",
-                columns: new[] { "DatasheetId", "Locale" },
+                columns: new[] { "DatasheetId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DatasheetTranslations_Locale",
+                name: "IX_DatasheetTranslations_LangId",
                 schema: "dbo",
                 table: "DatasheetTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Endpoints_EndpointMenuId",
@@ -918,17 +910,17 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_HomeTranslations_HomeId_Locale",
+                name: "IX_HomeTranslations_HomeId_LangId",
                 schema: "dbo",
                 table: "HomeTranslations",
-                columns: new[] { "HomeId", "Locale" },
+                columns: new[] { "HomeId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_HomeTranslations_Locale",
+                name: "IX_HomeTranslations_LangId",
                 schema: "dbo",
                 table: "HomeTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Languages_LangCode",
@@ -938,29 +930,29 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModuleTranslations_Locale",
+                name: "IX_ModuleTranslations_LangId",
                 schema: "dbo",
                 table: "ModuleTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModuleTranslations_ModuleId_Locale",
+                name: "IX_ModuleTranslations_ModuleId_LangId",
                 schema: "dbo",
                 table: "ModuleTranslations",
-                columns: new[] { "ModuleId", "Locale" },
+                columns: new[] { "ModuleId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageTranslations_Locale",
+                name: "IX_PageTranslations_LangId",
                 schema: "dbo",
                 table: "PageTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageTranslations_PageId_Locale",
+                name: "IX_PageTranslations_PageId_LangId",
                 schema: "dbo",
                 table: "PageTranslations",
-                columns: new[] { "PageId", "Locale" },
+                columns: new[] { "PageId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -976,29 +968,29 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTranslations_Locale",
+                name: "IX_ProductTranslations_LangId",
                 schema: "dbo",
                 table: "ProductTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTranslations_ProductId_Locale",
+                name: "IX_ProductTranslations_ProductId_LangId",
                 schema: "dbo",
                 table: "ProductTranslations",
-                columns: new[] { "ProductId", "Locale" },
+                columns: new[] { "ProductId", "LangId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SettingTranslations_Locale",
+                name: "IX_SettingTranslations_LangId",
                 schema: "dbo",
                 table: "SettingTranslations",
-                column: "Locale");
+                column: "LangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SettingTranslations_SettingId_Locale",
+                name: "IX_SettingTranslations_SettingId_LangId",
                 schema: "dbo",
                 table: "SettingTranslations",
-                columns: new[] { "SettingId", "Locale" },
+                columns: new[] { "SettingId", "LangId" },
                 unique: true);
         }
 

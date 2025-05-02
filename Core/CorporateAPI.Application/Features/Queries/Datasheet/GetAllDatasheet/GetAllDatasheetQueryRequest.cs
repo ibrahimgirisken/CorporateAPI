@@ -9,5 +9,7 @@ namespace CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet
 {
     public class GetAllDatasheetQueryRequest:IRequest<GetAllDatasheetQueryResponse>
     {
+        public string? Language { get; set; }
+        public bool IncludeAllLanguages { get; set; } = false;
     }
 }

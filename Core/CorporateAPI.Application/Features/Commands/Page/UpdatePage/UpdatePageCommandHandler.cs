@@ -37,7 +37,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.PageTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                if (!request.PageTranslations.Any(t => t.LangId == existingTranslation.LangId))
                 {
                     page.PageTranslations.Remove(existingTranslation);
                 }
@@ -45,7 +45,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
 
             foreach (var translationDTO in request.PageTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                var translation = existingTranslations.FirstOrDefault(t => t.LangId == translationDTO.LangId);
                 if (translation == null)
                 {
                     translation = new PageTranslation();

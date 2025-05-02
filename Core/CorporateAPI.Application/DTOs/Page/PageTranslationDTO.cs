@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Page
 {
     public class PageTranslationDTO
     {
-        public string Locale { get; set; }
+        public Guid LangId { get; set; }
         public string? Title { get; set; }
         public string? Url { get; set; }
         public string? PageTitle { get; set; }

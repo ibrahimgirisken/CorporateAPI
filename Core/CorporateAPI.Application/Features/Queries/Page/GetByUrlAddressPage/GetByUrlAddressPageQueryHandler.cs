@@ -20,12 +20,12 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage
         public async Task<GetByUrlAddressPageQueryResponse> Handle(GetByUrlAddressPageQueryRequest request, CancellationToken cancellationToken)
         {
             var language = request.Language ?? "en";
-            Domain.Entities.Page.Page page = await _pageReadRepository.GetSingleAsync(e => e.PageTranslations.Any(t => t.Url == request.UrlAddress && t.Locale == language),false, includes: e => e.PageTranslations);
+            Domain.Entities.Page.Page page = await _pageReadRepository.GetSingleAsync(e => e.PageTranslations.Any(t => t.Url == request.UrlAddress && t.Lang.LangCode == language),false, includes: e => e.PageTranslations);
 
             if (page != null)
             {
                 page.PageTranslations = page.PageTranslations
-            .Where(t => t.Locale == language)
+            .Where(t => t.Lang.LangCode == language)
             .ToList();
             }
             var response = page != null ? _mapper.Map<ResultPageDTO>(page) : null;

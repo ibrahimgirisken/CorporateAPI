@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.DTOs.Home;
+using CorporateAPI.Application.Repositories.Banner;
 using CorporateAPI.Application.Repositories.Home;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +20,30 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetAllHome
 
         public async Task<GetAllHomeQueryResponse> Handle(GetAllHomeQueryRequest request, CancellationToken cancellationToken)
         {
-            var homes=await _homeReadRepository.GetAll(false).Include(e=>e.HomeTranslations).ToListAsync();
-            var responseDatas= _mapper.Map<List<ResultHomeDTO>>(homes);
-            return new()
+
+            if (request.IncludeAllLanguages)
             {
-                Homes=responseDatas
-            };
+                var homeTranslations = _homeReadRepository.GetAll(false).Include(e => e.HomeTranslations).ToList();
+                var homeDatas = _mapper.Map<List<ResultHomeDTO>>(homeTranslations);
+                return new()
+                {
+                    Homes = homeDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var homesFiltered = _homeReadRepository.GetAll(false)
+                   .Include(e => e.HomeTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var home in homesFiltered)
+            {
+                home.HomeTranslations = home.HomeTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredHomeDtos = _mapper.Map<List<ResultHomeDTO>>(homesFiltered);
+            return new() { Homes = filteredHomeDtos };
         }
     }
 }

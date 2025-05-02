@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Datasheet
 {
     public class DatasheetTranslationDTO
     {
-        public string Locale { get; set; }
+        public Guid LangId { get; set; }
         public string? Name { get; set; }
         public string? Url { get; set; }
         public string? Content { get; set; }

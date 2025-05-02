@@ -100,10 +100,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -115,9 +111,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("BannerId", "Locale")
+                    b.HasIndex("BannerId", "LangId")
                         .IsUnique();
 
                     b.ToTable("BannerTranslations", "dbo");
@@ -213,10 +209,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -234,9 +226,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("CategoryId", "Locale")
+                    b.HasIndex("CategoryId", "LangId")
                         .IsUnique();
 
                     b.ToTable("CategoryTranslations", "dbo");
@@ -295,10 +287,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -313,9 +301,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("DatasheetId", "Locale")
+                    b.HasIndex("DatasheetId", "LangId")
                         .IsUnique();
 
                     b.ToTable("DatasheetTranslations", "dbo");
@@ -461,10 +449,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -476,9 +460,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("HomeId", "Locale")
+                    b.HasIndex("HomeId", "LangId")
                         .IsUnique();
 
                     b.ToTable("HomeTranslations", "dbo");
@@ -701,10 +685,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ModuleData")
                         .HasColumnType("nvarchar(max)");
 
@@ -719,9 +699,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("ModuleId", "Locale")
+                    b.HasIndex("ModuleId", "LangId")
                         .IsUnique();
 
                     b.ToTable("ModuleTranslations", "dbo");
@@ -789,10 +769,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -813,9 +789,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("PageId", "Locale")
+                    b.HasIndex("PageId", "LangId")
                         .IsUnique();
 
                     b.ToTable("PageTranslations", "dbo");
@@ -907,7 +883,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Locale")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
@@ -932,9 +908,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("ProductId", "Locale")
+                    b.HasIndex("ProductId", "LangId")
                         .IsUnique();
 
                     b.ToTable("ProductTranslations", "dbo");
@@ -1038,10 +1014,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -1056,9 +1028,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Locale");
+                    b.HasIndex("LangId");
 
-                    b.HasIndex("SettingId", "Locale")
+                    b.HasIndex("SettingId", "LangId")
                         .IsUnique();
 
                     b.ToTable("SettingTranslations", "dbo");
@@ -1069,8 +1041,7 @@ namespace CoreporateAPI.Persistence.Migrations
                             Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            LangId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Locale = "tr",
+                            LangId = new Guid("11111111-1111-1111-1111-111111111111"),
                             MetaDescription = "Türkçe Description",
                             SettingId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Title = "Türkçe Title",
@@ -1081,8 +1052,7 @@ namespace CoreporateAPI.Persistence.Migrations
                             Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            LangId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Locale = "en",
+                            LangId = new Guid("22222222-2222-2222-2222-222222222222"),
                             MetaDescription = "English Description",
                             SettingId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Title = "English Title",
@@ -1093,8 +1063,7 @@ namespace CoreporateAPI.Persistence.Migrations
                             Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
                             CreatedDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            LangId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Locale = "de",
+                            LangId = new Guid("33333333-3333-3333-3333-333333333333"),
                             MetaDescription = "Deutsch Description",
                             SettingId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Title = "Deutsch Title",
@@ -1233,8 +1202,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("BannerTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1262,8 +1230,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("CategoryTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1282,8 +1249,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("DatasheetTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1313,8 +1279,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("HomeTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1327,8 +1292,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("ModuleTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1347,8 +1311,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("PageTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1382,8 +1345,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("ProductTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1402,8 +1364,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Lang", "Lang")
                         .WithMany("SettingTranslations")
-                        .HasForeignKey("Locale")
-                        .HasPrincipalKey("LangCode")
+                        .HasForeignKey("LangId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Home
 {
     public class HomeTranslationDTO
     {
-        public string Locale { get; set; }
+        public Guid LangId { get; set; }
         public string? Url { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }

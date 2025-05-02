@@ -4,6 +4,7 @@ using CorporateAPI.Application.Enums;
 using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.RemoveProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
+using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Product.GetAllProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetByIdProduct;
 using MediatR;
@@ -31,9 +32,8 @@ namespace CoreporateAPI.API.Controllers
             string language = Request.Headers["Accept-Language".ToString()];
             if (string.IsNullOrEmpty(language))
             {
-                language = "en"; // Varsayılan dil
+                getAllProductQueryRequest.Language = "en"; // Varsayılan dil
             }
-            getAllProductQueryRequest.Language = language;
             getAllProductQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllProductQueryResponse response = await _mediator.Send(getAllProductQueryRequest);
             return Ok(response.ProductsDto);

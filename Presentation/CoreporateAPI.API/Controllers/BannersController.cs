@@ -30,14 +30,11 @@ namespace CoreporateAPI.API.Controllers
 
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            string language = Request.Headers["Accept-Language".ToString()];
-            if (string.IsNullOrEmpty(language))
+            if (string.IsNullOrEmpty(getAllBannerQueryRequest.Language))
             {
-                language = "en"; // Varsayılan dil
+                getAllBannerQueryRequest.Language = "en"; // Varsayılan dil
             }
-            getAllBannerQueryRequest.Language = language;
             getAllBannerQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
-
             GetAllBannerQueryResponse response =await _mediator.Send(getAllBannerQueryRequest);
             return Ok(response.Banners);
         }

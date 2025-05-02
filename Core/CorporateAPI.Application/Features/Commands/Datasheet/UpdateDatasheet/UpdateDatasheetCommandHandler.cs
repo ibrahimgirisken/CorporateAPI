@@ -33,7 +33,7 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.DatasheetTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                if (!request.DatasheetTranslations.Any(t => t.LangId == existingTranslation.LangId))
                 {
                     datasheet.DatasheetTranslations.Remove(existingTranslation);
                 }
@@ -41,7 +41,7 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
 
             foreach (var translationDTO in request.DatasheetTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                var translation = existingTranslations.FirstOrDefault(t => t.LangId == translationDTO.LangId);
                 if (translation == null)
                 {
                     translation = new DatasheetTranslation();

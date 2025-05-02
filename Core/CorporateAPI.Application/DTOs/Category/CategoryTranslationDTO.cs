@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Category
 {
     public class CategoryTranslationDTO
     {
-        public string Locale { get; set; }
+        public Guid LangId { get; set; }
         public string? Name { get; set; }
         public string? Title { get; set; }
         public string? Url { get; set; }

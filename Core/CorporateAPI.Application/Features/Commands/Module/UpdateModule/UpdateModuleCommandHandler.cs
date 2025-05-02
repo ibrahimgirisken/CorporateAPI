@@ -32,7 +32,7 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
             module.Status=request.Status;
             foreach (var translationDTO in request.ModuleTranslations)
             {
-                var translation=existingTranslations.FirstOrDefault(t=>t.Locale== translationDTO.Locale) ?? new ModuleTranslation();
+                var translation=existingTranslations.FirstOrDefault(t=>t.LangId == translationDTO.LangId) ?? new ModuleTranslation();
                 _mapper.Map(translationDTO, translation);
                 module.ModuleTranslations.Add(translation);
             }

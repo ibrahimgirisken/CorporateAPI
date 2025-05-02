@@ -35,12 +35,19 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
                 };
             }
             var language = request.Language ?? "en";
-            var menus = _bannerReadRepository.GetAll(false).Include(e => e.BannerTranslations.Where(l => l.Locale == language)).ToList();
-            var bannerData = _mapper.Map<List<ResultBannerDTO>>(menus);
-            return new()
+            var bannersFiltered = _bannerReadRepository.GetAll(false)
+                   .Include(e => e.BannerTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var banner in bannersFiltered)
             {
-                Banners = bannerData
-            };
+                banner.BannerTranslations = banner.BannerTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredBannerDtos = _mapper.Map<List<ResultBannerDTO>>(bannersFiltered);
+            return new() { Banners = filteredBannerDtos };
 
         }
     }

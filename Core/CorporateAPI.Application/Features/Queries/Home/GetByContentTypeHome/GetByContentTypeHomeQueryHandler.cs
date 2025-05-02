@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetByContentTypeHome
             var home = await _homeReadRepository.GetSingleAsync(
                 p => p.ContentType == request.ContentType,
                 false,
-                includes: e => e.HomeTranslations.Where(t => t.Locale == language));
+                includes: e => e.HomeTranslations.Where(t => t.Lang.LangCode == language));
             var response = _mapper.Map<ResultHomeDTO>(home);
 
             return new()

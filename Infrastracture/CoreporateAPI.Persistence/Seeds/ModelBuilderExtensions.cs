@@ -59,7 +59,7 @@ namespace CoreporateAPI.Persistence.Seeds
                 {
                     Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                     SettingId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    Locale = "tr",
+                    LangId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
                     Title = "Türkçe Title",
                     MetaDescription = "Türkçe Description",
                     IsDeleted = false,
@@ -70,7 +70,7 @@ namespace CoreporateAPI.Persistence.Seeds
                 {
                     Id = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc"),
                     SettingId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    Locale = "en",
+                    LangId = Guid.Parse("22222222-2222-2222-2222-222222222222"),
                     Title = "English Title",
                     MetaDescription = "English Description",
                     IsDeleted = false,
@@ -81,7 +81,7 @@ namespace CoreporateAPI.Persistence.Seeds
                 {
                     Id = Guid.Parse("dddddddd-dddd-dddd-dddd-dddddddddddd"),
                     SettingId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    Locale = "de",
+                    LangId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
                     Title = "Deutsch Title",
                     MetaDescription = "Deutsch Description",
                     IsDeleted = false,

@@ -36,7 +36,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.CategoryTranslations.Any(t=>t.Locale==existingTranslation.Locale))
+                if (!request.CategoryTranslations.Any(t=>t.LangId == existingTranslation.LangId))
                 {
                     category.CategoryTranslations.Remove(existingTranslation);
                 }
@@ -44,7 +44,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 
             foreach (var translationDTO in request.CategoryTranslations)
             {
-                var translation=existingTranslations.FirstOrDefault(t=>t.Locale==translationDTO.Locale);
+                var translation=existingTranslations.FirstOrDefault(t=>t.LangId == translationDTO.LangId);
                 if (translation==null)
                 {
                     translation=new CategoryTranslation();

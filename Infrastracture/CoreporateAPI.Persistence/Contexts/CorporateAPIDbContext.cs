@@ -52,11 +52,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(dl => dl.Lang)
                 .WithMany(dt => dt.DatasheetTranslations)
-                .HasForeignKey(dl => dl.Locale)
-                .HasPrincipalKey(dt => dt.LangCode)
+                .HasForeignKey(dl => dl.LangId)
+                .HasPrincipalKey(dt => dt.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(dt => new { dt.DatasheetId, dt.Locale }).IsUnique();
+                entity.HasIndex(dt => new { dt.DatasheetId, dt.LangId }).IsUnique();
             });
 
             modelBuilder.Entity<SettingTranslation>(entity =>
@@ -70,11 +70,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(sl => sl.Lang)
                 .WithMany(st => st.SettingTranslations)
-                .HasForeignKey(sl => sl.Locale)
-                .HasPrincipalKey(st => st.LangCode)
+                .HasForeignKey(sl => sl.LangId)
+                .HasPrincipalKey(st => st.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(st => new { st.SettingId, st.Locale }).IsUnique();
+                entity.HasIndex(st => new { st.SettingId, st.LangId }).IsUnique();
             });
 
 
@@ -89,11 +89,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(bt => bt.Lang)
                 .WithMany(l => l.BannerTranslations)
-                .HasForeignKey(bt => bt.Locale)
-                .HasPrincipalKey(l => l.LangCode)
+                .HasForeignKey(bt => bt.LangId)
+                .HasPrincipalKey(l => l.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(bl => new { bl.BannerId, bl.Locale }).IsUnique();
+                entity.HasIndex(bl => new { bl.BannerId, bl.LangId }).IsUnique();
             });
 
             modelBuilder.Entity<ProductTranslation>(entity =>
@@ -107,11 +107,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(pl => pl.Lang)
                  .WithMany(l => l.ProductTranslations)
-                 .HasForeignKey(pl => pl.Locale)
-                 .HasPrincipalKey(l => l.LangCode)
+                 .HasForeignKey(pl => pl.LangId)
+                 .HasPrincipalKey(l => l.Id)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(pt => new { pt.ProductId, pt.Locale }).IsUnique();
+                entity.HasIndex(pt => new { pt.ProductId, pt.LangId }).IsUnique();
             });
 
             modelBuilder.Entity<CategoryTranslation>(entity =>
@@ -125,11 +125,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(l => l.Lang)
                  .WithMany(cl => cl.CategoryTranslations)
-                 .HasForeignKey(cl => cl.Locale)
-                 .HasPrincipalKey(l => l.LangCode)
+                 .HasForeignKey(cl => cl.LangId)
+                 .HasPrincipalKey(l => l.Id)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(l => new { l.CategoryId, l.Locale }).IsUnique();
+                entity.HasIndex(l => new { l.CategoryId, l.LangId }).IsUnique();
 
             });
 
@@ -144,11 +144,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(pt => pt.Lang)
                 .WithMany(l => l.PageTranslations)
-                .HasForeignKey(pt => pt.Locale)
-                .HasPrincipalKey(l => l.LangCode)
+                .HasForeignKey(pt => pt.LangId)
+                .HasPrincipalKey(l => l.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(l => new { l.PageId, l.Locale }).IsUnique();
+                entity.HasIndex(l => new { l.PageId, l.LangId }).IsUnique();
             });
 
             modelBuilder.Entity<ModuleTranslation>(entity =>
@@ -161,11 +161,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(ml => ml.Lang)
                 .WithMany(l => l.ModuleTranslations)
-                .HasForeignKey(ml => ml.Locale)
-                .HasPrincipalKey(l => l.LangCode)
+                .HasForeignKey(ml => ml.LangId)
+                .HasPrincipalKey(l => l.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(l => new { l.ModuleId, l.Locale }).IsUnique();
+                entity.HasIndex(l => new { l.ModuleId, l.LangId }).IsUnique();
             });
 
             modelBuilder.Entity<Home>(entity =>
@@ -184,11 +184,11 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasOne(ht => ht.Lang)
                 .WithMany(l => l.HomeTranslations)
-                .HasForeignKey(bt => bt.Locale)
-                .HasPrincipalKey(l => l.LangCode)
+                .HasForeignKey(bt => bt.LangId)
+                .HasPrincipalKey(l => l.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasIndex(l => new { l.HomeId, l.Locale }).IsUnique();
+                entity.HasIndex(l => new { l.HomeId, l.LangId }).IsUnique();
             });
             modelBuilder.Entity<Lang>()
                 .HasIndex(l => l.LangCode)

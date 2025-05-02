@@ -15,10 +15,9 @@ namespace CorporateAPI.Application.Validators.Pages
                  .MinimumLength(3)
                  .MaximumLength(120);
 
-            RuleFor(m => m.Locale)
+            RuleFor(m => m.LangId)
                 .NotEmpty()
                 .NotNull()
-                .Must(value=>allowedValues.Contains(value))
                 .WithMessage($"Sadece:{string.Join(",",allowedValues)}");
         }
     }

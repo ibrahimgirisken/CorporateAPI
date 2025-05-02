@@ -55,7 +55,7 @@ namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
 
             foreach (var existingTranslation in existingTranslations)
             {
-               if(!request.SettingTranslations.Any(t=>t.Locale==existingTranslation.Locale))
+               if(!request.SettingTranslations.Any(t=>t.LangId == existingTranslation.LangId))
                 {
                     setting.SettingTranslations.Remove(existingTranslation);
                 }
@@ -63,7 +63,7 @@ namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
 
             foreach (var translationDTO in request.SettingTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                var translation = existingTranslations.FirstOrDefault(t => t.LangId == translationDTO.LangId);
                 if (translation == null)
                 {
                     translation = new SettingTranslation();

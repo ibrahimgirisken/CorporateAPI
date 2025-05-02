@@ -1,11 +1,13 @@
 ﻿using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.RemovePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
+using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Page.GetAllPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByIdPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
 namespace CoreporateAPI.API.Controllers
@@ -28,11 +30,10 @@ namespace CoreporateAPI.API.Controllers
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
             string language = Request.Headers["Accept-Language".ToString()];
-            if (string.IsNullOrEmpty(language))
+            if (string.IsNullOrEmpty(getAllPageQueryRequest.Language))
             {
-                language = "en"; // Varsayılan dil
+                getAllPageQueryRequest.Language = "en"; // Varsayılan dil
             }
-            getAllPageQueryRequest.Language = language;
             getAllPageQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllPageQueryResponse response = await _mediator.Send(getAllPageQueryRequest);
             return Ok(response.PagesDto);

@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Module
 {
     public class ModuleTranslationDTO
     {
-        public string Locale { get; set; }
+        public Guid LangId { get; set; }
         public string? Name { get; set; }
         public string? ModuleData { get; set; }
     }

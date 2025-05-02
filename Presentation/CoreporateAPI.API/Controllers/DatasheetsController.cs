@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.Application.Features.Commands.Datasheet.CreateDatasheet;
 using CorporateAPI.Application.Features.Commands.Datasheet.RemoveDatasheet;
 using CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet;
+using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet;
 using CorporateAPI.Application.Features.Queries.Datasheet.GetByIdDatasheet;
 using MediatR;
@@ -23,6 +24,13 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllDatasheetQueryRequest getAllDatasheetQueryRequest)
         {
+            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
+            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
+            if (string.IsNullOrEmpty(getAllDatasheetQueryRequest.Language))
+            {
+                getAllDatasheetQueryRequest.Language = "en"; // Varsayılan dil
+            }
+            getAllDatasheetQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllDatasheetQueryResponse response=await _mediator.Send(getAllDatasheetQueryRequest);
             return Ok(response.resultDatasheetsDto);
         }

@@ -40,7 +40,7 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.HomeTranslations.Any(t=>t.Locale==existingTranslation.Locale))
+                if (!request.HomeTranslations.Any(t=>t.LangId == existingTranslation.LangId))
                 {
                     home.HomeTranslations.Remove(existingTranslation);
                 }  
@@ -48,7 +48,7 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 
             foreach (var translationDTO in request.HomeTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                var translation = existingTranslations.FirstOrDefault(t => t.LangId == translationDTO.LangId);
                 if (translation == null)
                 {
                     translation = new HomeTranslation();

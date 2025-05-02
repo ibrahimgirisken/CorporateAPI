@@ -1,6 +1,10 @@
-﻿using CorporateAPI.Application.Features.Commands.Home.CreateHome;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Home.CreateHome;
 using CorporateAPI.Application.Features.Commands.Home.RemoveHome;
 using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
+using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Home.GetAllHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByContentTypeHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByIdHome;
@@ -22,8 +26,16 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Reading, Definition = "Get All Home")]
         public async Task<IActionResult> Get([FromQuery] GetAllHomeQueryRequest getAllHomeQueryRequest)
         {
+            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
+            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
+            if (string.IsNullOrEmpty(getAllHomeQueryRequest.Language))
+            {
+                getAllHomeQueryRequest.Language = "en"; // Varsayılan dil
+            }
+            getAllHomeQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllHomeQueryResponse response=await _mediator.Send(getAllHomeQueryRequest);
             return Ok(response.Homes);
         }

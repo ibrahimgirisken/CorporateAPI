@@ -8,7 +8,6 @@ namespace CoreporateAPI.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<SettingTranslation> builder)
         {
-                builder.Property(x => x.Locale).HasMaxLength(3).IsRequired();
                 builder.Property(x => x.Title).HasMaxLength(20);
                 builder.Property(x => x.MetaDescription).HasMaxLength(150);
         }
