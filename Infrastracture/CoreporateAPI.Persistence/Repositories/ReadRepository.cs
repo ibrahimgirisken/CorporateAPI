@@ -32,7 +32,7 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
         {
-            var query = Table.Where(method);
+            var query = Table.Where(method).Where(e=>!e.IsDeleted);
             if (!tracking)
                 query = Table.AsNoTracking();
             return query;
@@ -43,7 +43,7 @@ namespace CoreporateAPI.Persistence.Repositories
                  bool tracking = true,
                  params Expression<Func<T, object>>[] includes)
         {
-            var query = Table.AsQueryable();
+            var query = Table.Where(e => !e.IsDeleted);
 
             if (!tracking)
                 query = query.AsNoTracking();
@@ -59,7 +59,7 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)
         {
-            var query = Table.AsNoTracking();
+            var query = Table.Where(e => !e.IsDeleted);
             if (!tracking)
                 query.AsNoTracking();
 
