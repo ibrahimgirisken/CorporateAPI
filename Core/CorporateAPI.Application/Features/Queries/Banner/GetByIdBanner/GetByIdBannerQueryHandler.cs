@@ -19,8 +19,23 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 
         public async Task<GetByIdBannerQueryResponse> Handle(GetByIdBannerQueryRequest request, CancellationToken cancellationToken)
         {
-            var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: e => e.BannerTranslations);
-            var bannerDto=_mapper.Map<ResultBannerDTO>(banner);
+            ResultBannerDTO bannerDto = null;
+
+            if (request.IncludeAllLanguages)
+            {
+                var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: e => e.BannerTranslations);
+                bannerDto = _mapper.Map<ResultBannerDTO>(banner);
+            }
+            else
+            {
+                var banner = await _bannerReadRepository.GetByIdAsync(
+            request.Id,
+            false,
+            includes: e => e.BannerTranslations
+                .Where(t => t.Lang.LangCode == request.Language));
+                bannerDto = _mapper.Map<ResultBannerDTO>(banner);
+            }
+
             return new()
             {
                 Banner = bannerDto
