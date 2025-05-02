@@ -9,6 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Setting.GetByIdSetting
 {
     public class GetByIdSettingQueryResponse
     {
-        public List<ResultSettingDTO> Settings { get; set; }
+        public ResultSettingDTO Settings { get; set; }
     }
 }
