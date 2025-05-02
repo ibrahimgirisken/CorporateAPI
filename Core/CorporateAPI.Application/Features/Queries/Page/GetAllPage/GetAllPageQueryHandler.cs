@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
+using CorporateAPI.Application.Repositories.Banner;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,13 +22,31 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var pages = _pageReadRepository.GetAll(false).Include(m => m.PageTranslations).ToList();
-            var pageDtos = _mapper.Map<List<ResultPageDTO>>(pages);
 
-            return new()
+            if (request.IncludeAllLanguages)
             {
-                PagesDto = pageDtos,
-            };
+                var pageTranslations = _pageReadRepository.GetAll(false).Include(e => e.PageTranslations).ToList();
+                var pageDatas = _mapper.Map<List<ResultPageDTO>>(pageTranslations);
+                return new()
+                {
+                    PagesDto = pageDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var bannersFiltered = _pageReadRepository.GetAll(false)
+                   .Include(e => e.PageTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var banner in bannersFiltered)
+            {
+                banner.PageTranslations = banner.PageTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredPageDtos = _mapper.Map<List<ResultPageDTO>>(bannersFiltered);
+            return new() { PagesDto = filteredPageDtos };
+
         }
     }
 }

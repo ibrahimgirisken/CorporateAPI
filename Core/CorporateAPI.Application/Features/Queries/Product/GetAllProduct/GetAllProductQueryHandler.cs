@@ -3,11 +3,6 @@ using CorporateAPI.Application.DTOs.Product;
 using CorporateAPI.Application.Repositories.Product;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
 {
@@ -24,17 +19,31 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            var products = await _productReadRepository
-                .GetAll(false)
-                .Include(e => e.ProductTranslations)
-                .ToListAsync(cancellationToken);
 
-            var productsDto = _mapper.Map<List<ResultProductDTO>>(products);
-
-            return new()
+            if (request.IncludeAllLanguages)
             {
-                ProductsDto = productsDto,
-            };
+                var productTranslations = _productReadRepository.GetAll(false).Include(e => e.ProductTranslations).ToList();
+                var productDatas = _mapper.Map<List<ResultProductDTO>>(productTranslations);
+                return new()
+                {
+                    ProductsDto = productDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var productsFiltered = _productReadRepository.GetAll(false)
+                   .Include(e => e.ProductTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var product in productsFiltered)
+            {
+                product.ProductTranslations = product.ProductTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredProductDtos = _mapper.Map<List<ResultProductDTO>>(productsFiltered);
+            return new() { ProductsDto = filteredProductDtos };
+
         }
     }
 }

@@ -3,11 +3,7 @@ using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.Repositories.Banner;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
 {

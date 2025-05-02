@@ -22,7 +22,7 @@ namespace CoreporateAPI.API.Controllers
         public async Task<IActionResult> Get([FromRoute] GetByIdSettingQueryRequest getByIdSettingQueryRequest)
         {
             GetByIdSettingQueryResponse response = await _mediator.Send(getByIdSettingQueryRequest);
-            return Ok(response.ResultSettingDTO);
+            return Ok(response.Settings);
         }
 
         [HttpPost]

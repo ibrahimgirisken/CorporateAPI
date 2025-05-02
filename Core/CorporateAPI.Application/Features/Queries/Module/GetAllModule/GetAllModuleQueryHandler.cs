@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.Repositories;
+using CorporateAPI.Application.Repositories.Banner;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,12 +26,31 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetAllModule
 
         public async Task<GetAllModuleQueryResponse> Handle(GetAllModuleQueryRequest request, CancellationToken cancellationToken)
         {
-            var modules= _moduleReadRepository.GetAll(false).Include(m=>m.ModuleTranslations).ToList();
-            var moduleDtos = _mapper.Map<List<ResultModuleDTO>>(modules);
-            return new()
+
+            if (request.IncludeAllLanguages)
             {
-                ModulesDto = moduleDtos
-            };
+                var moduleTranslations = _moduleReadRepository.GetAll(false).Include(e => e.ModuleTranslations).ToList();
+                var moduleDatas = _mapper.Map<List<ResultModuleDTO>>(moduleTranslations);
+                return new()
+                {
+                    ModulesDto = moduleDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var modulesFiltered = _moduleReadRepository.GetAll(false)
+                   .Include(e => e.ModuleTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var module in modulesFiltered)
+            {
+                module.ModuleTranslations = module.ModuleTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredModuleDtos = _mapper.Map<List<ResultModuleDTO>>(modulesFiltered);
+            return new() { ModulesDto = filteredModuleDtos };
+
         }
     }
 }

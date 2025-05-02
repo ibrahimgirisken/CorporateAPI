@@ -2,11 +2,7 @@
 using CorporateAPI.Application.DTOs.Setting;
 using CorporateAPI.Application.Repositories.Setting;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CorporateAPI.Application.Features.Queries.Setting.GetByIdSetting
 {
@@ -23,13 +19,32 @@ namespace CorporateAPI.Application.Features.Queries.Setting.GetByIdSetting
 
         public async Task<GetByIdSettingQueryResponse> Handle(GetByIdSettingQueryRequest request, CancellationToken cancellationToken)
         {
-            var setting=_mapper.Map<Domain.Entities.Setting.Setting>(await _settingReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.SettingTranslations));
 
-            var settingDto=_mapper.Map<ResultSettingDTO>(setting);
-            return new()
+
+            if (request.IncludeAllLanguages)
             {
-                ResultSettingDTO = settingDto
-            };
+                var settingTranslations = _settingReadRepository.GetAll(false).Include(e => e.SettingTranslations).ToList();
+                var settingDatas = _mapper.Map<List<ResultSettingDTO>>(settingTranslations);
+                return new()
+                {
+                    Settings = settingDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var settingsFiltered = _settingReadRepository.GetAll(false)
+                   .Include(e => e.SettingTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var setting in settingsFiltered)
+            {
+                setting.SettingTranslations = setting.SettingTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredSettingDtos = _mapper.Map<List<ResultSettingDTO>>(settingsFiltered);
+            return new() { Settings = filteredSettingDtos };
+
         }
     }
 }
