@@ -23,7 +23,7 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Reading, Definition = "Get All Banner")]
         public async Task<IActionResult> GetAllBanner([FromQuery] GetAllBannerQueryRequest getAllBannerQueryRequest)
         {
@@ -39,15 +39,15 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.Banners);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("by-id")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Reading, Definition = "Get By Id Banner")]
-        public async Task<IActionResult> GetByIdBanner([FromRoute] GetByIdBannerQueryRequest getByIdBannerQueryRequest)
+        public async Task<IActionResult> GetByIdBanner([FromQuery] GetByIdBannerQueryRequest getByIdBannerQueryRequest)
         {
             GetByIdBannerQueryResponse response = await _mediator.Send(getByIdBannerQueryRequest);
             return Ok(response.Banner);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Writing, Definition = "Create Banner")]
         public async Task<IActionResult> CreateBanner(CreateBannerCommandRequest createBannerCommandRequest)
         {
@@ -55,16 +55,16 @@ namespace CoreporateAPI.API.Controllers
             return StatusCode((int)HttpStatusCode.Created);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Updating, Definition = "Update Banner")]
         public async Task<IActionResult> UpdateBanner(UpdateBannerCommandRequest updateBannerCommandRequest)
         {
             UpdateBannerCommandResponse response = await _mediator.Send(updateBannerCommandRequest);
             return Ok(response);
         }
-        [HttpDelete("{Id}")]
+        [HttpDelete("delete")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Deleting, Definition = "Remove Banner")]
-        public async Task<IActionResult> RemoveBanner([FromRoute] RemoveBannerCommandRequest removeBannerCommandRequest)
+        public async Task<IActionResult> RemoveBanner([FromQuery] RemoveBannerCommandRequest removeBannerCommandRequest)
         {
             RemoveBannerCommandResponse response = await _mediator.Send(removeBannerCommandRequest);
             return Ok(response);

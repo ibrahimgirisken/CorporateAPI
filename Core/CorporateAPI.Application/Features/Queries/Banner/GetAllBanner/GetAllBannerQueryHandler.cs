@@ -31,7 +31,7 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
                 };
             }
             var language = request.Language ?? "en";
-            var bannersFiltered = _bannerReadRepository.GetAll(false)
+            var bannersFiltered = _bannerReadRepository.GetAll(false).Where(b => !b.IsDeleted)
                    .Include(e => e.BannerTranslations)
                        .ThenInclude(t => t.Lang)
                    .ToList();

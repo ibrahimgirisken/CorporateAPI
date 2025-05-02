@@ -24,7 +24,7 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public IQueryable<T> GetAll(bool tracking = true)
         {
-            var query = Table.AsQueryable();
+            var query = Table.Where(e=>!e.IsDeleted);
             if (!tracking)
                 query.AsNoTracking();
             return query;
@@ -54,7 +54,7 @@ namespace CoreporateAPI.Persistence.Repositories
                 query = query.Include(include);
             }
 
-            return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id));
+            return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id) && !e.IsDeleted);
         }
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)

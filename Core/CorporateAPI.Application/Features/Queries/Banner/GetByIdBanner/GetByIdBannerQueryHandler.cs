@@ -2,6 +2,7 @@
 using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.Repositories.Banner;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 {
