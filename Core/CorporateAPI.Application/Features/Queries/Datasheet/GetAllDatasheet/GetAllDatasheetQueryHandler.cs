@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.DTOs.Datasheet;
+using CorporateAPI.Application.Repositories.Banner;
 using CorporateAPI.Application.Repositories.Datasheet;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +26,31 @@ namespace CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet
 
         public async Task<GetAllDatasheetQueryResponse> Handle(GetAllDatasheetQueryRequest request, CancellationToken cancellationToken)
         {
-            var datasheets=await _datasheetReadRepository.GetAll(false).Include(e => e.DatasheetTranslations).ToListAsync(cancellationToken);
-            var datasheetsDto=_mapper.Map<List<ResultDatasheetDTO>>(datasheets);
-            return new()
+
+            if (request.IncludeAllLanguages)
             {
-                resultDatasheetsDto = datasheetsDto,
-            };
+                var datasheetTranslations = _datasheetReadRepository.GetAll(false).Include(e => e.DatasheetTranslations).ToList();
+                var datasheetDatas = _mapper.Map<List<ResultDatasheetDTO>>(datasheetTranslations);
+                return new()
+                {
+                    resultDatasheetsDto = datasheetDatas
+                };
+            }
+            var language = request.Language ?? "en";
+            var datasheetsFiltered = _datasheetReadRepository.GetAll(false)
+                   .Include(e => e.DatasheetTranslations)
+                       .ThenInclude(t => t.Lang)
+                   .ToList();
+            foreach (var datasheet in datasheetsFiltered)
+            {
+                datasheet.DatasheetTranslations = datasheet.DatasheetTranslations
+                    .Where(t => t.Lang.LangCode == language)
+                    .ToList();
+            }
+
+            var filteredBannerDtos = _mapper.Map<List<ResultDatasheetDTO>>(datasheetsFiltered);
+            return new() { resultDatasheetsDto = filteredBannerDtos };
+
         }
     }
 }
