@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250505132126_mig1")]
+    [Migration("20250505142656_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -883,10 +883,6 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
