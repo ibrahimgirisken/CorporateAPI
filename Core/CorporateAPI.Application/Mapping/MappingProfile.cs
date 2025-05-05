@@ -28,6 +28,7 @@ using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
 using CorporateAPI.Application.Features.Commands.Settting.CreateSetting;
 using CorporateAPI.Application.Features.Commands.Settting.UpdateSetting;
+using CorporateAPI.Application.Resolvers;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Brand;
@@ -48,33 +49,46 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Setting,ResultSettingDTO>().ReverseMap();
             CreateMap<Setting,CreateSettingCommandRequest>().ReverseMap();
             CreateMap<Setting,UpdateSettingCommandRequest>().ReverseMap();
-            CreateMap<SettingTranslation,SettingTranslationDTO>().ReverseMap();
+            CreateMap<SettingTranslationDTO, SettingTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<SettingTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
 
             CreateMap<Category, ResultCategoryDTO>().ReverseMap();
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
             CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
-            CreateMap<CategoryTranslation,CategoryTranslationDTO>().ReverseMap();
+            CreateMap<CategoryTranslationDTO, CategoryTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<CategoryTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
             CreateMap<Page,CreatePageCommandRequest>().ReverseMap();
             CreateMap<Page,ResultPageDTO>().ReverseMap(); 
             CreateMap<Page,UpdatePageCommandRequest>().ReverseMap();
-            CreateMap<PageTranslation, PageTranslationDTO>().ReverseMap();
+            CreateMap<PageTranslationDTO, PageTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<PageTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
             CreateMap<Home,CreateHomeCommandRequest>().ReverseMap();
             CreateMap<Home,ResultHomeDTO>().ReverseMap();
             CreateMap<Home,UpdateHomeCommandRequest>().ReverseMap();
-            CreateMap<HomeTranslation,HomeTranslationDTO>().ReverseMap();
+            CreateMap<HomeTranslationDTO, HomeTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<HomeTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
             CreateMap<Banner, CreateBannerCommandRequest>().ReverseMap();
             CreateMap<Banner, ResultBannerDTO>().ReverseMap();
             CreateMap<Banner, UpdateBannerCommandRequest>().ReverseMap();
-            CreateMap<BannerTranslation, BannerTranslationDTO>().ReverseMap();
+            CreateMap<BannerTranslationDTO, BannerTranslation>()
+           .ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<BannerTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
             CreateMap<Module,ResultModuleDTO>().ReverseMap();
             CreateMap<Module,CreateModuleCommandRequest>().ReverseMap(); 
             CreateMap<Module,UpdateHomeCommandRequest>().ReverseMap(); 
-            CreateMap<ModuleTranslation,ModuleTranslationDTO>().ReverseMap();
+            CreateMap<ModuleTranslationDTO,ModuleTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<ModuleTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
             CreateMap<Lang,ResultLangDTO>().ReverseMap();
             CreateMap<Lang,CreateLangCommandRequest>().ReverseMap();
@@ -83,13 +97,17 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Product,ResultProductDTO>().ReverseMap();
             CreateMap<Product,CreateProductCommandRequest>().ReverseMap();
             CreateMap<Product,UpdateProductCommandRequest>().ReverseMap();
-            CreateMap<ProductTranslation, ProductTranslationDTO>().ReverseMap();
+            CreateMap<ProductTranslationDTO,ProductTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<ProductTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
 
             CreateMap<Datasheet,ResultDatasheetDTO>().ReverseMap();
             CreateMap<Datasheet,CreateDatasheetCommandRequest>().ReverseMap();
             CreateMap<Datasheet,UpdateDatasheetCommandRequest>().ReverseMap();
-            CreateMap<DatasheetTranslation,DatasheetTranslationDTO>().ReverseMap();
+            CreateMap<DatasheetTranslationDTO, DatasheetTranslation>().ForMember(dest => dest.LangId,
+                      opt => opt.MapFrom<GenericLangCodeToLangIdResolver<DatasheetTranslationDTO>>())
+           .ForMember(dest => dest.Lang, opt => opt.Ignore()).ReverseMap();
 
             CreateMap<Brand,ResultBrandDTO>().ReverseMap();
             CreateMap<Brand,CreateBrandCommandRequest>().ReverseMap();

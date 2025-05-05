@@ -7,11 +7,6 @@ using CorporateAPI.Domain.Entities.EndpointMenu;
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreporateAPI.Persistence.Services
 {

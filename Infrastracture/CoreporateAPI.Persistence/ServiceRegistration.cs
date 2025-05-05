@@ -23,6 +23,8 @@ using CoreporateAPI.Persistence.Repositories.Endpoint;
 using CorporateAPI.Application.Repositories.Endpoint;
 using CorporateAPI.Application.Repositories.EndpointMenu;
 using CoreporateAPI.Persistence.Repositories.EndpointMenu;
+using CoreporateAPI.Application;
+using CorporateAPI.Application.Resolvers;
 
 namespace CoreporateAPI.Persistence
 {
@@ -83,6 +85,10 @@ namespace CoreporateAPI.Persistence
             services.AddScoped<IEndpointMenuWriteRepository,EndpointMenuWriteRepository>();
 
             services.AddScoped<IAuthorizationEndpointService, AuthorizationEndpointService>();
+
+            services.AddScoped(typeof(GenericLangCodeToLangIdResolver<>));
+
+            services.AddScoped<ILanguageCodeResolverService, LanguageCodeResolverService>();
 
             services.AddScoped<IRoleService,RoleService>();
             services.AddScoped<IAuthService, AuthService>();

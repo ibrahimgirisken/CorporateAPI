@@ -38,7 +38,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.BannerTranslations.Any(t => t.LangId == existingTranslation.LangId))
+                if (!request.BannerTranslations.Any(t => t.LangCode == existingTranslation.Lang.LangCode))
                 {
                     banner.BannerTranslations.Remove(existingTranslation);
                 }
@@ -46,7 +46,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
 
             foreach (var translationDTO in request.BannerTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.LangId == translationDTO.LangId);
+                var translation = existingTranslations.FirstOrDefault(t => t.Lang.LangCode == translationDTO.LangCode);
                 if (translation == null)
                 {
                     translation = new BannerTranslation();
