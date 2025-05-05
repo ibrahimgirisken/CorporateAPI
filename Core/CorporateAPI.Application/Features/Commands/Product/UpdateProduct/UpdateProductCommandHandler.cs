@@ -43,7 +43,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
 
             foreach (var existingTranslation in existingTranslations)
             {
-                if (!request.ProductTranslations.Any(t => t.Locale == existingTranslation.Locale))
+                if (!request.ProductTranslations.Any(t => t.LangCode == existingTranslation.Lang.LangCode))
                 {
                     product.ProductTranslations.Remove(existingTranslation);
                 }
@@ -51,7 +51,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
 
             foreach (var translationDTO in request.ProductTranslations)
             {
-                var translation = existingTranslations.FirstOrDefault(t => t.Locale == translationDTO.Locale);
+                var translation = existingTranslations.FirstOrDefault(t => t.Lang.LangCode == translationDTO.LangCode);
                 if (translation == null)
                 {
                     translation = new ProductTranslation();

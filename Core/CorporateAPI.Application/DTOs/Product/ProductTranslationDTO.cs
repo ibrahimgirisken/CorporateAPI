@@ -8,7 +8,7 @@ namespace CorporateAPI.Application.DTOs.Product
 {
     public class ProductTranslationDTO
     {
-        public string Locale { get; set; }
+        public string LangCode { get; set; } = string.Empty;
         public string? Name { get; set; }
         public string? Url { get; set; }
         public string? Title { get; set; }

@@ -881,10 +881,6 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<Guid>("LangId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
 

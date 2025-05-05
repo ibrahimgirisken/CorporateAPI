@@ -9,7 +9,7 @@ namespace CorporateAPI.Domain.Entities.Product
 {
     public class ProductTranslation:BaseTranslation
     {
-        public string Locale { get; set; }
+        
         public string? Name { get; set; }
         public string? Url { get; set; }
         public string? Title { get; set; }
