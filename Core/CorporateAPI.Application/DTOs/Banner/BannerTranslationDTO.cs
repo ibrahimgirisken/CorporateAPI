@@ -9,6 +9,7 @@ namespace CorporateAPI.Application.DTOs.Banner
     public class BannerTranslationDTO
     {
         public string LangCode { get; set; }=string.Empty;
+
         public string? Url { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }

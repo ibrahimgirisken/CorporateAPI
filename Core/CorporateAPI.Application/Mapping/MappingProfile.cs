@@ -22,6 +22,7 @@ using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
 using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
 using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
 using CorporateAPI.Application.Features.Commands.Module.CreateModule;
+using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
 using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
 using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
@@ -150,7 +151,7 @@ namespace CorporateAPI.Application.Mapping
 
             CreateMap<Module, ResultModuleDTO>().ReverseMap();
             CreateMap<Module, CreateModuleCommandRequest>().ReverseMap();
-            CreateMap<Module, UpdateHomeCommandRequest>().ReverseMap(); // Not: Bu satırda `UpdateHomeCommandRequest` yerine muhtemelen `UpdateModuleCommandRequest` olmalı!
+            CreateMap<Module, UpdateModuleCommandRequest>().ReverseMap();
 
             CreateMap<Lang, ResultLangDTO>().ReverseMap();
             CreateMap<Lang, CreateLangCommandRequest>().ReverseMap();

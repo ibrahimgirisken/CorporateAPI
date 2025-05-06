@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.Abstractions.Services;
+using CorporateAPI.Application.Helpers;
 using CorporateAPI.Application.Repositories.Banner;
 using CorporateAPI.Domain.Entities.Banner;
 using MediatR;
@@ -10,12 +12,14 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
         readonly IBannerReadRepository _bannerReadRepository;
         readonly IBannerWriteRepository _bannerWriteRepository;
         readonly IMapper _mapper;
+        readonly ILanguageCodeResolverService _langService;
 
-        public UpdateBannerCommandHandler(IBannerReadRepository bannerReadRepository, IBannerWriteRepository bannerWriteRepository, IMapper mapper)
+        public UpdateBannerCommandHandler(IBannerReadRepository bannerReadRepository, IBannerWriteRepository bannerWriteRepository, IMapper mapper, ILanguageCodeResolverService langService = null)
         {
             _bannerReadRepository = bannerReadRepository;
             _bannerWriteRepository = bannerWriteRepository;
             _mapper = mapper;
+            _langService = langService;
         }
 
         public async Task<UpdateBannerCommandResponse> Handle(UpdateBannerCommandRequest request, CancellationToken cancellationToken)
@@ -33,27 +37,13 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
             banner.MobileVideo = request.MobileVideo;
             banner.Status = request.Status;
 
-            var existingTranslations = banner.BannerTranslations.ToList();
-
-
-            foreach (var existingTranslation in existingTranslations)
-            {
-                if (!request.BannerTranslations.Any(t => t.LangCode == existingTranslation.Lang.LangCode))
-                {
-                    banner.BannerTranslations.Remove(existingTranslation);
-                }
-            }
-
-            foreach (var translationDTO in request.BannerTranslations)
-            {
-                var translation = existingTranslations.FirstOrDefault(t => t.Lang.LangCode == translationDTO.LangCode);
-                if (translation == null)
-                {
-                    translation = new BannerTranslation();
-                    banner.BannerTranslations.Add(translation);
-                }
-                _mapper.Map(translationDTO, translation);
-            }
+            TranslationHelper.UpdateOrAddTranslations(
+         banner.BannerTranslations,
+         request.BannerTranslations,
+         dto => dto.LangCode,
+         code => _langService.GetLangIdByLangCode(code),
+         (dto, entity) => _mapper.Map(dto, entity)
+     );
 
             _bannerWriteRepository.Update(banner);
             await _bannerWriteRepository.SaveAsync();
