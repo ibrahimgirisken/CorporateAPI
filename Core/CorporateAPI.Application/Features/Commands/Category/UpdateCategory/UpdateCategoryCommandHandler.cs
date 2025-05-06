@@ -2,7 +2,6 @@
 using CorporateAPI.Application.Abstractions.Services;
 using CorporateAPI.Application.Helpers;
 using CorporateAPI.Application.Repositories.Category;
-using CorporateAPI.Domain.Entities.Category;
 using MediatR;
 using System.Linq.Expressions;
 

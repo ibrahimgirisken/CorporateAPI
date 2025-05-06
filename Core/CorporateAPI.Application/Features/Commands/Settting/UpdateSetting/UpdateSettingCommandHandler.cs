@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
-using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.Repositories.Setting;
 using CorporateAPI.Domain.Entities.Setting;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
 {
