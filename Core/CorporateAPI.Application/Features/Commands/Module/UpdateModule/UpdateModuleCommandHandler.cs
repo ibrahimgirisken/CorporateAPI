@@ -23,10 +23,8 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
         {
             var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Module.Module, object>>[]
             {
-e=>e.ModuleTranslations
-            }, includeStrings: new[]
-            {
-                "ModuleTranslations.Lang" });
+                e=>e.ModuleTranslations
+            });
 
             var existingTranslations = module.ModuleTranslations.ToList();
             module.ModuleTranslations.Clear();

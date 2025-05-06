@@ -24,9 +24,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
             Domain.Entities.Page.Page page = await _pageReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Page.Page, object>>[]
             {
                 e=> e.PageTranslations
-            }, includeStrings: new[]
-            {
-                "PageTranslations.Lang" });
+            });
            
             if (page == null)
                 throw new Exception("Page not found!");

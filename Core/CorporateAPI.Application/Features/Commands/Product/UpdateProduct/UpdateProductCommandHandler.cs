@@ -24,9 +24,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
             Domain.Entities.Product.Product product = await _productReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Product.Product, object>>[]
             {
                 e => e.ProductTranslations
-            }, includeStrings: new[]
-            {
-               "ProductTranslations.Lang" });
+            });
 
             if (product == null)
             {

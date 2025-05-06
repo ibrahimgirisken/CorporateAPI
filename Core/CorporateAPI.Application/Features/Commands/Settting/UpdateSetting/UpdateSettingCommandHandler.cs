@@ -29,9 +29,7 @@ namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
         {
             var setting =await settingReadRepository.GetByIdAsync(request.Id, false, includes:new Expression< Func<Domain.Entities.Setting.Setting, object>>[]{
                 e => e.SettingTranslations
-            }, includeStrings: new[]
-            {
-                "SettingTranslations.Lang" });
+            });
 
             if (setting == null)
             {

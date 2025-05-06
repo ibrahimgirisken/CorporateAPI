@@ -23,10 +23,8 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
         {
             Domain.Entities.Datasheet.Datasheet datasheet=await _datasheetReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Datasheet.Datasheet, object>>[]
             {
-e => e.DatasheetTranslations
-            }, includeStrings: new[]
-            {
-                "DatasheetTranslations.Lang" });
+                e => e.DatasheetTranslations
+            });
             if (datasheet == null)
                 throw new Exception("Datasheet not found!");
 

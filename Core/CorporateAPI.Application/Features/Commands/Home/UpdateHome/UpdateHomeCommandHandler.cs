@@ -22,7 +22,7 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 
         public async Task<UpdateHomeCommandResponse> Handle(UpdateHomeCommandRequest request, CancellationToken cancellationToken)
         {
-            var home=await _homeReadRepository.GetByIdAsync(request.Id,false,includes: new Expression<Func<Domain.Entities.Home.Home, object>>[] { e => e.HomeTranslations }, includeStrings: new[] { "HomeTranslations.Lang" });
+            var home=await _homeReadRepository.GetByIdAsync(request.Id,false,includes: new Expression<Func<Domain.Entities.Home.Home, object>>[] { e => e.HomeTranslations });
 
             if (home == null)
                 throw new Exception("Home not found!");

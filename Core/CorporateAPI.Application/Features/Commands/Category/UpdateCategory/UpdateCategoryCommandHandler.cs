@@ -27,12 +27,8 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
         {
             Domain.Entities.Category.Category category=await _categoryReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Category.Category, object>>[]
             {
-                e => e.CategoryTranslations
-            },
-            includeStrings: new[]
-            {
-                "CategoryTranslations.Lang" 
-            });
+                e => e.CategoryTranslations }
+            );
 
             if (category==null)
                 throw new Exception("Category not found!");
