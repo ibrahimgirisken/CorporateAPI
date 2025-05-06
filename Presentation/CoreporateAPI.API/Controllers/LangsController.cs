@@ -1,4 +1,7 @@
-﻿using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Lang.CreateLang;
 using CorporateAPI.Application.Features.Commands.Lang.RemoveLang;
 using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
 using CorporateAPI.Application.Features.Queries.Lang.GetAllLang;
@@ -19,35 +22,40 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllLangRequest getAllLangRequest)
+        [HttpGet("all")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Reading, Definition = "Get All Lang")]
+        public async Task<IActionResult> GetAllLang([FromQuery] GetAllLangRequest getAllLangRequest)
         {
             GetAllLangResponse response = await _mediator.Send(getAllLangRequest);
             return Ok(response.LangData);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdLangRequest getByIdLangRequest)
+        [HttpGet("by-id")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Reading, Definition = "Get By Id Lang")]
+        public async Task<IActionResult> GetByIdLang([FromQuery] GetByIdLangRequest getByIdLangRequest)
         {
             GetByIdLangResponse response = await _mediator.Send(getByIdLangRequest);
             return Ok(response.Lang);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreateLangCommandRequest createLangRequest)
+        [HttpPost("add")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Writing, Definition = "Create Lang")]
+        public async Task<IActionResult> CreateLang(CreateLangCommandRequest createLangRequest)
         {
             CreateLangResponse response = await _mediator.Send(createLangRequest);
             return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateLangCommandRequest updateLangRequest)
+        [HttpPut("update")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Updating, Definition = "Update Lang")]
+        public async Task<IActionResult> UpdateLang(UpdateLangCommandRequest updateLangRequest)
         {
             UpdateLangCommandResponse response = await _mediator.Send(updateLangRequest);
             return Ok(response);
         }
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemoveLangCommandRequest removeLangRequest)
+        [HttpDelete("delete")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Deleting, Definition = "Remove Lang")]
+        public async Task<IActionResult> RemoveLang([FromQuery] RemoveLangCommandRequest removeLangRequest)
         {
             RemoveLangCommandResponse response = await _mediator.Send(removeLangRequest);
             return Ok(response);

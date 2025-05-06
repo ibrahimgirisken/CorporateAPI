@@ -22,6 +22,7 @@ namespace CoreporateAPI.API.Controllers
         {
             _mediator = mediator;
         }
+
         [HttpGet()]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get All Users")]
@@ -30,7 +31,6 @@ namespace CoreporateAPI.API.Controllers
             GetAllUsersQueryResponse response = await _mediator.Send(getAllUsersQueryRequest);
             return Ok(response);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)

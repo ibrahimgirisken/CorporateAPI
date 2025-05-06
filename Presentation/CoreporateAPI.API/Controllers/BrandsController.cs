@@ -4,7 +4,6 @@ using CorporateAPI.Application.Enums;
 using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
 using CorporateAPI.Application.Features.Commands.Brand.RemoveBrand;
 using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
-using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Brand.GetAllBrand;
 using CorporateAPI.Application.Features.Queries.Brand.GetByIdBrand;
 using MediatR;
@@ -27,13 +26,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Reading, Definition = "Get All Brand")]
         public async Task<IActionResult> GetAllBrand([FromQuery]GetAllBrandQueryRequest getAllBrandQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            if (string.IsNullOrEmpty(getAllBrandQueryRequest.Language))
-            {
-                getAllBrandQueryRequest.Language = "en"; // Varsayılan dil
-            }
-            getAllBrandQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllBrandQueryResponse response=await _mediator.Send(getAllBrandQueryRequest);
             return Ok(response.Brands);
         }

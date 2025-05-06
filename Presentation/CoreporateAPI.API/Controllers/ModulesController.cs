@@ -29,10 +29,6 @@ namespace CoreporateAPI.API.Controllers
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            if (string.IsNullOrEmpty(getAllModuleQueryRequest.Language))
-            {
-                getAllModuleQueryRequest.Language = "en"; // Varsayılan dil
-            }
             getAllModuleQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllModuleQueryResponse response = await _mediator.Send(getAllModuleQueryRequest);
             return Ok(response.ModulesDto);

@@ -2,11 +2,6 @@
 using CorporateAPI.Application.DTOs.Brand;
 using CorporateAPI.Application.Repositories.Brand;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Queries.Brand.GetAllBrand
 {
