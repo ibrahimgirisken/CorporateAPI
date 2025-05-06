@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetAllHome
 
             if (request.IncludeAllLanguages)
             {
-                var homeTranslations = _homeReadRepository.GetAll(false).Include(e => e.HomeTranslations).ToList();
+                var homeTranslations = _homeReadRepository.GetAll(false).Include(e => e.HomeTranslations).ThenInclude(l=>l.Lang).ToList();
                 var homeDatas = _mapper.Map<List<ResultHomeDTO>>(homeTranslations);
                 return new()
                 {

@@ -23,7 +23,7 @@ namespace CorporateAPI.Application.Features.Queries.Brand.GetAllBrand
 
         public async Task<GetAllBrandQueryResponse> Handle(GetAllBrandQueryRequest request, CancellationToken cancellationToken)
         {
-            var brands = _brandReadRepository.GetAll().ToList();
+            var brands = _brandReadRepository.GetAll(false).ToList();
             var brandsDto=_mapper.Map<List<ResultBrandDTO>>(brands);
             return new()
             {

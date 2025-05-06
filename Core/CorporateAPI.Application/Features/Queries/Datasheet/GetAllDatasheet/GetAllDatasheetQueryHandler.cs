@@ -29,7 +29,7 @@ namespace CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet
 
             if (request.IncludeAllLanguages)
             {
-                var datasheetTranslations = _datasheetReadRepository.GetAll(false).Include(e => e.DatasheetTranslations).ToList();
+                var datasheetTranslations = _datasheetReadRepository.GetAll(false).Include(e => e.DatasheetTranslations).ThenInclude(l=>l.Lang).ToList();
                 var datasheetDatas = _mapper.Map<List<ResultDatasheetDTO>>(datasheetTranslations);
                 return new()
                 {

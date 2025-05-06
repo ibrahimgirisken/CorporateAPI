@@ -27,10 +27,6 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
             var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Banner.Banner, object>>[]
                 {
                     e=>e.BannerTranslations
-                },
-                includeStrings: new[]
-                {
-                    "BannerTranslations.Lang"
                 });
 
             if (banner == null)
@@ -44,13 +40,12 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
             banner.MobileVideo = request.MobileVideo;
             banner.Status = request.Status;
 
-            TranslationHelper.UpdateOrAddTranslations(
+         TranslationHelper.UpdateOrAddTranslations(
          banner.BannerTranslations,
          request.BannerTranslations,
          dto => dto.LangCode,
          code => _langService.GetLangIdByLangCode(code),
-         (dto, entity) => _mapper.Map(dto, entity)
-     );
+         (dto, entity) => _mapper.Map(dto, entity));
 
             _bannerWriteRepository.Update(banner);
             await _bannerWriteRepository.SaveAsync();

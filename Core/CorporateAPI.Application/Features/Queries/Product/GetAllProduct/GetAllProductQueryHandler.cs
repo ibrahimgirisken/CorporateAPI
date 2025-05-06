@@ -22,7 +22,7 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
 
             if (request.IncludeAllLanguages)
             {
-                var productTranslations = _productReadRepository.GetAll(false).Include(e => e.ProductTranslations).ToList();
+                var productTranslations = _productReadRepository.GetAll(false).Include(e => e.ProductTranslations).ThenInclude(l => l.Lang).ToList();
                 var productDatas = _mapper.Map<List<ResultProductDTO>>(productTranslations);
                 return new()
                 {

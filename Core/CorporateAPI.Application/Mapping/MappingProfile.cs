@@ -147,7 +147,6 @@ namespace CorporateAPI.Application.Mapping
 
             CreateMap<Banner, ResultBannerDTO>().ReverseMap();
             CreateMap<Banner, CreateBannerCommandRequest>().ReverseMap();
-            CreateMap<Banner, UpdateBannerCommandRequest>().ReverseMap();
 
             CreateMap<Module, ResultModuleDTO>().ReverseMap();
             CreateMap<Module, CreateModuleCommandRequest>().ReverseMap();

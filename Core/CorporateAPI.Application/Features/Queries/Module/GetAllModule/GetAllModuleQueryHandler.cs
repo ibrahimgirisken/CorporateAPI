@@ -29,7 +29,7 @@ namespace CorporateAPI.Application.Features.Queries.Module.GetAllModule
 
             if (request.IncludeAllLanguages)
             {
-                var moduleTranslations = _moduleReadRepository.GetAll(false).Include(e => e.ModuleTranslations).ToList();
+                var moduleTranslations = _moduleReadRepository.GetAll(false).Include(e => e.ModuleTranslations).ThenInclude(l=>l.Lang).ToList();
                 var moduleDatas = _mapper.Map<List<ResultModuleDTO>>(moduleTranslations);
                 return new()
                 {

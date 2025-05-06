@@ -9,5 +9,7 @@ namespace CorporateAPI.Application.Features.Queries.Category.GetAllCategory
 {
     public class GetAllCategoryQueryRequest:IRequest<GetAllCategoryQueryResponse>
     {
+        public string? Language { get; set; }
+        public bool IncludeAllLanguages { get; set; } = false;
     }
 }

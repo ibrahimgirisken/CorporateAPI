@@ -25,7 +25,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
             if (request.IncludeAllLanguages)
             {
-                var pageTranslations = _pageReadRepository.GetAll(false).Include(e => e.PageTranslations).ToList();
+                var pageTranslations = _pageReadRepository.GetAll(false).Include(e => e.PageTranslations).ThenInclude(l => l.Lang).ToList();
                 var pageDatas = _mapper.Map<List<ResultPageDTO>>(pageTranslations);
                 return new()
                 {

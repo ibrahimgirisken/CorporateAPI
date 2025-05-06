@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.Abstractions.Services;
+using CorporateAPI.Application.Helpers;
 using CorporateAPI.Application.Repositories.Category;
 using CorporateAPI.Domain.Entities.Category;
 using MediatR;
@@ -11,12 +13,14 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
         readonly ICategoryReadRepository _categoryReadRepository;
         readonly ICategoryWriteRepository _categoryWriteRepository;
         readonly IMapper _mapper;
+        readonly ILanguageCodeResolverService _langService;
 
-        public UpdateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMapper mapper)
+        public UpdateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMapper mapper, ILanguageCodeResolverService langService = null)
         {
             _categoryReadRepository = categoryReadRepository;
             _categoryWriteRepository = categoryWriteRepository;
             _mapper = mapper;
+            _langService = langService;
         }
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
@@ -31,39 +35,23 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
             });
 
             if (category==null)
-            {
                 throw new Exception("Category not found!");
-            }
+            
 
             category.Order=request.Order;
             category.Status=request.Status;
             category.ParentId=request.ParentId;
             category.Image1=request.Image1;
 
-            var existingTranslations=category.CategoryTranslations.ToList();
-
-            foreach (var existingTranslation in existingTranslations)
-            {
-                if (!request.CategoryTranslations.Any(t=>t.LangId == existingTranslation.LangId))
-                {
-                    category.CategoryTranslations.Remove(existingTranslation);
-                }
-            }
-
-            foreach (var translationDTO in request.CategoryTranslations)
-            {
-                var translation=existingTranslations.FirstOrDefault(t=>t.LangId == translationDTO.LangId);
-                if (translation==null)
-                {
-                    translation=new CategoryTranslation();
-                    category.CategoryTranslations.Add(translation);
-                }
-                _mapper.Map(translationDTO,translation);
-            }
-
+            TranslationHelper.UpdateOrAddTranslations(
+                category.CategoryTranslations,
+                request.CategoryTranslations,
+                dto => dto.LangCode,
+                code => _langService.GetLangIdByLangCode(code),
+                (dto, entity) => _mapper.Map(dto, entity)
+            );
             _categoryWriteRepository.Update(category);
             await _categoryWriteRepository.SaveAsync();
-
             return new UpdateCategoryCommandResponse();          
         }
     }
