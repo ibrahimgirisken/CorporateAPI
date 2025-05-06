@@ -1,4 +1,7 @@
-﻿using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
 using CorporateAPI.Application.Features.Commands.Brand.RemoveBrand;
 using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
 using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
@@ -20,8 +23,9 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]GetAllBrandQueryRequest getAllBrandQueryRequest)
+        [HttpGet("all")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Reading, Definition = "Get All Brand")]
+        public async Task<IActionResult> GetAllBrand([FromQuery]GetAllBrandQueryRequest getAllBrandQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
@@ -33,30 +37,33 @@ namespace CoreporateAPI.API.Controllers
             GetAllBrandQueryResponse response=await _mediator.Send(getAllBrandQueryRequest);
             return Ok(response.Brands);
         }
-
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdBrandQueryRequest getByIdBrandQueryRequest)
+        [HttpGet("by-id")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Reading, Definition = "Get By Id Brand")]
+        public async Task<IActionResult> GetByIdBrand([FromQuery] GetByIdBrandQueryRequest getByIdBrandQueryRequest)
         {
             GetByIdBrandQueryResponse response=await _mediator.Send(getByIdBrandQueryRequest);
             return Ok(response.Brand);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreateBrandCommandRequest createBrandCommandRequest)
+        [HttpPost("add")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Writing, Definition = "Create Brand")]
+        public async Task<IActionResult> CreateBrand(CreateBrandCommandRequest createBrandCommandRequest)
         {
             CreateBrandCommandResponse response=await _mediator.Send(createBrandCommandRequest);
             return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBrandCommandRequest updateBrandCommandRequest)
+        [HttpPut("update")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Updating, Definition = "Update Brand")]
+        public async Task<IActionResult> UpdateBrand(UpdateBrandCommandRequest updateBrandCommandRequest)
         {
             UpdateBrandCommandResponse response=await _mediator.Send(updateBrandCommandRequest);
             return Ok(response);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery] RemoveBrandCommandRequest removeBrandCommandRequest)
+        [HttpDelete("delete")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Deleting, Definition = "Remove Brand")]
+        public async Task<IActionResult> RemoveBrand([FromQuery] RemoveBrandCommandRequest removeBrandCommandRequest)
         {
             RemoveBrandCommandResponse response=await _mediator.Send(removeBrandCommandRequest);
             return Ok(response);

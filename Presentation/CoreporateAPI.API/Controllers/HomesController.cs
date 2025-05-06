@@ -4,7 +4,6 @@ using CorporateAPI.Application.Enums;
 using CorporateAPI.Application.Features.Commands.Home.CreateHome;
 using CorporateAPI.Application.Features.Commands.Home.RemoveHome;
 using CorporateAPI.Application.Features.Commands.Home.UpdateHome;
-using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Home.GetAllHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByContentTypeHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByIdHome;
@@ -25,9 +24,9 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Reading, Definition = "Get All Home")]
-        public async Task<IActionResult> Get([FromQuery] GetAllHomeQueryRequest getAllHomeQueryRequest)
+        public async Task<IActionResult> GetAllHome([FromQuery] GetAllHomeQueryRequest getAllHomeQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
@@ -40,14 +39,16 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.Homes);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdHomeQueryRequest getByIdHomeQueryRequest)
+        [HttpGet("by-id")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Reading, Definition = "Get By Id Home")]
+        public async Task<IActionResult> GetByIdHome([FromQuery] GetByIdHomeQueryRequest getByIdHomeQueryRequest)
         {
             GetByIdHomeQueryResponse response=await _mediator.Send(getByIdHomeQueryRequest);
             return Ok(response.home);
         }
         [HttpGet("Home/{ContentType}")]
-        public async Task<IActionResult> Get([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Reading, Definition = "Get By ContentType Home")]
+        public async Task<IActionResult> CreateHome([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)
         {
             string language = Request.Headers["Accept-Language".ToString()];
             if (string.IsNullOrEmpty(language))
@@ -58,22 +59,24 @@ namespace CoreporateAPI.API.Controllers
             GetByContentTypeHomeQueryResponse response = await _mediator.Send(getByContentTypeHomeQueryRequest);
             return Ok(response.homeDTO);
         }
-        [HttpPost]
-        public async Task<IActionResult> Post(CreateHomeCommandRequest createHomeCommandRequest)
+        [HttpPost("add")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Writing, Definition = "Create Home")]
+        public async Task<IActionResult> CreateHome(CreateHomeCommandRequest createHomeCommandRequest)
         {
           CreateHomeCommandResponse response= await _mediator.Send(createHomeCommandRequest);
             return StatusCode((int)HttpStatusCode.Created);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateHomeCommandRequest updateHomeCommandRequest)
+        [HttpPut("update")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Updating, Definition = "Update Home")]
+        public async Task<IActionResult> UpdateHome(UpdateHomeCommandRequest updateHomeCommandRequest)
         {
           UpdateHomeCommandResponse response= await _mediator.Send(updateHomeCommandRequest);
             return Ok(response);
         }
-
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromRoute]RemoveHomeCommandRequest removeHomeCommandRequest)
+        [HttpDelete("delete")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Deleting, Definition = "Remove Home")]
+        public async Task<IActionResult> RemoveHome([FromQuery] RemoveHomeCommandRequest removeHomeCommandRequest)
         {
            RemoveHomeCommandResponse response= await _mediator.Send(removeHomeCommandRequest);
             return Ok(response);

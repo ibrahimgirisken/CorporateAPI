@@ -1,13 +1,14 @@
-﻿using CorporateAPI.Application.Features.Commands.Page.CreatePage;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Page.CreatePage;
 using CorporateAPI.Application.Features.Commands.Page.RemovePage;
 using CorporateAPI.Application.Features.Commands.Page.UpdatePage;
-using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Page.GetAllPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByIdPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
 namespace CoreporateAPI.API.Controllers
@@ -24,8 +25,9 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllPageQueryRequest getAllPageQueryRequest)
+        [HttpGet("all")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Reading, Definition = "Get All Page")]
+        public async Task<IActionResult> GetAllPage([FromQuery] GetAllPageQueryRequest getAllPageQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
@@ -38,15 +40,17 @@ namespace CoreporateAPI.API.Controllers
             GetAllPageQueryResponse response = await _mediator.Send(getAllPageQueryRequest);
             return Ok(response.PagesDto);
         }
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdPageQueryRequest getByIdPageQueryRequest)
+        [HttpGet("by-id")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Reading, Definition = "Get By Id Page")]
+        public async Task<IActionResult> GetByIdPage([FromQuery] GetByIdPageQueryRequest getByIdPageQueryRequest)
         {
             GetByIdPageQueryResponse response = await _mediator.Send(getByIdPageQueryRequest);
             return Ok(response.PageDto);
         }
 
         [HttpGet("Page/{UrlAddress}")]
-        public async Task<IActionResult> Get([FromRoute] GetByUrlAddressPageQueryRequest getByUrlAddressPageQueryRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Reading, Definition = "Get By UrlAddress Page")]
+        public async Task<IActionResult> GetByUrlAddressPage([FromRoute] GetByUrlAddressPageQueryRequest getByUrlAddressPageQueryRequest)
         {
             string language = Request.Headers["Accept-Language".ToString()];
             if (string.IsNullOrEmpty(language))
@@ -58,22 +62,25 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.pageDTO);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreatePageCommandRequest createPageCommandRequest)
+        [HttpPost("add")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Writing, Definition = "Create Page")]
+        public async Task<IActionResult> CreatePage(CreatePageCommandRequest createPageCommandRequest)
         {
             CreatePageCommandResponse response=await _mediator.Send(createPageCommandRequest);
             return StatusCode((int)HttpStatusCode.Created);
          }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdatePageCommandRequest updatePageCommandRequest)
+        [HttpPut("update")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Updating, Definition = "Update Page")]
+        public async Task<IActionResult> UpdatePage(UpdatePageCommandRequest updatePageCommandRequest)
         {
             UpdatePageCommandResponse response = await _mediator.Send(updatePageCommandRequest);
             return Ok(response);
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemovePageCommandRequest removePageCommandRequest)
+        [HttpDelete("delete")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Deleting, Definition = "Remove Page")]
+        public async Task<IActionResult> RemovePage([FromRoute] RemovePageCommandRequest removePageCommandRequest)
         {
             RemovePageCommandResponse response=await _mediator.Send(removePageCommandRequest);
             return Ok(response);

@@ -4,7 +4,6 @@ using CorporateAPI.Application.Enums;
 using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.RemoveProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
-using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Product.GetAllProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetByIdProduct;
 using MediatR;
@@ -22,7 +21,7 @@ namespace CoreporateAPI.API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet]
+        [HttpGet("all")]
         [AuthorizeDefinition(Menu=AuthorizeDefinitionConstants.Products,ActionType =ActionType.Reading,Definition ="Get All Product")]
         public async Task<IActionResult> GetAllProduct([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
@@ -39,15 +38,15 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.ProductsDto);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("by-id")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Reading, Definition = "Get By Id Product")]
-        public async Task<IActionResult> GetByIdBanner([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
+        public async Task<IActionResult> GetByIdBanner([FromQuery] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
             GetByIdProductQueryResponse response=await _mediator.Send(getByIdProductQueryRequest);
             return Ok(response.ProductDTO);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Writing, Definition = "Create Product")]
         public async Task<IActionResult> CreateProduct(CreateProductCommandRequest createProductCommandRequest)
         {
@@ -55,7 +54,7 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Updating, Definition = "Update Product")]
         public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest updateProductCommandRequest)
         {
@@ -63,9 +62,9 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("delete")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Deleting, Definition = "Remove Product Item")]
-        public async Task<IActionResult> RemoveProductItem([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
+        public async Task<IActionResult> RemoveProduct([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse response=await _mediator.Send(removeProductCommandRequest);
             return Ok(response);

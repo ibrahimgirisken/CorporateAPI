@@ -1,7 +1,9 @@
-﻿using CorporateAPI.Application.Features.Commands.Datasheet.CreateDatasheet;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Datasheet.CreateDatasheet;
 using CorporateAPI.Application.Features.Commands.Datasheet.RemoveDatasheet;
 using CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet;
-using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet;
 using CorporateAPI.Application.Features.Queries.Datasheet.GetByIdDatasheet;
 using MediatR;
@@ -21,8 +23,9 @@ namespace CoreporateAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllDatasheetQueryRequest getAllDatasheetQueryRequest)
+        [HttpGet("all")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Reading, Definition = "Get All Datasheet")]
+        public async Task<IActionResult> GetAllDatasheet([FromQuery] GetAllDatasheetQueryRequest getAllDatasheetQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
@@ -35,29 +38,32 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.resultDatasheetsDto);
         }
 
-        [HttpGet("{Id}")]   
-        public async Task<IActionResult> Get([FromRoute] GetByIdDatasheetQueryRequest getByIdDatasheetQueryRequest)
+        [HttpGet("by-id")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Reading, Definition = "Get By Id Datasheet")]
+        public async Task<IActionResult> GetByIdDatasheet([FromQuery] GetByIdDatasheetQueryRequest getByIdDatasheetQueryRequest)
         {
             GetByIdDatasheetQueryResponse response=await _mediator.Send(getByIdDatasheetQueryRequest);
             return Ok(response.ResultDatasheetDTO);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreateDatasheetCommandRequest createDatasheetCommandRequest)
+        [HttpPost("add")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Writing, Definition = "Create Datasheet")]
+        public async Task<IActionResult> CreateDatasheet(CreateDatasheetCommandRequest createDatasheetCommandRequest)
         {
             CreateDatasheetCommandResponse response=await _mediator.Send(createDatasheetCommandRequest);
             return StatusCode((int) HttpStatusCode.Created);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateDatasheetCommandRequest updateDatasheetCommandRequest)
+        [HttpPut("update")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Updating, Definition = "Update Datasheet")]
+        public async Task<IActionResult> UpdateDatasheet(UpdateDatasheetCommandRequest updateDatasheetCommandRequest)
         {
             UpdateDatasheetCommandResponse response = await _mediator.Send(updateDatasheetCommandRequest);
              return Ok(response);
         }
-
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromRoute] RemoveDatasheetCommandRequest removeDatasheetCommandRequest)
+        [HttpDelete("delete")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Deleting, Definition = "Remove Datasheet")]
+        public async Task<IActionResult> RemoveDatasheet([FromRoute] RemoveDatasheetCommandRequest removeDatasheetCommandRequest)
         {
             RemoveDatasheetCommandResponse response=await _mediator.Send(removeDatasheetCommandRequest);
             return Ok(response);

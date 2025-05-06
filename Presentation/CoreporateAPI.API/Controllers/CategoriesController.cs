@@ -1,4 +1,7 @@
-﻿using CorporateAPI.Application.Features.Commands.Category.CreateCategory;
+﻿using CorporateAPI.Application.Consts;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.Category.CreateCategory;
 using CorporateAPI.Application.Features.Commands.Category.RemoveCategory;
 using CorporateAPI.Application.Features.Commands.Category.UpdateCategory;
 using CorporateAPI.Application.Features.Queries.Category.GetAllCategory;
@@ -18,8 +21,9 @@ namespace CoreporateAPI.API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllCategoryQueryRequest getAllCategoryQueryRequest)
+        [HttpGet("all")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Reading, Definition = "Get All Category")]
+        public async Task<IActionResult> GetAllCategory([FromQuery] GetAllCategoryQueryRequest getAllCategoryQueryRequest)
         {
             var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
             string language = Request.Headers["Accept-Language".ToString()];
@@ -30,30 +34,35 @@ namespace CoreporateAPI.API.Controllers
             GetAllCategoryQueryResponse response=await _mediator.Send(getAllCategoryQueryRequest);
             return Ok(response.CategoriesDto);
         }
-        
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdCategoryQueryRequest getByIdCategoryQueryRequest)
+
+        [HttpGet("by-id")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Reading, Definition = "Get By Id Category")]
+        public async Task<IActionResult> GetByIdCategory([FromQuery] GetByIdCategoryQueryRequest getByIdCategoryQueryRequest)
         {
             GetByIdCategoryQueryResponse response=await _mediator.Send(getByIdCategoryQueryRequest);
             return Ok(response.CategoryDTO);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Writing, Definition = "Create Category")]
         public async Task<IActionResult> Post(CreateCategoryCommandRequest createCategoryCommandRequest)
         {
             CreateCategoryCommandResponse response =await _mediator.Send(createCategoryCommandRequest);
             return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateCategoryCommandRequest updateCategoryCommandRequest)
+        [HttpPut("update")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Updating, Definition = "Update Category")]
+        public async Task<IActionResult> UpdateCategory(UpdateCategoryCommandRequest updateCategoryCommandRequest)
         {
             UpdateCategoryCommandResponse response=await _mediator.Send(updateCategoryCommandRequest);
             return Ok(response);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery] RemoveCategoryCommandRequest removeCategoryCommandRequest)
+        [HttpDelete("delete")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Deleting, Definition = "Remove Category")]
+
+        public async Task<IActionResult> RemoveCategory([FromQuery] RemoveCategoryCommandRequest removeCategoryCommandRequest)
         {
             RemoveCategoryCommandResponse remove=await _mediator.Send(removeCategoryCommandRequest);
             return Ok(remove);
