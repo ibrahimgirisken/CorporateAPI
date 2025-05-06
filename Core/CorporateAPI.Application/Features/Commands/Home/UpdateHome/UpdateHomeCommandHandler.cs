@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Repositories.Home;
 using CorporateAPI.Domain.Entities.Home;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 {
@@ -21,7 +22,7 @@ namespace CorporateAPI.Application.Features.Commands.Home.UpdateHome
 
         public async Task<UpdateHomeCommandResponse> Handle(UpdateHomeCommandRequest request, CancellationToken cancellationToken)
         {
-            var home=await _homeReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.HomeTranslations);
+            var home=await _homeReadRepository.GetByIdAsync(request.Id,false,includes: new Expression<Func<Domain.Entities.Home.Home, object>>[] { e => e.HomeTranslations }, includeStrings: new[] { "HomeTranslations.Lang" });
 
             if (home == null)
                 throw new Exception("Home not found!");

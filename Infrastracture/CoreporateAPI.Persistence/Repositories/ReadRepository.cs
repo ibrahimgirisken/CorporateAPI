@@ -39,22 +39,33 @@ namespace CoreporateAPI.Persistence.Repositories
 
         }
         public async Task<T> GetByIdAsync(
-                 string id,
-                 bool tracking = true,
-                 params Expression<Func<T, object>>[] includes)
+     string id,
+     bool tracking = true,
+     Expression<Func<T, object>>[] includes = null,
+     string[] includeStrings = null)
         {
             var query = Table.Where(e => !e.IsDeleted);
 
             if (!tracking)
                 query = query.AsNoTracking();
 
-            // İlişkili tabloları dinamik olarak ekle
-            foreach (var include in includes)
+            if (includes != null)
             {
-                query = query.Include(include);
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
             }
 
-            return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id) && !e.IsDeleted);
+            if (includeStrings != null)
+            {
+                foreach (var includeStr in includeStrings)
+                {
+                    query = query.Include(includeStr);
+                }
+            }
+
+            return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id));
         }
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)

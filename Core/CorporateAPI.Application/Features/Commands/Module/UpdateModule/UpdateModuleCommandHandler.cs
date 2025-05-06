@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Repositories;
 using CorporateAPI.Domain.Entities.Module;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 {
@@ -20,7 +21,13 @@ namespace CorporateAPI.Application.Features.Commands.Module.UpdateModule
 
         public async Task<UpdateModuleCommandResponse> Handle(UpdateModuleCommandRequest request, CancellationToken cancellationToken)
         {
-            var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ModuleTranslations);
+            var module=await _moduleReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Module.Module, object>>[]
+            {
+e=>e.ModuleTranslations
+            }, includeStrings: new[]
+            {
+                "ModuleTranslations.Lang" });
+
             var existingTranslations = module.ModuleTranslations.ToList();
             module.ModuleTranslations.Clear();
             module.ContentType=request.ContentType;

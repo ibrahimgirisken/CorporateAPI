@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Repositories.Category;
 using CorporateAPI.Domain.Entities.Category;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 {
@@ -20,7 +21,14 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Category.Category category=await _categoryReadRepository.GetByIdAsync(request.Id,false,e=>e.CategoryTranslations);
+            Domain.Entities.Category.Category category=await _categoryReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Category.Category, object>>[]
+            {
+                e => e.CategoryTranslations
+            },
+            includeStrings: new[]
+            {
+                "CategoryTranslations.Lang" 
+            });
 
             if (category==null)
             {

@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Repositories.Product;
 using CorporateAPI.Domain.Entities.Product;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
 {
@@ -20,7 +21,12 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
-           Domain.Entities.Product.Product product= await _productReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.ProductTranslations);
+            Domain.Entities.Product.Product product = await _productReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Product.Product, object>>[]
+            {
+                e => e.ProductTranslations
+            }, includeStrings: new[]
+            {
+               "ProductTranslations.Lang" });
 
             if (product == null)
             {
@@ -38,7 +44,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
             product.Video = request.Video;
             product.Order = request.Order;
             product.Status = request.Status;
-            
+
             var existingTranslations = product.ProductTranslations.ToList();
 
             foreach (var existingTranslation in existingTranslations)

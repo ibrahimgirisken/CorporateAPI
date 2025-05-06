@@ -2,7 +2,7 @@
 using CorporateAPI.Application.DTOs.Banner;
 using CorporateAPI.Application.Repositories.Banner;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 {
@@ -23,18 +23,33 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner
 
             if (request.IncludeAllLanguages)
             {
-                var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: e => e.BannerTranslations);
+                var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Banner.Banner, object>>[]
+                {
+                    e=>e.BannerTranslations
+                },
+                includeStrings: new[]
+                {
+                    "BannerTranslations.Lang"
+                });
                 bannerDto = _mapper.Map<ResultBannerDTO>(banner);
             }
             else
             {
                 var banner = await _bannerReadRepository.GetByIdAsync(
-            request.Id,
-            false,
-            includes: e => e.BannerTranslations
-                .Where(t => t.Lang.LangCode == request.Language));
+            request.Id,false,includes: new Expression<Func<Domain.Entities.Banner.Banner, object>>[]
+                 {
+                     e => e.BannerTranslations
+                 }, includeStrings: new[]
+                 {
+                     "BannerTranslations.Lang"
+                 });
+
+                banner.BannerTranslations = banner.BannerTranslations
+                    .Where(t => t.Lang.LangCode == request.Language)
+                    .ToList();
                 bannerDto = _mapper.Map<ResultBannerDTO>(banner);
             }
+
 
             return new()
             {

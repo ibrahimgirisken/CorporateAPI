@@ -5,6 +5,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,11 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
 
         public async Task<GetByIdPageQueryResponse> Handle(GetByIdPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var page= await _pageReadRepository.GetByIdAsync(request.Id, false,includes:e=>e.PageTranslations);
+            var page= await _pageReadRepository.GetByIdAsync(request.Id, false,includes:new Expression<Func<Domain.Entities.Page.Page, object>>[]{
+e => e.PageTranslations
+            }, includeStrings: new[]
+            {
+                "PageTranslations.Lang"});
             var pageDto = _mapper.Map<ResultPageDTO>(page);
             return new()
             {

@@ -2,8 +2,8 @@
 using CorporateAPI.Application.Abstractions.Services;
 using CorporateAPI.Application.Helpers;
 using CorporateAPI.Application.Repositories.Banner;
-using CorporateAPI.Domain.Entities.Banner;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
 {
@@ -24,7 +24,14 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
 
         public async Task<UpdateBannerCommandResponse> Handle(UpdateBannerCommandRequest request, CancellationToken cancellationToken)
         {
-            var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: e => e.BannerTranslations);
+            var banner = await _bannerReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Banner.Banner, object>>[]
+                {
+                    e=>e.BannerTranslations
+                },
+                includeStrings: new[]
+                {
+                    "BannerTranslations.Lang"
+                });
 
             if (banner == null)
                 throw new Exception("Banner not found!");

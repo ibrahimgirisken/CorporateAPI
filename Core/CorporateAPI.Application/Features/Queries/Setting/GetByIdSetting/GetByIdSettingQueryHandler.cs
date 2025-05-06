@@ -5,6 +5,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,12 @@ namespace CorporateAPI.Application.Features.Queries.Setting.GetByIdSetting
 
         public async Task<GetByIdSettingQueryResponse> Handle(GetByIdSettingQueryRequest request, CancellationToken cancellationToken)
         {
-            var setting=_mapper.Map<Domain.Entities.Setting.Setting>(await _settingReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.SettingTranslations));
+            var setting=_mapper.Map<Domain.Entities.Setting.Setting>(await _settingReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Setting.Setting, object>>[]
+            {
+                e => e.SettingTranslations
+            }, includeStrings: new[]
+            {
+                "SettingTranslations.Lang" }));
 
             var settingDto=_mapper.Map<ResultSettingDTO>(setting);
             return new()

@@ -2,6 +2,7 @@
 using CorporateAPI.Application.DTOs.Category;
 using CorporateAPI.Application.Repositories.Category;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Queries.Category.GetByIdCategory
 {
@@ -18,7 +19,14 @@ namespace CorporateAPI.Application.Features.Queries.Category.GetByIdCategory
 
         public async Task<GetByIdCategoryQueryResponse> Handle(GetByIdCategoryQueryRequest request, CancellationToken cancellationToken)
         {
-            var category= await _categoryReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.CategoryTranslations);
+            var category= await _categoryReadRepository.GetByIdAsync(request.Id, false, includes:new Expression< Func<Domain.Entities.Category.Category, object>>[]
+                {
+                e => e.CategoryTranslations
+                },
+            includeStrings: new[]
+            {
+                "CategoryTranslations.Lang"
+            });
             var categoryDto=_mapper.Map<ResultCategoryDTO>(category);
             return new()
             {

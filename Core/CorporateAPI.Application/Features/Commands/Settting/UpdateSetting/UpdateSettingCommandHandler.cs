@@ -6,6 +6,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,11 @@ namespace CorporateAPI.Application.Features.Commands.Settting.UpdateSetting
 
         public async Task<UpdateSettingCommandResponse> Handle(UpdateSettingCommandRequest request, CancellationToken cancellationToken)
         {
-            var setting =await settingReadRepository.GetByIdAsync(request.Id,false,e=>e.SettingTranslations);
+            var setting =await settingReadRepository.GetByIdAsync(request.Id, false, includes:new Expression< Func<Domain.Entities.Setting.Setting, object>>[]{
+                e => e.SettingTranslations
+            }, includeStrings: new[]
+            {
+                "SettingTranslations.Lang" });
 
             if (setting == null)
             {

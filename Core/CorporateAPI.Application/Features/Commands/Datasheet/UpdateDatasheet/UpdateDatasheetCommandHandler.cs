@@ -2,6 +2,7 @@
 using CorporateAPI.Application.Repositories.Datasheet;
 using CorporateAPI.Domain.Entities.Datasheet;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
 {
@@ -20,7 +21,12 @@ namespace CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet
 
         public async Task<UpdateDatasheetCommandResponse> Handle(UpdateDatasheetCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Datasheet.Datasheet datasheet=await _datasheetReadRepository.GetByIdAsync(request.Id,false,includes:e=>e.DatasheetTranslations);
+            Domain.Entities.Datasheet.Datasheet datasheet=await _datasheetReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Datasheet.Datasheet, object>>[]
+            {
+e => e.DatasheetTranslations
+            }, includeStrings: new[]
+            {
+                "DatasheetTranslations.Lang" });
             if (datasheet == null)
                 throw new Exception("Datasheet not found!");
 
