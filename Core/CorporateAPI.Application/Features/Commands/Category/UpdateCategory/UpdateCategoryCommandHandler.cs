@@ -14,7 +14,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
         readonly IMapper _mapper;
         readonly ILanguageCodeResolverService _langService;
 
-        public UpdateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMapper mapper, ILanguageCodeResolverService langService = null)
+        public UpdateCategoryCommandHandler(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMapper mapper, ILanguageCodeResolverService langService)
         {
             _categoryReadRepository = categoryReadRepository;
             _categoryWriteRepository = categoryWriteRepository;

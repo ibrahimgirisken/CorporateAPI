@@ -14,7 +14,7 @@ namespace CorporateAPI.Application.Features.Commands.Banner.UpdateBanner
         readonly IMapper _mapper;
         readonly ILanguageCodeResolverService _langService;
 
-        public UpdateBannerCommandHandler(IBannerReadRepository bannerReadRepository, IBannerWriteRepository bannerWriteRepository, IMapper mapper, ILanguageCodeResolverService langService = null)
+        public UpdateBannerCommandHandler(IBannerReadRepository bannerReadRepository, IBannerWriteRepository bannerWriteRepository, IMapper mapper, ILanguageCodeResolverService langService)
         {
             _bannerReadRepository = bannerReadRepository;
             _bannerWriteRepository = bannerWriteRepository;
