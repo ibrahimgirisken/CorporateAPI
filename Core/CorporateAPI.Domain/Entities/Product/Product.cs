@@ -22,9 +22,9 @@ namespace CorporateAPI.Domain.Entities.Product
         public string? Video { get; set; }
         public int? Order { get; set; }
         public bool Status { get; set; }=false;
-        public int? CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         public Domain.Entities.Category.Category? Category { get; set; }
-        public int? BrandId { get; set; }
+        public Guid? BrandId { get; set; }
         public Domain.Entities.Brand.Brand? Brand { get; set; }
         public List<ProductTranslation> ProductTranslations { get; set; }
     }

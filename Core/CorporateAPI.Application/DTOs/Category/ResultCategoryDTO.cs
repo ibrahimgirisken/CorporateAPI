@@ -13,7 +13,7 @@ namespace CorporateAPI.Application.DTOs.Category
         public string Image1 { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; } = false;
-        public int ParentId { get; set; }
+        public Guid? ParentId { get; set; }
         public List<ResultCategoryDTO?> Children { get; set; }
         public List<CategoryTranslationDTO> CategoryTranslations { get; set; }
     }

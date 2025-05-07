@@ -16,7 +16,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.UpdateCategory
             Children = new List<ResultCategoryDTO>();
             CategoryTranslations = new List<CategoryTranslationDTO>();
         }
-        public int? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
         public string? Image1 { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; } = false;

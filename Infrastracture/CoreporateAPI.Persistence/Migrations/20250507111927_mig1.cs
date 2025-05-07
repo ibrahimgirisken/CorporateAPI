@@ -108,8 +108,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     Image1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: true),
-                    ParentId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -118,8 +117,8 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Categories_Categories_ParentId1",
-                        column: x => x.ParentId1,
+                        name: "FK_Categories_Categories_ParentId",
+                        column: x => x.ParentId,
                         principalSchema: "dbo",
                         principalTable: "Categories",
                         principalColumn: "Id");
@@ -410,10 +409,8 @@ namespace CoreporateAPI.Persistence.Migrations
                     Video = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
-                    CategoryId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    BrandId = table.Column<int>(type: "int", nullable: true),
-                    BrandId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -422,14 +419,14 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Brands_BrandId1",
-                        column: x => x.BrandId1,
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
                         principalSchema: "dbo",
                         principalTable: "Brands",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalSchema: "dbo",
                         principalTable: "Categories",
                         principalColumn: "Id");
@@ -864,10 +861,10 @@ namespace CoreporateAPI.Persistence.Migrations
                 column: "LangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_ParentId1",
+                name: "IX_Categories_ParentId",
                 schema: "dbo",
                 table: "Categories",
-                column: "ParentId1");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryTranslations_CategoryId_LangId",
@@ -955,16 +952,16 @@ namespace CoreporateAPI.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_BrandId1",
+                name: "IX_Products_BrandId",
                 schema: "dbo",
                 table: "Products",
-                column: "BrandId1");
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryId1",
+                name: "IX_Products_CategoryId",
                 schema: "dbo",
                 table: "Products",
-                column: "CategoryId1");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductTranslations_LangId",

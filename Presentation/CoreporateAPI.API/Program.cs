@@ -15,17 +15,17 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 
-//AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
-//System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-));
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowFrontend", policy => {
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+    }
+    ); });
 
 builder.Services.AddControllers(options =>
 {
@@ -102,6 +102,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 
 app.Run();

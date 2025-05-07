@@ -17,7 +17,7 @@ namespace CorporateAPI.Application.Features.Commands.Category.CreateCategory
         }
         public string? Image1 { get; set; }
         public int Order { get; set; }
-        public int? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
         public bool Status { get; set; } = false;
         public List<CreateCategoryCommandRequest> Children { get; set; }
         public List<CategoryTranslationDTO> CategoryTranslations { get; set; }

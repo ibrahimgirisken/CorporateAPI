@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250505142656_mig1")]
+    [Migration("20250507111927_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -172,10 +172,7 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("ParentId1")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Status")
@@ -186,7 +183,7 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId1");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories", "dbo");
                 });
@@ -806,16 +803,10 @@ namespace CoreporateAPI.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("BrandId1")
+                    b.Property<Guid?>("BrandId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("CategoryId1")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -856,9 +847,9 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId1");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products", "dbo");
                 });
@@ -1214,7 +1205,7 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId1");
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
@@ -1329,11 +1320,11 @@ namespace CoreporateAPI.Persistence.Migrations
                 {
                     b.HasOne("CorporateAPI.Domain.Entities.Brand.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId1");
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("CorporateAPI.Domain.Entities.Category.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Brand");
 
