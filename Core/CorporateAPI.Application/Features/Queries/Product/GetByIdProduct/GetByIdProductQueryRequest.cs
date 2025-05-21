@@ -1,14 +1,11 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Queries.Product.GetByIdProduct
 {
     public class GetByIdProductQueryRequest:IRequest<GetByIdProductQueryResponse>
     {
         public string Id { get; set; }
+        public string? Language { get; set; }
+        public bool IncludeAllLanguages { get; set; } = false;
     }
 }

@@ -10,7 +10,6 @@ using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.Product;
 using CorporateAPI.Application.DTOs.Setting;
 using CorporateAPI.Application.Features.Commands.Banner.CreateBanner;
-using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
 using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
 using CorporateAPI.Application.Features.Commands.Category.CreateCategory;

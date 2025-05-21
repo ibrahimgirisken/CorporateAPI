@@ -35,7 +35,7 @@ namespace CoreporateAPI.API.Controllers
 
         [HttpGet("by-id")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Reading, Definition = "Get By Id Product")]
-        public async Task<IActionResult> GetByIdBanner([FromQuery] GetByIdProductQueryRequest getByIdProductQueryRequest)
+        public async Task<IActionResult> GetByIdProduct([FromQuery] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
             GetByIdProductQueryResponse response=await _mediator.Send(getByIdProductQueryRequest);
             return Ok(response.ProductDTO);
