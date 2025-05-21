@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using CorporateAPI.Application.Abstractions.Services;
+using CorporateAPI.Application.Helpers;
 using CorporateAPI.Application.Repositories.Product;
-using CorporateAPI.Domain.Entities.Product;
 using MediatR;
 using System.Linq.Expressions;
 
@@ -11,12 +12,14 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
         readonly IProductReadRepository _productReadRepository;
         readonly IProductWriteRepository _productWriteRepository;
         readonly IMapper _mapper;
+        readonly ILanguageCodeResolverService _langService;
 
-        public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper)
+        public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMapper mapper, ILanguageCodeResolverService langService = null)
         {
             _productReadRepository = productReadRepository;
             _productWriteRepository = productWriteRepository;
             _mapper = mapper;
+            _langService = langService;
         }
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
@@ -27,9 +30,7 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
             });
 
             if (product == null)
-            {
                 throw new Exception("Product not found!");
-            }
 
             product.Code = request.Code;
             product.BrandId = request.BrandId;
@@ -43,28 +44,14 @@ namespace CorporateAPI.Application.Features.Commands.Product.UpdateProduct
             product.Order = request.Order;
             product.Status = request.Status;
 
-            var existingTranslations = product.ProductTranslations.ToList();
+            TranslationHelper.UpdateOrAddTranslations(
+                product.ProductTranslations,
+                request.ProductTranslations,
+                dto=>dto.LangCode,
+                code=>_langService.GetLangIdByLangCode(code),
+                (dto,entity)=>_mapper.Map(dto, entity));
 
-            foreach (var existingTranslation in existingTranslations)
-            {
-                if (!request.ProductTranslations.Any(t => t.LangCode == existingTranslation.Lang.LangCode))
-                {
-                    product.ProductTranslations.Remove(existingTranslation);
-                }
-            }
-
-            foreach (var translationDTO in request.ProductTranslations)
-            {
-                var translation = existingTranslations.FirstOrDefault(t => t.Lang.LangCode == translationDTO.LangCode);
-                if (translation == null)
-                {
-                    translation = new ProductTranslation();
-                    product.ProductTranslations.Add(translation);
-                }
-                _mapper.Map(translationDTO, translation);
-            }
-
-            _productWriteRepository.Update(product);
+           _productWriteRepository.Update(product);
             await _productWriteRepository.SaveAsync();
 
             return new UpdateProductCommandResponse();
