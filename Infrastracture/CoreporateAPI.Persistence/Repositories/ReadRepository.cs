@@ -70,7 +70,7 @@ namespace CoreporateAPI.Persistence.Repositories
 
         public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)
         {
-            var query = Table.Where(e => !e.IsDeleted);
+            IQueryable<T> query = Table.Where(e => !e.IsDeleted);
             if (!tracking)
                 query.AsNoTracking();
 
@@ -80,5 +80,6 @@ namespace CoreporateAPI.Persistence.Repositories
             }
             return await query.FirstOrDefaultAsync(method);
         }
+
     }
 }
