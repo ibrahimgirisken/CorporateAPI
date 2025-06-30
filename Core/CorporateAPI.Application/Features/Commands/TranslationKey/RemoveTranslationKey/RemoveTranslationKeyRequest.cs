@@ -9,5 +9,6 @@ namespace CorporateAPI.Application.Features.Commands.TranslationKey.RemoveTransl
 {
     public class RemoveTranslationKeyRequest:IRequest<RemoveTranslationKeyResponse>
     {
+        public string Id { get; set; }
     }
 }

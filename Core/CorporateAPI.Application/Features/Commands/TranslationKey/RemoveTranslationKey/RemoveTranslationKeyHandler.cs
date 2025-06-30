@@ -1,17 +1,22 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CorporateAPI.Application.Repositories.TranslationKey;
+using MediatR;
 
 namespace CorporateAPI.Application.Features.Commands.TranslationKey.RemoveTranslationKey
 {
     public class RemoveTranslationKeyHandler : IRequestHandler<RemoveTranslationKeyRequest, RemoveTranslationKeyResponse>
     {
-        public Task<RemoveTranslationKeyResponse> Handle(RemoveTranslationKeyRequest request, CancellationToken cancellationToken)
+        readonly ITranslationKeyWriteRepository _translationKeyWriteRepository;
+
+        public RemoveTranslationKeyHandler(ITranslationKeyWriteRepository translationKeyWriteRepository)
         {
-            throw new NotImplementedException();
+            _translationKeyWriteRepository = translationKeyWriteRepository;
+        }
+
+        public async Task<RemoveTranslationKeyResponse> Handle(RemoveTranslationKeyRequest request, CancellationToken cancellationToken)
+        {
+            await _translationKeyWriteRepository.RemoveAsync(request.Id);
+            await _translationKeyWriteRepository.SaveAsync();
+            return new();
         }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using CorporateAPI.Application.DTOs.Product;
-using CorporateAPI.Domain.Entities.Product;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Product.CreateProduct
 {

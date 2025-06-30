@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CorporateAPI.Application.DTOs.Translation;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,13 @@ namespace CorporateAPI.Application.Features.Commands.TranslationKey.UpdateTransl
 {
     public class UpdateTranslationKeyRequest:IRequest<UpdateTranslationKeyResponse>
     {
+        public string Id { get; set; }
+        public UpdateTranslationKeyRequest()
+        {
+            Translations = new List<TranslationValueDTO>();
+        }
+        public string Key { get; set; }
+        public string? Description { get; set; }
+        public List<TranslationValueDTO> Translations { get; set; }
     }
 }
