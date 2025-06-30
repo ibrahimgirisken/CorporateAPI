@@ -153,6 +153,13 @@ namespace CoreporateAPI.Persistence.Contexts
                 entity.HasIndex(l => new { l.PageId, l.LangId }).IsUnique();
             });
 
+            modelBuilder.Entity<TranslationKey>(entity =>
+            {
+                entity.ToTable("TranslationKeys");
+
+                entity.HasIndex(x => x.Key).IsUnique();
+            });
+
             modelBuilder.Entity<TranslationValue>(entity =>
             {
                 entity.ToTable("TranslationValues");
