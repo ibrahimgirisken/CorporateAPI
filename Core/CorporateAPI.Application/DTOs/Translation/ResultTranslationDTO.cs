@@ -8,6 +8,7 @@ namespace CorporateAPI.Application.DTOs.Translation
 {
     public class ResultTranslationDTO
     {
+        public string Id { get; set; }
         public string Key { get; set; }
         public string? Description { get; set; }
         public List<TranslationValueDTO> Translations { get; set; }

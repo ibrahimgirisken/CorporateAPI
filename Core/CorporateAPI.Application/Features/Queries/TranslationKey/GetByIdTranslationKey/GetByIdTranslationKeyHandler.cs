@@ -29,7 +29,7 @@ namespace CorporateAPI.Application.Features.Queries.TranslationKey.GetByIdTransl
                     e => e.Translations
                 }, includeStrings: new[]
                 {
-                    "TranslationKeys.Lang"
+                    "Translations.Lang"
                 }).Result;
                 translationDTO = _mapper.Map<ResultTranslationDTO>(translation);
             }
@@ -41,7 +41,7 @@ namespace CorporateAPI.Application.Features.Queries.TranslationKey.GetByIdTransl
                         e => e.Translations
                     }, includeStrings: new[]
                     {
-                        "TranslationKeys.Lang"
+                        "Translations.Lang"
                     }).Result;
                 translation.Translations = translation.Translations
                     .Where(t => t.Lang.LangCode == request.Language)
