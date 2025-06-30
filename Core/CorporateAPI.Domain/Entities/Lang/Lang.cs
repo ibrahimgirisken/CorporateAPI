@@ -6,6 +6,7 @@ using CorporateAPI.Domain.Entities.Home;
 using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Product;
 using CorporateAPI.Domain.Entities.Setting;
+using CorporateAPI.Domain.Entities.Translation;
 
 namespace CorporateAPI.Domain.Entities
 {
@@ -22,5 +23,6 @@ namespace CorporateAPI.Domain.Entities
         public List<CategoryTranslation> CategoryTranslations { get; set; }
         public List<DatasheetTranslation> DatasheetTranslations{ get; set; }
         public List<SettingTranslation>  SettingTranslations{ get; set; }
+        public List<TranslationValue> Translations { get; set; }
     }
 }
