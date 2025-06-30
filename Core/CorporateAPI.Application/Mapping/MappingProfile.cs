@@ -9,6 +9,7 @@ using CorporateAPI.Application.DTOs.Module;
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.Product;
 using CorporateAPI.Application.DTOs.Setting;
+using CorporateAPI.Application.DTOs.Translation;
 using CorporateAPI.Application.Features.Commands.Banner.CreateBanner;
 using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
 using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
@@ -28,6 +29,7 @@ using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
 using CorporateAPI.Application.Features.Commands.Settting.CreateSetting;
 using CorporateAPI.Application.Features.Commands.Settting.UpdateSetting;
+using CorporateAPI.Application.Features.Commands.TranslationKey.CreateTranslationKey;
 using CorporateAPI.Application.Resolvers;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
@@ -39,6 +41,7 @@ using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Page;
 using CorporateAPI.Domain.Entities.Product;
 using CorporateAPI.Domain.Entities.Setting;
+using CorporateAPI.Domain.Entities.Translation;
 
 namespace CorporateAPI.Application.Mapping
 {
@@ -125,6 +128,15 @@ namespace CorporateAPI.Application.Mapping
                 .ForMember(dest => dest.LangCode,
                            opt => opt.MapFrom(src => src.Lang != null ? src.Lang.LangCode : null));
 
+            CreateMap<TranslationValueDTO, TranslationValue>()
+                .ForMember(dest => dest.LangId,
+                opt => opt.MapFrom<GenericLangCodeToLangIdResolver<TranslationValueDTO>>())
+                .ForMember(desc => desc.Lang, opt => opt.Ignore());
+
+            CreateMap<TranslationValue, TranslationValueDTO>()
+                .ForMember(dest => dest.LangCode,
+                opt => opt.MapFrom(src=>src.Lang!=null ? src.Lang.LangCode : null));
+
 
             // === Base Entities and DTOs ===
 
@@ -166,6 +178,10 @@ namespace CorporateAPI.Application.Mapping
             CreateMap<Brand,ResultBrandDTO>().ReverseMap();
             CreateMap<Brand,CreateBrandCommandRequest>().ReverseMap();
             CreateMap<Brand,UpdateBrandCommandRequest>().ReverseMap();
+
+            CreateMap<TranslationKey, ResultTranslationDTO>().ReverseMap();
+            CreateMap<TranslationKey,CreateTranslationKeyRequest>().ReverseMap();
+            CreateMap<TranslationKey, UpdateBrandCommandRequest>().ReverseMap();
         }
     }
 }
