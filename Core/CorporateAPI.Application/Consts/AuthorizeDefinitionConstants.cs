@@ -21,5 +21,6 @@ namespace CorporateAPI.Application.Consts
         public const string Settings = "Settings";
         public const string Roles = "Roles";
         public const string Users = "Users";
+        public const string Translations = "Translations";
     }
 }
