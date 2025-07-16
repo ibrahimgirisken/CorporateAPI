@@ -49,7 +49,7 @@ namespace CoreporateAPI.API.Controllers
         [HttpGet("get-roles-to-user/{UserId}")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To User")]
-        public async Task<IActionResult> GetRolesToUser(GetRolesToUserRequest getRolesToUserRequest)
+        public async Task<IActionResult> GetRolesToUser([FromRoute] GetRolesToUserRequest getRolesToUserRequest)
         {
             GetRolesToUserResponse response = await _mediator.Send(getRolesToUserRequest);
             return Ok(response);
@@ -58,7 +58,7 @@ namespace CoreporateAPI.API.Controllers
         [HttpPost("assign-role-to-user")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Writing, Definition = "Assign Role To User")]
-        public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
+        public async Task<IActionResult> AssignRoleToUser(AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
         {
             AssignRoleEndpointCommandResponse response=await _mediator.Send(roleEndpointCommandRequest);
             return Ok(response);
