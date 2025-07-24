@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Exceptions
 {
-    internal class NotFoundUserException : Exception
+    public  class NotFoundUserException : Exception
     {
         public NotFoundUserException():base("Kullanıcı adı veya şifre hatalı!")
         {

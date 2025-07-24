@@ -51,7 +51,7 @@ namespace CoreporateAPI.Persistence.Services
                 Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime,user);
                 return token;
             }
-            throw new AuthenticationErrorException();
+            throw new NotFoundUserException();
         }
 
         public Task PasswordResetAsync(string email)

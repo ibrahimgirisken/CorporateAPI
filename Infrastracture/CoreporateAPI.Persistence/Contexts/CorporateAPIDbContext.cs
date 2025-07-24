@@ -1,5 +1,4 @@
-﻿using CoreporateAPI.Persistence.EntityConfigurations;
-using CoreporateAPI.Persistence.Seeds;
+﻿using CoreporateAPI.Persistence.Seeds;
 using CorporateAPI.Domain.Entities;
 using CorporateAPI.Domain.Entities.Banner;
 using CorporateAPI.Domain.Entities.Brand;

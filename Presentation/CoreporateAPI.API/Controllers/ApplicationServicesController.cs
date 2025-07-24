@@ -1,10 +1,12 @@
 ﻿using CorporateAPI.Application.Abstractions.Services.Configurations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class ApplicationServicesController : ControllerBase
     {
         readonly IApplicationService _applicationService;

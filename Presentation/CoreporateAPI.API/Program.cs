@@ -1,4 +1,5 @@
-﻿using CoreporateAPI.API.Filters;
+﻿using CoreporateAPI.API.Configurations.ColumnWriters;
+using CoreporateAPI.API.Filters;
 using CoreporateAPI.Infrastracture;
 using CoreporateAPI.Infrastructure.Filters;
 using CoreporateAPI.Persistence;
@@ -10,6 +11,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Core;
+using Serilog.Sinks.MSSqlServer;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -26,6 +32,37 @@ builder.Services.AddCors(options => {
         policy.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     }
     ); });
+
+SqlColumn sqlColumn = new SqlColumn();
+sqlColumn.ColumnName = "UserName";
+sqlColumn.DataType = System.Data.SqlDbType.NVarChar;
+sqlColumn.PropertyName = "UserName";
+sqlColumn.DataLength = 50;
+sqlColumn.AllowNull = true;
+ColumnOptions columnOpt = new ColumnOptions();
+columnOpt.Store.Remove(StandardColumn.Properties);
+columnOpt.Store.Add(StandardColumn.LogEvent);
+columnOpt.AdditionalColumns = new Collection<SqlColumn> { sqlColumn };
+
+Logger log = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log.txt")
+    .WriteTo.MSSqlServer(
+    connectionString: builder.Configuration.GetConnectionString("MsSql"),
+     sinkOptions: new MSSqlServerSinkOptions
+     {
+         AutoCreateSqlTable = true,
+         TableName = "logs",
+     },
+     appConfiguration: null,
+     columnOptions: columnOpt
+    )
+    .Enrich.FromLogContext()
+    .Enrich.With<CustomUserNameColumn>()
+    .MinimumLevel.Information()
+    .CreateLogger();
+builder.Host.UseSerilog(log);
+
 
 builder.Services.AddControllers(options =>
 {
