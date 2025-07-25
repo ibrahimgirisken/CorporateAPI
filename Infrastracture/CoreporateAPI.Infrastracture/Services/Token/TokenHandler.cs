@@ -34,8 +34,8 @@ namespace CoreporateAPI.Infrastracture.Services.Token
                 issuer: _configuration["Token:issuer"],
                 expires: token.Expiration,
                 notBefore: DateTime.UtcNow,
-                signingCredentials: signingCredentials
-                );
+                signingCredentials: signingCredentials,
+                claims:new List<Claim> { new(ClaimTypes.Name,user.UserName)});
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
             return token;

@@ -1,4 +1,5 @@
 ﻿using CoreporateAPI.API.Configurations.ColumnWriters;
+using CoreporateAPI.API.Extensions;
 using CoreporateAPI.API.Filters;
 using CoreporateAPI.Infrastracture;
 using CoreporateAPI.Infrastructure.Filters;
@@ -34,34 +35,39 @@ builder.Services.AddCors(options => {
     }
     ); });
 
-SqlColumn sqlColumn = new SqlColumn();
-sqlColumn.ColumnName = "UserName";
-sqlColumn.DataType = System.Data.SqlDbType.NVarChar;
-sqlColumn.PropertyName = "UserName";
-sqlColumn.DataLength = 50;
-sqlColumn.AllowNull = true;
-ColumnOptions columnOpt = new ColumnOptions();
-columnOpt.Store.Remove(StandardColumn.Properties);
-columnOpt.Store.Add(StandardColumn.LogEvent);
-columnOpt.AdditionalColumns = new Collection<SqlColumn> { sqlColumn };
+var columnOptions = new ColumnOptions();
+columnOptions.Store.Remove(StandardColumn.Properties); // Gereksiz kolonları çıkar
+columnOptions.Store.Add(StandardColumn.LogEvent);      // JSON log verisi
+
+columnOptions.AdditionalColumns = new Collection<SqlColumn>
+{
+    new SqlColumn
+    {
+        ColumnName = "UserName",
+        DataType = SqlDbType.NVarChar,
+        DataLength = 50,
+        AllowNull = true
+    }
+};
 
 Logger log = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("logs/log.txt")
     .WriteTo.MSSqlServer(
-    connectionString: builder.Configuration.GetConnectionString("MsSql"),
-     sinkOptions: new MSSqlServerSinkOptions
-     {
-         AutoCreateSqlTable = true,
-         TableName = "logs",
-     },
-     appConfiguration: null,
-     columnOptions: columnOpt
+        connectionString: builder.Configuration.GetConnectionString("MsSql"),
+        sinkOptions: new MSSqlServerSinkOptions
+        {
+            TableName = "logs",
+            AutoCreateSqlTable = true,
+        },
+        columnOptions: columnOptions
     )
+    .Enrich.With<CustomUserNameColumn>() // Enricher sınıfı
     .Enrich.FromLogContext()
-    .Enrich.With<CustomUserNameColumn>()
     .MinimumLevel.Information()
     .CreateLogger();
+
+
 builder.Host.UseSerilog(log);
 
 builder.Services.AddHttpLogging(logging =>
@@ -138,6 +144,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseStaticFiles();
 
