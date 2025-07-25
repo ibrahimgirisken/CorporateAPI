@@ -8,25 +8,32 @@ namespace CoreporateAPI.API.Extensions
 {
     static public class ConfigureExceptionHandlerExtension
     {
-        public static void ConfigureExceptionHandler<T>(this WebApplication application,ILogger<T> logger)
+        public static void ConfigureExceptionHandler<T>(this WebApplication application, ILogger<T> logger)
         {
             application.UseExceptionHandler(builder =>
             {
                 builder.Run(async context =>
                 {
-                    context.Response.StatusCode=(int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.ContentType = MediaTypeNames.Application.Json;
 
-                    var contextFeature= context.Features.Get<IExceptionHandlerFeature>();
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        logger.LogError(contextFeature.Error.Message);
-                      await  context.Response.WriteAsJsonAsync(JsonSerializer.Serialize(new
+                        logger.LogError(contextFeature.Error, contextFeature.Error.Message);
+
+                        var errorResponse = new
                         {
                             StatusCode = context.Response.StatusCode,
-                            Message=contextFeature.Error.Message,
-                            Title="Hata alındı!"
-                        }));
+                            Message = contextFeature.Error.Message,
+                            Title = "Hata alındı!"
+                        };
+
+                        await context.Response.WriteAsJsonAsync(errorResponse, new JsonSerializerOptions
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                        });
                     }
                 });
             });

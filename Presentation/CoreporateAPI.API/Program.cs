@@ -85,8 +85,18 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ValidationFilter>();
     options.Filters.Add<RolePermissionFilter>();
-}).AddFluentValidation(configuration=>configuration.RegisterValidatorsFromAssemblyContaining<PageValidator>()).ConfigureApiBehaviorOptions(options=>options.SuppressModelStateInvalidFilter=true).AddJsonOptions(x =>
-   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+})
+.AddFluentValidation(configuration =>
+    configuration.RegisterValidatorsFromAssemblyContaining<PageValidator>())
+.ConfigureApiBehaviorOptions(options =>
+    options.SuppressModelStateInvalidFilter = true)
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
