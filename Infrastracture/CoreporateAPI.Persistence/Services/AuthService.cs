@@ -44,7 +44,7 @@ namespace CoreporateAPI.Persistence.Services
             if (user == null)
                 user = await _userManager.FindByEmailAsync(usernameOrEmail);
             if (user == null)
-                throw new DirectoryNotFoundException();
+                throw new NotFoundUserException();
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
             if (result.Succeeded)
             {

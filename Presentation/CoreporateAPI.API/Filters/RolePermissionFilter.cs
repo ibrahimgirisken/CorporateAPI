@@ -29,8 +29,7 @@ namespace CoreporateAPI.API.Filters
                 var hasRole =await _userService.HasRolePermissionToEndpointAsync(name,code);  
                 if (!hasRole)
                     context.Result = new UnauthorizedResult();
-                else
-                    await next();
+                return;
             }
             await next();
         }
