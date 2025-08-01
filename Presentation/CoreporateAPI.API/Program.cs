@@ -7,9 +7,11 @@ using CoreporateAPI.Persistence;
 using CoreporateAPI.Persistence.Contexts;
 using CorporateAPI.Application;
 using CorporateAPI.Application.Validators.Pages;
+using CorporateAPI.Domain.Entities.Identity;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -124,6 +126,7 @@ builder.Services.AddSwaggerGen(setup =>
     });
 
 });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Admin",options=>
     {

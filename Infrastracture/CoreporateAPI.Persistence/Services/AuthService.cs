@@ -1,17 +1,10 @@
-﻿using Azure.Core;
-using CorporateAPI.Application.Abstractions.Services;
+﻿using CorporateAPI.Application.Abstractions.Services;
 using CorporateAPI.Application.Abstractions.Token;
 using CorporateAPI.Application.DTOs;
 using CorporateAPI.Application.Exceptions;
-using CorporateAPI.Application.Features.Commands.AppUser.LoginUser;
 using CorporateAPI.Domain.Entities.Identity;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CoreporateAPI.Persistence.Services
 {

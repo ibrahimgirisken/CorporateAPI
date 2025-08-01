@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250630082334_mig2")]
-    partial class mig2
+    [Migration("20250801140851_mig_1")]
+    partial class mig_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1078,14 +1078,17 @@ namespace CoreporateAPI.Persistence.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TranslationKey", "dbo");
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("TranslationKeys", "dbo");
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Translation.TranslationValue", b =>
