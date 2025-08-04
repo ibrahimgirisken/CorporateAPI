@@ -1,7 +1,6 @@
 ﻿using CorporateAPI.Application.Features.Commands.AuthorizationEndpoint.AssignRoleEndpoint;
 using CorporateAPI.Application.Features.Queries.AuthorizationEndpoint.GetRolesToEndpoints;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers

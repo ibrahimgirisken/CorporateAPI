@@ -1,4 +1,6 @@
 ﻿using CorporateAPI.Application.Abstractions.Services.Configurations;
+using CorporateAPI.Application.CustomAttributes;
+using CorporateAPI.Application.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +8,7 @@ namespace CoreporateAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Admin")]
+    //[Authorize(AuthenticationSchemes = "Admin")]
     public class ApplicationServicesController : ControllerBase
     {
         readonly IApplicationService _applicationService;
@@ -16,6 +18,7 @@ namespace CoreporateAPI.API.Controllers
             _applicationService = applicationService;
         }
         [HttpGet]
+        [AuthorizeDefinition(ActionType = ActionType.Reading, Definition = "Get Authorize Definition Endpoints", Menu = "Application Services")]
         public IActionResult GetAuthorizeDefinitionEndpoints()
         {
            var datas= _applicationService.GetAuthorizeDefinitionEndpoints(typeof(Program));
