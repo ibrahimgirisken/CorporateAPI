@@ -62,7 +62,7 @@ namespace CoreporateAPI.Persistence.Services
             {
                 endpoint.Roles.Remove(role);
             }
-            var appRoles =_roleManager.Roles.Where(r => roles.Contains(r.Name)).ToList();
+            var appRoles =await _roleManager.Roles.Where(r => roles.Contains(r.Name)).ToListAsync();
             foreach (var role in appRoles)
                 endpoint.Roles.Add(role);
            await _endpointWriteRepository.SaveAsync();
