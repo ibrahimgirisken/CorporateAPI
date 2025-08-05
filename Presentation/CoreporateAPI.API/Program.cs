@@ -98,6 +98,25 @@ builder.Services.AddControllers(options =>
 
 
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer("Admin",options=>
+    {
+        options.TokenValidationParameters = new()
+        {
+            ValidateAudience = true,
+            ValidateActor = true,
+            ValidateIssuer = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidAudience = builder.Configuration["Token:Audience"],
+            ValidIssuer = builder.Configuration["Token:Issuer"],
+            IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+            LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
+            NameClaimType = ClaimTypes.Name 
+        };
+    });
+
 builder.Services.AddSwaggerGen(setup =>
 {
     var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -124,24 +143,6 @@ builder.Services.AddSwaggerGen(setup =>
     });
 
 });
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer("Admin",options=>
-    {
-        options.TokenValidationParameters = new()
-        {
-            ValidateAudience = true,
-            ValidateActor = true,
-            ValidateIssuer = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidAudience = builder.Configuration["Token:Audience"],
-            ValidIssuer = builder.Configuration["Token:Issuer"],
-            IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
-            LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
-            NameClaimType = ClaimTypes.Name 
-        };
-    });
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
