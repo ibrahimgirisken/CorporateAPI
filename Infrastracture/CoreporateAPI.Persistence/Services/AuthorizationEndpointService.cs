@@ -35,6 +35,7 @@ namespace CoreporateAPI.Persistence.Services
             {
                 _endpointMenu = new()
                 {
+                    Id = Guid.NewGuid(),
                     Name = endpointMenu
                 };
                await _endpointMenuWriteRepository.AddAsync(_endpointMenu);
@@ -46,10 +47,11 @@ namespace CoreporateAPI.Persistence.Services
                 var action= _applicationService.GetAuthorizeDefinitionEndpoints(type).FirstOrDefault(m=>m.Name==endpointMenu)?.Actions.FirstOrDefault(e=>e.Code==code);
                 endpoint = new()
                 {
-                    Code = code,
-                    ActionType = action?.ActionType,
-                    HttpType = action?.HttpType,
-                    Definition = action?.Definition,
+                    Code = action.Code,
+                    ActionType = action.ActionType,
+                    HttpType = action.HttpType,
+                    Definition = action.Definition,
+                    Id = Guid.NewGuid(),
                     EndpointMenu = _endpointMenu
                 };
 
@@ -72,7 +74,10 @@ namespace CoreporateAPI.Persistence.Services
                 Include(e=>e.Roles).
                 Include(e=>e.EndpointMenu).
                 FirstOrDefaultAsync(e => e.Code == code && e.EndpointMenu.Name==endpointMenu);
-            return endpoints.Roles.Select(r=>r.Name).ToList();
+            if (endpoints!=null)
+                return endpoints.Roles.Select(r => r.Name).ToList();
+               
+            return null;
         }
     }
 }
