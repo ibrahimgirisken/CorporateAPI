@@ -39,13 +39,6 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
-        {
-            LoginUserCommandResponse response = await _mediator.Send(loginUserCommandRequest);
-            return Ok(response);
-        }
-
         [HttpGet("get-roles-to-user/{UserId}")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To User")]
