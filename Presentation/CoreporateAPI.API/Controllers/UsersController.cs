@@ -1,6 +1,7 @@
 ﻿using CorporateAPI.Application.Consts;
 using CorporateAPI.Application.CustomAttributes;
 using CorporateAPI.Application.Enums;
+using CorporateAPI.Application.Features.Commands.AppUser.AssignRoleToUser;
 using CorporateAPI.Application.Features.Commands.AppUser.CreateUser;
 using CorporateAPI.Application.Features.Commands.AuthorizationEndpoint.AssignRoleEndpoint;
 using CorporateAPI.Application.Features.Queries.AppUser.GetAllUsers;
@@ -50,9 +51,9 @@ namespace CoreporateAPI.API.Controllers
         [HttpPost("assign-role-to-user")]
         //[Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Writing, Definition = "Assign Role To User")]
-        public async Task<IActionResult> AssignRoleToUser(AssignRoleEndpointCommandRequest roleEndpointCommandRequest)
+        public async Task<IActionResult> AssignRoleToUser(AssignRoleToUserCommandRequest assignRoleToUserCommandRequest)
         {
-            AssignRoleEndpointCommandResponse response=await _mediator.Send(roleEndpointCommandRequest);
+            AssignRoleToUserCommandResponse response=await _mediator.Send(assignRoleToUserCommandRequest);
             return Ok(response);
         }
 
