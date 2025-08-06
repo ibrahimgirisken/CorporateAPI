@@ -24,10 +24,10 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AssignRoleEndpoint(AssignRoleEndpointCommandRequest assignRoleEndpointCommand)
+        public async Task<IActionResult> AssignRoleEndpoint(AssignRoleEndpointCommandRequest assignRoleEndpointCommandRequest)
         {
-            assignRoleEndpointCommand.Type = typeof(Program);
-            AssignRoleEndpointCommandResponse response=await _mediator.Send(assignRoleEndpointCommand);
+            assignRoleEndpointCommandRequest.Type = typeof(Program);
+            AssignRoleEndpointCommandResponse response=await _mediator.Send(assignRoleEndpointCommandRequest);
             return Ok(response);
         }
     }

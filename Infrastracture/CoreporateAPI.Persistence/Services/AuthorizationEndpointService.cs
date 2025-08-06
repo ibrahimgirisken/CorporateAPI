@@ -30,7 +30,7 @@ namespace CoreporateAPI.Persistence.Services
 
         public async Task AssignRoleEndpointAsync(string[] roles,string endpointMenu, string code, Type type)
         {
-            EndpointMenu? _endpointMenu=await _endpointMenuReadRepository.GetSingleAsync(e=>e.Name == endpointMenu); 
+            EndpointMenu _endpointMenu=await _endpointMenuReadRepository.GetSingleAsync(e=>e.Name == endpointMenu); 
             if(_endpointMenu == null)
             {
                 _endpointMenu = new()
