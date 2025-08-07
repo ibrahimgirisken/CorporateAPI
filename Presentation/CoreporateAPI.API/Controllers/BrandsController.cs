@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
 using CorporateAPI.Application.Features.Queries.Brand.GetAllBrand;
 using CorporateAPI.Application.Features.Queries.Brand.GetByIdBrand;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -38,6 +39,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Writing, Definition = "Create Brand")]
         public async Task<IActionResult> CreateBrand(CreateBrandCommandRequest createBrandCommandRequest)
         {
@@ -46,6 +48,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Updating, Definition = "Update Brand")]
         public async Task<IActionResult> UpdateBrand(UpdateBrandCommandRequest updateBrandCommandRequest)
         {
@@ -54,6 +57,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Brands, ActionType = ActionType.Deleting, Definition = "Remove Brand")]
         public async Task<IActionResult> RemoveBrand([FromQuery] RemoveBrandCommandRequest removeBrandCommandRequest)
         {

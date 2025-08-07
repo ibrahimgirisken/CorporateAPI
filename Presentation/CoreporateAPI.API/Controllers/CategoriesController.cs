@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.Category.UpdateCategory;
 using CorporateAPI.Application.Features.Queries.Category.GetAllCategory;
 using CorporateAPI.Application.Features.Queries.Category.GetByIdCategory;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -32,6 +33,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet("by-id")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Reading, Definition = "Get By Id Category")]
         public async Task<IActionResult> GetByIdCategory([FromQuery] GetByIdCategoryQueryRequest getByIdCategoryQueryRequest)
         {
@@ -40,6 +42,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Writing, Definition = "Create Category")]
         public async Task<IActionResult> Post(CreateCategoryCommandRequest createCategoryCommandRequest)
         {
@@ -48,6 +51,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Updating, Definition = "Update Category")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommandRequest updateCategoryCommandRequest)
         {
@@ -56,6 +60,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Deleting, Definition = "Remove Category")]
 
         public async Task<IActionResult> RemoveCategory([FromQuery] RemoveCategoryCommandRequest removeCategoryCommandRequest)

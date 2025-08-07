@@ -9,6 +9,7 @@ using CorporateAPI.Application.Features.Queries.Product.GetAllProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetByIdProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetByUrlProduct;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -53,6 +54,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Writing, Definition = "Create Product")]
         public async Task<IActionResult> CreateProduct(CreateProductCommandRequest createProductCommandRequest)
         {
@@ -61,6 +63,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Updating, Definition = "Update Product")]
         public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest updateProductCommandRequest)
         {
@@ -69,6 +72,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Deleting, Definition = "Remove Product Item")]
         public async Task<IActionResult> RemoveProduct([FromQuery] RemoveProductCommandRequest removeProductCommandRequest)
         {

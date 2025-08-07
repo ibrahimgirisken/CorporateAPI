@@ -8,6 +8,7 @@ using CorporateAPI.Application.Features.Queries.Home.GetAllHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByContentTypeHome;
 using CorporateAPI.Application.Features.Queries.Home.GetByIdHome;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -56,6 +57,7 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.homeDTO);
         }
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Writing, Definition = "Create Home")]
         public async Task<IActionResult> CreateHome(CreateHomeCommandRequest createHomeCommandRequest)
         {
@@ -64,6 +66,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Updating, Definition = "Update Home")]
         public async Task<IActionResult> UpdateHome(UpdateHomeCommandRequest updateHomeCommandRequest)
         {
@@ -71,6 +74,7 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Deleting, Definition = "Remove Home")]
         public async Task<IActionResult> RemoveHome([FromQuery] RemoveHomeCommandRequest removeHomeCommandRequest)
         {

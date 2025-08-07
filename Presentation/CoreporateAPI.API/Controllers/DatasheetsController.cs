@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.Datasheet.UpdateDatasheet;
 using CorporateAPI.Application.Features.Queries.Datasheet.GetAllDatasheet;
 using CorporateAPI.Application.Features.Queries.Datasheet.GetByIdDatasheet;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -43,6 +44,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Writing, Definition = "Create Datasheet")]
         public async Task<IActionResult> CreateDatasheet(CreateDatasheetCommandRequest createDatasheetCommandRequest)
         {
@@ -51,6 +53,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Updating, Definition = "Update Datasheet")]
         public async Task<IActionResult> UpdateDatasheet(UpdateDatasheetCommandRequest updateDatasheetCommandRequest)
         {
@@ -58,6 +61,7 @@ namespace CoreporateAPI.API.Controllers
              return Ok(response);
         }
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Deleting, Definition = "Remove Datasheet")]
         public async Task<IActionResult> RemoveDatasheet([FromRoute] RemoveDatasheetCommandRequest removeDatasheetCommandRequest)
         {

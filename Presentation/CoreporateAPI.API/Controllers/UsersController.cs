@@ -24,7 +24,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet()]
-        //[Authorize(AuthenticationSchemes = "Admin")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get All Users")]
         public async Task<IActionResult> GetAllUsers([FromQuery]GetAllUsersQueryRequest getAllUsersQueryRequest)
         {
@@ -40,7 +40,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpGet("get-roles-to-user/{UserId}")]
-        //[Authorize(AuthenticationSchemes = "Admin")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Reading, Definition = "Get Roles To User")]
         public async Task<IActionResult> GetRolesToUser([FromRoute] GetRolesToUserRequest getRolesToUserRequest)
         {
@@ -49,7 +49,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("assign-role-to-user")]
-        //[Authorize(AuthenticationSchemes = "Admin")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Users, ActionType = ActionType.Writing, Definition = "Assign Role To User")]
         public async Task<IActionResult> AssignRoleToUser(AssignRoleToUserCommandRequest assignRoleToUserCommandRequest)
         {

@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetAllBanner;
 using CorporateAPI.Application.Features.Queries.Banner.GetByIdBanner;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -44,6 +45,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Writing, Definition = "Create Banner")]
         public async Task<IActionResult> CreateBanner(CreateBannerCommandRequest createBannerCommandRequest)
         {
@@ -52,6 +54,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Updating, Definition = "Update Banner")]
         public async Task<IActionResult> UpdateBanner(UpdateBannerCommandRequest updateBannerCommandRequest)
         {
@@ -59,6 +62,7 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Banners, ActionType = ActionType.Deleting, Definition = "Remove Banner")]
         public async Task<IActionResult> RemoveBanner([FromQuery] RemoveBannerCommandRequest removeBannerCommandRequest)
         {

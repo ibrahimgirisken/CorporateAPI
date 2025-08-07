@@ -5,6 +5,7 @@ using CorporateAPI.Application.Features.Commands.Settting.CreateSetting;
 using CorporateAPI.Application.Features.Commands.Settting.UpdateSetting;
 using CorporateAPI.Application.Features.Queries.Setting.GetByIdSetting;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -40,6 +41,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Settings, ActionType = ActionType.Updating, Definition = "Update Setting")]
 
         public async Task<IActionResult> RemoveSetting(UpdateSettingCommandRequest updateSettingCommandRequest)

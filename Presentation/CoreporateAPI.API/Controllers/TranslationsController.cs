@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.TranslationKey.UpdateTranslatio
 using CorporateAPI.Application.Features.Queries.TranslationKey.GetAllTranslationKey;
 using CorporateAPI.Application.Features.Queries.TranslationKey.GetByIdTranslationKey;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -43,6 +44,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Translations, ActionType = ActionType.Writing, Definition = "Create Translation")]
 
         public async Task<IActionResult> CreateTranslate(CreateTranslationKeyRequest createTranslationKeyRequest)
@@ -52,6 +54,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Translations, ActionType = ActionType.Updating,
             Definition = "Update Translate")]
         public async Task<IActionResult> UpdateTranslate(UpdateTranslationKeyRequest updateTranslationKeyRequest)
@@ -61,6 +64,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu =AuthorizeDefinitionConstants.Translations,ActionType =ActionType.Deleting,Definition ="Remove Translate")]
         public async Task<IActionResult> RemoveTranslate([FromRoute] RemoveTranslationKeyRequest removeTranslationKeyRequest)
         {

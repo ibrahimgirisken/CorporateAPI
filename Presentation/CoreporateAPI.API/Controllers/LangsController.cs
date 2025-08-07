@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.Lang.UpdateLang;
 using CorporateAPI.Application.Features.Queries.Lang.GetAllLang;
 using CorporateAPI.Application.Features.Queries.Lang.GetByIdLang;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -39,6 +40,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Writing, Definition = "Create Lang")]
         public async Task<IActionResult> CreateLang(CreateLangCommandRequest createLangRequest)
         {
@@ -47,6 +49,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Updating, Definition = "Update Lang")]
         public async Task<IActionResult> UpdateLang(UpdateLangCommandRequest updateLangRequest)
         {
@@ -54,6 +57,7 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response);
         }
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Langs, ActionType = ActionType.Deleting, Definition = "Remove Lang")]
         public async Task<IActionResult> RemoveLang([FromQuery] RemoveLangCommandRequest removeLangRequest)
         {

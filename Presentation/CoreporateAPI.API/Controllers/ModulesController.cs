@@ -7,6 +7,7 @@ using CorporateAPI.Application.Features.Commands.Module.UpdateModule;
 using CorporateAPI.Application.Features.Queries.Module.GetAllModule;
 using CorporateAPI.Application.Features.Queries.Module.GetByIdModule;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreporateAPI.API.Controllers
@@ -42,6 +43,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Modules, ActionType = ActionType.Writing, Definition = "Create Module")]
         public async Task<IActionResult> CreateModule(CreateModuleCommandRequest createModuleCommandRequest)
         {
@@ -50,6 +52,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Modules, ActionType = ActionType.Updating, Definition = "Update Module")]
         public async Task<IActionResult> UpdateModule(UpdateModuleCommandRequest updateModuleCommandRequest)
         {
@@ -58,6 +61,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Modules, ActionType = ActionType.Deleting, Definition = "Remove Module")]
         public async Task<IActionResult> RemoveModule([FromRoute]RemoveModuleCommandRequest removeModuleCommandRequest)
         {

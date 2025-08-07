@@ -8,6 +8,7 @@ using CorporateAPI.Application.Features.Queries.Page.GetAllPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByIdPage;
 using CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -15,7 +16,6 @@ namespace CoreporateAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes="Admin")]
     public class PagesController : ControllerBase
     {
         readonly IMediator _mediator;
@@ -59,6 +59,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Writing, Definition = "Create Page")]
         public async Task<IActionResult> CreatePage(CreatePageCommandRequest createPageCommandRequest)
         {
@@ -67,6 +68,7 @@ namespace CoreporateAPI.API.Controllers
          }
 
         [HttpPut("update")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Updating, Definition = "Update Page")]
         public async Task<IActionResult> UpdatePage(UpdatePageCommandRequest updatePageCommandRequest)
         {
@@ -75,6 +77,7 @@ namespace CoreporateAPI.API.Controllers
         }
 
         [HttpDelete("delete")]
+        [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Deleting, Definition = "Remove Page")]
         public async Task<IActionResult> RemovePage([FromRoute] RemovePageCommandRequest removePageCommandRequest)
         {
