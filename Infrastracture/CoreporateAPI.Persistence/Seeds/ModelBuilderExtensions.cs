@@ -1,5 +1,7 @@
 ﻿using CorporateAPI.Domain.Entities;
+using CorporateAPI.Domain.Entities.Identity;
 using CorporateAPI.Domain.Entities.Setting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreporateAPI.Persistence.Seeds
@@ -8,6 +10,29 @@ namespace CoreporateAPI.Persistence.Seeds
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            var hasher = new PasswordHasher<AppUser>();
+
+            var adminUser = new AppUser
+            {
+                Id = "385e28b4-d313-4724-b8c8-1483f15ee8f4",
+                NameSurname = "İbrahim GİRİŞKEN",
+                Admin = true,
+                UserName = "girisken07",
+                NormalizedUserName = "GIRISKEN07",
+                Email = "girisken07@gmail.com",
+                NormalizedEmail = "GIRISKEN07@GMAIL.COM",
+                EmailConfirmed = false,
+                PasswordHash = "AQAAAAIAAYagAAAAEEQjo+oKKy4mkizENNnOCBDpiMeuDW0QzmWPBn02dK+2+V4vBSjvzPsYe9mbV1C6vg==",
+                SecurityStamp = "MSV7PQQLRH5YEGZDJDHRZTXA6N2WEGAB",
+                ConcurrencyStamp = "4cdedf5f-20f4-4920-ad3e-83a99713be35",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
+            };
+            modelBuilder.Entity<AppUser>().HasData(adminUser);
             modelBuilder.Entity<Lang>().HasData(
      new Lang()
      {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreporateAPI.Persistence.Migrations
 {
     [DbContext(typeof(CorporateAPIDbContext))]
-    [Migration("20250801140851_mig_1")]
-    partial class mig_1
+    [Migration("20250807120829_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -503,6 +503,9 @@ namespace CoreporateAPI.Persistence.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -561,6 +564,26 @@ namespace CoreporateAPI.Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "385e28b4-d313-4724-b8c8-1483f15ee8f4",
+                            AccessFailedCount = 0,
+                            Admin = true,
+                            ConcurrencyStamp = "4cdedf5f-20f4-4920-ad3e-83a99713be35",
+                            Email = "girisken07@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NameSurname = "İbrahim GİRİŞKEN",
+                            NormalizedEmail = "GIRISKEN07@GMAIL.COM",
+                            NormalizedUserName = "GIRISKEN07",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEQjo+oKKy4mkizENNnOCBDpiMeuDW0QzmWPBn02dK+2+V4vBSjvzPsYe9mbV1C6vg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "MSV7PQQLRH5YEGZDJDHRZTXA6N2WEGAB",
+                            TwoFactorEnabled = false,
+                            UserName = "girisken07"
+                        });
                 });
 
             modelBuilder.Entity("CorporateAPI.Domain.Entities.Lang", b =>
