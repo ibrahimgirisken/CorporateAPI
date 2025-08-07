@@ -22,7 +22,7 @@ namespace CoreporateAPI.Persistence.Seeds
                 Email = "girisken07@gmail.com",
                 NormalizedEmail = "GIRISKEN07@GMAIL.COM",
                 EmailConfirmed = false,
-                PasswordHash = "AQAAAAIAAYagAAAAEEQjo+oKKy4mkizENNnOCBDpiMeuDW0QzmWPBn02dK+2+V4vBSjvzPsYe9mbV1C6vg==",
+                PasswordHash = "AQAAAAIAAYagAAAAEEQjo+oKKy4mkizENNnOCBDpiMeuDW0QzmWPBn02dK+2+V4vBSjvzPsYe9mbV1C6vg==",//abc123
                 SecurityStamp = "MSV7PQQLRH5YEGZDJDHRZTXA6N2WEGAB",
                 ConcurrencyStamp = "4cdedf5f-20f4-4920-ad3e-83a99713be35",
                 PhoneNumber = null,
