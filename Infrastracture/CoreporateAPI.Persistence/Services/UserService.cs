@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.Application.Abstractions.Services;
 using CorporateAPI.Application.DTOs.User;
+using CorporateAPI.Application.Exceptions;
 using CorporateAPI.Application.Repositories.Endpoint;
 using CorporateAPI.Domain.Entities.Endpoint;
 using CorporateAPI.Domain.Entities.Identity;
@@ -118,6 +119,18 @@ namespace CoreporateAPI.Persistence.Services
         public Task UpdatePasswordAsync(string userId, string resetToken, string newPassword)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateRefreshTokenAsyc(string refreshToken, AppUser user, DateTime accessTokenData, int addOnAccessTokenDate)
+        {
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenEndDate = accessTokenData.AddSeconds(addOnAccessTokenDate);
+                await _userManager.UpdateAsync(user);
+            }
+            else
+                throw new NotFoundUserException();
         }
     }
 }

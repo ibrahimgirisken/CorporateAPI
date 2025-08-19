@@ -36,8 +36,8 @@ builder.Services.AddCors(options => {
     ); });
 
 var columnOptions = new ColumnOptions();
-columnOptions.Store.Remove(StandardColumn.Properties); // Gereksiz kolonları çıkar
-columnOptions.Store.Add(StandardColumn.LogEvent);      // JSON log verisi
+columnOptions.Store.Remove(StandardColumn.Properties);
+columnOptions.Store.Add(StandardColumn.LogEvent);     
 
 columnOptions.AdditionalColumns = new Collection<SqlColumn>
 {

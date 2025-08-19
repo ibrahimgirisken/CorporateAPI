@@ -2,14 +2,10 @@
 using CorporateAPI.Domain.Entities.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreporateAPI.Infrastracture.Services.Token
 {
@@ -38,6 +34,7 @@ namespace CoreporateAPI.Infrastracture.Services.Token
                 claims:new List<Claim> { new(ClaimTypes.Name,user.UserName)});
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
+            token.RefreshToken = CreateRefreshToken();
             return token;
         }
 

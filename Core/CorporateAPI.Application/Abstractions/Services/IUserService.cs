@@ -1,5 +1,6 @@
 ﻿using CorporateAPI.Application.DTOs.User;
 using CorporateAPI.Application.Features.Commands.AppUser.CreateUser;
+using CorporateAPI.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace CorporateAPI.Application.Abstractions.Services
     {
         Task<CreateUserResponse> CreateAsync(CreateUser model);
         Task<List<ListUser>> GetAllUsersAsync(int page,int size);
+        Task UpdateRefreshTokenAsyc(string refreshToken, AppUser user, DateTime accessTokenDate, int addOnAccessTokenDate);
         Task UpdatePasswordAsync(string userId,string resetToken, string newPassword);
         Task AssignRoleToUserAsync(string userId, string[] roles);
         Task<string[]> GetRolesToUserAsync(string userIdOrName);

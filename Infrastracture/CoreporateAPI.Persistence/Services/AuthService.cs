@@ -13,12 +13,13 @@ namespace CoreporateAPI.Persistence.Services
         readonly UserManager<CorporateAPI.Domain.Entities.Identity.AppUser> _userManager;
         readonly SignInManager<CorporateAPI.Domain.Entities.Identity.AppUser> _signInManager;
         readonly ITokenHandler _tokenHandler;
-
-        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler)
+        readonly IUserService _userService;
+        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler, IUserService userService = null)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHandler = tokenHandler;
+            _userService = userService;
         }
 
         public Task<Token> FacebookLoginAsync(string authToken, int accessTokenLifeTime)
@@ -42,6 +43,7 @@ namespace CoreporateAPI.Persistence.Services
             if (result.Succeeded)
             {
                 Token token = _tokenHandler.CreateAccessToken(accessTokenLifeTime,user);
+                await _userService.UpdateRefreshTokenAsyc(token.RefreshToken, user, token.Expiration, 15);
                 return token;
             }
             throw new NotFoundUserException();
