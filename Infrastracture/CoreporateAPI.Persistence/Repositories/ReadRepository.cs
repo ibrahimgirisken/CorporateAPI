@@ -68,18 +68,20 @@ namespace CoreporateAPI.Persistence.Repositories
             return await query.FirstOrDefaultAsync(e => e.Id == Guid.Parse(id));
         }
 
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes)
+        public async Task<T?> GetSingleAsync(
+     Expression<Func<T, bool>> predicate,
+     bool tracking = true,
+     Func<IQueryable<T>, IQueryable<T>>? include = null)
         {
             IQueryable<T> query = Table.Where(e => !e.IsDeleted);
+
             if (!tracking)
-                query.AsNoTracking();
+                query = query.AsNoTracking();
 
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
-            }
-            return await query.FirstOrDefaultAsync(method);
+            if (include is not null)
+                query = include(query); // Include + ThenInclude zinciri mümkün
+
+            return await query.FirstOrDefaultAsync(predicate);
         }
-
     }
 }

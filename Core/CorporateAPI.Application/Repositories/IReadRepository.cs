@@ -12,7 +12,11 @@ namespace CorporateAPI.Application.Repositories
     {
         IQueryable<T> GetAll(bool tracking = true);
         IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true, params Expression<Func<T, object>>[] includes);
+        Task<T?> GetSingleAsync(
+        Expression<Func<T, bool>> predicate,
+        bool tracking = true,
+        Func<IQueryable<T>, IQueryable<T>>? include = null
+    );
         Task<T> GetByIdAsync(
      string id,
      bool tracking = true,
