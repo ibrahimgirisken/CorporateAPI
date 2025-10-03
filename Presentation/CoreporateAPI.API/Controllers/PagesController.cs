@@ -44,16 +44,10 @@ namespace CoreporateAPI.API.Controllers
             return Ok(response.PageDto);
         }
 
-        [HttpGet("Page/{UrlAddress}")]
+        [HttpGet("by-url")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Reading, Definition = "Get By UrlAddress Page")]
         public async Task<IActionResult> GetByUrlAddressPage([FromRoute] GetByUrlAddressPageQueryRequest getByUrlAddressPageQueryRequest)
         {
-            string language = Request.Headers["Accept-Language".ToString()];
-            if (string.IsNullOrEmpty(language))
-            {
-                language = "en"; // Varsayılan dil
-            }
-            getByUrlAddressPageQueryRequest.Language = language;
             GetByUrlAddressPageQueryResponse response = await _mediator.Send(getByUrlAddressPageQueryRequest);
             return Ok(response.pageDTO);
         }

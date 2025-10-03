@@ -4,7 +4,6 @@ using CorporateAPI.Application.Enums;
 using CorporateAPI.Application.Features.Commands.Product.CreateProduct;
 using CorporateAPI.Application.Features.Commands.Product.RemoveProduct;
 using CorporateAPI.Application.Features.Commands.Product.UpdateProduct;
-using CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage;
 using CorporateAPI.Application.Features.Queries.Product.GetAllProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetByIdProduct;
 using CorporateAPI.Application.Features.Queries.Product.GetByUrlProduct;
@@ -47,7 +46,7 @@ namespace CoreporateAPI.API.Controllers
 
         [HttpGet("by-url")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Reading, Definition = "Get By Url Product")]
-        public async Task<IActionResult> GetByUrlProduct([FromQuery] GetByUrlProductQueryRequest getByUrlProductQueryRequest)
+        public async Task<IActionResult> GetByUrlProduct([FromRoute] GetByUrlProductQueryRequest getByUrlProductQueryRequest)
         {
             GetByUrlProductQueryResponse response = await _mediator.Send(getByUrlProductQueryRequest);
             return Ok(response.ProductDTO);
