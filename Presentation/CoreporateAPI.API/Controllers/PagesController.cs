@@ -46,7 +46,7 @@ namespace CoreporateAPI.API.Controllers
 
         [HttpGet("by-url")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Reading, Definition = "Get By UrlAddress Page")]
-        public async Task<IActionResult> GetByUrlAddressPage([FromRoute] GetByUrlAddressPageQueryRequest getByUrlAddressPageQueryRequest)
+        public async Task<IActionResult> GetByUrlAddressPage([FromQuery] GetByUrlAddressPageQueryRequest getByUrlAddressPageQueryRequest)
         {
             GetByUrlAddressPageQueryResponse response = await _mediator.Send(getByUrlAddressPageQueryRequest);
             return Ok(response.pageDTO);
