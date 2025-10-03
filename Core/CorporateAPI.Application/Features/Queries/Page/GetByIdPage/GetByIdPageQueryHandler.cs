@@ -2,12 +2,8 @@
 using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
 {
@@ -25,7 +21,7 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByIdPage
         public async Task<GetByIdPageQueryResponse> Handle(GetByIdPageQueryRequest request, CancellationToken cancellationToken)
         {
             var page= await _pageReadRepository.GetByIdAsync(request.Id, false,includes:new Expression<Func<Domain.Entities.Page.Page, object>>[]{
-e => e.PageTranslations
+                e => e.PageTranslations
             }, includeStrings: new[]
             {
                 "PageTranslations.Lang"});
