@@ -21,30 +21,13 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
         public async Task<GetAllBannerQueryResponse> Handle(GetAllBannerQueryRequest request, CancellationToken cancellationToken)
         {
 
-            if (request.IncludeAllLanguages)
-            {
+
                 var bannerTranslations =await _bannerReadRepository.GetAll(false).Include(e => e.BannerTranslations).ThenInclude(l=>l.Lang).ToListAsync();
                 var bannerDatas = _mapper.Map<List<ResultBannerDTO>>(bannerTranslations);
                 return new()
                 {
                     Banners = bannerDatas
                 };
-            }
-            var language = request.Language ?? "en";
-            var bannersFiltered = _bannerReadRepository.GetAll(false).Where(b => !b.IsDeleted)
-                   .Include(e => e.BannerTranslations)
-                       .ThenInclude(t => t.Lang)
-                   .ToList();
-            foreach (var banner in bannersFiltered)
-            {
-                banner.BannerTranslations = banner.BannerTranslations
-                    .Where(t => t.Lang.LangCode == language)
-                    .ToList();
-            }
-
-            var filteredBannerDtos = _mapper.Map<List<ResultBannerDTO>>(bannersFiltered);
-            return new() { Banners = filteredBannerDtos };
-
         }
     }
 }

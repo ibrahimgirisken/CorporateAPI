@@ -22,30 +22,12 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
 
         public async Task<GetAllPageQueryResponse> Handle(GetAllPageQueryRequest request, CancellationToken cancellationToken)
         {
-
-            if (request.IncludeAllLanguages)
-            {
                 var pageTranslations = _pageReadRepository.GetAll(false).Include(e => e.PageTranslations).ThenInclude(l => l.Lang).ToList();
                 var pageDatas = _mapper.Map<List<ResultPageDTO>>(pageTranslations);
                 return new()
                 {
                     PagesDto = pageDatas
                 };
-            }
-            var language = request.Language ?? "en";
-            var bannersFiltered = _pageReadRepository.GetAll(false)
-                   .Include(e => e.PageTranslations)
-                       .ThenInclude(t => t.Lang)
-                   .ToList();
-            foreach (var banner in bannersFiltered)
-            {
-                banner.PageTranslations = banner.PageTranslations
-                    .Where(t => t.Lang.LangCode == language)
-                    .ToList();
-            }
-
-            var filteredPageDtos = _mapper.Map<List<ResultPageDTO>>(bannersFiltered);
-            return new() { PagesDto = filteredPageDtos };
 
         }
     }

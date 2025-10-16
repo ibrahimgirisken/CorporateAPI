@@ -29,13 +29,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Pages, ActionType = ActionType.Reading, Definition = "Get All Page")]
         public async Task<IActionResult> GetAllPage([FromQuery] GetAllPageQueryRequest getAllPageQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            if (!includeAllLanguagesFlag && string.IsNullOrEmpty(getAllPageQueryRequest.Language))
-            {
-                getAllPageQueryRequest.Language = Request.Headers["Accept-Language"].ToString();
-            }
-            getAllPageQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllPageQueryResponse response = await _mediator.Send(getAllPageQueryRequest);
             return Ok(response.PagesDto);
         }
