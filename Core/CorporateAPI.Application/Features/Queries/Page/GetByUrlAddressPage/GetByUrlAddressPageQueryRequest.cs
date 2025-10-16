@@ -9,7 +9,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage
 {
     public class GetByUrlAddressPageQueryRequest:IRequest<GetByUrlAddressPageQueryResponse>
     {
-        public string? Language { get; set; }
-        public string UrlAddress { get; set; }
+        public string? UrlAddress { get; set; }
     }
 }

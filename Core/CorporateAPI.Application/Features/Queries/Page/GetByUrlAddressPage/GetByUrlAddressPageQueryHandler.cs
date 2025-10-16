@@ -20,28 +20,22 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetByUrlAddressPage
 
         public async Task<GetByUrlAddressPageQueryResponse> Handle(GetByUrlAddressPageQueryRequest request, CancellationToken cancellationToken)
         {
-            var language = request.Language ?? "en";
+            if (string.IsNullOrWhiteSpace(request.UrlAddress))
+                return new() { pageDTO = null };
 
             var page = await _pageReadRepository.GetSingleAsync(
-                e => e.PageTranslations.Any(t => t.Url == request.UrlAddress && t.Lang.LangCode == language),
-                tracking: false,
-                include: q => q
-                    .Include(e => e.PageTranslations.Where(t => t.Lang.LangCode == language)) // EF Core 5+ filtered include
-                    .ThenInclude(t => t.Lang)
-            );
-            if (page != null)
-            {
-                page.PageTranslations = page.PageTranslations
-                    .Where(t => t.Lang.LangCode == language)
-                    .ToList();
-            }
+                    e => e.PageTranslations.Any(t => t.Url == request.UrlAddress),
+                    tracking: false,
+                    include: q => q
+                        .Include(e => e.PageTranslations)
+                        .ThenInclude(t => t.Lang));
+               
 
-            var response = page != null ? _mapper.Map<ResultPageDTO>(page) : null;
+            if (page is null)
+                return new() { pageDTO = null };
 
-            return new()
-            {
-                pageDTO = response
-            };
+            var dto = _mapper.Map<ResultPageDTO>(page);
+            return new() { pageDTO = dto };
         }
     }
 }
