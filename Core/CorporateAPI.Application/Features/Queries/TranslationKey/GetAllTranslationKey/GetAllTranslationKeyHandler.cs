@@ -24,8 +24,6 @@ namespace CorporateAPI.Application.Features.Queries.TranslationKey.GetAllTransla
 
         public async Task<GetAllTranslationKeyResponse> Handle(GetAllTranslationKeyRequest request, CancellationToken cancellationToken)
         {
-           if(request.IncludeAllLanguages)
-            {
                 var translationKeys = _translationKeyReadRepository.GetAll(false).Include(e=>e.Translations).ThenInclude(l=>l.Lang).ToList();
 
                 var translationKeyDtos = _mapper.Map<List<ResultTranslationDTO>>(translationKeys);
@@ -33,23 +31,6 @@ namespace CorporateAPI.Application.Features.Queries.TranslationKey.GetAllTransla
                 {
                    TranslationDTO = translationKeyDtos
                 };
-            }
-
-           var language=request.Language ?? "en";
-            var translateFiltered=_translationKeyReadRepository.GetAll(false)
-                .Include(e => e.Translations)
-                    .ThenInclude(t => t.Lang)
-                .ToList();
-
-            foreach (var translationKey in translateFiltered)
-            {
-                translationKey.Translations = translationKey.Translations
-                    .Where(t => t.Lang.LangCode == language)
-                    .ToList();
-            }
-
-            var filteredTranslationDtos = _mapper.Map<List<ResultTranslationDTO>>(translateFiltered);
-            return new() { TranslationDTO = filteredTranslationDtos };
         }
     }
 }

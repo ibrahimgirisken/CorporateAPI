@@ -27,10 +27,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Translations, ActionType = ActionType.Reading, Definition = "Get All Translation")]
         public async Task<IActionResult> GetAllTranslations([FromQuery] GetAllTranslationKeyRequest getAllTranslationsQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            string language = Request.Headers["Accept-Language".ToString()];
-            getAllTranslationsQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllTranslationKeyResponse response = await _mediator.Send(getAllTranslationsQueryRequest);
             return Ok(response.TranslationDTO);
         }

@@ -4,7 +4,5 @@ namespace CorporateAPI.Application.Features.Queries.TranslationKey.GetAllTransla
 {
     public class GetAllTranslationKeyRequest:IRequest<GetAllTranslationKeyResponse>
     {
-        public string? Language { get; set; }
-        public bool IncludeAllLanguages { get; set; } = false;
     }
 }
