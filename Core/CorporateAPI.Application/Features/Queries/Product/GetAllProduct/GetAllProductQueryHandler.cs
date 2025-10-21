@@ -20,29 +20,12 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetAllProduct
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
 
-            if (request.IncludeAllLanguages)
+            var produtTranslations = _productReadRepository.GetAll(false).Include(e => e.ProductTranslations).ThenInclude(l => l.Lang).ToList();
+            var pageDatas = _mapper.Map<List<ResultProductDTO>>(produtTranslations);
+            return new()
             {
-                var productTranslations = _productReadRepository.GetAll(false).Include(e => e.ProductTranslations).ThenInclude(l => l.Lang).ToList();
-                var productDatas = _mapper.Map<List<ResultProductDTO>>(productTranslations);
-                return new()
-                {
-                    ProductsDto = productDatas
-                };
-            }
-            var language = request.Language ?? "en";
-            var productsFiltered = _productReadRepository.GetAll(false)
-                   .Include(e => e.ProductTranslations)
-                       .ThenInclude(t => t.Lang)
-                   .ToList();
-            foreach (var product in productsFiltered)
-            {
-                product.ProductTranslations = product.ProductTranslations
-                    .Where(t => t.Lang.LangCode == language)
-                    .ToList();
-            }
-
-            var filteredProductDtos = _mapper.Map<List<ResultProductDTO>>(productsFiltered);
-            return new() { ProductsDto = filteredProductDtos };
+                ProductsDto = pageDatas
+            };
 
         }
     }

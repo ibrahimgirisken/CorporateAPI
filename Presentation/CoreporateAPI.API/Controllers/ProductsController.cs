@@ -27,10 +27,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu=AuthorizeDefinitionConstants.Products,ActionType =ActionType.Reading,Definition ="Get All Product")]
         public async Task<IActionResult> GetAllProduct([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            string language = Request.Headers["Accept-Language".ToString()];
-            getAllProductQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllProductQueryResponse response = await _mediator.Send(getAllProductQueryRequest);
             return Ok(response.ProductsDto);
         }
@@ -46,7 +42,7 @@ namespace CoreporateAPI.API.Controllers
 
         [HttpGet("by-url")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Reading, Definition = "Get By Url Product")]
-        public async Task<IActionResult> GetByUrlProduct([FromRoute] GetByUrlProductQueryRequest getByUrlProductQueryRequest)
+        public async Task<IActionResult> GetByUrlProduct([FromQuery] GetByUrlProductQueryRequest getByUrlProductQueryRequest)
         {
             GetByUrlProductQueryResponse response = await _mediator.Send(getByUrlProductQueryRequest);
             return Ok(response.ProductDTO);
