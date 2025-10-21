@@ -15,6 +15,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
         public int Order { get; set; }
         public bool Status { get; set; }
         public string? ModuleIds { get; set; }
+        public string? PageType { get; set; }
         public List<PageTranslationDTO> PageTranslations { get; set; }
     }
 }

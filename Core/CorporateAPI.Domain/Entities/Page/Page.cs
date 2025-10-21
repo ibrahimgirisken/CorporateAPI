@@ -15,6 +15,7 @@ namespace CorporateAPI.Domain.Entities.Page
         public string? Video { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
+        public string? PageType { get; set; }
         public string? ModuleIds { get; set; }
         public List<PageTranslation> PageTranslations { get; set; }
     }

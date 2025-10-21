@@ -20,6 +20,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
         public string? Image3 { get; set; }
         public int Order { get; set; }
         public bool Status { get; set; }
+        public string? PageType { get; set; }
         public string? ModuleIds { get; set; }
         public List<PageTranslationDTO> PageTranslations { get; set; }
     }
