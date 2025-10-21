@@ -9,13 +9,11 @@ namespace CorporateAPI.Application.Features.Commands.Page.CreatePage
     public class CreatePageCommandHandler : IRequestHandler<CreatePageCommandRequest, CreatePageCommandResponse>
     {
         readonly IPageWriteRepository _pageWriteRepository;
-        readonly IModuleReadRepository _moduleReadRepository;
         readonly IMapper _mapper;
 
-        public CreatePageCommandHandler(IPageWriteRepository pageWriteRepository, IMapper mapper = null, IModuleReadRepository moduleReadRepository = null)
+        public CreatePageCommandHandler(IPageWriteRepository pageWriteRepository, IMapper mapper = null)
         {
             _pageWriteRepository = pageWriteRepository;
-            _moduleReadRepository = moduleReadRepository;
             _mapper = mapper;
         }
 

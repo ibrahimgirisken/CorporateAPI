@@ -35,6 +35,7 @@ namespace CorporateAPI.Application.Features.Commands.Page.UpdatePage
             page.Image1 = request.Image1;
             page.Image2 = request.Image2;
             page.Image3 = request.Image3;
+            page.PageType = request.PageType;
 
 
             var existingTranslations = page.PageTranslations.ToList();
