@@ -26,8 +26,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Categories, ActionType = ActionType.Reading, Definition = "Get All Category")]
         public async Task<IActionResult> GetAllCategory([FromQuery] GetAllCategoryQueryRequest getAllCategoryQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            string language = Request.Headers["Accept-Language".ToString()];
             GetAllCategoryQueryResponse response=await _mediator.Send(getAllCategoryQueryRequest);
             return Ok(response.CategoriesDto);
         }

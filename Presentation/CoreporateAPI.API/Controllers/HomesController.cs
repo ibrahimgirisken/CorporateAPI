@@ -29,9 +29,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Reading, Definition = "Get All Home")]
         public async Task<IActionResult> GetAllHome([FromQuery] GetAllHomeQueryRequest getAllHomeQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            getAllHomeQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllHomeQueryResponse response=await _mediator.Send(getAllHomeQueryRequest);
             return Ok(response.Homes);
         }

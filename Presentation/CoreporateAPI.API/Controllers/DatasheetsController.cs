@@ -28,9 +28,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Datasheets, ActionType = ActionType.Reading, Definition = "Get All Datasheet")]
         public async Task<IActionResult> GetAllDatasheet([FromQuery] GetAllDatasheetQueryRequest getAllDatasheetQueryRequest)
         {
-            var includeAllLanguages = Request.Query["IncludeAllLanguages"].ToString();
-            bool includeAllLanguagesFlag = includeAllLanguages.Equals("true", StringComparison.OrdinalIgnoreCase);
-            getAllDatasheetQueryRequest.IncludeAllLanguages = includeAllLanguagesFlag;
             GetAllDatasheetQueryResponse response=await _mediator.Send(getAllDatasheetQueryRequest);
             return Ok(response.resultDatasheetsDto);
         }

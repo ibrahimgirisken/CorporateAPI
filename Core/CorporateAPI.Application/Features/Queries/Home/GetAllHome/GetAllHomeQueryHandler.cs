@@ -18,30 +18,12 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetAllHome
 
         public async Task<GetAllHomeQueryResponse> Handle(GetAllHomeQueryRequest request, CancellationToken cancellationToken)
         {
-
-            if (request.IncludeAllLanguages)
+            var pageTranslations = _homeReadRepository.GetAll(false).Include(e => e.HomeTranslations).ThenInclude(l => l.Lang).ToList();
+            var homeDatas = _mapper.Map<List<ResultHomeDTO>>(pageTranslations);
+            return new()
             {
-                var homeTranslations = _homeReadRepository.GetAll(false).Include(e => e.HomeTranslations).ThenInclude(l=>l.Lang).ToList();
-                var homeDatas = _mapper.Map<List<ResultHomeDTO>>(homeTranslations);
-                return new()
-                {
-                    Homes = homeDatas
-                };
-            }
-            var language = request.Language ?? "en";
-            var homesFiltered = _homeReadRepository.GetAll(false)
-                   .Include(e => e.HomeTranslations)
-                       .ThenInclude(t => t.Lang)
-                   .ToList();
-            foreach (var home in homesFiltered)
-            {
-                home.HomeTranslations = home.HomeTranslations
-                    .Where(t => t.Lang.LangCode == language)
-                    .ToList();
-            }
-
-            var filteredHomeDtos = _mapper.Map<List<ResultHomeDTO>>(homesFiltered);
-            return new() { Homes = filteredHomeDtos };
+                Homes = homeDatas
+            };
         }
     }
 }

@@ -26,7 +26,6 @@ namespace CorporateAPI.Application.Features.Queries.Page.GetAllPage
                 {
                     PagesDto = pageDatas
                 };
-
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.Product;
 using CorporateAPI.Application.Repositories.Product;
 using MediatR;
