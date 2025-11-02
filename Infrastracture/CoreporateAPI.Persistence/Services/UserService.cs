@@ -125,8 +125,11 @@ namespace CoreporateAPI.Persistence.Services
         {
             if (user != null)
             {
+                var utcAccessTokenDate = accessTokenData.ToUniversalTime();
+                 var utcRefreshTokenEndDate = utcAccessTokenDate.AddSeconds(addOnAccessTokenDate);
+
                 user.RefreshToken = refreshToken;
-                user.RefreshTokenEndDate = accessTokenData.AddSeconds(addOnAccessTokenDate);
+                user.RefreshTokenEndDate = utcRefreshTokenEndDate;
                 await _userManager.UpdateAsync(user);
             }
             else

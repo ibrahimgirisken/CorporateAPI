@@ -29,15 +29,18 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
-builder.Services.AddCors(options => {
-    options.AddPolicy("AllowFrontend", policy => {
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
         policy.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     }
-    ); });
+    );
+});
 
 var columnOptions = new ColumnOptions();
 columnOptions.Store.Remove(StandardColumn.Properties);
-columnOptions.Store.Add(StandardColumn.LogEvent);     
+columnOptions.Store.Add(StandardColumn.LogEvent);
 
 columnOptions.AdditionalColumns = new Collection<SqlColumn>
 {
@@ -53,15 +56,12 @@ columnOptions.AdditionalColumns = new Collection<SqlColumn>
 Logger log = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("logs/log.txt")
-    .WriteTo.MSSqlServer(
-        connectionString: builder.Configuration.GetConnectionString("MsSql"),
-        sinkOptions: new MSSqlServerSinkOptions
-        {
-            TableName = "logs",
-            AutoCreateSqlTable = true,
-        },
-        columnOptions: columnOptions
-    )
+    .WriteTo.PostgreSQL(
+      connectionString: builder.Configuration.GetConnectionString("PostgreSql"),
+      tableName: "logs",
+      needAutoCreateTable: true
+)
+
     .Enrich.With<CustomUserNameColumn>() // Enricher sınıfı
     .Enrich.FromLogContext()
     .MinimumLevel.Information()
@@ -100,7 +100,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer("Admin",options=>
+    .AddJwtBearer("Admin", options =>
     {
         options.TokenValidationParameters = new()
         {
@@ -111,9 +111,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidAudience = builder.Configuration["Token:Audience"],
             ValidIssuer = builder.Configuration["Token:Issuer"],
-            IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
             LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
-            NameClaimType = ClaimTypes.Name 
+            NameClaimType = ClaimTypes.Name
         };
     });
 

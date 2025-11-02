@@ -41,8 +41,9 @@ namespace CoreporateAPI.Persistence.Seeds
          Title = "Türkçe",
          Image = "tr.png",
          IsDeleted = false,
-         CreatedDate = new DateTime(2025, 1, 1),
-         UpdatedDate = new DateTime(2025, 1, 1)
+         CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+         UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
+
      },
      new Lang()
      {
@@ -51,8 +52,9 @@ namespace CoreporateAPI.Persistence.Seeds
          Title = "English",
          Image = "en.png",
          IsDeleted = false,
-         CreatedDate = new DateTime(2025, 1, 1),
-         UpdatedDate = new DateTime(2025, 1, 1)
+         CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+         UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
+
      },
      new Lang()
      {
@@ -61,8 +63,8 @@ namespace CoreporateAPI.Persistence.Seeds
          Title = "Deutsch",
          Image = "de.png",
          IsDeleted = false,
-         CreatedDate = new DateTime(2025, 1, 1),
-         UpdatedDate = new DateTime(2025, 1, 1)
+         CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+         UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
      }
  );
 
@@ -74,8 +76,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     Address = "Address",
                     Status = true,
                     IsDeleted = false,
-                    CreatedDate = new DateTime(2025, 1, 1),
-                    UpdatedDate = new DateTime(2025, 1, 1)
+                    CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+                    UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
+
                 }
             );
 
@@ -88,8 +91,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     Title = "Türkçe Title",
                     MetaDescription = "Türkçe Description",
                     IsDeleted = false,
-                    CreatedDate = new DateTime(2025, 1, 1),
-                    UpdatedDate = new DateTime(2025, 1, 1)
+                    CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+                    UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
+
                 },
                 new SettingTranslation()
                 {
@@ -99,8 +103,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     Title = "English Title",
                     MetaDescription = "English Description",
                     IsDeleted = false,
-                    CreatedDate = new DateTime(2025, 1, 1),
-                    UpdatedDate = new DateTime(2025, 1, 1)
+                    CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+                    UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
+
                 },
                 new SettingTranslation()
                 {
@@ -110,8 +115,9 @@ namespace CoreporateAPI.Persistence.Seeds
                     Title = "Deutsch Title",
                     MetaDescription = "Deutsch Description",
                     IsDeleted = false,
-                    CreatedDate = new DateTime(2025, 1, 1),
-                    UpdatedDate = new DateTime(2025, 1, 1)
+                    CreatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+                    UpdatedDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc)
+
                 }
             );
 

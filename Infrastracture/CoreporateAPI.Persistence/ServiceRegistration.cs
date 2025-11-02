@@ -36,7 +36,7 @@ namespace CoreporateAPI.Persistence
         {
             services.AddDbContext<CorporateAPIDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.ConnectionString);
+                options.UseNpgsql(Configuration.ConnectionString);
                 options.EnableSensitiveDataLogging();
             });
             services.AddIdentity<AppUser, AppRole>(options =>

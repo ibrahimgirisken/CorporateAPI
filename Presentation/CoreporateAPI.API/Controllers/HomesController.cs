@@ -44,12 +44,6 @@ namespace CoreporateAPI.API.Controllers
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Homes, ActionType = ActionType.Reading, Definition = "Get By ContentType Home")]
         public async Task<IActionResult> CreateHome([FromRoute] GetByContentTypeHomeQueryRequest getByContentTypeHomeQueryRequest)
         {
-            string language = Request.Headers["Accept-Language".ToString()];
-            if (string.IsNullOrEmpty(language))
-            {
-                language = "en"; // Varsayılan dil
-            }
-            getByContentTypeHomeQueryRequest.Language = language;
             GetByContentTypeHomeQueryResponse response = await _mediator.Send(getByContentTypeHomeQueryRequest);
             return Ok(response.homeDTO);
         }

@@ -10,7 +10,8 @@ namespace CoreporateAPI.Persistence
         public CorporateAPIDbContext CreateDbContext(string[] args)
         {
             DbContextOptionsBuilder dbContextOptionsBuilder = new();
-            dbContextOptionsBuilder.UseSqlServer(Configuration.ConnectionString);
+            // dbContextOptionsBuilder.UseSqlServer(Configuration.ConnectionString);
+            dbContextOptionsBuilder.UseNpgsql(Configuration.ConnectionString);
             return new CorporateAPIDbContext(dbContextOptionsBuilder.Options);
 
         }

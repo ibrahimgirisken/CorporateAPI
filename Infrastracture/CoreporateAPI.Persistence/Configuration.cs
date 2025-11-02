@@ -24,7 +24,8 @@ namespace CoreporateAPI.Persistence
                     configurationManager.AddJsonFile("appsettings.Production.json");
                 }
 
-                return configurationManager.GetConnectionString("MsSql");
+                return configurationManager.GetConnectionString("PostgreSql");
+                // return configurationManager.GetConnectionString("MsSql");
             }
         }
     }
