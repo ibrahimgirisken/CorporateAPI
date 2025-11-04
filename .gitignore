@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Infrastructure\CoreporateAPI.Persistence\Migrations klasörünün tamamını hariç tut
+Infrastructure/CoreporateAPI.Persistence/Migrations/
