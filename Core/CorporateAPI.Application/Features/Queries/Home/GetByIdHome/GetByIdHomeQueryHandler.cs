@@ -21,7 +21,7 @@ namespace CorporateAPI.Application.Features.Queries.Home.GetByIdHome
         {
             var home= await _homeReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Home.Home, object>>[]
             {
-e => e.HomeTranslations
+                e => e.HomeTranslations
             },
             includeStrings: new[]
             {

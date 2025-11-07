@@ -19,39 +19,14 @@ namespace CorporateAPI.Application.Features.Queries.Product.GetByIdProduct
 
         public async Task<GetByIdProductQueryResponse> Handle(GetByIdProductQueryRequest request, CancellationToken cancellationToken)
         {
-
-            ResultProductDTO productDto = null;
-
-            if (request.IncludeAllLanguages)
-            {
-                var product = await _productReadRepository.GetByIdAsync(request.Id, false, includes: new Expression<Func<Domain.Entities.Product.Product, object>>[]
-                {
-                    e=>e.ProductTranslations
-                },
-                includeStrings: new[]
+            var product=await _productReadRepository.GetByIdAsync(request.Id,false,includes:new Expression<Func<Domain.Entities.Product.Product,object>>[]{
+                e=>e.ProductTranslations
+            },includeStrings:new[]
                 {
                     "ProductTranslations.Lang"
-                });
-                productDto = _mapper.Map<ResultProductDTO>(product);
-            }
-            else
-            {
-                var product = await _productReadRepository.GetByIdAsync(
-            request.Id, false, includes: new Expression<Func<Domain.Entities.Product.Product, object>>[]
-                 {
-                     e => e.ProductTranslations
-                 }, includeStrings: new[]
-                 {
-                     "ProductTranslations.Lang"
-                 });
-
-                product.ProductTranslations = product.ProductTranslations
-                    .Where(t => t.Lang.LangCode == request.Language)
-                    .ToList();
-                productDto = _mapper.Map<ResultProductDTO>(product);
-            }
-
-
+                }
+            );
+            var productDto=_mapper.Map<ResultProductDTO>(product);
             return new()
             {
                 ProductDTO = productDto

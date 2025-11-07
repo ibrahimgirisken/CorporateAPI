@@ -13,7 +13,6 @@ using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Page;
 using CorporateAPI.Domain.Entities.Product;
 using CorporateAPI.Domain.Entities.Setting;
-using CorporateAPI.Domain.Entities.Translation;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,7 +34,6 @@ namespace CoreporateAPI.Persistence.Contexts
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Endpoint> Endpoints { get; set; }
         public DbSet<EndpointMenu> EndpointMenus { get; set; }
-        public DbSet<TranslationKey> TranslationKey { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -150,30 +148,6 @@ namespace CoreporateAPI.Persistence.Contexts
                 .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasIndex(l => new { l.PageId, l.LangId }).IsUnique();
-            });
-
-            modelBuilder.Entity<TranslationKey>(entity =>
-            {
-                entity.ToTable("TranslationKeys");
-
-                entity.HasIndex(x => x.Key).IsUnique();
-            });
-
-            modelBuilder.Entity<TranslationValue>(entity =>
-            {
-                entity.ToTable("TranslationValues");
-                entity.HasOne(tv=>tv.TranslationKey)
-                .WithMany(tk => tk.Translations)
-                .HasForeignKey(tv=>tv.TranslationKeyId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(tv => tv.Lang)
-                .WithMany(l => l.Translations)
-                .HasForeignKey(tv => tv.LangId)
-                .HasPrincipalKey(l => l.Id)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasIndex(tv => new { tv.TranslationKeyId, tv.LangId }).IsUnique();
             });
 
             modelBuilder.Entity<ModuleTranslation>(entity =>

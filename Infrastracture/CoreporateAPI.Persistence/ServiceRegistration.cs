@@ -25,8 +25,6 @@ using CorporateAPI.Application.Repositories.EndpointMenu;
 using CoreporateAPI.Persistence.Repositories.EndpointMenu;
 using CoreporateAPI.Application;
 using CorporateAPI.Application.Resolvers;
-using CorporateAPI.Application.Repositories.TranslationKey;
-using CoreporateAPI.Persistence.Repositories.Translation;
 
 namespace CoreporateAPI.Persistence
 {
@@ -85,9 +83,6 @@ namespace CoreporateAPI.Persistence
 
             services.AddScoped<IEndpointMenuReadRepository, EndpointMenuReadRepository>();
             services.AddScoped<IEndpointMenuWriteRepository,EndpointMenuWriteRepository>();
-
-            services.AddScoped<ITranslationKeyReadRepository, TranslationKeyReadRepository>();
-            services.AddScoped<ITranslationKeyWriteRepository, TranslationKeyWriteRepository>();
 
             services.AddScoped<IAuthorizationEndpointService, AuthorizationEndpointService>();
 
