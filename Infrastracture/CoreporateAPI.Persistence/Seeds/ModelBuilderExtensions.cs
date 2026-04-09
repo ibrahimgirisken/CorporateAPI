@@ -10,8 +10,6 @@ namespace CoreporateAPI.Persistence.Seeds
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            var hasher = new PasswordHasher<AppUser>();
-
             var adminUser = new AppUser
             {
                 Id = "385e28b4-d313-4724-b8c8-1483f15ee8f4",
@@ -22,9 +20,9 @@ namespace CoreporateAPI.Persistence.Seeds
                 Email = "girisken07@gmail.com",
                 NormalizedEmail = "GIRISKEN07@GMAIL.COM",
                 EmailConfirmed = false,
-                PasswordHash = "AQAAAAIAAYagAAAAEEQjo+oKKy4mkizENNnOCBDpiMeuDW0QzmWPBn02dK+2+V4vBSjvzPsYe9mbV1C6vg==",//abc123
                 SecurityStamp = "MSV7PQQLRH5YEGZDJDHRZTXA6N2WEGAB",
                 ConcurrencyStamp = "4cdedf5f-20f4-4920-ad3e-83a99713be35",
+                PasswordHash= "AQAAAAIAAYagAAAAEG4MJ+ifSr2Cgf4m6B/3kqqtSy7sEzXKpwPXebUyLDFeNjfZURlcnrvPOs7o2eStbg==",//0kau1Xlg2X2THhpS
                 PhoneNumber = null,
                 PhoneNumberConfirmed = false,
                 TwoFactorEnabled = false,
@@ -32,11 +30,14 @@ namespace CoreporateAPI.Persistence.Seeds
                 LockoutEnabled = true,
                 AccessFailedCount = 0
             };
+            //var passwordHash = new PasswordHasher<AppUser>();
+            //string generatedHash = passwordHash.HashPassword(new AppUser(), "0kau1Xlg2X2THhpS");
+
             modelBuilder.Entity<AppUser>().HasData(adminUser);
             modelBuilder.Entity<Lang>().HasData(
      new Lang()
      {
-         Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+         Id = Guid.Parse("942e32e5-ed55-4868-8643-0f5087f78d51"),
          LangCode = "tr",
          Title = "Türkçe",
          Image = "tr.png",
@@ -47,7 +48,7 @@ namespace CoreporateAPI.Persistence.Seeds
      },
      new Lang()
      {
-         Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+         Id = Guid.Parse("94eba3c1-7851-430e-aeb6-764403053c0c"),
          LangCode = "en",
          Title = "English",
          Image = "en.png",
@@ -58,7 +59,7 @@ namespace CoreporateAPI.Persistence.Seeds
      },
      new Lang()
      {
-         Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+         Id = Guid.Parse("140b7478-54e6-4690-bbcb-b621f1702a5d"),
          LangCode = "de",
          Title = "Deutsch",
          Image = "de.png",
@@ -71,7 +72,7 @@ namespace CoreporateAPI.Persistence.Seeds
             modelBuilder.Entity<Setting>().HasData(
                 new Setting()
                 {
-                    Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                    Id = Guid.Parse("64978ef1-7b04-4372-b6fe-18483ee3d753"),
                     Telephone = "123456789",
                     Address = "Address",
                     Status = true,
@@ -85,9 +86,9 @@ namespace CoreporateAPI.Persistence.Seeds
             modelBuilder.Entity<SettingTranslation>().HasData(
                 new SettingTranslation()
                 {
-                    Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                    SettingId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    LangId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                    Id = Guid.Parse("14b628ce-9f8a-40c9-a538-606b3c908bfd"),
+                    SettingId = Guid.Parse("64978ef1-7b04-4372-b6fe-18483ee3d753"),
+                    LangId = Guid.Parse("942e32e5-ed55-4868-8643-0f5087f78d51"),
                     Title = "Türkçe Title",
                     MetaDescription = "Türkçe Description",
                     IsDeleted = false,
@@ -97,9 +98,9 @@ namespace CoreporateAPI.Persistence.Seeds
                 },
                 new SettingTranslation()
                 {
-                    Id = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc"),
-                    SettingId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    LangId = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                    Id = Guid.Parse("6187c244-aae0-41eb-91ed-ac2f949581a9"),
+                    SettingId = Guid.Parse("64978ef1-7b04-4372-b6fe-18483ee3d753"),
+                    LangId = Guid.Parse("94eba3c1-7851-430e-aeb6-764403053c0c"),
                     Title = "English Title",
                     MetaDescription = "English Description",
                     IsDeleted = false,
@@ -109,9 +110,9 @@ namespace CoreporateAPI.Persistence.Seeds
                 },
                 new SettingTranslation()
                 {
-                    Id = Guid.Parse("dddddddd-dddd-dddd-dddd-dddddddddddd"),
-                    SettingId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    LangId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    Id = Guid.Parse("57360389-60af-4832-b99f-deca830dd946"),
+                    SettingId = Guid.Parse("64978ef1-7b04-4372-b6fe-18483ee3d753"),
+                    LangId = Guid.Parse("140b7478-54e6-4690-bbcb-b621f1702a5d"),
                     Title = "Deutsch Title",
                     MetaDescription = "Deutsch Description",
                     IsDeleted = false,

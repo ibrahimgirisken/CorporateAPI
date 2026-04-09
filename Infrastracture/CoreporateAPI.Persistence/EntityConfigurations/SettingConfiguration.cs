@@ -9,7 +9,6 @@ namespace CoreporateAPI.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<Setting> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x=>x.Id).UseIdentityColumn();
             builder.Property(x => x.Telephone).HasMaxLength(25);
             builder.Property(x => x.Address).HasMaxLength(250);
             builder.Property(x => x.BlackLogo).HasMaxLength(150);

@@ -13,19 +13,24 @@ namespace CoreporateAPI.Persistence
         {
             get
             {
-                ConfigurationManager configurationManager = new();
-                try
+                ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+
+                // 1. Uygulamanın o an çalıştığı fiziksel klasörü al
+                string path = Directory.GetCurrentDirectory();
+
+                // 2. appsettings.json dosyasını ara
+                if (!File.Exists(Path.Combine(path, "appsettings.json")))
                 {
-                    configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/CoreporateAPI.API"));
-                    configurationManager.AddJsonFile("appsettings.json");
-                }
-                catch
-                {
-                    configurationManager.AddJsonFile("appsettings.Production.json");
+                    // Eğer dosya burada yoksa (Development ortamındaysan), API projesinin içine bak
+                    path = Path.Combine(path, "../../../CorporateAPI/Presentation/CoreporateAPI.API");
                 }
 
-                return configurationManager.GetConnectionString("PostgreSql");
-                // return configurationManager.GetConnectionString("MsSql");
+                configurationBuilder.SetBasePath(path);
+                configurationBuilder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                IConfigurationRoot configuration = configurationBuilder.Build();
+                return configuration.GetConnectionString("MySql");
+
             }
         }
     }

@@ -15,9 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Core;
-using Serilog.Sinks.MSSqlServer;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -38,31 +35,15 @@ builder.Services.AddCors(options =>
     );
 });
 
-var columnOptions = new ColumnOptions();
-columnOptions.Store.Remove(StandardColumn.Properties);
-columnOptions.Store.Add(StandardColumn.LogEvent);
-
-columnOptions.AdditionalColumns = new Collection<SqlColumn>
-{
-    new SqlColumn
-    {
-        ColumnName = "UserName",
-        DataType = SqlDbType.NVarChar,
-        DataLength = 50,
-        AllowNull = true
-    }
-};
 
 Logger log = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("logs/log.txt")
-    .WriteTo.PostgreSQL(
-      connectionString: builder.Configuration.GetConnectionString("PostgreSql"),
-      tableName: "logs",
-      needAutoCreateTable: true
-)
-
-    .Enrich.With<CustomUserNameColumn>() // Enricher sınıfı
+    .WriteTo.MySQL(
+        connectionString: builder.Configuration.GetConnectionString("MySql"),
+        tableName: "logs"
+    )
+    .Enrich.With<CustomUserNameColumn>()
     .Enrich.FromLogContext()
     .MinimumLevel.Information()
     .CreateLogger();
@@ -99,8 +80,8 @@ builder.Services.AddControllers(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer("Admin", options =>
+builder.Services.AddAuthentication("Admin")
+    .AddJwtBearer("Admin",options =>
     {
         options.TokenValidationParameters = new()
         {
@@ -130,7 +111,7 @@ builder.Services.AddSwaggerGen(setup =>
 
         Reference = new OpenApiReference
         {
-            Id = JwtBearerDefaults.AuthenticationScheme,
+            Id = "Admin",
             Type = ReferenceType.SecurityScheme
         }
     };

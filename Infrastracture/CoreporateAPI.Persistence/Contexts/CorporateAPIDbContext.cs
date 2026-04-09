@@ -13,14 +13,15 @@ using CorporateAPI.Domain.Entities.Module;
 using CorporateAPI.Domain.Entities.Page;
 using CorporateAPI.Domain.Entities.Product;
 using CorporateAPI.Domain.Entities.Setting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreporateAPI.Persistence.Contexts
 {
-    public class CorporateAPIDbContext : IdentityDbContext<AppUser, AppRole, string>
+    public class CorporateAPIDbContext : IdentityDbContext<AppUser, IdentityRole<string>, string>
     {
-        public CorporateAPIDbContext(DbContextOptions options) : base(options)
+        public CorporateAPIDbContext(DbContextOptions<CorporateAPIDbContext> options) : base(options)
         { }
         public DbSet<Datasheet> Datasheets { get; set; }
         public DbSet<Banner> Banners { get; set; }
@@ -38,7 +39,49 @@ namespace CoreporateAPI.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("dbo");
+            base.OnModelCreating(modelBuilder);
+
+            const int keyLen = 128;
+            const int shortKeyLen = 80;
+            const int normLen = 128;
+
+            modelBuilder.Entity<AppUser>(entity =>
+            {
+                entity.Property(u => u.Id).HasMaxLength(85).IsRequired();
+                entity.Property(u => u.UserName).HasMaxLength(normLen);
+                entity.Property(u => u.NormalizedUserName).HasMaxLength(normLen);
+                entity.Property(u => u.Email).HasMaxLength(normLen);
+                entity.Property(u => u.NormalizedEmail).HasMaxLength(normLen);
+            });
+
+            modelBuilder.Entity<IdentityRole<string>>(entity =>
+            {
+                entity.Property(r => r.Id).HasMaxLength(85).IsRequired();
+                entity.Property(r => r.Name).HasMaxLength(128);
+                entity.Property(r => r.NormalizedName).HasMaxLength(128);
+            });
+
+
+            modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.Property(l => l.LoginProvider).HasMaxLength(64);
+                entity.Property(l => l.ProviderKey).HasMaxLength(64);
+                entity.Property(l => l.UserId).HasMaxLength(128);
+                entity.Property(l => l.ProviderDisplayName).HasMaxLength(128);
+            });
+
+            modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.Property(t => t.UserId).HasMaxLength(128);
+                entity.Property(t => t.LoginProvider).HasMaxLength(50);
+                entity.Property(t => t.Name).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>(entity =>
+            {
+                entity.Property(r => r.UserId).HasMaxLength(85);
+                entity.Property(r => r.RoleId).HasMaxLength(85);
+            });
 
             modelBuilder.Entity<DatasheetTranslation>(entity =>
             {
@@ -169,6 +212,7 @@ namespace CoreporateAPI.Persistence.Contexts
 
             modelBuilder.Entity<Home>(entity =>
             {
+                entity.Property(h => h.ContentType).HasMaxLength(128).IsRequired();
                 entity.HasIndex(h => h.ContentType).IsUnique();
             });
 
@@ -189,12 +233,14 @@ namespace CoreporateAPI.Persistence.Contexts
 
                 entity.HasIndex(l => new { l.HomeId, l.LangId }).IsUnique();
             });
-            modelBuilder.Entity<Lang>()
-                .HasIndex(l => l.LangCode)
-                .IsUnique();
+            modelBuilder.Entity<Lang>(
+                entity =>
+                {
+                    entity.Property(l => l.LangCode).HasMaxLength(10).IsRequired();
+                    entity.HasIndex(l => l.LangCode).IsUnique();
+                });
 
             modelBuilder.Seed();
-            base.OnModelCreating(modelBuilder);
 
         }
 
@@ -202,13 +248,14 @@ namespace CoreporateAPI.Persistence.Contexts
         {
             var datas = ChangeTracker
                 .Entries<BaseEntity>();
-
+            TimeZoneInfo turkeyTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Turkey Standard Time");
+            DateTime turkeyNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, turkeyTimeZone);
             foreach (var data in datas)
             {
                 _ = data.State switch
                 {
-                    EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
-                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
+                    EntityState.Added => turkeyNow,
+                    EntityState.Modified => turkeyNow,
                     _ => DateTime.UtcNow,
                 };
             }
