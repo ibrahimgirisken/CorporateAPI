@@ -1,10 +1,5 @@
 ﻿using CorporateAPI.Application.DTOs.Banner;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
 {
@@ -21,7 +16,6 @@ namespace CorporateAPI.Application.Features.Commands.Banner.CreateBanner
         public string? MobileVideo { get; set; }
         public int Order { get; set; } = 1;
         public bool Status { get; set; }
-        public bool IsDeleted { get; set; } = false;
         public List<BannerTranslationDTO> BannerTranslations { get; set; }
     }
 }

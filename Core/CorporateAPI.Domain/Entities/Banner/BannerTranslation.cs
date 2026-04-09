@@ -1,9 +1,4 @@
 ﻿using CorporateAPI.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporateAPI.Domain.Entities.Banner
 {
@@ -13,6 +8,6 @@ namespace CorporateAPI.Domain.Entities.Banner
         public string? Title { get; set; }
         public string? Content { get; set; }
         public Guid BannerId { get; set; }
-        public Banner Banner { get; set; }
+        public Domain.Entities.Banner.Banner Banner { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using CorporateAPI.Application.DTOs.Page;
 using CorporateAPI.Application.DTOs.Product;
 using CorporateAPI.Application.DTOs.Setting;
 using CorporateAPI.Application.Features.Commands.Banner.CreateBanner;
+using CorporateAPI.Application.Features.Commands.Banner.UpdateBanner;
 using CorporateAPI.Application.Features.Commands.Brand.CreateBrand;
 using CorporateAPI.Application.Features.Commands.Brand.UpdateBrand;
 using CorporateAPI.Application.Features.Commands.Category.CreateCategory;
@@ -91,6 +92,7 @@ namespace CorporateAPI.Application.Mapping
                            opt => opt.MapFrom<GenericLangCodeToLangIdResolver<BannerTranslationDTO>>())
                 .ForMember(dest => dest.Lang, opt => opt.Ignore());
 
+
             CreateMap<BannerTranslation, BannerTranslationDTO>()
                 .ForMember(dest => dest.LangCode,
                            opt => opt.MapFrom(src => src.Lang != null ? src.Lang.LangCode : null));
@@ -146,6 +148,7 @@ namespace CorporateAPI.Application.Mapping
 
             CreateMap<Banner, ResultBannerDTO>().ReverseMap();
             CreateMap<Banner, CreateBannerCommandRequest>().ReverseMap();
+            CreateMap<Banner, UpdateBannerCommandRequest>().ReverseMap();
 
             CreateMap<Module, ResultModuleDTO>().ReverseMap();
             CreateMap<Module, CreateModuleCommandRequest>().ReverseMap();

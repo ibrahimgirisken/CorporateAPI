@@ -22,7 +22,7 @@ namespace CorporateAPI.Application.Features.Queries.Banner.GetAllBanner
         {
 
 
-                var bannerTranslations =await _bannerReadRepository.GetAll(false).Include(e => e.BannerTranslations).ThenInclude(l=>l.Lang).ToListAsync();
+                var bannerTranslations =_bannerReadRepository.GetAll(false).Include(e => e.BannerTranslations).ThenInclude(l=>l.Lang).ToList();
                 var bannerDatas = _mapper.Map<List<ResultBannerDTO>>(bannerTranslations);
                 return new()
                 {
