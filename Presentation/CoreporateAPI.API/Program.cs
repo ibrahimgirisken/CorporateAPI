@@ -7,7 +7,7 @@ using CoreporateAPI.Persistence;
 using CoreporateAPI.Persistence.Contexts;
 using CorporateAPI.Application;
 using CorporateAPI.Application.Validators.Pages;
-using FluentValidation.AspNetCore;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +21,11 @@ using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -61,14 +61,13 @@ builder.Services.AddHttpLogging(logging =>
     logging.CombineLogs = true;
 });
 
+builder.Services.AddValidatorsFromAssemblyContaining<PageValidator>();
 
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ValidationFilter>();
     options.Filters.Add<RolePermissionFilter>();
 })
-.AddFluentValidation(configuration =>
-    configuration.RegisterValidatorsFromAssemblyContaining<PageValidator>())
 .ConfigureApiBehaviorOptions(options =>
     options.SuppressModelStateInvalidFilter = true)
 .AddJsonOptions(options =>
